@@ -1,0 +1,39 @@
+/** 
+ * 사용자 정의 초기화
+ */
+body {
+  margin: 0;
+  font-family: "Spoqa Han Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #212121;
+}
+
+body,
+body *,
+body::before,
+body::after,
+body *::before,
+body *::after {
+  box-sizing: border-box;
+}
+
+img {
+  vertical-align: middle;
+}
+
+button {
+  user-select: none;
+  cursor: pointer;
+}
+
+abbr[title] {
+  cursor: help;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
