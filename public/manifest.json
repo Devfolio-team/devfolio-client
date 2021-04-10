@@ -1,6 +1,6 @@
 {
-  "short_name": "E.UID",
-  "name": "이듬(E.UID) 블렌디드 러닝",
+  "short_name": "Devfolio",
+  "name": "가장 쉬운 포트폴리오 제작 Devfolio",
   "icons": [
     {
       "src": "assets/favicon.png",
