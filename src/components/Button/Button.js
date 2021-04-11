@@ -4,7 +4,7 @@ import { string, func, number } from 'prop-types';
 const Button = styled.button.attrs(({ type, onClick, ...restProps }) => ({
   type,
   onClick,
-  ...restProps
+  ...restProps,
 }))`
   width: ${props => props.width}px;
   height: ${props => props.height}px;
@@ -26,7 +26,7 @@ Button.defaultProps = {
   fontSize: 1.4,
   fontWeight: 500,
   border: '1px solid #428BCA',
-  borderRadius: 5
+  borderRadius: 5,
 };
 
 Button.propTypes = {
@@ -49,7 +49,7 @@ Button.propTypes = {
   /** 버튼 테두리를 설정합니다. */
   border: string,
   /** 버튼 테두리의 둥글기를 설정합니다. */
-  borderRadius: number
+  borderRadius: number,
 };
 
 export default Button;
