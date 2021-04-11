@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { string, func, number } from 'prop-types';
 import { color } from 'utils';
 
-const Button = styled.button.attrs(({ type, onClick, ...restProps }) => ({
+const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   type,
   onClick,
-  ...restProps,
 }))`
   width: ${props => props.width}px;
   height: ${props => props.height}px;
@@ -17,6 +16,10 @@ const Button = styled.button.attrs(({ type, onClick, ...restProps }) => ({
   border-radius: ${props => props.borderRadius}px;
   padding: 5px 20px;
 `;
+
+const Button = ({ type, onClick, ...restProps }) => (
+  <StyledButton type={type} onClick={onClick} {...restProps} />
+);
 
 Button.defaultProps = {
   type: 'button',
