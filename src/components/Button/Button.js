@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { string, func, number } from 'prop-types';
+import { color } from 'utils';
 
 const Button = styled.button.attrs(({ type, onClick, ...restProps }) => ({
   type,
@@ -22,10 +23,10 @@ Button.defaultProps = {
   width: 110,
   height: 45,
   bgColor: 'transparent',
-  fontColor: '#428BCA',
+  fontColor: color.mainColor,
   fontSize: 1.4,
   fontWeight: 500,
-  border: '1px solid #428BCA',
+  border: `1px solid ${color.mainColor}`,
   borderRadius: 5,
 };
 
