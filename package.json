@@ -48,6 +48,9 @@
       "jsx-a11y"
     ],
     "rules": {
+      "prefer-destructuring": "warn",
+      "no-var": "error",
+      "no-console": "warn",
       "jsx-a11y/no-noninteractive-element-interactions": [
         "error",
         {
