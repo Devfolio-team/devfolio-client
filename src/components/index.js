@@ -5,3 +5,4 @@ export { default as RadioButton } from './RadioButton/RadioButton';
 export { default as Input } from './Input/Input';
 export { default as TextArea } from './TextArea/TextArea';
 export { default as Selectbox } from './Selectbox/Selectbox';
+export { default as SVGIcon } from './SVGIcon/SVGIcon';
