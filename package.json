@@ -51,6 +51,7 @@
       "prefer-destructuring": "warn",
       "no-var": "error",
       "no-console": "warn",
+      "require-await": "error",
       "jsx-a11y/no-noninteractive-element-interactions": [
         "error",
         {
