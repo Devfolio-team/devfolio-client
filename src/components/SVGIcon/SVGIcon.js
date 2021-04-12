@@ -106,7 +106,7 @@ SVGIcon.propTypes = {
   /** SVGIcon에 적용 할 height를 설정합니다. */
   height: number,
   /** SVGIcon에 적용 할 type를 설정합니다. */
-  type: string,
+  type: string.isRequired,
 };
 
 export default SVGIcon;
