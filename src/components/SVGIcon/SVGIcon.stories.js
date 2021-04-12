@@ -11,7 +11,23 @@ export default {
     },
   },
   argTypes: {
-    type: { control: 'text' },
+    type: {
+      control: {
+        type: 'radio',
+        options: [
+          'Angry',
+          'Blog',
+          'Email',
+          'Empty',
+          'Github',
+          'Google',
+          'HeartBlack',
+          'HeartEmpty',
+          'Sad',
+          'Smile',
+        ],
+      },
+    },
     width: { control: 'number' },
     height: { control: 'number' },
   },

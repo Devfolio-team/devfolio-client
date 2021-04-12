@@ -11,7 +11,12 @@ export default {
     },
   },
   argTypes: {
-    type: { control: 'text' },
+    type: {
+      control: {
+        type: 'radio',
+        options: ['Black', 'White'],
+      },
+    },
     width: { control: 'number' },
     height: { control: 'number' },
   },
