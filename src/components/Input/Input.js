@@ -31,7 +31,7 @@ Input.defaultProps = {
 
 Input.propTypes = {
   /** 인풋의 종류를 설정합니다. */
-  type: string.isRequired,
+  type: string,
   /** 인풋의 고유한 id값을 설정합니다. */
   id: string.isRequired,
   /** 인풋의 label값을 설정합니다. */
