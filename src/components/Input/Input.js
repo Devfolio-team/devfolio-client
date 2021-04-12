@@ -15,7 +15,14 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
   outline: none;
 `;
 
-const Input = ({ type, id, ...restProps }) => <StyledInput type={type} id={id} {...restProps} />;
+const Input = ({ type, id, label, ...restProps }) => {
+  return (
+    <>
+      <StyledInput type={type} id={id} {...restProps} />
+      <label htmlFor={id}>{label}</label>
+    </>
+  );
+};
 
 Input.defaultProps = {
   type: 'text',
@@ -24,9 +31,11 @@ Input.defaultProps = {
 
 Input.propTypes = {
   /** 인풋의 종류를 설정합니다. */
-  type: string.isRequired,
+  type: string,
   /** 인풋의 고유한 id값을 설정합니다. */
   id: string.isRequired,
+  /** 인풋의 label값을 설정합니다. */
+  label: string.isRequired,
   /** 인풋 넓이를 설정합니다. */
   width: number,
   /** 인풋 높이를 설정합니다. */

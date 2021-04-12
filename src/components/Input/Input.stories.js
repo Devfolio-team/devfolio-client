@@ -13,6 +13,7 @@ export default {
   },
   argTypes: {
     id: { control: 'text' },
+    label: { control: 'text' },
     width: { control: 'number' },
     height: { control: 'number' },
     fontSize: { control: 'number' },
@@ -25,3 +26,8 @@ export default {
 const Template = args => <Input {...args} />;
 
 export const ExampleInput = Template.bind({});
+
+ExampleInput.args = {
+  label: 'Example',
+  id: 'exInput1',
+};
