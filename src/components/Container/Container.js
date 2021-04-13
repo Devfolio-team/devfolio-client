@@ -12,6 +12,12 @@ const StyledContainer = styled.div`
   flex-flow: ${({ flexFlow }) => flexFlow};
   justify-content: ${({ justifyContent }) => justifyContent};
   align-items: ${({ alignItems }) => alignItems};
+  position: ${({ position }) => position};
+  border: ${({ border }) => border};
+  top: ${({ top }) => top};
+  left: ${({ left }) => left};
+  bottom: ${({ bottom }) => bottom};
+  right: ${({ right }) => right};
 `;
 
 function Container(props) {
@@ -43,6 +49,18 @@ Container.propTypes = {
   justifyContent: string,
   /** display속성이 flex일때 교차축에 대한 정렬방식을 설정합니다. */
   alignItems: string,
+  /** 컨테이너의 position 속성을 설정합니다. */
+  position: string,
+  /** 컨테이너의 테두리를 설정합니다. */
+  border: string,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 상단을 기준으로 설정합니다. */
+  top: number,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 왼쪽을 기준으로 설정합니다. */
+  left: number,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 하단을 기준으로 설정합니다. */
+  bottom: number,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 오른쪽을 기준으로 설정합니다. */
+  right: number,
 };
 
 export default Container;

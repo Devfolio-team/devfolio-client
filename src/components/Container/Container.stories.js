@@ -21,6 +21,12 @@ export default {
     flexFlow: { control: 'text' },
     justifyContent: { control: 'text' },
     alignItems: { control: 'text' },
+    position: { control: 'text' },
+    border: { control: 'text' },
+    top: { control: 'number' },
+    left: { control: 'number' },
+    bottom: { control: 'number' },
+    right: { control: 'number' },
   },
 };
 
