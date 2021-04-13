@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, number, oneOf } from 'prop-types';
+import { string, number, oneOfType } from 'prop-types';
 
 const StyledContainer = styled.div`
   display: ${({ display }) => display};
@@ -34,7 +34,7 @@ Container.propTypes = {
   /** 컨테이너의 display속성을 설정합니다. */
   display: string,
   /** 컨테이너의 넓이를 설정합니다. number값을 주면 px단위, string값은 css문법으로 전달해줍니다. */
-  width: oneOf([number, string]),
+  width: oneOfType([number, string]),
   /** 컨테이너의 높이를 px단위로 설정합니다. */
   height: number,
   /** 컨테이너의 내부 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
