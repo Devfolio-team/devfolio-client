@@ -28,7 +28,7 @@ const HeaderBar = () => {
         background="#F8F9FA"
       >
         <Heading as="h1">
-          <A11yHidden>Devfolio</A11yHidden>
+          <A11yHidden as="span">Devfolio</A11yHidden>
           <Logo width={130} height={30} />
         </Heading>
         <Button

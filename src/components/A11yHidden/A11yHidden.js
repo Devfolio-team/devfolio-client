@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { element } from 'prop-types';
+import { string } from 'prop-types';
 
 const StyledA11yHidden = styled.span`
   overflow: hidden;
@@ -18,7 +18,7 @@ const A11yHidden = ({ as, ...restProps }) => <StyledA11yHidden as={as} {...restP
 
 A11yHidden.propTypes = {
   /** styled component의 요소를 정해줍니다 */
-  as: element.isRequired,
+  as: string.isRequired,
 };
 
 export default A11yHidden;
