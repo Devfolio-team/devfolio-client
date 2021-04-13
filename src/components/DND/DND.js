@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { color } from 'utils';
+import { string } from 'prop-types';
+import A11yHidden from 'components/A11yHidden/A11yHidden';
+import Container from 'components/Container/Container';
+import Image from 'components/Image/Image';
 
-// TODO: 컨테이너 컴포넌트로 수정필요
-const DNDContainer = styled.div`
-  display: inline-block;
-  width: 400px;
-  height: 400px;
-  border: 1px dashed #ccc;
-  position: relative;
-`;
 const DNDInput = styled.input`
   width: 100%;
   height: 100%;
@@ -18,19 +14,6 @@ const DNDInput = styled.input`
   z-index: 9999;
 `;
 
-// TODO: a11y-hidden 컴포넌트로 수정필요
-const Label = styled.label``;
-
-// TODO: 이미지 컴포넌트로 수정필요
-const Image = styled.img`
-  width: 400px;
-  height: 400px;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-`;
 const Display = styled.div`
   text-align: center;
   width: 100%;
@@ -53,7 +36,7 @@ const HoverDisplay = styled.div`
   z-index: -1;
 `;
 
-const DND = () => {
+const DND = ({ id }) => {
   const [src, setSrc] = useState(null);
   const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
@@ -76,7 +59,7 @@ const DND = () => {
       setAlt(alt);
       setIsDragged(false);
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
@@ -91,27 +74,52 @@ const DND = () => {
       });
       return res.data;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   };
 
   return (
-    <DNDContainer>
+    <Container
+      display="inline-block"
+      width={400}
+      height={400}
+      border="1px dashed #ccc"
+      position="relative"
+    >
       <DNDInput
         onDragOver={onDragOverHandler}
         onDragLeave={onDragLeaveHandler}
         accept="image/jpeg, image/png, image/jpg, image/webp"
         multiple
         type="file"
-        id="dummy"
+        id={id}
         onChange={onChange}
       />
-      <Label htmlFor="dummy"></Label>
-      {src ? <Image src={src} alt={alt} /> : null}
+      <A11yHidden as="label" htmlFor={id}>
+        이미지 업로드 드래그 앤 드랍 창
+      </A11yHidden>
+      {src ? (
+        <Image
+          src={src}
+          alt={alt}
+          width={400}
+          height={400}
+          object-fit="cover"
+          position="absolute"
+          top={0}
+          left={0}
+          zIndex={-1}
+        />
+      ) : null}
       {isUploaded ? null : <Display>Upload your Image!</Display>}
       {isDragged ? <HoverDisplay>Drop the Files Here...</HoverDisplay> : null}
-    </DNDContainer>
+    </Container>
   );
+};
+
+DND.propTypes = {
+  /**드래그앤드랍의 input에 고유한 id값을 설정합니다. */
+  id: string.isRequired,
 };
 
 export default DND;
