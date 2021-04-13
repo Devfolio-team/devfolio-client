@@ -8,8 +8,8 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
 }))`
   width: ${props => props.width}px;
   height: ${props => props.height}px;
-  background: ${props => props.bgColor};
-  color: ${props => props.fontColor};
+  background: ${props => props.background};
+  color: ${props => props.color};
   font-size: ${props => props.fontSize}rem;
   font-weight: ${props => props.fontWeight};
   border: ${props => props.border};

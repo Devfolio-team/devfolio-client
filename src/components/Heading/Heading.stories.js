@@ -13,7 +13,7 @@ export default {
   argTypes: {
     color: { control: 'color' },
     fontSize: { control: 'number' },
-    backgroundColor: { control: 'string' },
+    background: { control: 'string' },
   },
 };
 
@@ -26,5 +26,5 @@ ExampleHeading.args = {
   color: '#FFFFFF',
   fontSize: 6.4,
   //스토리북에서 default color가 흰색이라서 배경으로 검은색 했음.
-  backgroundColor: '#000000',
+  background: '#000000',
 };
