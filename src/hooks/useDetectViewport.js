@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import React from 'react';
 
 export const initialViewports = {
-  sm: 480,
-  md: 768,
-  lg: 1024,
+  xs: 480,
+  sm: 768,
+  md: 1024,
+  lg: 1440,
 };
 
 const initialState = {
@@ -27,7 +29,7 @@ const updateAction = newState => ({
 /* -------------------------------------------------------------------------- */
 
 export default function useDetectViewport(viewports = initialViewports) {
-  const { sm, md, lg } = viewports;
+  const { xs, sm, md, lg } = viewports;
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   React.useEffect(() => {
@@ -39,28 +41,25 @@ export default function useDetectViewport(viewports = initialViewports) {
         // innerHeight: vh
       } = window;
 
-      if (vw < sm) {
+      if (vw < xs) {
         updateState({
           type: 'xs',
           isMobile: true,
           isDesktop: false,
         });
-      }
-      if (vw >= sm && vw < md) {
+      } else if (vw >= xs && vw < sm) {
         updateState({
           type: 'sm',
           isMobile: true,
           isDesktop: false,
         });
-      }
-      if (vw >= md && vw < lg) {
+      } else if (vw >= sm && vw < md) {
         updateState({
           type: 'md',
           isMobile: false,
           isDesktop: true,
         });
-      }
-      if (vw >= lg) {
+      } else if (vw >= lg) {
         updateState({
           type: 'lg',
           isMobile: false,
@@ -71,12 +70,12 @@ export default function useDetectViewport(viewports = initialViewports) {
 
     detectionViewport();
 
-    window.addEventListener('resize', detectionViewport);
+    window.addEventListener('resize', _.throttle(detectionViewport, 200));
 
     return () => {
       window.removeEventListener('resize', detectionViewport);
     };
-  }, [dispatch, lg, md, sm]);
+  }, [dispatch, xs, lg, md, sm]);
 
   return state;
 }
