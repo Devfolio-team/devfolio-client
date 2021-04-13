@@ -3,11 +3,11 @@ import { ReactComponent as LogoBlack } from 'assets/LogoBlack.svg';
 import { ReactComponent as LogoWhite } from 'assets/LogoWhite.svg';
 
 const Logo = ({ type, width, height, ...restProps }) => {
-  let Temp = null;
+  let Logo = null;
 
-  Temp = type === 'Black' ? LogoBlack : LogoWhite;
+  Logo = type === 'Black' ? LogoBlack : LogoWhite;
 
-  return <Temp width={width} height={height} {...restProps} />;
+  return <Logo width={width} height={height} {...restProps} />;
 };
 
 Logo.defaultProps = {
