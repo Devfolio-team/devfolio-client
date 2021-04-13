@@ -8,3 +8,4 @@ export { default as Selectbox } from './Selectbox/Selectbox';
 export { default as DND } from './DND/DND';
 export { default as Container } from './Container/Container';
 export { default as SVGIcon } from './SVGIcon/SVGIcon';
+export { default as Image } from './Image/Image';
