@@ -7,3 +7,4 @@ export { default as TextArea } from './TextArea/TextArea';
 export { default as Selectbox } from './Selectbox/Selectbox';
 export { default as Container } from './Container/Container';
 export { default as SVGIcon } from './SVGIcon/SVGIcon';
+export { default as Logo } from './Logo/Logo';
