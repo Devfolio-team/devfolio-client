@@ -14,7 +14,14 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   font-weight: ${props => props.fontWeight};
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius}px;
-  padding: 5px 20px;
+  padding: ${props => props.padding}px;
+  position: ${props => props.position};
+  top: ${props => props.top}px;
+  right: ${props => props.right}px;
+  left: ${props => props.left}px;
+  bottom: ${props => props.bottom}px;
+  margin: ${props => props.margin};
+  display: ${props => props.display};
 `;
 
 const Button = ({ type, onClick, ...restProps }) => (
@@ -31,6 +38,7 @@ Button.defaultProps = {
   fontWeight: 500,
   border: `1px solid ${color.mainColor}`,
   borderRadius: 5,
+  padding: '5 20',
 };
 
 Button.propTypes = {
@@ -54,6 +62,8 @@ Button.propTypes = {
   border: string,
   /** 버튼 테두리의 둥글기를 설정합니다. */
   borderRadius: number,
+  /** 버튼 테두리의 패딩을 설정합니다. */
+  padding: number,
 };
 
 export default Button;
