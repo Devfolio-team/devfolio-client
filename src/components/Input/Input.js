@@ -1,5 +1,17 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { string, number } from 'prop-types';
+import { color } from 'utils';
+import A11yHidden from 'components/A11yHidden/A11yHidden';
+
+const StyledLabel = styled.label`
+  display: block;
+  transition: 0.4s;
+  transform: translateY(${({ focus, inputValue }) => (focus || inputValue ? -0.5 : 2.5)}rem);
+  font-size: 1.2rem;
+  margin-left: ${({ focus, inputValue }) => (focus || inputValue ? 0 : 15)}px;
+  color: ${color.lightGray};
+`;
 
 const StyledInput = styled.input.attrs(({ type, id }) => ({
   type,
@@ -15,11 +27,40 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
   outline: none;
 `;
 
-const Input = ({ type, id, label, ...restProps }) => {
+const Input = ({ type, id, label, mode, ...restProps }) => {
+  const [focus, setFocus] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const onFocusHandler = () => {
+    setFocus(true);
+  };
+
+  const onBlurHandler = () => {
+    setFocus(false);
+    if (inputValue !== '') setInputValue(true);
+  };
+
+  const onChangeHandler = e => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <>
-      <StyledInput type={type} id={id} {...restProps} />
-      <label htmlFor={id}>{label}</label>
+      {mode === 'hidden' ? (
+        <A11yHidden as="label" htmlFor={id} />
+      ) : (
+        <StyledLabel htmlFor={id} focus={focus} inputValue={inputValue}>
+          {label}
+        </StyledLabel>
+      )}
+      <StyledInput
+        type={type}
+        id={id}
+        onFocus={onFocusHandler}
+        onBlur={onBlurHandler}
+        onChange={onChangeHandler}
+        {...restProps}
+      />
     </>
   );
 };
@@ -27,6 +68,8 @@ const Input = ({ type, id, label, ...restProps }) => {
 Input.defaultProps = {
   type: 'text',
   fontSize: 1.2,
+  width: 170,
+  height: 40,
 };
 
 Input.propTypes = {
@@ -50,6 +93,8 @@ Input.propTypes = {
   border: string,
   /** 인풋 테두리의 둥글기를 설정합니다. */
   borderRadius: number,
+  /** 인풋의 레이블의 숨김처리를 설정합니다. */
+  mode: string,
 };
 
 export default Input;

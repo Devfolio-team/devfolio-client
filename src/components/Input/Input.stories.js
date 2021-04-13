@@ -20,6 +20,7 @@ export default {
     fontWeight: { control: 'number' },
     fontColor: { control: 'color' },
     borderRadius: { control: 'number' },
+    mode: { control: 'text' },
   },
 };
 
