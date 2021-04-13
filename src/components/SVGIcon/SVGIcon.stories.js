@@ -23,6 +23,7 @@ export default {
           'Google',
           'HeartBlack',
           'HeartEmpty',
+          'HeartRed',
           'Sad',
           'Smile',
         ],
