@@ -14,4 +14,4 @@ export default {
 
 const Template = args => <DND {...args} />;
 
-export const ExampleButton = Template.bind({});
+export const ExampleDND = Template.bind({});
