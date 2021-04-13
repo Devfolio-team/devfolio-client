@@ -13,7 +13,7 @@ const StyledHeader = styled.header.attrs(props => {})`
   padding: ${({ padding }) => padding};
 `;
 
-function HeaderBar() {
+const HeaderBar = () => {
   const viewport = useDetectViewport();
   const { isDesktop } = viewport;
   return (
@@ -46,7 +46,7 @@ function HeaderBar() {
       </Container>
     </StyledHeader>
   );
-}
+};
 
 HeaderBar.propTypes = {};
 

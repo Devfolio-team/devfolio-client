@@ -20,9 +20,9 @@ const StyledContainer = styled.div`
   right: ${({ right }) => right};
 `;
 
-function Container(props) {
+const Container = props => {
   return <StyledContainer {...props}></StyledContainer>;
-}
+};
 
 Container.defaultProps = {
   display: 'block',
