@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '**다이아로그** 컴포넌트는 팝업 형태의 창을 띄워 정보를 보여주는 화면입니다.',
+        component: '**다이얼로그** 컴포넌트는 팝업 형태의 창을 띄워 정보를 보여주는 화면입니다.',
       },
     },
   },
