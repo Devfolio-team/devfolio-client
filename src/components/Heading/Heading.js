@@ -7,7 +7,7 @@ const StyledHeading = styled.h1`
   font-size: ${props => props.fontSize}rem;
   font-weight: ${props => props.fontWeight};
   line-height: ${props => props.lineHeight}px;
-  background-color: ${props => props.backgroundColor};
+  background: ${props => props.background};
 `;
 
 const Heading = ({ ...restProps }) => <StyledHeading {...restProps}></StyledHeading>;
