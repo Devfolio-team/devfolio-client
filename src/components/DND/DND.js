@@ -3,9 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { color } from 'utils';
 import { string } from 'prop-types';
-import A11yHidden from 'components/A11yHidden/A11yHidden';
-import Container from 'components/Container/Container';
-import Image from 'components/Image/Image';
+import { A11yHidden, Container, Image } from 'components';
 
 const DNDInput = styled.input`
   width: 100%;
