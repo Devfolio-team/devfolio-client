@@ -3,7 +3,7 @@ import { Button, Container, Heading, Input, SVGIcon, Modal, Dialog } from 'compo
 
 const DivisionLine = styled.div`
   border-bottom: 1px solid #454b58;
-  width: 100vw;
+  width: 100%;
   height: 44px;
   margin-bottom: 42px;
 `;
@@ -58,11 +58,13 @@ const LoginModalDialog = () => {
           <DialogForm>
             <Input
               id={'dialogInput'}
-              label={'dialogInput'}
+              label={'다이얼로그 인풋'}
               mode="hidden"
               width={550}
               height={65}
               borderRadius={30}
+              margin={'0 auto'}
+              display="block"
             />
             <Button
               width={260}
