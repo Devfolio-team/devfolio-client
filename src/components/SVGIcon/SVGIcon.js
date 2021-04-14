@@ -4,7 +4,8 @@ import { ReactComponent as Angry } from 'assets/Angry.svg';
 import { ReactComponent as Blog } from 'assets/Blog.svg';
 import { ReactComponent as Email } from 'assets/Email.svg';
 import { ReactComponent as Empty } from 'assets/Empty.svg';
-import { ReactComponent as Github } from 'assets/Github.svg';
+import { ReactComponent as GithubWhite } from 'assets/GithubWhite.svg';
+import { ReactComponent as GithubBlack } from 'assets/GithubBlack.svg';
 import { ReactComponent as Google } from 'assets/Google.svg';
 import { ReactComponent as HeartBlack } from 'assets/HeartBlack.svg';
 import { ReactComponent as HeartEmpty } from 'assets/HeartEmpty.svg';
@@ -32,7 +33,12 @@ const StyledEmpty = styled(Empty)`
   height: ${props => props.heigth}px;
 `;
 
-const StyledGithub = styled(Github)`
+const StyledGithubWhite = styled(GithubWhite)`
+  width: ${props => props.width}px;
+  height: ${props => props.heigth}px;
+`;
+
+const StyledGithubBlack = styled(GithubBlack)`
   width: ${props => props.width}px;
   height: ${props => props.heigth}px;
 `;
@@ -68,9 +74,8 @@ const StyledSmile = styled(Smile)`
 `;
 
 const SVGIcon = ({ type, width, height, ...restProps }) => {
-  let Comp = null;
-
   switch (type) {
+    default:
     case 'Angry':
       return <StyledAngry width={width} height={height} {...restProps} />;
     case 'Blog':
@@ -79,8 +84,10 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       return <StyledEmail width={width} height={height} {...restProps} />;
     case 'Empty':
       return <StyledEmpty width={width} height={height} {...restProps} />;
-    case 'Github':
-      return <StyledGithub width={width} height={height} {...restProps} />;
+    case 'GithubWhite':
+      return <StyledGithubWhite width={width} height={height} {...restProps} />;
+    case 'GithubBlack':
+      return <StyledGithubBlack width={width} height={height} {...restProps} />;
     case 'Google':
       return <StyledGoogle width={width} height={height} {...restProps} />;
     case 'HeartBlack':
@@ -93,11 +100,11 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       return <StyledSad width={width} height={height} {...restProps} />;
     case 'Smile':
       return <StyledSmile width={width} height={height} {...restProps} />;
-    default:
-      console.log('type을 다시 확인 해주세요.');
   }
+};
 
-  return <Comp />;
+SVGIcon.defaultProps = {
+  type: 'Angry',
 };
 
 SVGIcon.propTypes = {

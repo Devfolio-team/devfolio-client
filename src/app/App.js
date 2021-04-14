@@ -1,4 +1,4 @@
-import { HeaderBar } from 'containers';
+import { FooterBar, HeaderBar } from 'containers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 import {
@@ -22,6 +22,7 @@ function App() {
         <Route path="/project_edit/:project_id" component={ProjectEditPage} />
         <Redirect to="page-not-found" component={PageNotFound} />
       </Switch>
+      <FooterBar />
     </Router>
   );
 }
