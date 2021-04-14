@@ -8,6 +8,8 @@ const StyledHeading = styled.h1`
   font-weight: ${props => props.fontWeight};
   line-height: ${props => props.lineHeight}px;
   background: ${props => props.background};
+  margin: ${props => props.margin};
+  text-align: ${props => props.textAlign};
 `;
 
 const Heading = ({ ...restProps }) => <StyledHeading {...restProps}></StyledHeading>;
@@ -29,6 +31,8 @@ Heading.propTypes = {
   backgroundColor: string,
   /** Heading에 적용 할 Heading-level을 설정합니다. */
   as: oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  /** Heading에 적용 할 margin을 설정합니다. */
+  margin: string,
 };
 
 export default Heading;
