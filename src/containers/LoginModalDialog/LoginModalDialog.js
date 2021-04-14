@@ -27,11 +27,11 @@ const DialogForm = styled.form`
   height: 448px;
 `;
 
-const LoginModalDialog = () => {
+const LoginModalDialog = ({ onModalClickHandler }) => {
   return (
     <>
       <Modal>
-        <Dialog width={710} height={500} margin="21rem auto 0 auto" borderRadius={8}>
+        <Dialog role="dialog" width={710} height={500} margin="21rem auto 0 auto" borderRadius={8}>
           <Heading
             as={'h2'}
             fontSize={3.5}
@@ -89,6 +89,7 @@ const LoginModalDialog = () => {
             position="absolute"
             top={20}
             right={20}
+            onClick={onModalClickHandler}
           >
             X
           </Button>

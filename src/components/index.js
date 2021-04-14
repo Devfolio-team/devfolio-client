@@ -13,3 +13,4 @@ export { default as Logo } from './Logo/Logo';
 export { default as A11yHidden } from './A11yHidden/A11yHidden';
 export { default as Dialog } from './Dialog/Dialog';
 export { default as Modal } from './Modal/Modal';
+export { default as Portal } from './Portal/Portal';
