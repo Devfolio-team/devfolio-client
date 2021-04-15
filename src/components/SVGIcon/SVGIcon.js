@@ -13,6 +13,7 @@ import { ReactComponent as Sad } from 'assets/Sad.svg';
 import { ReactComponent as Smile } from 'assets/Smile.svg';
 import { ReactComponent as X } from 'assets/X.svg';
 import { ReactComponent as Camera } from 'assets/Camera.svg';
+import { ReactComponent as Folder } from 'assets/Folder.svg';
 
 const SVGIcon = ({ type, width, height, ...restProps }) => {
   let SVGIcon = null;
@@ -59,6 +60,9 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       break;
     case 'Camera':
       SVGIcon = Camera;
+      break;
+    case 'Folder':
+      SVGIcon = Folder;
       break;
   }
   return <SVGIcon width={width} heigth={height} {...restProps} />;
