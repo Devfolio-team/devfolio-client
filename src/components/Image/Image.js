@@ -5,7 +5,18 @@ const StyledImage = styled.img.attrs(({ src, alt }) => ({
   src,
   alt,
 }))`
-  ${({ $width, $height, $objectFit, $position, $top, $left, $bottom, $right, $zIndex }) => css`
+  ${({
+    $width,
+    $height,
+    $objectFit,
+    $position,
+    $top,
+    $left,
+    $bottom,
+    $right,
+    $zIndex,
+    $borderRadius,
+  }) => css`
     width: ${$width}px;
     height: ${$height}px;
     object-fit: ${$objectFit};
@@ -15,6 +26,7 @@ const StyledImage = styled.img.attrs(({ src, alt }) => ({
     bottom: ${$bottom};
     right: ${$right};
     z-index: ${$zIndex};
+    border-radius: ${$borderRadius};
   `}
 `;
 
@@ -30,6 +42,7 @@ const Image = ({
   bottom,
   right,
   zIndex,
+  borderRadius,
   ...restProps
 }) => (
   <StyledImage
@@ -44,6 +57,7 @@ const Image = ({
     $bottom={bottom}
     $right={right}
     $zIndex={zIndex}
+    $borderRadius={borderRadius}
     {...restProps}
   />
 );
@@ -75,6 +89,8 @@ Image.propTypes = {
   bottom: string,
   /** 이미지의 z축 순서를 지정합니다. */
   zIndex: number,
+  /** 이미지의 테두리의 둥글기를 설정합니다. */
+  borderRadius: string,
 };
 
 export default Image;
