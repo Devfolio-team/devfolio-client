@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, number } from 'prop-types';
 import { color } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
@@ -17,27 +17,56 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
   type,
   id,
 }))`
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
-  border-radius: ${props => props.borderRadius}px;
-  font-size: ${props => props.fontSize}rem;
-  font-weight: ${props => props.fontWeight};
-  color: ${props => props.fontColor};
-  border: ${props => props.border};
-  outline: none;
-  margin: ${props => props.margin};
-  display: ${props => props.display};
-  padding: ${props => props.padding};
-  &:focus {
+  ${({
+    $width,
+    $height,
+    $borderRadius,
+    $fontSize,
+    $fontWeight,
+    $color,
+    $border,
+    $margin,
+    $display,
+    $padding
+  }) => css`
+    width: ${$width}px;
+    height: ${$height}px;
+    border-radius: ${$borderRadius}px;
+    font-size: ${$fontSize}rem;
+    font-weight: ${$fontWeight};
+    color: ${$color};
+    border: ${$border};
     outline: none;
-    box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
-  }
-  &:focus:not(:focus-visible) {
-    box-shadow: none;
-  }
+    margin: ${$margin};
+    display: ${$display};
+    padding: ${$padding};
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+    }
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
+    }
+  `}
 `;
 
-const Input = ({ type, id, label, mode, ...restProps }) => {
+const Input = ({
+  type,
+  id,
+  label,
+  mode,
+  width,
+  height,
+  borderRadius,
+  fontSize,
+  fontWeight,
+  color,
+  border,
+  margin,
+  display,
+  padding
+  ...restProps
+}) => {
   const [focus, setFocus] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -69,6 +98,16 @@ const Input = ({ type, id, label, mode, ...restProps }) => {
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
         onChange={onChangeHandler}
+        $width={width}
+        $height={height}
+        $borderRadius={borderRadius}
+        $fontSize={fontSize}
+        $fontWeight={fontWeight}
+        $color={color}
+        $border={border}
+        $margin={margin}
+        $display={display}
+        $padding={padding}
         {...restProps}
       />
     </>
@@ -98,13 +137,17 @@ Input.propTypes = {
   /** 인풋 폰트 굵기를 설정합니다. */
   fontWeight: number,
   /** 인풋 폰트색을 설정합니다. */
-  fontColor: string,
+  color: string,
   /** 인풋 테두리를 설정합니다. */
   border: string,
   /** 인풋 테두리의 둥글기를 설정합니다. */
   borderRadius: number,
   /** 인풋의 레이블의 숨김처리를 설정합니다. */
   mode: string,
+  /** 인풋의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
+  margin: string,
+  /** 인풋의 display속성을 설정합니다. */
+  display: string,
   /** 인풋 테두리의 패딩을 설정합니다. */
   padding: string,
 };
