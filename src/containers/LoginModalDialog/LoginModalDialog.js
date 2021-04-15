@@ -115,7 +115,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
               bgColor={'#ffffff'}
             >
               <IconContainer>
-                <SVGIcon type={'Github'} width={16} height={16}></SVGIcon>
+                <SVGIcon type={'GithubBlack'} width={16} height={16}></SVGIcon>
                 <SVGIconName>Github</SVGIconName>
               </IconContainer>
             </Button>
@@ -127,8 +127,8 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
           <DialogForm onSubmit={onSubmitHandler}>
             <Input
               id={'dialogInput'}
-              label={'다이얼로그 인풋'}
-              mode="hidden"
+              label="이메일 주소를 입력해주세요 :)"
+              // mode="hidden"
               width={550}
               height={65}
               borderRadius={30}
@@ -157,8 +157,8 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
             border="0"
             fontSize={2}
             position="absolute"
-            top={20}
-            right={20}
+            top="20px"
+            right="20px"
             onClick={onModalCloseHandler}
           >
             X
