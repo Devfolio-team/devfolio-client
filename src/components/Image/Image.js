@@ -1,22 +1,52 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, number } from 'prop-types';
 
 const StyledImage = styled.img.attrs(({ src, alt }) => ({
   src,
   alt,
 }))`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  object-fit: ${({ objectFit }) => objectFit};
-  position: ${({ position }) => position};
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
-  bottom: ${({ bottom }) => bottom};
-  right: ${({ right }) => right};
-  z-index: ${({ zIndex }) => zIndex};
+  ${({ $width, $height, $objectFit, $position, $top, $left, $bottom, $right, $zIndex }) => css`
+    width: ${$width}px;
+    height: ${$height}px;
+    object-fit: ${$objectFit};
+    position: ${$position};
+    top: ${$top};
+    left: ${$left};
+    bottom: ${$bottom};
+    right: ${$right};
+    z-index: ${$zIndex};
+  `}
 `;
 
-const Image = ({ src, alt, ...restProps }) => <StyledImage src={src} alt={alt} {...restProps} />;
+const Image = ({
+  src,
+  alt,
+  width,
+  height,
+  objectFit,
+  position,
+  top,
+  left,
+  bottom,
+  right,
+  zIndex,
+  ...restProps
+}) => (
+  <StyledImage
+    src={src}
+    alt={alt}
+    $width={width}
+    $height={height}
+    $objectFit={objectFit}
+    $position={position}
+    $top={top}
+    $left={left}
+    $bottom={bottom}
+    $right={right}
+    $zIndex={zIndex}
+    {...restProps}
+  />
+);
 
 Image.defaultProps = {
   objectFit: 'cover',
@@ -36,13 +66,13 @@ Image.propTypes = {
   /** 이미지의 position 속성을 설정합니다. */
   position: string,
   /** position 속성이 있을 경우 컴포넌트의 위치를 상단을 기준으로 설정합니다. */
-  top: number,
+  top: string,
   /** position 속성이 있을 경우 컴포넌트의 위치를 왼쪽을 기준으로 설정합니다. */
-  left: number,
+  left: string,
   /** position 속성이 있을 경우 컴포넌트의 위치를 오른쪽을 기준으로 설정합니다. */
-  right: number,
+  right: string,
   /** position 속성이 있을 경우 컴포넌트의 위치를 하단을 기준으로 설정합니다. */
-  bottom: number,
+  bottom: string,
   /** 이미지의 z축 순서를 지정합니다. */
   zIndex: number,
 };

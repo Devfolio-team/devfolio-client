@@ -6,19 +6,21 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '**이미지** 컴포넌트는 문서애 이미지를 넣는 용도입니다. ',
+        component: '**Image** 컴포넌트는 문서애 이미지를 넣는 용도입니다. ',
       },
     },
   },
   argTypes: {
+    src: { control: 'text' },
+    alt: { control: 'text' },
     width: { control: 'number' },
     height: { control: 'number' },
     objectFit: { control: 'text' },
     position: { control: 'text' },
-    top: { control: 'number' },
-    left: { control: 'number' },
-    bottom: { control: 'number' },
-    right: { control: 'number' },
+    top: { control: 'text' },
+    left: { control: 'text' },
+    bottom: { control: 'text' },
+    right: { control: 'text' },
     zIndex: { control: 'number' },
   },
 };

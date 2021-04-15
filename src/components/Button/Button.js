@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, func, number } from 'prop-types';
 import { color } from 'utils';
 import { forwardRef } from 'react';
@@ -7,34 +7,99 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   type,
   onClick,
 }))`
-  width: ${({ width }) => width}px;
-  height: ${props => props.height}px;
-  background: ${props => props.background};
-  color: ${props => props.color};
-  font-size: ${props => props.fontSize}rem;
-  font-weight: ${props => props.fontWeight};
-  border: ${props => props.border};
-  border-radius: ${props => props.borderRadius}px;
-  padding: ${props => props.padding}px;
-  position: ${props => props.position};
-  top: ${props => props.top}px;
-  right: ${props => props.right}px;
-  left: ${props => props.left}px;
-  bottom: ${props => props.bottom}px;
-  margin: ${props => props.margin};
-  display: ${props => props.display};
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
-  }
-  &:focus:not(:focus-visible) {
-    box-shadow: none;
-  }
+  ${({
+    $width,
+    $height,
+    $background,
+    $color,
+    $fontSize,
+    $fontWeight,
+    $border,
+    $borderRadius,
+    $padding,
+    $position,
+    $top,
+    $right,
+    $left,
+    $bottom,
+    $margin,
+    $display,
+  }) => css`
+    width: ${$width}px;
+    height: ${$height}px;
+    background: ${$background};
+    color: ${$color};
+    font-size: ${$fontSize}rem;
+    font-weight: ${$fontWeight};
+    border: ${$border};
+    border-radius: ${$borderRadius}px;
+    padding: ${$padding};
+    position: ${$position};
+    top: ${$top};
+    right: ${$right};
+    left: ${$left};
+    bottom: ${$bottom};
+    margin: ${$margin};
+    display: ${$display};
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+    }
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
+    }
+  `}
 `;
 
-const Button = forwardRef(({ type, onClick, ...restProps }, ref) => (
-  <StyledButton type={type} onClick={onClick} ref={ref} {...restProps} />
-));
+const Button = forwardRef(
+  (
+    {
+      type,
+      onClick,
+      width,
+      height,
+      background,
+      color,
+      fontSize,
+      fontWeight,
+      border,
+      borderRadius,
+      padding,
+      position,
+      top,
+      right,
+      left,
+      bottom,
+      margin,
+      display,
+      ...restProps
+    },
+    ref
+  ) => (
+    <StyledButton
+      type={type}
+      onClick={onClick}
+      ref={ref}
+      $width={width}
+      $height={height}
+      $background={background}
+      $color={color}
+      $fontSize={fontSize}
+      $fontWeight={fontWeight}
+      $border={border}
+      $borderRadius={borderRadius}
+      $padding={padding}
+      $position={position}
+      $top={top}
+      $right={right}
+      $left={left}
+      $bottom={bottom}
+      $margin={margin}
+      $display={display}
+      {...restProps}
+    />
+  )
+);
 
 Button.defaultProps = {
   type: 'button',
@@ -59,9 +124,9 @@ Button.propTypes = {
   /** 버튼 높이를 설정합니다. */
   height: number,
   /** 버튼 배경색을 설정합니다. */
-  bgColor: string,
+  background: string,
   /** 버튼 폰트색을 설정합니다. */
-  fontColor: string,
+  color: string,
   /** 버튼 폰트 사이즈를 설정합니다. */
   fontSize: number,
   /** 버튼 폰트 굵기를 설정합니다. */
@@ -72,6 +137,20 @@ Button.propTypes = {
   borderRadius: number,
   /** 버튼 테두리의 패딩을 설정합니다. */
   padding: string,
+  /** 버튼요소를 배치하는 방법을 지정합니다. */
+  position: string,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 상단을 기준으로 설정합니다. */
+  top: string,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 오른쪽을 기준으로 설정합니다. */
+  right: string,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 왼쪽을 기준으로 설정합니다. */
+  left: string,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 하단을 기준으로 설정합니다. */
+  bottom: string,
+  /** 버튼의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
+  margin: string,
+  /** 버튼의 display속성을 설정합니다. */
+  display: string,
 };
 
 export default Button;

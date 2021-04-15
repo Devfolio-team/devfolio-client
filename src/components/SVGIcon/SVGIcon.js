@@ -14,140 +14,51 @@ import { ReactComponent as Sad } from 'assets/Sad.svg';
 import { ReactComponent as Smile } from 'assets/Smile.svg';
 import { ReactComponent as X } from 'assets/X.svg';
 
-const StyledAngry = styled(Angry)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledBlog = styled(Blog)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledEmail = styled(Email)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledEmpty = styled(Empty)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledGithubWhite = styled(GithubWhite)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledGithubBlack = styled(GithubBlack)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledGoogle = styled(Google)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledHeartBlack = styled(HeartBlack)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledHeartEmpty = styled(HeartEmpty)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledHeartRed = styled(HeartRed)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledSad = styled(Sad)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledSmile = styled(Smile)`
-  width: ${props => props.width}px;
-  height: ${props => props.heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const StyledX = styled(X)`
-  width: ${props => props.$width}px;
-  height: ${props => props.$heigth}px;
-  path {
-    fill: ${props => props.$fill};
-  }
-`;
-
-const SVGIcon = ({ type, width, height, fill, ...restProps }) => {
+const SVGIcon = ({ type, width, height, ...restProps }) => {
+  let SVGIcon = null;
   switch (type) {
     default:
     case 'Angry':
-      return <StyledAngry width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Angry;
+      break;
     case 'Blog':
-      return <StyledBlog width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Blog;
+      break;
     case 'Email':
-      return <StyledEmail width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Email;
+      break;
     case 'Empty':
-      return <StyledEmpty width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Empty;
+      break;
     case 'GithubWhite':
-      return <StyledGithubWhite width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = GithubWhite;
+      break;
     case 'GithubBlack':
-      return <StyledGithubBlack width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = GithubBlack;
+      break;
     case 'Google':
-      return <StyledGoogle width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Google;
+      break;
     case 'HeartBlack':
-      return <StyledHeartBlack width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = HeartBlack;
+      break;
     case 'HeartEmpty':
-      return <StyledHeartEmpty width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = HeartEmpty;
+      break;
     case 'HeartRed':
-      return <StyledHeartRed width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = HeartRed;
+      break;
     case 'Sad':
-      return <StyledSad width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Sad;
+      break;
     case 'Smile':
-      return <StyledSmile width={width} height={height} $fill={fill} {...restProps} />;
+      SVGIcon = Smile;
+      break;
     case 'X':
-      return <StyledX $width={width} $heigth={height} $fill={fill} {...restProps} />;
+      SVGIcon = X;
+      break;
   }
+  return <SVGIcon width={width} heigth={height} {...restProps} />;
 };
 
 SVGIcon.defaultProps = {

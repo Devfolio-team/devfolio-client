@@ -2,21 +2,21 @@ import styled from 'styled-components';
 import { number, string } from 'prop-types';
 import { useState } from 'react';
 
-const Styledlabel = styled.label.attrs(props => ({
-  for: props.for,
+const Styledlabel = styled.label.attrs(({ htmlFor }) => ({
+  htmlFor,
 }))`
   display: block;
   transition: 0.4s;
-  transform: translateY(${props => (props.focus || props.areaValue ? -0.5 : 3.5)}rem);
+  transform: translateY(${({ focus, areaValue }) => (focus || areaValue ? -0.5 : 3.5)}rem);
   font-size: 2rem;
   margin-top: 15px;
-  margin-left: ${props => (props.focus || props.areaValue ? 0 : 15)}px;
+  margin-left: ${({ focus, areaValue }) => (focus || areaValue ? 0 : 15)}px;
   color: #7e7272;
 `;
 
 const StyledTextArea = styled.textarea`
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   font-size: 2rem;
   padding: 10px 0 0 8px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
@@ -47,8 +47,8 @@ const TextArea = ({ id, width, height, color, ...restProps }) => {
       </Styledlabel>
       <StyledTextArea
         id={id}
-        width={width}
-        height={height}
+        $width={width}
+        $height={height}
         {...restProps}
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
