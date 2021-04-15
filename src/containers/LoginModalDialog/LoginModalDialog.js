@@ -157,8 +157,8 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
             border="0"
             fontSize={2}
             position="absolute"
-            top={20}
-            right={20}
+            top="20px"
+            right="20px"
             onClick={onModalCloseHandler}
           >
             X

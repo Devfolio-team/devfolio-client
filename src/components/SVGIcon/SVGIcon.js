@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { number, string } from 'prop-types';
 import { ReactComponent as Angry } from 'assets/Angry.svg';
 import { ReactComponent as Blog } from 'assets/Blog.svg';
