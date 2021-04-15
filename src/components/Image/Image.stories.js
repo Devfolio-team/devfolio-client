@@ -22,6 +22,7 @@ export default {
     bottom: { control: 'text' },
     right: { control: 'text' },
     zIndex: { control: 'number' },
+    borderRadius: { control: 'text' },
   },
 };
 

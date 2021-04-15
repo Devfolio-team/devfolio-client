@@ -168,3 +168,7 @@ abbr[title] {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+path {
+  pointer-events: none;
+}
