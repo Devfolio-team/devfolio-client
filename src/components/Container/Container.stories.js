@@ -27,6 +27,7 @@ export default {
     left: { control: 'number' },
     bottom: { control: 'number' },
     right: { control: 'number' },
+    borderRadius: { control: 'text ' },
   },
 };
 

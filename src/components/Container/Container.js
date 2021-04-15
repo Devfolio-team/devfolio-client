@@ -20,6 +20,7 @@ const StyledContainer = styled.div`
     $bottom,
     $right,
     $textAlign,
+    $borderRadius,
   }) => css`
     display: ${$display};
     width: ${typeof $width === 'string' ? $width : `${$width}px`};
@@ -37,6 +38,7 @@ const StyledContainer = styled.div`
     bottom: ${typeof $bottom === 'string' ? $bottom : `${$bottom}px`};
     right: ${typeof $right === 'string' ? $right : `${$right}px`};
     text-align: ${$textAlign};
+    border-radius: ${$borderRadius};
   `}
 `;
 
@@ -57,6 +59,7 @@ const Container = ({
   bottom,
   right,
   textAlign,
+  borderRadius,
   ...restProps
 }) => {
   return (
@@ -77,6 +80,7 @@ const Container = ({
       $bottom={bottom}
       $right={right}
       $textAlign={textAlign}
+      $borderRadius={borderRadius}
       {...restProps}
     />
   );
@@ -123,6 +127,8 @@ Container.propTypes = {
   textAlign: string,
   /** 컨테이너의 자식 요소를 설정합니다. */
   children: node,
+  /** 컨테이너의 테두리의 둥글기를 설정합니다. */
+  borderRadius: string,
 };
 
 export default Container;

@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { color } from 'utils';
 import { string } from 'prop-types';
-import { A11yHidden, Container, Image } from 'components';
+import { A11yHidden, Container, Image, SVGIcon } from 'components';
 
 const DNDInput = styled.input`
   width: 100%;
@@ -17,10 +17,15 @@ const Display = styled.div`
   width: 100%;
   height: 100%;
   background: ${color.mainColor};
+  border-radius: 5px;
   position: absolute;
   top: 0;
   font-size: 3rem;
   z-index: -2;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
 `;
 const HoverDisplay = styled.div`
   text-align: center;
@@ -28,10 +33,31 @@ const HoverDisplay = styled.div`
   height: 100%;
   position: absolute;
   top: 0;
-  background: #fff;
+  background: #5db3fd;
   font-size: 3rem;
-  border: 2px dashed blue;
+  border: 1px dashed ${color.mainColor};
+  border-radius: 5px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
   z-index: -1;
+`;
+
+const RoundBackground = styled.div`
+  width: 80px;
+  height: 80px;
+  background: #a9c1ff;
+  position: absolute;
+  border-radius: 50%;
+  z-index: -2;
+`;
+
+const HoverDNDMessage = styled.p`
+  font-size: 2rem;
+  font-weight: 700;
+  color: ${color.white};
+  margin-top: 30px;
 `;
 
 const DND = ({ id }) => {
@@ -48,6 +74,7 @@ const DND = ({ id }) => {
 
   const onDragLeaveHandler = e => {
     setIsDragged(false);
+    setIsUploaded(false);
   };
 
   const onChange = async e => {
@@ -81,7 +108,8 @@ const DND = ({ id }) => {
       display="inline-block"
       width={400}
       height={400}
-      border="1px dashed #ccc"
+      border="1px solid #EAEAEA"
+      borderRadius="5px"
       position="relative"
     >
       <DNDInput
@@ -107,10 +135,21 @@ const DND = ({ id }) => {
           top={0}
           left={0}
           zIndex={-1}
+          borderRadius="5px"
         />
       ) : null}
-      {isUploaded ? null : <Display>Upload your Image!</Display>}
-      {isDragged ? <HoverDisplay>Drop the Files Here...</HoverDisplay> : null}
+      {isUploaded ? null : (
+        <Display>
+          <RoundBackground />
+          <SVGIcon type="Camera" />
+        </Display>
+      )}
+      {isDragged ? (
+        <HoverDisplay>
+          <SVGIcon type="Folder" />
+          <HoverDNDMessage>Drag &amp; Drop your files here</HoverDNDMessage>
+        </HoverDisplay>
+      ) : null}
     </Container>
   );
 };
