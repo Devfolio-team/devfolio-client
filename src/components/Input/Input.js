@@ -27,6 +27,14 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
   outline: none;
   margin: ${props => props.margin};
   display: ${props => props.display};
+  padding: ${props => props.padding};
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+  }
+  &:focus:not(:focus-visible) {
+    box-shadow: none;
+  }
 `;
 
 const Input = ({ type, id, label, mode, ...restProps }) => {
@@ -97,6 +105,8 @@ Input.propTypes = {
   borderRadius: number,
   /** 인풋의 레이블의 숨김처리를 설정합니다. */
   mode: string,
+  /** 인풋 테두리의 패딩을 설정합니다. */
+  padding: string,
 };
 
 export default Input;

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const StyledModal = styled.div`
+const StyledModal = styled.div.attrs(() => ({
+  tabindex: -1,
+}))`
   position: fixed;
   top: 0;
   right: 0;
@@ -10,6 +12,6 @@ const StyledModal = styled.div`
   z-index: 1;
 `;
 
-const Modal = ({ children }) => <StyledModal>{children}</StyledModal>;
+const Modal = ({ onClick, children }) => <StyledModal onClick={onClick}>{children}</StyledModal>;
 
 export default Modal;

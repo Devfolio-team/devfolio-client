@@ -1,5 +1,5 @@
 import { A11yHidden, Button, Container, Heading, Logo, Portal } from 'components';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { LoginModalDialog } from 'containers';
@@ -21,9 +21,25 @@ const HeaderBar = () => {
   const viewport = useDetectViewport();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const ref = useRef(null);
+  const beforeRef = useRef(null);
 
-  const onModalClickHandler = () => {
-    setIsModalOpen(!isModalOpen);
+  const onModalOpenHandler = () => {
+    setIsModalOpen(true);
+  };
+
+  const onModalCloseHandler = e => {
+    if (e.keyCode === 27) {
+      setIsModalOpen(false);
+      beforeRef.current.focus();
+      return;
+    }
+
+    if (e.target === e.currentTarget) {
+      setIsModalOpen(false);
+      beforeRef.current.focus();
+      return;
+    }
   };
 
   const { isDesktop } = viewport;
@@ -54,13 +70,19 @@ const HeaderBar = () => {
           fontSize={1.6}
           borderRadius={16}
           border="0"
-          onClick={onModalClickHandler}
+          onClick={onModalOpenHandler}
+          ref={beforeRef}
         >
           로그인
         </Button>
         {isModalOpen ? (
           <Portal id="modal-root">
-            <LoginModalDialog onModalClickHandler={onModalClickHandler}></LoginModalDialog>
+            <LoginModalDialog
+              ref={ref}
+              onModalCloseHandler={onModalCloseHandler}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            ></LoginModalDialog>
           </Portal>
         ) : null}
       </Container>
