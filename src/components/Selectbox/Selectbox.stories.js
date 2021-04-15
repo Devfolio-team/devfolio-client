@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '**셀렉트 박스** 컴포넌트는 옵션 메뉴를 제공하는 컨트롤 입니다.',
+        component: '**Selectbox** 컴포넌트는 옵션 메뉴를 제공하는 컨트롤 입니다.',
       },
     },
   },
