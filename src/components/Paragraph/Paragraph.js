@@ -1,14 +1,24 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { number, string } from 'prop-types';
 
 const StyledParagraph = styled.p`
-  font-size: ${props => props.fontSize}rem;
-  font-weight: ${props => props.fontWeight};
-  line-height: ${props => props.lineHeight}px;
-  color: ${props => props.color};
+  ${({ $fontSize, $fontWeight, $lineHeight, $color }) => css`
+    font-size: ${$fontSize}rem;
+    font-weight: ${$fontWeight};
+    line-height: ${$lineHeight}px;
+    color: ${$color};
+  `}
 `;
 
-const Paragraph = ({ ...restProps }) => <StyledParagraph {...restProps} />;
+const Paragraph = ({ fontSize, fontWeight, lineHeight, color, ...restProps }) => (
+  <StyledParagraph
+    $fontSize={fontSize}
+    $fontWeight={fontWeight}
+    $lineHeight={lineHeight}
+    $color={color}
+    {...restProps}
+  />
+);
 
 Paragraph.propTypes = {
   /** Paragraph에 적용 할 fontSize 설정합니다. */

@@ -1,18 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, number, oneOf } from 'prop-types';
 
 // as 사용해서 heading level을 유동적으로 사용
 const StyledHeading = styled.h1`
-  color: ${props => props.color};
-  font-size: ${props => props.fontSize}rem;
-  font-weight: ${props => props.fontWeight};
-  line-height: ${props => props.lineHeight}px;
-  background: ${props => props.background};
-  margin: ${props => props.margin};
-  text-align: ${props => props.textAlign};
+  ${({ $color, $fontSize, $fontWeight, $lineHeight, $background, $margin, $textAlign }) => css`
+    color: ${$color};
+    font-size: ${$fontSize}rem;
+    font-weight: ${$fontWeight};
+    line-height: ${$lineHeight}px;
+    background: ${$background};
+    margin: ${$margin};
+    text-align: ${$textAlign};
+  `}
 `;
 
-const Heading = ({ ...restProps }) => <StyledHeading {...restProps}></StyledHeading>;
+const Heading = ({
+  color,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  background,
+  margin,
+  textAlign,
+  ...restProps
+}) => (
+  <StyledHeading
+    $color={color}
+    $fontSize={fontSize}
+    $fontWeight={fontWeight}
+    $lineHeight={lineHeight}
+    $background={background}
+    $margin={margin}
+    $textAlign={textAlign}
+    {...restProps}
+  ></StyledHeading>
+);
 
 Heading.defaultProps = {
   color: '#ddd',
