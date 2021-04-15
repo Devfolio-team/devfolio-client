@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { string, func, number } from 'prop-types';
 import { color } from 'utils';
+import { forwardRef } from 'react';
 
 const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   type,
   onClick,
 }))`
-  width: ${props => props.width}px;
+  width: ${({ width }) => width}px;
   height: ${props => props.height}px;
   background: ${props => props.background};
   color: ${props => props.color};
@@ -22,11 +23,18 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   bottom: ${props => props.bottom}px;
   margin: ${props => props.margin};
   display: ${props => props.display};
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+  }
+  &:focus:not(:focus-visible) {
+    box-shadow: none;
+  }
 `;
 
-const Button = ({ type, onClick, ...restProps }) => (
-  <StyledButton type={type} onClick={onClick} {...restProps} />
-);
+const Button = forwardRef(({ type, onClick, ...restProps }, ref) => (
+  <StyledButton type={type} onClick={onClick} ref={ref} {...restProps} />
+));
 
 Button.defaultProps = {
   type: 'button',
@@ -63,7 +71,7 @@ Button.propTypes = {
   /** 버튼 테두리의 둥글기를 설정합니다. */
   borderRadius: number,
   /** 버튼 테두리의 패딩을 설정합니다. */
-  padding: number,
+  padding: string,
 };
 
 export default Button;
