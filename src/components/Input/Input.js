@@ -27,7 +27,8 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
     $border,
     $margin,
     $display,
-    $padding
+    $padding,
+    $boxShadow,
   }) => css`
     width: ${$width}px;
     height: ${$height}px;
@@ -40,6 +41,7 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
     margin: ${$margin};
     display: ${$display};
     padding: ${$padding};
+    box-shadow: ${$boxShadow}
     &:focus {
       outline: none;
       box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
@@ -64,7 +66,8 @@ const Input = ({
   border,
   margin,
   display,
-  padding
+  padding,
+  boxShadow,
   ...restProps
 }) => {
   const [focus, setFocus] = useState(false);
@@ -108,6 +111,7 @@ const Input = ({
         $margin={margin}
         $display={display}
         $padding={padding}
+        $boxShadow={boxShadow}
         {...restProps}
       />
     </>
@@ -150,6 +154,8 @@ Input.propTypes = {
   display: string,
   /** 인풋 테두리의 패딩을 설정합니다. */
   padding: string,
+  /** 인풋 박스 테두리의 그림자를 설정합니다. */
+  boxShadow: string,
 };
 
 export default Input;

@@ -51,50 +51,55 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   `}
 `;
 
-const Button = forwardRef(({
-  type,
-  onClick,
-  width,
-  height,
-  background,
-  color,
-  fontSize,
-  fontWeight,
-  border,
-  borderRadius,
-  padding,
-  position,
-  top,
-  right,
-  left,
-  bottom,
-  margin,
-  display,
-  ...restProps
-}, ref) => (
-  <StyledButton
-    type={type}
-    onClick={onClick}
-    ref={ref}
-    $width={width}
-    $height={height}
-    $background={background}
-    $color={color}
-    $fontSize={fontSize}
-    $fontWeight={fontWeight}
-    $border={border}
-    $borderRadius={borderRadius}
-    $padding={padding}
-    $position={position}
-    $top={top}
-    $right={right}
-    $left={left}
-    $bottom={bottom}
-    $margin={margin}
-    $display={display}
-    {...restProps}
-  />
-));
+const Button = forwardRef(
+  (
+    {
+      type,
+      onClick,
+      width,
+      height,
+      background,
+      color,
+      fontSize,
+      fontWeight,
+      border,
+      borderRadius,
+      padding,
+      position,
+      top,
+      right,
+      left,
+      bottom,
+      margin,
+      display,
+      ...restProps
+    },
+    ref
+  ) => (
+    <StyledButton
+      type={type}
+      onClick={onClick}
+      ref={ref}
+      $width={width}
+      $height={height}
+      $background={background}
+      $color={color}
+      $fontSize={fontSize}
+      $fontWeight={fontWeight}
+      $border={border}
+      $borderRadius={borderRadius}
+      $padding={padding}
+      $position={position}
+      $top={top}
+      $right={right}
+      $left={left}
+      $bottom={bottom}
+      $margin={margin}
+      $display={display}
+      {...restProps}
+    />
+  )
+);
 
 Button.defaultProps = {
   type: 'button',
