@@ -2,7 +2,7 @@ import { A11yHidden, Button, Container, Heading, Logo, Portal } from 'components
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import useDetectViewport from 'hooks/useDetectViewport';
-import { LoginModalDialog } from 'containers';
+import { LoginModalDialog, SignupModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
@@ -77,12 +77,13 @@ const HeaderBar = () => {
         </Button>
         {isModalOpen ? (
           <Portal id="modal-root">
-            <LoginModalDialog
+            {/* <LoginModalDialog
               ref={ref}
               onModalCloseHandler={onModalCloseHandler}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
-            ></LoginModalDialog>
+            ></LoginModalDialog> */}
+            <SignupModalDialog ref={ref} onModalCloseHandler={onModalCloseHandler} />
           </Portal>
         ) : null}
       </Container>
