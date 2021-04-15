@@ -1,28 +1,85 @@
 import React from 'react';
-import styled from 'styled-components';
-import { string, number, oneOfType } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { string, number, oneOfType, node } from 'prop-types';
 
 const StyledContainer = styled.div`
-  display: ${({ display }) => display};
-  width: ${({ width }) => (typeof width === 'string' ? width : `${width}px`)};
-  height: ${({ height }) => height}px;
-  padding: ${({ padding }) => padding};
-  margin: ${({ margin }) => margin};
-  background: ${({ background }) => background};
-  flex-flow: ${({ flexFlow }) => flexFlow};
-  justify-content: ${({ justifyContent }) => justifyContent};
-  align-items: ${({ alignItems }) => alignItems};
-  position: ${({ position }) => position};
-  border: ${({ border }) => border};
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
-  bottom: ${({ bottom }) => bottom};
-  right: ${({ right }) => right};
-  text-align: ${({ $textAlign }) => $textAlign};
+  ${({
+    $display,
+    $width,
+    $height,
+    $padding,
+    $margin,
+    $background,
+    $flexFlow,
+    $justifyContent,
+    $alignItems,
+    $position,
+    $border,
+    $top,
+    $left,
+    $bottom,
+    $right,
+    $textAlign,
+  }) => css`
+    display: ${$display};
+    width: ${typeof $width === 'string' ? $width : `${$width}px`};
+    height: ${typeof $height === 'string' ? $height : `${$height}px`};
+    padding: ${$padding};
+    margin: ${$margin};
+    background: ${$background};
+    flex-flow: ${$flexFlow};
+    justify-content: ${$justifyContent};
+    align-items: ${$alignItems};
+    position: ${$position};
+    border: ${$border};
+    top: ${typeof $top === 'string' ? $top : `${$top}px`};
+    left: ${typeof $left === 'string' ? $left : `${$left}px`};
+    bottom: ${typeof $bottom === 'string' ? $bottom : `${$bottom}px`};
+    right: ${typeof $right === 'string' ? $right : `${$right}px`};
+    text-align: ${$textAlign};
+  `}
 `;
 
-const Container = props => {
-  return <StyledContainer {...props}></StyledContainer>;
+const Container = ({
+  display,
+  width,
+  height,
+  padding,
+  margin,
+  background,
+  flexFlow,
+  justifyContent,
+  alignItems,
+  position,
+  border,
+  top,
+  left,
+  bottom,
+  right,
+  textAlign,
+  ...restProps
+}) => {
+  return (
+    <StyledContainer
+      $display={display}
+      $width={width}
+      $height={height}
+      $padding={padding}
+      $margin={margin}
+      $background={background}
+      $flexFlow={flexFlow}
+      $justifyContent={justifyContent}
+      $alignItems={alignItems}
+      $position={position}
+      $border={border}
+      $top={top}
+      $left={left}
+      $bottom={bottom}
+      $right={right}
+      $textAlign={textAlign}
+      {...restProps}
+    />
+  );
 };
 
 Container.defaultProps = {
@@ -37,7 +94,7 @@ Container.propTypes = {
   /** 컨테이너의 넓이를 설정합니다. number값을 주면 px단위, string값은 css문법으로 전달해줍니다. */
   width: oneOfType([number, string]),
   /** 컨테이너의 높이를 px단위로 설정합니다. */
-  height: number,
+  height: oneOfType([number, string]),
   /** 컨테이너의 내부 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
   padding: string,
   /** 컨테이너의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
@@ -54,14 +111,18 @@ Container.propTypes = {
   position: string,
   /** 컨테이너의 테두리를 설정합니다. */
   border: string,
-  /** position 속성이 있을 경우 컴포넌트의 위치를 상단을 기준으로 설정합니다. */
-  top: number,
-  /** position 속성이 있을 경우 컴포넌트의 위치를 왼쪽을 기준으로 설정합니다. */
-  left: number,
-  /** position 속성이 있을 경우 컴포넌트의 위치를 하단을 기준으로 설정합니다. */
-  bottom: number,
-  /** position 속성이 있을 경우 컴포넌트의 위치를 오른쪽을 기준으로 설정합니다. */
-  right: number,
+  /** position 속성이 있을 경우 컴포넌트의 위치를 상단을 기준으로 설정합니다. number값을 주면 기본 단위는 px입니다. */
+  top: oneOfType([number, string]),
+  /** position 속성이 있을 경우 컴포넌트의 위치를 왼쪽을 기준으로 설정합니다. number값을 주면 기본 단위는 px입니다. */
+  left: oneOfType([number, string]),
+  /** position 속성이 있을 경우 컴포넌트의 위치를 하단을 기준으로 설정합니다. number값을 주면 기본 단위는 px입니다. */
+  bottom: oneOfType([number, string]),
+  /** position 속성이 있을 경우 컴포넌트의 위치를 오른쪽을 기준으로 설정합니다. number값을 주면 기본 단위는 px입니다. */
+  right: oneOfType([number, string]),
+  /** 컨테이너 내부 텍스트들의 정렬 방식을 설정합니다. */
+  textAlign: string,
+  /** 컨테이너의 자식 요소를 설정합니다. */
+  children: node,
 };
 
 export default Container;
