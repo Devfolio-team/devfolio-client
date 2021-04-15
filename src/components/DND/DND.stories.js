@@ -15,3 +15,7 @@ export default {
 const Template = args => <DND {...args} />;
 
 export const ExampleDND = Template.bind({});
+
+ExampleDND.args = {
+  id: 'ex-1',
+};
