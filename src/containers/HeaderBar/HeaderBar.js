@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { LoginModalDialog } from 'containers';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
   width: 100vw;
@@ -53,8 +54,10 @@ const HeaderBar = () => {
         background="#F8F9FA"
       >
         <Heading as="h1">
-          <A11yHidden as="span">Devfolio</A11yHidden>
-          <Logo width={130} height={30} />
+          <Link to="/">
+            <A11yHidden as="span">Devfolio</A11yHidden>
+            <Logo width={130} height={30} />
+          </Link>
         </Heading>
         <Button
           width={84}

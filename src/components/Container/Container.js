@@ -18,6 +18,7 @@ const StyledContainer = styled.div`
   left: ${({ left }) => left};
   bottom: ${({ bottom }) => bottom};
   right: ${({ right }) => right};
+  text-align: ${({ $textAlign }) => $textAlign};
 `;
 
 const Container = props => {

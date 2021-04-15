@@ -19,13 +19,15 @@ export default {
           'Blog',
           'Email',
           'Empty',
-          'Github',
+          'GithubWhite',
+          'GithubBlack',
           'Google',
           'HeartBlack',
           'HeartEmpty',
           'HeartRed',
           'Sad',
           'Smile',
+          'X',
         ],
       },
     },
@@ -40,13 +42,15 @@ export const AngryIcon = Template.bind({});
 export const BlogIcon = Template.bind({});
 export const EmailIcon = Template.bind({});
 export const EmptyIcon = Template.bind({});
-export const GithubIcon = Template.bind({});
+export const GithubWhiteIcon = Template.bind({});
+export const GithubBlackIcon = Template.bind({});
 export const GoogleIcon = Template.bind({});
 export const HeartBlackIcon = Template.bind({});
 export const HeartEmptyIcon = Template.bind({});
 export const HeartRedIcon = Template.bind({});
 export const SadIcon = Template.bind({});
 export const SmileIcon = Template.bind({});
+export const XIcon = Template.bind({});
 
 AngryIcon.args = {
   type: 'Angry',
@@ -68,8 +72,14 @@ EmptyIcon.args = {
   width: 40,
   height: 40,
 };
-GithubIcon.args = {
-  type: 'Github',
+GithubWhiteIcon.args = {
+  type: 'GithubWhite',
+  width: 40,
+  height: 40,
+  fill: '#cccccc',
+};
+GithubBlackIcon.args = {
+  type: 'GithubBlack',
   width: 40,
   height: 40,
 };
@@ -102,4 +112,10 @@ SmileIcon.args = {
   type: 'Smile',
   width: 40,
   height: 40,
+};
+XIcon.args = {
+  type: 'X',
+  width: 40,
+  height: 40,
+  fill: '#000000',
 };
