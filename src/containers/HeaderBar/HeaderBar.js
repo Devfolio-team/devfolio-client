@@ -1,18 +1,20 @@
 import { A11yHidden, Button, Container, Heading, Logo, Portal } from 'components';
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
 
-const StyledHeader = styled.header.attrs(props => {})`
-  width: 100vw;
-  height: 64px;
-  background: ${({ background }) => background};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: ${({ padding }) => padding};
+const StyledHeader = styled.header`
+  ${({ $background, $padding }) => css`
+    width: 100vw;
+    height: 64px;
+    background: ${$background};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${$padding};
+  `}
 `;
 
 const HeaderBar = () => {
@@ -27,7 +29,7 @@ const HeaderBar = () => {
   const { isDesktop } = viewport;
 
   return (
-    <StyledHeader background="#F8F9FA" padding={`0 ${isDesktop ? '70px' : '30px'}`}>
+    <StyledHeader $background="#F8F9FA" $padding={`0 ${isDesktop ? '70px' : '30px'}`}>
       <Container
         as="nav"
         display="flex"
