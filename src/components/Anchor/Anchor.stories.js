@@ -11,13 +11,13 @@ export default {
     },
   },
   argTypes: {
-    $display: { control: 'text' },
-    $color: { control: 'color' },
-    $fontSize: { control: 'number' },
-    $margin: { control: 'text' },
-    $padding: { control: 'text' },
-    $width: { control: 'number' },
-    $height: { control: 'number' },
+    display: { control: 'text' },
+    color: { control: 'color' },
+    fontSize: { control: 'number' },
+    margin: { control: 'text' },
+    padding: { control: 'text' },
+    width: { control: 'number' },
+    height: { control: 'number' },
     href: { control: 'text' },
     target: {
       control: {
@@ -36,5 +36,5 @@ ExampleAnchor.args = {
   children: '프로젝트 저장소로 이동',
   href: 'https://github.com/Devfolio-team',
   target: '_blank',
-  $fontSize: 2.0,
+  fontSize: 2,
 };

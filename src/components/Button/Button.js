@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { string, func, number } from 'prop-types';
 import { color } from 'utils';
+import { forwardRef } from 'react';
 
 const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   type,
@@ -40,10 +41,17 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
     bottom: ${$bottom};
     margin: ${$margin};
     display: ${$display};
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+    }
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
+    }
   `}
 `;
 
-const Button = ({
+const Button = forwardRef(({
   type,
   onClick,
   width,
@@ -63,10 +71,11 @@ const Button = ({
   margin,
   display,
   ...restProps
-}) => (
+}, ref) => (
   <StyledButton
     type={type}
     onClick={onClick}
+    ref={ref}
     $width={width}
     $height={height}
     $background={background}
@@ -85,7 +94,7 @@ const Button = ({
     $display={display}
     {...restProps}
   />
-);
+));
 
 Button.defaultProps = {
   type: 'button',

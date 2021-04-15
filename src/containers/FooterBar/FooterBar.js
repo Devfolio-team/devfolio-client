@@ -1,18 +1,20 @@
 import { Anchor, Container, SVGIcon } from 'components';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledFooter = styled.footer`
-  width: 100vw;
-  height: 124px;
-  background: ${({ background }) => background};
-  padding: ${({ padding }) => padding};
-  color: #868e96;
+  ${({ $background, $padding }) => css`
+    width: 100vw;
+    height: 124px;
+    background: #25272b;
+    padding: 20px;
+    color: #868e96;
+  `}
 `;
 
 const FooterBar = () => {
   return (
-    <StyledFooter background="#25272B" padding="20px">
+    <StyledFooter>
       <Container $textAlign="center">
         <Anchor
           href="https://github.com/Devfolio-team"

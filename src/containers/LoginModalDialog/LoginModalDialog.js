@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button, Container, Heading, Input, SVGIcon, Modal, Dialog } from 'components';
+import { forwardRef, useEffect, React } from 'react';
 
 const DivisionLine = styled.div`
   border-bottom: 1px solid #454b58;
@@ -12,8 +13,8 @@ const DivisionDiv = styled.div`
   color: #ffffff;
   background-color: #2c3035;
   width: 146px;
-  height: 86px;
-  line-height: 86px;
+  height: 46px;
+  line-height: 46px;
   text-align: center;
   margin: 0 auto;
   font-size: 16px;
@@ -27,11 +28,63 @@ const DialogForm = styled.form`
   height: 448px;
 `;
 
-const LoginModalDialog = ({ onModalClickHandler }) => {
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const SVGIconName = styled.span`
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  margin-left: 16px;
+`;
+
+const onSubmitHandler = e => {
+  e.preventDefault();
+};
+
+const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
+  useEffect(() => {
+    const handleFocusTrap = e => {
+      const dialogNode = ref.current;
+      const focusableNodeList = dialogNode.querySelectorAll(
+        'input, button, textarea, select, [href]'
+      );
+
+      const [firstFocusableNode] = focusableNodeList;
+      const lastFocusableNode = focusableNodeList[focusableNodeList.length - 1];
+
+      const key = e.keyCode;
+      if (e.target === firstFocusableNode && e.shiftKey && key === 9) {
+        e.preventDefault();
+        lastFocusableNode.focus();
+      }
+      if (e.target === lastFocusableNode && !e.shiftKey && key === 9) {
+        e.preventDefault();
+        firstFocusableNode.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleFocusTrap);
+    window.addEventListener('keyup', onModalCloseHandler);
+
+    return () => {
+      window.removeEventListener('keydown', handleFocusTrap);
+      window.removeEventListener('keyup', onModalCloseHandler);
+    };
+  }, [onModalCloseHandler, ref]);
+
   return (
     <>
-      <Modal>
-        <Dialog role="dialog" width={710} height={500} margin="21rem auto 0 auto" borderRadius={8}>
+      <Modal onClick={onModalCloseHandler}>
+        <Dialog
+          ref={ref}
+          role="dialog"
+          width={710}
+          height={500}
+          margin="21rem auto 0 auto"
+          borderRadius={8}
+        >
           <Heading
             as={'h2'}
             fontSize={3.5}
@@ -42,20 +95,36 @@ const LoginModalDialog = ({ onModalClickHandler }) => {
             시작하기
           </Heading>
           <Container width={550} display="flex" justifyContent="space-between">
-            <Button width={260} height={66} borderRadius={30} bgColor={'#ffffff'}>
-              <SVGIcon type={'Google'} width={16} height={16}></SVGIcon>
-              <span>Google</span>
+            <Button
+              ariaLabel="구글 로그인"
+              width={260}
+              height={66}
+              borderRadius={30}
+              bgColor={'#ffffff'}
+            >
+              <IconContainer>
+                <SVGIcon type={'Google'} width={16} height={16}></SVGIcon>
+                <SVGIconName>Google</SVGIconName>
+              </IconContainer>
             </Button>
-            <Button width={260} height={66} borderRadius={30} bgColor={'#ffffff'}>
-              <SVGIcon type={'Github'} width={16} height={16}></SVGIcon>
-              <span>Github</span>
+            <Button
+              ariaLabel="깃허브 로그인"
+              width={260}
+              height={66}
+              borderRadius={30}
+              bgColor={'#ffffff'}
+            >
+              <IconContainer>
+                <SVGIcon type={'Github'} width={16} height={16}></SVGIcon>
+                <SVGIconName>Github</SVGIconName>
+              </IconContainer>
             </Button>
           </Container>
-          <Container display="flex" position="relactive">
+          <Container display="flex" alignItems="center" position="relactive">
             <DivisionDiv>또는</DivisionDiv>
             <DivisionLine></DivisionLine>
           </Container>
-          <DialogForm>
+          <DialogForm onSubmit={onSubmitHandler}>
             <Input
               id={'dialogInput'}
               label={'다이얼로그 인풋'}
@@ -64,13 +133,14 @@ const LoginModalDialog = ({ onModalClickHandler }) => {
               height={65}
               borderRadius={30}
               margin={'0 auto'}
+              padding={'21px 0 21px 26px'}
               display="block"
             />
             <Button
               width={260}
               height={65}
               background={'#2c3035'}
-              border={'1px solid #ffffff'}
+              border="1px solid #ffffff"
               borderRadius={30}
               color={'#ffffff'}
               display="block"
@@ -84,12 +154,12 @@ const LoginModalDialog = ({ onModalClickHandler }) => {
             height={22}
             background={'transparent'}
             color={'#ffffff'}
-            border={0}
+            border="0"
             fontSize={2}
             position="absolute"
             top={20}
             right={20}
-            onClick={onModalClickHandler}
+            onClick={onModalCloseHandler}
           >
             X
           </Button>
@@ -97,6 +167,6 @@ const LoginModalDialog = ({ onModalClickHandler }) => {
       </Modal>
     </>
   );
-};
+});
 
 export default LoginModalDialog;
