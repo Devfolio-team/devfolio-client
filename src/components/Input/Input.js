@@ -7,15 +7,21 @@ import A11yHidden from 'components/A11yHidden/A11yHidden';
 const StyledLabel = styled.label`
   display: block;
   transition: 0.4s;
-  transform: translateY(${({ focus, inputValue }) => (focus || inputValue ? -0.5 : 2.5)}rem);
-  font-size: 1.2rem;
-  margin-left: ${({ focus, inputValue }) => (focus || inputValue ? 0 : 15)}px;
-  color: ${color.lightGray};
+  transform: translateY(
+    ${({ focus, inputValue, beforeTranslate, afterTranslate }) =>
+      focus || inputValue ? afterTranslate : beforeTranslate}rem
+  );
+  font-size: 2rem;
+  margin-left: ${({ focus, inputValue, beforeMargin, afterMargin }) =>
+    focus || inputValue ? afterMargin : beforeMargin}px;
+  color: ${color.placeholder};
 `;
 
-const StyledInput = styled.input.attrs(({ type, id }) => ({
+const StyledInput = styled.input.attrs(({ type, id, autocomplete, readonly }) => ({
   type,
   id,
+  autocomplete,
+  readonly,
 }))`
   ${({
     $width,
@@ -41,7 +47,6 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
     margin: ${$margin};
     display: ${$display};
     padding: ${$padding};
-    box-shadow: ${$boxShadow}
     &:focus {
       outline: none;
       box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
@@ -68,6 +73,11 @@ const Input = ({
   display,
   padding,
   boxShadow,
+  beforeTranslate,
+  afterTranslate,
+  beforeMargin,
+  afterMargin,
+  readOnly,
   ...restProps
 }) => {
   const [focus, setFocus] = useState(false);
@@ -91,13 +101,23 @@ const Input = ({
       {mode === 'hidden' ? (
         <A11yHidden as="label" htmlFor={id} children={label} />
       ) : (
-        <StyledLabel htmlFor={id} focus={focus} inputValue={inputValue}>
+        <StyledLabel
+          htmlFor={id}
+          focus={focus}
+          inputValue={inputValue}
+          beforeTranslate={beforeTranslate}
+          afterTranslate={afterTranslate}
+          beforeMargin={beforeMargin}
+          afterMargin={afterMargin}
+        >
           {label}
         </StyledLabel>
       )}
       <StyledInput
         type={type}
         id={id}
+        autocomplete="off"
+        readOnly={readOnly}
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
         onChange={onChangeHandler}
@@ -132,6 +152,14 @@ Input.propTypes = {
   id: string.isRequired,
   /** 인풋의 label값을 설정합니다. */
   label: string.isRequired,
+  /** 인풋의 placeholder의 기본 위치(위 아래로 이동)를 설정합니다. */
+  beforeTranslate: string,
+  /** 인풋의 placeholder의 움직일 위치(위 아래로 이동)를 설정합니다. */
+  afterTranslate: string,
+  /** 인풋의 placeholder 기본 위치(좌우로 이동) 설정 합니다. */
+  beforeMargin: string,
+  /** 인풋의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
+  afterMargin: string,
   /** 인풋 넓이를 설정합니다. */
   width: number,
   /** 인풋 높이를 설정합니다. */

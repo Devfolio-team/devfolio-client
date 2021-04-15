@@ -44,6 +44,9 @@ const onSubmitHandler = e => {
 };
 
 const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
+  const $rootNode = document.getElementById('root');
+  $rootNode.setAttribute('aria-hidden', 'true');
+
   useEffect(() => {
     const handleFocusTrap = e => {
       const dialogNode = ref.current;
@@ -69,22 +72,16 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
     window.addEventListener('keyup', onModalCloseHandler);
 
     return () => {
+      $rootNode.removeAttribute('aria-hidden');
       window.removeEventListener('keydown', handleFocusTrap);
       window.removeEventListener('keyup', onModalCloseHandler);
     };
-  }, [onModalCloseHandler, ref]);
+  }, [$rootNode, onModalCloseHandler, ref]);
 
   return (
     <>
       <Modal onClick={onModalCloseHandler}>
-        <Dialog
-          ref={ref}
-          role="dialog"
-          width={710}
-          height={500}
-          margin="21rem auto 0 auto"
-          borderRadius={8}
-        >
+        <Dialog ref={ref} role="dialog" width={710} height={500} borderRadius={8}>
           <Heading
             as={'h2'}
             fontSize={3.5}
@@ -103,7 +100,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
               bgColor={'#ffffff'}
             >
               <IconContainer>
-                <SVGIcon type={'Google'} width={16} height={16}></SVGIcon>
+                <SVGIcon type={'Google'} width="30px" height="30px"></SVGIcon>
                 <SVGIconName>Google</SVGIconName>
               </IconContainer>
             </Button>
@@ -115,7 +112,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
               bgColor={'#ffffff'}
             >
               <IconContainer>
-                <SVGIcon type={'GithubBlack'} width={16} height={16}></SVGIcon>
+                <SVGIcon type={'GithubBlack'} width="30px" height="30px"></SVGIcon>
                 <SVGIconName>Github</SVGIconName>
               </IconContainer>
             </Button>
@@ -128,13 +125,16 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
             <Input
               id={'dialogInput'}
               label="이메일 주소를 입력해주세요 :)"
-              // mode="hidden"
               width={550}
               height={65}
               borderRadius={30}
-              margin={'0 auto'}
-              padding={'21px 0 21px 26px'}
+              margin="0 auto"
+              padding="21px 0 21px 26px"
               display="block"
+              beforeTranslate="4.2"
+              afterTranslate="-1"
+              beforeMargin="80"
+              afterMargin="60"
             />
             <Button
               width={260}
@@ -153,15 +153,13 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
             width={22}
             height={22}
             background={'transparent'}
-            color={'#ffffff'}
             border="0"
-            fontSize={2}
             position="absolute"
             top="20px"
             right="20px"
             onClick={onModalCloseHandler}
           >
-            X
+            <SVGIcon type="X" onClick={onModalCloseHandler} width={22} height={22} />
           </Button>
         </Dialog>
       </Modal>
