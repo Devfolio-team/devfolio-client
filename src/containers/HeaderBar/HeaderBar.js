@@ -1,7 +1,6 @@
 import { A11yHidden, Button, Container, Heading, Logo, Portal } from 'components';
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import useDetectViewport from 'hooks/useDetectViewport';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
 
@@ -17,9 +16,8 @@ const StyledHeader = styled.header`
   `}
 `;
 
-const HeaderBar = () => {
-  const viewport = useDetectViewport();
-
+const HeaderBar = ({ viewport }) => {
+  const { isDesktop, type } = viewport;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef(null);
   const beforeRef = useRef(null);
@@ -42,14 +40,12 @@ const HeaderBar = () => {
     }
   };
 
-  const { isDesktop } = viewport;
-
   return (
     <StyledHeader $background="#F8F9FA" $padding={`0 ${isDesktop ? '70px' : '30px'}`}>
       <Container
         as="nav"
         display="flex"
-        width={isDesktop ? 1440 : '100%'}
+        width={type === 'xl' ? 1440 : '100%'}
         height={64}
         justifyContent="space-between"
         alignItems="center"
