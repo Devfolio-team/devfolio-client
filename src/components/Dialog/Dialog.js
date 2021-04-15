@@ -10,7 +10,10 @@ const StyledDialog = styled.div`
     z-index: 10;
     margin: ${$margin};
     padding: 30px;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: ${$borderRadius}px;
   `}
 `;
