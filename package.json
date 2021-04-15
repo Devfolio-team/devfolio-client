@@ -107,6 +107,7 @@
     "classnames": "^2.2.6",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "sass": "^1.32.8",
-    "serve": "^11.3.2"
+    "serve": "^11.3.2",
+    "storybook-react-router": "^1.0.8"
   }
 }

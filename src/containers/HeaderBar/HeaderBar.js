@@ -1,7 +1,9 @@
-import { A11yHidden, Button, Container, Heading, Logo } from 'components';
-import React from 'react';
+import { A11yHidden, Button, Container, Heading, Logo, Portal } from 'components';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import useDetectViewport from 'hooks/useDetectViewport';
+import { LoginModalDialog } from 'containers';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header.attrs(props => {})`
   width: 100vw;
@@ -15,7 +17,15 @@ const StyledHeader = styled.header.attrs(props => {})`
 
 const HeaderBar = () => {
   const viewport = useDetectViewport();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onModalClickHandler = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   const { isDesktop } = viewport;
+
   return (
     <StyledHeader background="#F8F9FA" padding={`0 ${isDesktop ? '70px' : '30px'}`}>
       <Container
@@ -28,8 +38,10 @@ const HeaderBar = () => {
         background="#F8F9FA"
       >
         <Heading as="h1">
-          <A11yHidden as="span">Devfolio</A11yHidden>
-          <Logo width={130} height={30} />
+          <Link to="/">
+            <A11yHidden as="span">Devfolio</A11yHidden>
+            <Logo width={130} height={30} />
+          </Link>
         </Heading>
         <Button
           width={84}
@@ -40,9 +52,15 @@ const HeaderBar = () => {
           fontSize={1.6}
           borderRadius={16}
           border="0"
+          onClick={onModalClickHandler}
         >
           로그인
         </Button>
+        {isModalOpen ? (
+          <Portal id="modal-root">
+            <LoginModalDialog onModalClickHandler={onModalClickHandler}></LoginModalDialog>
+          </Portal>
+        ) : null}
       </Container>
     </StyledHeader>
   );

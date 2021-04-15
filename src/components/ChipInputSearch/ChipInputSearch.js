@@ -51,6 +51,12 @@ const ChipInputSearch = () => {
 
   const onKeyUpHandler = e => {
     if (e.key !== 'Enter') return;
+    const input = e.target;
+    const filter = input.value.toUpperCase();
+    dummyDatas.forEach(dummyData => {
+      if (dummyData.toUpperCase().indexOf(filter) > -1) {
+      }
+    });
     if (e.target.value !== '') setChipLabels([...chipLabels, e.target.value]);
     e.target.value = '';
   };

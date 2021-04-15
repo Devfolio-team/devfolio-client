@@ -25,6 +25,8 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
   color: ${props => props.fontColor};
   border: ${props => props.border};
   outline: none;
+  margin: ${props => props.margin};
+  display: ${props => props.display};
 `;
 
 const Input = ({ type, id, label, mode, ...restProps }) => {
@@ -47,7 +49,7 @@ const Input = ({ type, id, label, mode, ...restProps }) => {
   return (
     <>
       {mode === 'hidden' ? (
-        <A11yHidden as="label" htmlFor={id} />
+        <A11yHidden as="label" htmlFor={id} children={label} />
       ) : (
         <StyledLabel htmlFor={id} focus={focus} inputValue={inputValue}>
           {label}

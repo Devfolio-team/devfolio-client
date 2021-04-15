@@ -1,4 +1,9 @@
 import HeaderBar from './HeaderBar';
+import { addDecorator } from '@storybook/react';
+import StoryRouter from 'storybook-react-router';
+
+// 스토리북에서의 Router오류 방지를 위한 decorator
+addDecorator(StoryRouter());
 
 export default {
   title: 'Container/HeaderBar',
