@@ -30,34 +30,34 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
     $borderBottom,
   }) =>
     css`
-    width: ${$width}px;
-    height: ${$height}px;
-    background: ${$background};
-    color: ${$color};
-    font-size: ${$fontSize}rem;
-    font-weight: ${$fontWeight};
-    border: ${$border};
-    border-radius: ${$borderRadius}px;
-    padding: ${$padding};
-    position: ${$position};
-    top: ${$top};
-    right: ${$right};
-    left: ${$left};
-    bottom: ${$bottom};
-    margin: ${$margin};
-    display: ${$display};
-    border-top: ${$borderTop};
-    border-right: ${$borderRight};
-    border-left: ${$borderLeft};
-    border-bottom: ${$borderBottom}
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
-    }
-    &:focus:not(:focus-visible) {
-      box-shadow: none;
-    }
-  `}
+      width: ${$width}px;
+      height: ${$height}px;
+      background: ${$background};
+      color: ${$color};
+      font-size: ${$fontSize}rem;
+      font-weight: ${$fontWeight};
+      border: ${$border};
+      border-radius: ${$borderRadius}px;
+      padding: ${$padding};
+      position: ${$position};
+      top: ${$top};
+      right: ${$right};
+      left: ${$left};
+      bottom: ${$bottom};
+      margin: ${$margin};
+      display: ${$display};
+      border-top: ${$borderTop};
+      border-right: ${$borderRight};
+      border-left: ${$borderLeft};
+      border-bottom: ${$borderBottom};
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+      }
+      &:focus:not(:focus-visible) {
+        box-shadow: none;
+      }
+    `}
 `;
 
 const Button = forwardRef(
