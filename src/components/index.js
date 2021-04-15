@@ -16,3 +16,4 @@ export { default as Dialog } from './Dialog/Dialog';
 export { default as Modal } from './Modal/Modal';
 export { default as Portal } from './Portal/Portal';
 export { default as Anchor } from './Anchor/Anchor';
+export { default as MenuUnderline } from './MenuUnderline/MenuUnderline';
