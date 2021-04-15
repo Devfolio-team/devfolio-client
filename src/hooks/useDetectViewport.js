@@ -59,9 +59,15 @@ export default function useDetectViewport(viewports = initialViewports) {
           isMobile: false,
           isDesktop: true,
         });
-      } else if (vw >= lg) {
+      } else if (vw >= md && vw < lg) {
         updateState({
           type: 'lg',
+          isMobile: false,
+          isDesktop: true,
+        });
+      } else if (vw >= lg) {
+        updateState({
+          type: 'xl',
           isMobile: false,
           isDesktop: true,
         });

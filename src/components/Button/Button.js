@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { string, func, number } from 'prop-types';
+import { string, func, number, oneOfType } from 'prop-types';
 import { color } from 'utils';
 import { forwardRef } from 'react';
 
@@ -24,31 +24,40 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
     $bottom,
     $margin,
     $display,
-  }) => css`
-    width: ${$width}px;
-    height: ${$height}px;
-    background: ${$background};
-    color: ${$color};
-    font-size: ${$fontSize}rem;
-    font-weight: ${$fontWeight};
-    border: ${$border};
-    border-radius: ${$borderRadius}px;
-    padding: ${$padding};
-    position: ${$position};
-    top: ${$top};
-    right: ${$right};
-    left: ${$left};
-    bottom: ${$bottom};
-    margin: ${$margin};
-    display: ${$display};
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
-    }
-    &:focus:not(:focus-visible) {
-      box-shadow: none;
-    }
-  `}
+    $borderTop,
+    $borderRight,
+    $borderLeft,
+    $borderBottom,
+  }) =>
+    css`
+      width: ${$width}px;
+      height: ${$height}px;
+      background: ${$background};
+      color: ${$color};
+      font-size: ${$fontSize}rem;
+      font-weight: ${$fontWeight};
+      border: ${$border};
+      border-radius: ${$borderRadius}px;
+      padding: ${$padding};
+      position: ${$position};
+      top: ${$top};
+      right: ${$right};
+      left: ${$left};
+      bottom: ${$bottom};
+      margin: ${$margin};
+      display: ${$display};
+      border-top: ${$borderTop};
+      border-right: ${$borderRight};
+      border-left: ${$borderLeft};
+      border-bottom: ${$borderBottom};
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+      }
+      &:focus:not(:focus-visible) {
+        box-shadow: none;
+      }
+    `}
 `;
 
 const Button = forwardRef(
@@ -72,6 +81,10 @@ const Button = forwardRef(
       bottom,
       margin,
       display,
+      borderTop,
+      borderRight,
+      borderLeft,
+      borderBottom,
       ...restProps
     },
     ref
@@ -96,6 +109,10 @@ const Button = forwardRef(
       $bottom={bottom}
       $margin={margin}
       $display={display}
+      $borderTop={borderTop}
+      $borderRight={borderRight}
+      $borderLeft={borderLeft}
+      $borderBottom={borderBottom}
       {...restProps}
     />
   )
@@ -109,9 +126,8 @@ Button.defaultProps = {
   fontColor: color.mainColor,
   fontSize: 1.4,
   fontWeight: 500,
-  border: `1px solid ${color.mainColor}`,
   borderRadius: 5,
-  padding: '5 20',
+  padding: '5px 20px',
 };
 
 Button.propTypes = {
@@ -130,9 +146,17 @@ Button.propTypes = {
   /** 버튼 폰트 사이즈를 설정합니다. */
   fontSize: number,
   /** 버튼 폰트 굵기를 설정합니다. */
-  fontWeight: number,
+  fontWeight: oneOfType([string, number]),
   /** 버튼 테두리를 설정합니다. */
   border: string,
+  /** 버튼의 위쪽 테두리를 설정합니다. */
+  borderTop: string,
+  /** 버튼의 오른쪽 테두리를 설정합니다. */
+  borderRight: string,
+  /** 버튼의 아래쪽 테두리를 설정합니다. */
+  borderBottom: string,
+  /** 버튼의 왼쪽 테두리를 설정합니다. */
+  borderLeft: string,
   /** 버튼 테두리의 둥글기를 설정합니다. */
   borderRadius: number,
   /** 버튼 테두리의 패딩을 설정합니다. */
