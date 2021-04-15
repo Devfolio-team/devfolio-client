@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { number, string } from 'prop-types';
+import { forwardRef } from 'react';
 
 const StyledDialog = styled.div`
   width: ${props => props.width}px;
@@ -12,9 +13,11 @@ const StyledDialog = styled.div`
   border-radius: ${props => props.borderRadius}px;
 `;
 
-const Dialog = ({ children, ...restProps }) => (
-  <StyledDialog {...restProps}>{children}</StyledDialog>
-);
+const Dialog = forwardRef(({ children, ...restProps }, ref) => (
+  <StyledDialog id="dialog" ref={ref} {...restProps}>
+    {children}
+  </StyledDialog>
+));
 
 Dialog.propTypes = {
   /** Dialog에 적용 할 가로 너비를 px단위로 설정합니다. */
