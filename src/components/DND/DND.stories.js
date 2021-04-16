@@ -10,12 +10,15 @@ export default {
       },
     },
   },
+  argTypes: {
+    id: { control: 'text' },
+    src: { control: 'text' },
+    alt: { control: 'text' },
+    value: { control: 'text' },
+    onChange: { action: '체인지!' },
+  },
 };
 
 const Template = args => <DND {...args} />;
 
 export const ExampleDND = Template.bind({});
-
-ExampleDND.args = {
-  id: 'ex-1',
-};
