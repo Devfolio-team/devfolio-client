@@ -15,6 +15,10 @@ export default {
     id: { control: 'text' },
     type: { control: 'text' },
     label: { control: 'text' },
+    beforeTranslate: { control: 'number' },
+    afterTranslate: { control: 'number' },
+    beforeMargin: { control: 'number' },
+    afterMargin: { control: 'number' },
     width: { control: 'number' },
     height: { control: 'number' },
     fontSize: { control: 'number' },
@@ -25,14 +29,13 @@ export default {
     mode: { control: 'text' },
     margin: { control: 'text' },
     display: { control: 'text' },
+    padding: { control: 'text' },
+    boxShadow: { control: 'text' },
+    value: { control: 'text' },
+    onChange: { action: '체인지!' },
   },
 };
 
 const Template = args => <Input {...args} />;
 
 export const ExampleInput = Template.bind({});
-
-ExampleInput.args = {
-  label: 'Example',
-  id: 'exInput1',
-};
