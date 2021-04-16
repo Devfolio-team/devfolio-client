@@ -11,8 +11,18 @@ export default {
       },
     },
   },
+  argTypes: {
+    id: { control: 'text' },
+    value: { control: 'text' },
+    onChange: { action: '체인지!' },
+  },
 };
 
 const Template = args => <ProjectName {...args} />;
 
 export const ExampleProjectName = Template.bind({});
+
+ExampleProjectName.argTypes = {
+  id: 'example-1',
+  value: 'Example',
+};
