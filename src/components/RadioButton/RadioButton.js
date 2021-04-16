@@ -1,36 +1,9 @@
-import styled from 'styled-components';
-import { string, bool, element } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { string, bool, number, func } from 'prop-types';
 import { color } from 'utils';
 
-const RadioInput = styled.input.attrs(({ name, id, value, checked }) => ({
-  type: 'radio',
-  name,
-  id,
-  value,
-  checked,
-}))`
+const RadioInput = styled.input`
   display: none;
-  & + label {
-    display: inline-block;
-    position: relative;
-    line-height: 16px;
-    padding-left: 30px;
-    font-size: 1.2rem;
-    color: #666;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  & + label:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 18px;
-    height: 18px;
-    border: 1px solid ${color.lightGray};
-    background: #fff;
-    border-radius: 50%;
-  }
   &:checked + label:after {
     content: '';
     position: absolute;
@@ -43,13 +16,63 @@ const RadioInput = styled.input.attrs(({ name, id, value, checked }) => ({
   }
 `;
 
-const RadioButton = ({ name, id, value, children, checked }) => {
+const RadioLabel = styled.label`
+  ${({ $fontSize, $fontWeight, $color }) => css`
+    font-size: ${$fontSize}rem;
+    font-weight: ${$fontWeight};
+    color: ${$color};
+  `}
+  display: inline-block;
+  position: relative;
+  line-height: 16px;
+  padding-left: 30px;
+  cursor: pointer;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid ${color.lightGray};
+    background: #fff;
+    border-radius: 50%;
+  }
+`;
+
+const RadioButton = ({
+  name,
+  id,
+  value,
+  label,
+  checked,
+  onChange,
+  fontSize,
+  fontWeight,
+  color,
+}) => {
   return (
-    <div>
-      <RadioInput name={name} id={id} value={value} checked={checked} />
-      <label htmlFor={id}>{children}</label>
-    </div>
+    <>
+      <RadioInput
+        type="radio"
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+      />
+      <RadioLabel htmlFor={id} $fontSize={fontSize} $fontWeight={fontWeight} $color={color}>
+        {label}
+      </RadioLabel>
+    </>
   );
+};
+
+RadioButton.defaultProps = {
+  checked: false,
+  fontSize: 1.2,
+  fontWeight: '700',
+  color: '#666',
 };
 
 RadioButton.propTypes = {
@@ -60,9 +83,17 @@ RadioButton.propTypes = {
   /** 라디오버튼의 값을 설정합니다. */
   value: string.isRequired,
   /** 라디오버튼의 체크여부를 설정합니다. */
-  checked: bool,
+  checked: bool.isRequired,
   /** 라디오버튼의 설명을 설정합니다. */
-  children: element,
+  label: string,
+  /** 라디오버튼의 레이블의 폰트 크기를 설정합니다. */
+  fontSize: number,
+  /** 라디오버튼의 레이블의 폰트 두께를 설정합니다. */
+  fontWeight: string,
+  /** 라디오버튼의 레이블의 폰트 색상을 설정합니다. */
+  color: string,
+  /** 라디오버튼의 체크버튼이 변경되는 이벤트를 설정합니다. */
+  onChange: func,
 };
 
 export default RadioButton;
