@@ -159,6 +159,8 @@ img {
 button {
   user-select: none;
   cursor: pointer;
+  border-color: transparent;
+  color: #212121;
 }
 
 abbr[title] {
