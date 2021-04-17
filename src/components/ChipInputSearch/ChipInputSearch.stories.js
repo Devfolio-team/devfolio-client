@@ -13,13 +13,13 @@ export default {
   },
   argTypes: {
     id: { control: 'text' },
+    chipLabels: { control: 'array' },
+    onKeyUpHandler: { action: '키 입력!' },
+    value: { control: 'text' },
+    onChange: { action: '체인지!' },
   },
 };
 
 const Template = args => <ChipInputSearch {...args} />;
 
 export const ExampleChipInputSearch = Template.bind({});
-
-ExampleChipInputSearch.args = {
-  id: 'exId1',
-};

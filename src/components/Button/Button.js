@@ -30,8 +30,8 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
     $borderBottom,
   }) =>
     css`
-      width: ${$width}px;
-      height: ${$height}px;
+      width: ${$width};
+      height: ${$height};
       background: ${$background};
       color: ${$color};
       font-size: ${$fontSize}rem;
@@ -136,9 +136,9 @@ Button.propTypes = {
   /** 버튼 이벤트 리스너는 함수만 설정 가능합니다. */
   onClick: func,
   /** 버튼 넓이를 설정합니다. */
-  width: number,
+  width: string,
   /** 버튼 높이를 설정합니다. */
-  height: number,
+  height: string,
   /** 버튼 배경색을 설정합니다. */
   background: string,
   /** 버튼 폰트색을 설정합니다. */
