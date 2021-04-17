@@ -6,6 +6,8 @@ const SignupModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
   $rootNode.setAttribute('aria-hidden', 'true');
 
   useEffect(() => {
+    ref.current.focus();
+
     const handleFocusTrap = e => {
       const dialogNode = ref.current;
       const focusableNodeList = dialogNode.querySelectorAll(
@@ -45,6 +47,7 @@ const SignupModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
           height={750}
           borderRadius={8}
           position="absolute"
+          tabIndex={0}
         >
           <Heading
             as={'h2'}
@@ -64,7 +67,8 @@ const SignupModalDialog = forwardRef(({ onModalCloseHandler }, ref) => {
               margin="0 auto 20px auto"
               padding="21px 0 21px 26px"
               display="block"
-              readOnly="readOnly"
+              // readOnly="readOnly"
+              disAbled="disAbled"
             />
             <Input
               id="NameInput"
