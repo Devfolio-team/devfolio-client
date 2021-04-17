@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { string, number, func } from 'prop-types';
-import { color } from 'utils';
+import { color, applyStyle } from 'utils';
 
 const StyledSelectbox = styled.select`
   width: 65px;
@@ -13,10 +13,8 @@ const StyledSelectbox = styled.select`
 `;
 
 const StyledLabel = styled.label`
-  ${({ $fontSize, $fontWeight, $color }) => css`
-    font-size: ${$fontSize}rem;
-    font-weight: ${$fontWeight};
-    color: ${$color};
+  ${props => css`
+    ${applyStyle(props)}
   `}
 `;
 
