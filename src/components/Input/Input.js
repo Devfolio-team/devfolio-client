@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { string, number } from 'prop-types';
+import { string, number, func } from 'prop-types';
 import { color } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
 
@@ -45,13 +45,7 @@ const StyledInput = styled.input.attrs(({ type, id, autocomplete, ariaLabel }) =
     margin: ${$margin};
     display: ${$display};
     padding: ${$padding};
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
-    }
-    &:focus:not(:focus-visible) {
-      box-shadow: none;
-    }
+    box-shadow: ${$boxShadow};
   `}
 `;
 
@@ -59,6 +53,8 @@ const Input = ({
   type,
   id,
   label,
+  value,
+  onChange,
   mode,
   width,
   height,
@@ -80,20 +76,14 @@ const Input = ({
   labelsize,
   ...restProps
 }) => {
-  const [focus, setFocus] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
 
   const onFocusHandler = () => {
-    setFocus(true);
+    setIsFocused(true);
   };
 
   const onBlurHandler = () => {
-    setFocus(false);
-    if (inputValue !== '') setInputValue(true);
-  };
-
-  const onChangeHandler = e => {
-    setInputValue(e.target.value);
+    setIsFocused(false);
   };
 
   return (
@@ -104,8 +94,8 @@ const Input = ({
         <StyledLabel
           htmlFor={id}
           labelsize={labelsize}
-          focus={focus}
-          inputValue={inputValue}
+          focus={isFocused}
+          inputValue={value}
           beforeTranslate={beforeTranslate}
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
@@ -119,9 +109,11 @@ const Input = ({
         id={id}
         readOnly={readOnly}
         disable={disAbled}
+        value={value}
+        autocomplete="off"
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
-        onChange={onChangeHandler}
+        onChange={onChange}
         $width={width}
         $height={height}
         $borderRadius={borderRadius}
@@ -140,10 +132,13 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  id: 'exInput1',
   type: 'text',
+  label: 'Example',
   fontSize: 1.2,
   width: 170,
   height: 40,
+  value: '',
 };
 
 Input.propTypes = {
@@ -154,13 +149,13 @@ Input.propTypes = {
   /** 인풋의 label값을 설정합니다. */
   label: string.isRequired,
   /** 인풋의 placeholder의 기본 위치(위 아래로 이동)를 설정합니다. */
-  beforeTranslate: string,
+  beforeTranslate: number,
   /** 인풋의 placeholder의 움직일 위치(위 아래로 이동)를 설정합니다. */
-  afterTranslate: string,
+  afterTranslate: number,
   /** 인풋의 placeholder 기본 위치(좌우로 이동) 설정 합니다. */
-  beforeMargin: string,
+  beforeMargin: number,
   /** 인풋의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
-  afterMargin: string,
+  afterMargin: number,
   /** 인풋 넓이를 설정합니다. */
   width: string,
   /** 인풋 높이를 설정합니다. */
@@ -185,6 +180,10 @@ Input.propTypes = {
   padding: string,
   /** 인풋 박스 테두리의 그림자를 설정합니다. */
   boxShadow: string,
+  /** 인풋 박스 입력되는 값을 설정합니다. */
+  value: string,
+  /** 인풋의 변경되는 값을 감지하는 이벤트를 설정합니다. */
+  onChange: func,
 };
 
 export default Input;

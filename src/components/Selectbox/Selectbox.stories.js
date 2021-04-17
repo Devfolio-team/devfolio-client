@@ -14,15 +14,14 @@ export default {
     id: { control: 'text' },
     label: { control: 'text' },
     name: { control: 'text' },
+    value: { control: 'number' },
+    onChange: { action: '체인지!' },
+    fontSize: { control: 'number' },
+    fontWeight: { control: 'text' },
+    color: { control: 'color' },
   },
 };
 
 const Template = args => <Selectbox {...args} />;
 
 export const ExampleSelectbox = Template.bind({});
-
-ExampleSelectbox.args = {
-  label: 'Example',
-  id: 'exSelectbox1',
-  name: 'exSelectbox',
-};
