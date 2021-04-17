@@ -16,7 +16,7 @@ const applyStyle = ({
   $margin,
   $background,
   $flexFlow,
-  $flexDerection,
+  $flexDirection,
   $flexWrap,
   $justifyContent,
   $alignItems,
@@ -67,8 +67,8 @@ padding: ${$padding || ''};
 margin: ${$margin ? $margin : ''};
 background: ${$background ? $background : ''};
 flex-flow: ${$flexFlow || ''};
-flexDerection: ${$flexDerection || ''};
-$flexWrap: ${$flexWrap || ''};
+flex-direction: ${$flexDirection || ''};
+flexWrap: ${$flexWrap || ''};
 justify-content: ${$justifyContent || ''};
 align-items: ${$alignItems || ''};
 position: ${$position || ''};
@@ -85,12 +85,12 @@ border-bottom: ${$borderBottom || ''};
 border-left: ${$borderLeft || ''};
 color: ${$color || ''};
 font-size: ${`${$fontSize}rem` || ''};
-fontWeight: ${getUnitByType($fontWeight)};
-minWidth: ${getUnitByType($minWidth)};
-maxWidth: ${getUnitByType($maxWidth)};
-minHeight: ${getUnitByType($minHeight)};
-maxHeight: ${getUnitByType($maxHeight)};
-boxShadow: ${getUnitByType($boxShadow)};
+font-weight: ${getUnitByType($fontWeight)};
+min-width: ${getUnitByType($minWidth)};
+max-width: ${getUnitByType($maxWidth)};
+min-height: ${getUnitByType($minHeight)};
+max-height: ${getUnitByType($maxHeight)};
+box-shadow: ${getUnitByType($boxShadow)};
 z-index: ${$zIndex || ''};
 transform: ${$transform || ''};
 background-color: ${$backgroundColor || ''};
