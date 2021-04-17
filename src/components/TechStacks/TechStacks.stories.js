@@ -15,7 +15,7 @@ export default {
     chipLabels: { control: 'array' },
     onKeyUpHandler: { action: '키 입력!' },
     value: { control: 'text' },
-    onChange: { action: '체인지!' },
+    onChangeHandler: { action: '체인지!' },
   },
 };
 

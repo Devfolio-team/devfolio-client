@@ -31,7 +31,7 @@ TechStacks.propTypes = {
   /** ChipInputSearch의 인풋 박스에 입력되는 값을 설정합니다. */
   value: string,
   /** ChipInputSearch의 인풋의 변경되는 값을 감지하는 이벤트를 설정합니다. */
-  onChange: func,
+  onChangeHandler: func,
 };
 
 export default TechStacks;
