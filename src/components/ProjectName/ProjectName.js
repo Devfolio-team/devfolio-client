@@ -1,7 +1,7 @@
 import { Heading, Paragraph, Input } from 'components';
 import { string, func } from 'prop-types';
 
-const ProjectName = ({ id, value, onChange }) => {
+const ProjectName = ({ value, onChange }) => {
   return (
     <div>
       <Heading as="h2" color="#212121" fontSize={1.6} margin="0 0 20px 0">
@@ -13,7 +13,7 @@ const ProjectName = ({ id, value, onChange }) => {
         프로젝트 이름은 프로젝트 페이지의 제목으로 사용됩니다.
       </Paragraph>
       <Input
-        id={id}
+        id="projectName"
         value={value}
         onChange={onChange}
         mode="hidden"
@@ -30,12 +30,10 @@ const ProjectName = ({ id, value, onChange }) => {
 };
 
 ProjectName.defaultProps = {
-  id: 'projectName',
   value: '',
 };
 
 ProjectName.propTypes = {
-  id: string.isRequired,
   value: string.isRequired,
   onChange: func.isRequired,
 };
