@@ -11,13 +11,16 @@ const StyledLabel = styled.label`
     ${({ focus, inputValue, beforeTranslate, afterTranslate }) =>
       focus || inputValue ? afterTranslate : beforeTranslate}rem
   );
-  font-size: 2rem;
+  font-size: ${({ labelsize }) => labelsize}rem;
   margin-left: ${({ focus, inputValue, beforeMargin, afterMargin }) =>
     focus || inputValue ? afterMargin : beforeMargin}px;
   color: ${color.placeholder};
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input.attrs(({ type, id, autocomplete, ariaLabel }) => ({
+  type,
+  id,
+}))`
   ${({
     $width,
     $height,
@@ -31,8 +34,8 @@ const StyledInput = styled.input`
     $padding,
     $boxShadow,
   }) => css`
-    width: ${$width}px;
-    height: ${$height}px;
+    width: ${$width};
+    height: ${$height};
     border-radius: ${$borderRadius}px;
     font-size: ${$fontSize}rem;
     font-weight: ${$fontWeight};
@@ -68,6 +71,9 @@ const Input = ({
   afterTranslate,
   beforeMargin,
   afterMargin,
+  readOnly,
+  disAbled,
+  labelsize,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -87,6 +93,7 @@ const Input = ({
       ) : (
         <StyledLabel
           htmlFor={id}
+          labelsize={labelsize}
           focus={isFocused}
           inputValue={value}
           beforeTranslate={beforeTranslate}
@@ -100,6 +107,8 @@ const Input = ({
       <StyledInput
         type={type}
         id={id}
+        readOnly={readOnly}
+        disable={disAbled}
         value={value}
         autocomplete="off"
         onFocus={onFocusHandler}
@@ -148,7 +157,7 @@ Input.propTypes = {
   /** 인풋의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
   afterMargin: number,
   /** 인풋 넓이를 설정합니다. */
-  width: number,
+  width: string,
   /** 인풋 높이를 설정합니다. */
   height: number,
   /** 인풋 폰트 사이즈를 설정합니다. */

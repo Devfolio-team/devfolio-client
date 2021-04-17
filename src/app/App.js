@@ -14,6 +14,8 @@ import useDetectViewport from 'hooks/useDetectViewport';
 function App() {
   const viewport = useDetectViewport();
 
+  console.log(viewport);
+
   return (
     <Router>
       <HeaderBar viewport={viewport} />
