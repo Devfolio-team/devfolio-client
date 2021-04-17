@@ -22,5 +22,6 @@ export { default as TeamName } from './TeamName/TeamName';
 export { default as PlanIntention } from './PlanIntention/PlanIntention';
 export { default as ProjectItem } from './ProjectItem/ProjectItem';
 export { default as Time } from './Time/Time';
+export { default as TechStacks } from './TechStacks/TechStacks';
 export { default as Span } from './Span/Span';
 export { default as GithubLink } from './GithubLink/GithubLink';
