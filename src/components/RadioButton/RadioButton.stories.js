@@ -21,6 +21,7 @@ export default {
     fontWeight: { control: 'text' },
     color: { control: 'color' },
     onChange: { action: '체인지!' },
+    margin: { control: 'text' },
   },
 };
 
@@ -29,7 +30,6 @@ const Template = args => <RadioButton {...args} />;
 export const ExampleRadioButton = Template.bind({});
 
 ExampleRadioButton.args = {
-  // checked: false,
   name: 'radio',
   value: 'radio',
   id: 'rd-1',

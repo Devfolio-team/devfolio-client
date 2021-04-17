@@ -17,10 +17,11 @@ const RadioInput = styled.input`
 `;
 
 const RadioLabel = styled.label`
-  ${({ $fontSize, $fontWeight, $color }) => css`
+  ${({ $fontSize, $fontWeight, $color, $margin }) => css`
     font-size: ${$fontSize}rem;
     font-weight: ${$fontWeight};
     color: ${$color};
+    margin: ${$margin};
   `}
   display: inline-block;
   position: relative;
@@ -50,6 +51,7 @@ const RadioButton = ({
   fontSize,
   fontWeight,
   color,
+  margin,
 }) => {
   return (
     <>
@@ -61,7 +63,13 @@ const RadioButton = ({
         checked={checked}
         onChange={onChange}
       />
-      <RadioLabel htmlFor={id} $fontSize={fontSize} $fontWeight={fontWeight} $color={color}>
+      <RadioLabel
+        htmlFor={id}
+        $fontSize={fontSize}
+        $fontWeight={fontWeight}
+        $color={color}
+        $margin={margin}
+      >
         {label}
       </RadioLabel>
     </>
@@ -94,6 +102,8 @@ RadioButton.propTypes = {
   color: string,
   /** 라디오버튼의 체크버튼이 변경되는 이벤트를 설정합니다. */
   onChange: func,
+  /** 라디오버튼의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
+  margin: string,
 };
 
 export default RadioButton;
