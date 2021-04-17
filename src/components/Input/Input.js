@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { string, number, func } from 'prop-types';
+import { string, number, func, oneOfType } from 'prop-types';
 import { color, applyStyle } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
 
@@ -138,19 +138,19 @@ Input.propTypes = {
   /** 인풋의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
   afterMargin: number,
   /** 인풋 넓이를 설정합니다. */
-  width: string,
+  width: oneOfType([string, number]),
   /** 인풋 높이를 설정합니다. */
-  height: number,
+  height: oneOfType([string, number]),
   /** 인풋 폰트 사이즈를 설정합니다. */
   fontSize: number,
   /** 인풋 폰트 굵기를 설정합니다. */
-  fontWeight: number,
+  fontWeight: oneOfType([string, number]),
   /** 인풋 폰트색을 설정합니다. */
   color: string,
   /** 인풋 테두리를 설정합니다. */
   border: string,
   /** 인풋 테두리의 둥글기를 설정합니다. */
-  borderRadius: number,
+  borderRadius: oneOfType([string, number]),
   /** 인풋의 레이블의 숨김처리를 설정합니다. */
   mode: string,
   /** 인풋의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
