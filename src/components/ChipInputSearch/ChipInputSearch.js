@@ -110,8 +110,9 @@ const ChipInputSearch = ({ id, chipLabels, onKeyUpHandler, value, onChange }) =>
         onKeyUp={onKeyUpHandler}
       />
       <ChipDataList id={id}>
-        {dummyDatas.map(dummyData => (
-          <ChipDataListOption value={dummyData}></ChipDataListOption>
+        {/* index대신에 데이터베이스에서 데이터 가지고 오면 id값으로 key값 세팅해주기 */}
+        {dummyDatas.map((dummyData, index) => (
+          <ChipDataListOption key={index} value={dummyData}></ChipDataListOption>
         ))}
       </ChipDataList>
     </ChipContainer>
