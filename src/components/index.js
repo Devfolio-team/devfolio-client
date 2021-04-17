@@ -18,5 +18,7 @@ export { default as Portal } from './Portal/Portal';
 export { default as Anchor } from './Anchor/Anchor';
 export { default as ProjectName } from './ProjectName/ProjectName';
 export { default as MenuUnderline } from './MenuUnderline/MenuUnderline';
+export { default as TeamName } from './TeamName/TeamName';
+export { default as PlanIntention } from './PlanIntention/PlanIntention';
 export { default as ProjectItem } from './ProjectItem/ProjectItem';
 export { default as Time } from './Time/Time';

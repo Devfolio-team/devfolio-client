@@ -13,6 +13,16 @@ export default {
   argTypes: {
     width: { control: 'number' },
     height: { control: 'number' },
+    id: { control: 'text' },
+    color: { control: 'color' },
+    value: { control: 'text' },
+    label: { control: 'text' },
+    mode: { control: 'text' },
+    onChange: { action: '체인지!' },
+    beforeTranslate: { control: 'number' },
+    afterTranslate: { control: 'number' },
+    beforeMargin: { control: 'number' },
+    afterMargin: { control: 'number' },
   },
 };
 

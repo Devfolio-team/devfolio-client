@@ -1,55 +1,15 @@
 import styled, { css } from 'styled-components';
 import { string, func, number, oneOfType } from 'prop-types';
-import { color } from 'utils';
+import { color, applyStyle } from 'utils';
 import { forwardRef } from 'react';
 
 const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   type,
   onClick,
 }))`
-  ${({
-    $width,
-    $height,
-    $background,
-    $color,
-    $fontSize,
-    $fontWeight,
-    $border,
-    $borderRadius,
-    $padding,
-    $position,
-    $top,
-    $right,
-    $left,
-    $bottom,
-    $margin,
-    $display,
-    $borderTop,
-    $borderRight,
-    $borderLeft,
-    $borderBottom,
-  }) =>
+  ${props =>
     css`
-      width: ${$width};
-      height: ${$height};
-      background: ${$background};
-      color: ${$color};
-      font-size: ${$fontSize}rem;
-      font-weight: ${$fontWeight};
-      border: ${$border};
-      border-radius: ${$borderRadius}px;
-      padding: ${$padding};
-      position: ${$position};
-      top: ${$top};
-      right: ${$right};
-      left: ${$left};
-      bottom: ${$bottom};
-      margin: ${$margin};
-      display: ${$display};
-      border-top: ${$borderTop};
-      border-right: ${$borderRight};
-      border-left: ${$borderLeft};
-      border-bottom: ${$borderBottom};
+      ${applyStyle(props)}
       &:focus {
         outline: none;
         box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
