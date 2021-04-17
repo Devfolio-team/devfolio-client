@@ -56,8 +56,8 @@ const HomePage = ({ viewport }) => {
             <Button
               title="좋아요가 많은 순서로 프로젝트 보기"
               aria-label="좋아요가 많은 순서로 프로젝트 보기"
-              width={112}
-              height={48}
+              width="112px"
+              height="48px"
               background="transparent"
               border="0"
               fontSize={1.9}
@@ -73,6 +73,8 @@ const HomePage = ({ viewport }) => {
               background="transparent"
               border="0"
               fontSize={1.9}
+              width="112px"
+              height="48px"
             >
               최신
             </Button>
@@ -96,6 +98,7 @@ const HomePage = ({ viewport }) => {
                   author={project.nickname}
                   authorProfile={project.profile_photo}
                   viewport={viewport}
+                  likeCount={project.likeCount}
                 ></ProjectItem>
               );
             })}

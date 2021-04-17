@@ -1,5 +1,5 @@
 import { styled } from '@storybook/theming';
-import { Container, Heading, Image, Paragraph, Time } from 'components';
+import { Container, Heading, Image, Paragraph, Span, SVGIcon, Time } from 'components';
 import React from 'react';
 import { css } from 'styled-components';
 
@@ -12,6 +12,7 @@ const StyledProjectItem = styled.li`
     border: 1px solid transparent;
     border-radius: 5px;
     overflow: hidden;
+    flex
   `}
 `;
 
@@ -23,6 +24,7 @@ const ProjectItem = ({
   created,
   author,
   authorProfile,
+  likeCount,
 }) => {
   const createDate = new Date(created);
   const year = createDate.getFullYear();
@@ -52,7 +54,7 @@ const ProjectItem = ({
       <Container
         width={301}
         height={44}
-        padding="10px"
+        padding="10px 16px"
         background="#FFFFFF"
         borderTop="1px solid #E6E6E6"
         display="flex"
@@ -67,10 +69,19 @@ const ProjectItem = ({
             width={24}
             height={24}
             borderRadius="50%"
-            margin="0 8px 0 0 "
           />
+          <Span margin="0 0 0 8px" color="#868E96" fontSize={1.2} verticalAlign="middle">
+            by
+          </Span>
+          <Span verticalAlign="middle" fontSize={1.2}>
+            {' '}
+            {author}
+          </Span>
         </Container>
-        <Container></Container>
+        <Container margin="0" display="flex" justifyContent="end" alignItems="center">
+          <SVGIcon type="HeartRed" />
+          <Span marginLeft={5}>{likeCount}</Span>
+        </Container>
       </Container>
     </StyledProjectItem>
   );
