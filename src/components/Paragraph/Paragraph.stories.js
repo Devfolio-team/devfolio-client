@@ -18,9 +18,9 @@ export default {
 
 const Template = args => <Paragraph {...args}>{args.children}</Paragraph>;
 
-export const ExampleHeading = Template.bind({});
+export const ExampleParagraph = Template.bind({});
 
-ExampleHeading.args = {
+ExampleParagraph.args = {
   children: '포트폴리오에 보여질 자기 소개를 최대한 자세히 적어주세요!',
   color: '#666666',
   fontSize: 2.4,
