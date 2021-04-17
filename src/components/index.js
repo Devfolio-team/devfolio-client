@@ -20,3 +20,4 @@ export { default as ProjectName } from './ProjectName/ProjectName';
 export { default as MenuUnderline } from './MenuUnderline/MenuUnderline';
 export { default as ProjectItem } from './ProjectItem/ProjectItem';
 export { default as Time } from './Time/Time';
+export { default as GithubLink } from './GithubLink/GithubLink';
