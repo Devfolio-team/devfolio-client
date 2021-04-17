@@ -2,20 +2,35 @@ import styled, { css } from 'styled-components';
 import { number, string } from 'prop-types';
 
 const StyledParagraph = styled.p`
-  ${({ $fontSize, $fontWeight, $lineHeight, $color }) => css`
+  ${({ $fontSize, $fontWeight, $lineHeight, $color, $height, $padding, $margin }) => css`
     font-size: ${$fontSize}rem;
     font-weight: ${$fontWeight};
     line-height: ${$lineHeight}px;
     color: ${$color};
+    height: ${$height}px;
+    padding: ${$padding};
+    margin: ${$margin};
   `}
 `;
 
-const Paragraph = ({ fontSize, fontWeight, lineHeight, color, ...restProps }) => (
+const Paragraph = ({
+  fontSize,
+  fontWeight,
+  lineHeight,
+  color,
+  height,
+  padding,
+  margin,
+  ...restProps
+}) => (
   <StyledParagraph
     $fontSize={fontSize}
     $fontWeight={fontWeight}
     $lineHeight={lineHeight}
     $color={color}
+    $height={height}
+    $padding={padding}
+    $margin={margin}
     {...restProps}
   />
 );

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { LoginModalDialog, SignupModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
 
-const StyledHeader = styled.header`
+const StyledHeaderBar = styled.header`
   ${({ $background, $padding }) => css`
     width: 100vw;
     height: 64px;
@@ -41,7 +41,7 @@ const HeaderBar = ({ viewport }) => {
   };
 
   return (
-    <StyledHeader $background="#F8F9FA" $padding={`0 ${isDesktop ? '70px' : '30px'}`}>
+    <StyledHeaderBar $background="#F8F9FA">
       <Container
         as="nav"
         display="flex"
@@ -50,6 +50,7 @@ const HeaderBar = ({ viewport }) => {
         justifyContent="space-between"
         alignItems="center"
         background="#F8F9FA"
+        padding={`0 ${isDesktop ? '70px' : '30px'}`}
       >
         <Heading as="h1">
           <Link to="/">
@@ -83,7 +84,7 @@ const HeaderBar = ({ viewport }) => {
           </Portal>
         ) : null}
       </Container>
-    </StyledHeader>
+    </StyledHeaderBar>
   );
 };
 

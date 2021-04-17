@@ -17,3 +17,5 @@ export { default as Modal } from './Modal/Modal';
 export { default as Portal } from './Portal/Portal';
 export { default as Anchor } from './Anchor/Anchor';
 export { default as MenuUnderline } from './MenuUnderline/MenuUnderline';
+export { default as ProjectItem } from './ProjectItem/ProjectItem';
+export { default as Time } from './Time/Time';

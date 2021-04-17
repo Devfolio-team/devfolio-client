@@ -1,45 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, number, oneOfType, node } from 'prop-types';
+import { applyStyle } from 'utils';
 
 const StyledContainer = styled.div`
-  ${({
-    $display,
-    $width,
-    $height,
-    $padding,
-    $margin,
-    $background,
-    $flexFlow,
-    $justifyContent,
-    $alignItems,
-    $position,
-    $border,
-    $top,
-    $left,
-    $bottom,
-    $right,
-    $textAlign,
-    $borderRadius,
-  }) => css`
-    display: ${$display};
-    width: ${typeof $width === 'string' ? $width : `${$width}px`};
-    height: ${typeof $height === 'string' ? $height : `${$height}px`};
-    padding: ${$padding};
-    margin: ${$margin};
-    background: ${$background};
-    flex-flow: ${$flexFlow};
-    justify-content: ${$justifyContent};
-    align-items: ${$alignItems};
-    position: ${$position};
-    border: ${$border};
-    top: ${typeof $top === 'string' ? $top : `${$top}px`};
-    left: ${typeof $left === 'string' ? $left : `${$left}px`};
-    bottom: ${typeof $bottom === 'string' ? $bottom : `${$bottom}px`};
-    right: ${typeof $right === 'string' ? $right : `${$right}px`};
-    text-align: ${$textAlign};
-    border-radius: ${$borderRadius};
-  `}
+  ${props =>
+    css`
+      ${applyStyle(props)}
+    `}
 `;
 
 const Container = ({
@@ -60,6 +28,10 @@ const Container = ({
   right,
   textAlign,
   borderRadius,
+  borderTop,
+  borderRight,
+  borderBottom,
+  borderLeft,
   ...restProps
 }) => {
   return (
@@ -81,6 +53,10 @@ const Container = ({
       $right={right}
       $textAlign={textAlign}
       $borderRadius={borderRadius}
+      $borderTop={borderTop}
+      $borderRight={borderRight}
+      $borderBottom={borderBottom}
+      $borderLeft={borderLeft}
       {...restProps}
     />
   );
