@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 const StyledFooter = styled.footer`
   ${({ $background, $padding }) => css`
-    width: 100vw;
+    width: 100%;
     height: 124px;
     background: #25272b;
     padding: 20px;
