@@ -19,7 +19,7 @@ const PublicStatus = ({ selectedOption, onChangeRadioHandler }) => {
         />
         <RadioButton
           id="publicStatusRadio2"
-          name="private"
+          name="public"
           value="private"
           onChange={onChangeRadioHandler}
           checked={selectedOption === 'private'}
