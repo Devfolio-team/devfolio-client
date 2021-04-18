@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { string, number, func } from 'prop-types';
-import { color } from 'utils';
+import { string, number, func, oneOfType } from 'prop-types';
+import { color, applyStyle } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
 
 const StyledLabel = styled.label`
@@ -11,41 +11,22 @@ const StyledLabel = styled.label`
     ${({ focus, inputValue, beforeTranslate, afterTranslate }) =>
       focus || inputValue ? afterTranslate : beforeTranslate}rem
   );
-  font-size: ${({ labelsize }) => labelsize}rem;
   margin-left: ${({ focus, inputValue, beforeMargin, afterMargin }) =>
     focus || inputValue ? afterMargin : beforeMargin}px;
   color: ${color.placeholder};
+  ${props => css`
+    font-size: ${props.$labelFontSize};
+  `}
 `;
 
-const StyledInput = styled.input.attrs(({ type, id, autocomplete, ariaLabel }) => ({
+const StyledInput = styled.input.attrs(({ type, id }) => ({
   type,
   id,
 }))`
-  ${({
-    $width,
-    $height,
-    $borderRadius,
-    $fontSize,
-    $fontWeight,
-    $color,
-    $border,
-    $margin,
-    $display,
-    $padding,
-    $boxShadow,
-  }) => css`
-    width: ${$width};
-    height: ${$height};
-    border-radius: ${$borderRadius}px;
-    font-size: ${$fontSize}rem;
-    font-weight: ${$fontWeight};
-    color: ${$color};
-    border: ${$border};
+  ${props => css`
+    ${applyStyle(props)}
+    font-size: ${props.$inputFontSize}
     outline: none;
-    margin: ${$margin};
-    display: ${$display};
-    padding: ${$padding};
-    box-shadow: ${$boxShadow};
   `}
 `;
 
@@ -59,7 +40,7 @@ const Input = ({
   width,
   height,
   borderRadius,
-  fontSize,
+  inputFontSize,
   fontWeight,
   color,
   border,
@@ -72,8 +53,8 @@ const Input = ({
   beforeMargin,
   afterMargin,
   readOnly,
-  disAbled,
-  labelsize,
+  disabled,
+  labelFontSize,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -93,7 +74,7 @@ const Input = ({
       ) : (
         <StyledLabel
           htmlFor={id}
-          labelsize={labelsize}
+          $labelFontSize={labelFontSize}
           focus={isFocused}
           inputValue={value}
           beforeTranslate={beforeTranslate}
@@ -108,7 +89,7 @@ const Input = ({
         type={type}
         id={id}
         readOnly={readOnly}
-        disable={disAbled}
+        disabled={disabled}
         value={value}
         autocomplete="off"
         onFocus={onFocusHandler}
@@ -117,7 +98,7 @@ const Input = ({
         $width={width}
         $height={height}
         $borderRadius={borderRadius}
-        $fontSize={fontSize}
+        $inputFontSize={inputFontSize}
         $fontWeight={fontWeight}
         $color={color}
         $border={border}
@@ -157,19 +138,19 @@ Input.propTypes = {
   /** 인풋의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
   afterMargin: number,
   /** 인풋 넓이를 설정합니다. */
-  width: string,
+  width: oneOfType([string, number]),
   /** 인풋 높이를 설정합니다. */
-  height: number,
+  height: oneOfType([string, number]),
   /** 인풋 폰트 사이즈를 설정합니다. */
   fontSize: number,
   /** 인풋 폰트 굵기를 설정합니다. */
-  fontWeight: number,
+  fontWeight: oneOfType([string, number]),
   /** 인풋 폰트색을 설정합니다. */
   color: string,
   /** 인풋 테두리를 설정합니다. */
   border: string,
   /** 인풋 테두리의 둥글기를 설정합니다. */
-  borderRadius: number,
+  borderRadius: oneOfType([string, number]),
   /** 인풋의 레이블의 숨김처리를 설정합니다. */
   mode: string,
   /** 인풋의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */

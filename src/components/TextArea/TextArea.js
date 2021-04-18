@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
-import { number, string } from 'prop-types';
-import { useState } from 'react';
 import { applyStyle } from 'utils';
+import { number, string, func } from 'prop-types';
+import { useState } from 'react';
+import { color } from 'utils';
+import { A11yHidden } from 'components';
 
-const Styledlabel = styled.label.attrs(({ htmlFor }) => ({
+const StyledLabel = styled.label.attrs(({ htmlFor }) => ({
   htmlFor,
 }))`
   ${props => css`
@@ -13,6 +15,13 @@ const Styledlabel = styled.label.attrs(({ htmlFor }) => ({
     font-size: 2rem;
     margin-top: 15px;
     color: #7e7272;
+    transform: translateY(
+      ${({ focus, areaValue, beforeTranslate, afterTranslate }) =>
+        focus || areaValue ? afterTranslate : beforeTranslate}rem
+    );
+    margin-left: ${({ focus, areaValue, beforeMargin, afterMargin }) =>
+      focus || areaValue ? afterMargin : beforeMargin}px;
+    color: ${color.placeholder};
   `}
 `;
 
@@ -28,33 +37,48 @@ const StyledTextArea = styled.textarea`
     `}
 `;
 
-const TextArea = ({ id, width, height, color, ...restProps }) => {
-  const [focus, setFocus] = useState(false);
-  const [areaValue, setAreaValue] = useState('');
+const TextArea = ({
+  id,
+  width,
+  height,
+  color,
+  value,
+  label,
+  mode,
+  onChange,
+  beforeTranslate,
+  afterTranslate,
+  beforeMargin,
+  afterMargin,
+  ...restProps
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
 
   const onFocusHandler = () => {
-    setFocus(true);
+    setIsFocused(true);
   };
 
   const onBlurHandler = e => {
-    setFocus(false);
-    if (areaValue !== '' && focus === false) setAreaValue(true);
+    setIsFocused(false);
   };
 
-  const onChangeHandler = e => {
-    setAreaValue(e.target.value);
-  };
   return (
     <>
-      <Styledlabel
-        for={id}
-        focus={focus}
-        areaValue={areaValue}
-        $transform={`translate3d(0, ${focus || areaValue ? -0.5 : 3.5}rem, 0)`}
-        $marginLeft={`${focus || areaValue ? 0 : 15}px`}
-      >
-        간단한 자기소개
-      </Styledlabel>
+      {mode === 'hidden' ? (
+        <A11yHidden as="label" htmlFor={id} children={label} />
+      ) : (
+        <StyledLabel
+          htmlFor={id}
+          focus={isFocused}
+          areaValue={value}
+          beforeTranslate={beforeTranslate}
+          afterTranslate={afterTranslate}
+          beforeMargin={beforeMargin}
+          afterMargin={afterMargin}
+        >
+          {label}
+        </StyledLabel>
+      )}
       <StyledTextArea
         id={id}
         $width={width}
@@ -62,24 +86,38 @@ const TextArea = ({ id, width, height, color, ...restProps }) => {
         {...restProps}
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
-        onChange={onChangeHandler}
-        value={areaValue}
+        onChange={onChange}
+        value={value}
       />
     </>
   );
 };
 
 TextArea.propTypes = {
-  /** TextArea 적용 할 세로높이를 설정합니다. */
+  /** TextArea와 label에 적용 할 공통의 ID를 설정합니다. */
+  id: string.isRequired,
+  /** TextArea 적용 할 width 크기를 설정합니다. */
   width: number.isRequired,
   /** TextArea 적용 할 가로너비를 설정합니다. */
   height: number.isRequired,
-  /** TextArea와 label에 적용 할 공통의 ID를 설정합니다. */
-  id: string.isRequired,
-  /** label이 focus를 받았을 때 이동 할 위치를 설정합니다. */
-  transform: number,
-  /** label이 focus를 받았을 때 왼쪽여백의 크기를 설정합니다. */
-  marginLeft: number,
+  /** TextArea 폰트색을 설정합니다. */
+  color: string,
+  /** TextArea 박스 입력되는 값을 설정합니다. */
+  value: string,
+  /** TextArea의 label값을 설정합니다. */
+  label: string,
+  /** TextArea의 레이블의 숨김처리를 설정합니다. */
+  mode: string,
+  /** TextArea의 변경되는 값을 감지하는 이벤트를 설정합니다. */
+  onChange: func,
+  /** TextArea의 placeholder의 기본 위치(위 아래로 이동)를 설정합니다. */
+  beforeTranslate: number,
+  /** TextArea의 placeholder의 움직일 위치(위 아래로 이동)를 설정합니다. */
+  afterTranslate: number,
+  /** TextArea의 placeholder 기본 위치(좌우로 이동) 설정 합니다. */
+  beforeMargin: number,
+  /** TextArea의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
+  afterMargin: number,
 };
 
 export default TextArea;

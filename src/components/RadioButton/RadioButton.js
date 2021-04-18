@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { string, bool, number, func } from 'prop-types';
-import { color } from 'utils';
+import { color, applyStyle } from 'utils';
 
 const RadioInput = styled.input`
   display: none;
@@ -17,11 +17,8 @@ const RadioInput = styled.input`
 `;
 
 const RadioLabel = styled.label`
-  ${({ $fontSize, $fontWeight, $color, $margin }) => css`
-    font-size: ${$fontSize}rem;
-    font-weight: ${$fontWeight};
-    color: ${$color};
-    margin: ${$margin};
+  ${props => css`
+    ${applyStyle(props)}
   `}
   display: inline-block;
   position: relative;

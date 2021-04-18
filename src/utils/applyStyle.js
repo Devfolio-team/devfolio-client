@@ -59,6 +59,7 @@ const applyStyle = ({
   $pointerEvents,
   $fill,
   $transition,
+  $verticalAlign,
 }) => `
 display: ${$display || ''};
 width: ${getUnitByType($width)};
@@ -84,7 +85,7 @@ border-right: ${$borderRight || ''};
 border-bottom: ${$borderBottom || ''};
 border-left: ${$borderLeft || ''};
 color: ${$color || ''};
-font-size: ${`${$fontSize}rem` || ''};
+font-size: ${$fontSize ? `${$fontSize}rem` : ''};
 font-weight: ${getUnitByType($fontWeight)};
 min-width: ${getUnitByType($minWidth)};
 max-width: ${getUnitByType($maxWidth)};
@@ -109,6 +110,7 @@ overflow: ${$overflow || ''};
 cursor: ${$cursor || ''};
 pointer-events: ${$pointerEvents || ''};
 transition: ${$transition || ''};
+vertical-align: ${$verticalAlign || ''};
 path {
   fill: ${$fill || ''};
 }
