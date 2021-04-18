@@ -14,6 +14,7 @@ import { ReactComponent as Smile } from 'assets/Smile.svg';
 import { ReactComponent as X } from 'assets/X.svg';
 import { ReactComponent as Camera } from 'assets/Camera.svg';
 import { ReactComponent as Folder } from 'assets/Folder.svg';
+import { ReactComponent as Calendar } from 'assets/Calendar.svg';
 
 const SVGIcon = ({ type, width, height, ...restProps }) => {
   let SVGIcon = null;
@@ -63,6 +64,9 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       break;
     case 'Folder':
       SVGIcon = Folder;
+      break;
+    case 'Calendar':
+      SVGIcon = Calendar;
       break;
   }
   return <SVGIcon width={width} heigth={height} {...restProps} />;

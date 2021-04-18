@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
+import { applyStyle } from 'utils';
 
 const StyledModal = styled.div.attrs(() => ({
   tabindex: -1,
 }))`
-  ${({ $height }) => css`
+  ${props => css`
+    ${applyStyle(props)}
     position: fixed;
     top: 0;
     right: 0;
@@ -11,14 +13,9 @@ const StyledModal = styled.div.attrs(() => ({
     left: 0;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1;
-    height: ${$height}px;
   `}
 `;
 
-const Modal = ({ onClick, children, height }) => (
-  <StyledModal $height={height} onClick={onClick}>
-    {children}
-  </StyledModal>
-);
+const Modal = ({ onClick, children }) => <StyledModal onClick={onClick}>{children}</StyledModal>;
 
 export default Modal;

@@ -28,6 +28,7 @@ export default {
           'Sad',
           'Smile',
           'X',
+          'Calendar',
         ],
       },
     },
@@ -51,6 +52,7 @@ export const HeartRedIcon = Template.bind({});
 export const SadIcon = Template.bind({});
 export const SmileIcon = Template.bind({});
 export const XIcon = Template.bind({});
+export const Calendar = Template.bind({});
 
 AngryIcon.args = {
   type: 'Angry',
@@ -118,4 +120,9 @@ XIcon.args = {
   width: 40,
   height: 40,
   fill: '#000000',
+};
+Calendar.arg = {
+  type: 'Calendar',
+  width: 15,
+  height: 19,
 };
