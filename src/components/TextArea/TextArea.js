@@ -1,27 +1,31 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { number, string } from 'prop-types';
 import { useState } from 'react';
+import { applyStyle } from 'utils';
 
 const Styledlabel = styled.label.attrs(({ htmlFor }) => ({
   htmlFor,
 }))`
-  display: block;
-  transition: 0.4s;
-  transform: translateY(${({ focus, areaValue }) => (focus || areaValue ? -0.5 : 3.5)}rem);
-  font-size: 2rem;
-  margin-top: 15px;
-  margin-left: ${({ focus, areaValue }) => (focus || areaValue ? 0 : 15)}px;
-  color: #7e7272;
+  ${props => css`
+    ${applyStyle(props)}
+    display: block;
+    transition: 0.4s;
+    font-size: 2rem;
+    margin-top: 15px;
+    color: #7e7272;
+  `}
 `;
 
 const StyledTextArea = styled.textarea`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  font-size: 2rem;
-  padding: 10px 0 0 8px;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  border: 0;
+  ${props =>
+    css`
+      ${applyStyle(props)}
+      font-size: 2rem;
+      padding: 10px 0 0 8px;
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      border: 0;
+    `}
 `;
 
 const TextArea = ({ id, width, height, color, ...restProps }) => {
@@ -42,7 +46,13 @@ const TextArea = ({ id, width, height, color, ...restProps }) => {
   };
   return (
     <>
-      <Styledlabel for={id} focus={focus} areaValue={areaValue}>
+      <Styledlabel
+        for={id}
+        focus={focus}
+        areaValue={areaValue}
+        $transform={`translate3d(0, ${focus || areaValue ? -0.5 : 3.5}rem, 0)`}
+        $marginLeft={`${focus || areaValue ? 0 : 15}px`}
+      >
         간단한 자기소개
       </Styledlabel>
       <StyledTextArea
@@ -60,12 +70,16 @@ const TextArea = ({ id, width, height, color, ...restProps }) => {
 };
 
 TextArea.propTypes = {
-  /** TextArea 적용 할 width 크기를 설정합니다. */
+  /** TextArea 적용 할 세로높이를 설정합니다. */
   width: number.isRequired,
-  /** TextArea 적용 할 height 크기를 설정합니다. */
+  /** TextArea 적용 할 가로너비를 설정합니다. */
   height: number.isRequired,
   /** TextArea와 label에 적용 할 공통의 ID를 설정합니다. */
   id: string.isRequired,
+  /** label이 focus를 받았을 때 이동 할 위치를 설정합니다. */
+  transform: number,
+  /** label이 focus를 받았을 때 왼쪽여백의 크기를 설정합니다. */
+  marginLeft: number,
 };
 
 export default TextArea;

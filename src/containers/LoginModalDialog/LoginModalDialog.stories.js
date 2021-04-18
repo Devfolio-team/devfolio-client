@@ -1,4 +1,6 @@
 import LoginModalDialog from './LoginModalDialog';
+import viewport from '../../utils/applyStyle';
+import { forwardRef, React } from 'react';
 
 export default {
   title: 'Component/LoginModalDialog',
@@ -17,4 +19,4 @@ const Template = args => <LoginModalDialog {...args}>{args.children}</LoginModal
 
 export const ExampleLoginModalDialog = Template.bind({});
 
-ExampleLoginModalDialog.args = {};
+ExampleLoginModalDialog.args = { viewport, forwardRef };

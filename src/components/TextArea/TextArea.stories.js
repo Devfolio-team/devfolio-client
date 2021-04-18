@@ -13,6 +13,8 @@ export default {
   argTypes: {
     width: { control: 'number' },
     height: { control: 'number' },
+    transform: { control: 'number' },
+    marginLeft: { control: 'number' },
   },
 };
 
@@ -24,4 +26,6 @@ ExampleTextArea.args = {
   width: 300,
   height: 95,
   id: 'text1',
+  transform: 3.5,
+  marginLeft: 0,
 };

@@ -1,16 +1,11 @@
 import styled, { css } from 'styled-components';
 import { string, number, oneOf } from 'prop-types';
+import { applyStyle } from 'utils';
 
 // as 사용해서 heading level을 유동적으로 사용
 const StyledHeading = styled.h1`
-  ${({ $color, $fontSize, $fontWeight, $lineHeight, $background, $margin, $textAlign }) => css`
-    color: ${$color};
-    font-size: ${$fontSize}rem;
-    font-weight: ${$fontWeight};
-    line-height: ${$lineHeight}px;
-    background: ${$background};
-    margin: ${$margin};
-    text-align: ${$textAlign};
+  ${props => css`
+    ${applyStyle(props)}
   `}
 `;
 
