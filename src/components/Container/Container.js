@@ -32,6 +32,7 @@ const Container = ({
   borderRight,
   borderBottom,
   borderLeft,
+  cursor,
   ...restProps
 }) => {
   return (
@@ -57,6 +58,7 @@ const Container = ({
       $borderRight={borderRight}
       $borderBottom={borderBottom}
       $borderLeft={borderLeft}
+      $cursor={cursor}
       {...restProps}
     />
   );
