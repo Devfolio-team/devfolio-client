@@ -1,12 +1,24 @@
-import { A11yHidden, Button, Container, Heading, Logo, Portal } from 'components';
+import {
+  A11yHidden,
+  Button,
+  Container,
+  Heading,
+  Image,
+  Logo,
+  Portal,
+  UserNavigator,
+} from 'components';
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ReactComponent as arrowDownIcon } from 'assets/arrowDownIcon.svg';
+import { applyStyle } from 'utils';
 
 const StyledHeaderBar = styled.header`
   ${({ $background, $padding }) => css`
-    width: 100vw;
+    width: 100%;
     height: 64px;
     background: ${$background};
     display: flex;
@@ -16,7 +28,15 @@ const StyledHeaderBar = styled.header`
   `}
 `;
 
+const StyledArrowDownIcon = styled(arrowDownIcon)`
+  ${props => css`
+    ${applyStyle(props)}
+  `}
+`;
+
 const HeaderBar = ({ viewport }) => {
+  const { currentUser } = useSelector(state => state.auth);
+
   const { isDesktop, type } = viewport;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef(null);
@@ -41,7 +61,7 @@ const HeaderBar = ({ viewport }) => {
   };
 
   return (
-    <StyledHeaderBar $background="#F8F9FA">
+    <StyledHeaderBar $background="#25272B">
       <Container
         as="nav"
         display="flex"
@@ -49,29 +69,70 @@ const HeaderBar = ({ viewport }) => {
         height={64}
         justifyContent="space-between"
         alignItems="center"
-        background="#F8F9FA"
+        background="#25272B"
         padding={`0 ${isDesktop ? '70px' : '30px'}`}
+        position="relative"
       >
         <Heading as="h1">
           <Link to="/">
             <A11yHidden as="span">Devfolio</A11yHidden>
-            <Logo width={130} height={30} />
+            <Logo width={130} height={30} type="white" />
           </Link>
         </Heading>
-        <Button
-          width={84}
-          height={36}
-          color="#FFFFFF"
-          background="#25272B"
-          fontWeight={700}
-          fontSize={1.6}
-          borderRadius={16}
-          border="0"
-          onClick={onModalOpenHandler}
-          ref={beforeRef}
-        >
-          로그인
-        </Button>
+        {currentUser ? (
+          <Container display="flex" alignItems="center" margin="0">
+            <Button
+              width={105}
+              height={32}
+              margin="0 20px 0 0"
+              border="2px solid #f8f9fa"
+              background="#212121"
+              color="#f8f9fa"
+              fontWeight="700"
+              fontSize={1.6}
+              borderRadius={16}
+              padding="0"
+              ref={beforeRef}
+            >
+              새 글 작성
+            </Button>
+            <Container display="flex" alignItems="center" cursor="pointer">
+              <Button
+                width={40}
+                height={40}
+                border="0"
+                borderRadius="50%"
+                padding="0"
+                margin="0 5px 0 0"
+              >
+                <Image
+                  src={currentUser.profile_photo}
+                  alt=""
+                  width={40}
+                  height={40}
+                  borderRadius="50%"
+                />
+              </Button>
+              <StyledArrowDownIcon width={24} height={24} fill="#f8f9fa" />
+            </Container>
+            <UserNavigator />
+          </Container>
+        ) : (
+          <Button
+            width={84}
+            height={36}
+            color="#FFFFFF"
+            background="#25272B"
+            fontWeight={700}
+            fontSize={1.6}
+            borderRadius={16}
+            border="0"
+            onClick={onModalOpenHandler}
+            ref={beforeRef}
+          >
+            로그인
+          </Button>
+        )}
         {isModalOpen ? (
           <Portal id="modal-root">
             <LoginModalDialog
