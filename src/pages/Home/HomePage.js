@@ -16,7 +16,7 @@ const StyledHomePage = styled.main`
 `;
 
 const HomePage = ({ viewport }) => {
-  const { type, isMobile, isDesktop } = viewport;
+  const { type, isDesktop } = viewport;
 
   const [projects, setProjects] = useState([]);
 
