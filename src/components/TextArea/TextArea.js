@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { applyStyle } from 'utils';
 import { number, string, func } from 'prop-types';
 import { useState } from 'react';
 import { color } from 'utils';
@@ -7,27 +8,33 @@ import { A11yHidden } from 'components';
 const StyledLabel = styled.label.attrs(({ htmlFor }) => ({
   htmlFor,
 }))`
-  display: block;
-  transition: 0.4s;
-  transform: translateY(
-    ${({ focus, areaValue, beforeTranslate, afterTranslate }) =>
-      focus || areaValue ? afterTranslate : beforeTranslate}rem
-  );
-  font-size: 2rem;
-  margin-top: 15px;
-  margin-left: ${({ focus, areaValue, beforeMargin, afterMargin }) =>
-    focus || areaValue ? afterMargin : beforeMargin}px;
-  color: ${color.placeholder};
+  ${props => css`
+    ${applyStyle(props)}
+    display: block;
+    transition: 0.4s;
+    font-size: 2rem;
+    margin-top: 15px;
+    color: #7e7272;
+    transform: translateY(
+      ${({ focus, areaValue, beforeTranslate, afterTranslate }) =>
+        focus || areaValue ? afterTranslate : beforeTranslate}rem
+    );
+    margin-left: ${({ focus, areaValue, beforeMargin, afterMargin }) =>
+      focus || areaValue ? afterMargin : beforeMargin}px;
+    color: ${color.placeholder};
+  `}
 `;
 
 const StyledTextArea = styled.textarea`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  font-size: 2rem;
-  padding: 10px 0 0 8px;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  border: 0;
+  ${props =>
+    css`
+      ${applyStyle(props)}
+      font-size: 2rem;
+      padding: 10px 0 0 8px;
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      border: 0;
+    `}
 `;
 
 const TextArea = ({
@@ -91,7 +98,7 @@ TextArea.propTypes = {
   id: string.isRequired,
   /** TextArea 적용 할 width 크기를 설정합니다. */
   width: number.isRequired,
-  /** TextArea 적용 할 height 크기를 설정합니다. */
+  /** TextArea 적용 할 가로너비를 설정합니다. */
   height: number.isRequired,
   /** TextArea 폰트색을 설정합니다. */
   color: string,
