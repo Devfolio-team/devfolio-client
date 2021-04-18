@@ -7,6 +7,10 @@ const StyledContainer = styled.div`
   ${props =>
     css`
       ${applyStyle(props)}
+      //ProjectDuration Component에서 달력 포지션 때문에 사용..추후 수정필요
+      .react-datepicker-popper {
+        left: 115px !important;
+      }
     `}
 `;
 
