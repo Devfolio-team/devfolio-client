@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { number, string } from 'prop-types';
+import { string } from 'prop-types';
 import { applyStyle } from 'utils';
 
 const StyledParagraph = styled.p`
@@ -32,11 +32,11 @@ const Paragraph = ({
 
 Paragraph.propTypes = {
   /** Paragraph에 적용 할 글자 크기를 설정합니다. */
-  fontSize: number,
+  fontSize: string,
   /** Paragraph에 적용 할 글자 굵기를 설정합니다. */
-  fontWeight: number,
+  fontWeight: string,
   /** Paragraph에 적용 할 줄 높이를 설정합니다. */
-  lineHeight: number,
+  lineHeight: string,
   /** Paragraph에 적용 할 글자색을 설정합니다. */
   color: string,
   /** Paragraph에 적용 할 p태그의 높이를 설정합니다. */
