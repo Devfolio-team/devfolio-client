@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Button, Container, Heading, Input, SVGIcon, Modal, Dialog } from 'components';
 import { forwardRef, useEffect, React } from 'react';
-import axios from 'axios';
 
 const DivisionLine = styled.div`
   ${({ $height, $marginBottom }) => css`
@@ -120,7 +119,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               bgColor={'#ffffff'}
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
               onClick={() => {
-                window.location.href = 'http://devfolio.world:3020/auth/google';
+                window.location.href = 'http://localhost:3020/auth/google';
               }}
             >
               <IconContainer>
