@@ -26,6 +26,7 @@ export { default as TechStacks } from './TechStacks/TechStacks';
 export { default as Span } from './Span/Span';
 export { default as GithubLink } from './GithubLink/GithubLink';
 export { default as ProjectThumbnail } from './ProjectThumbnail/ProjectThumbnail';
+export { default as ProjectDuration } from './ProjectDuration/ProjectDuration';
 export { default as PublicStatus } from './PublicStatus/PublicStatus';
 export { default as DeploymentStatus } from './DeploymentStatus/DeploymentStatus';
 export { default as ProjectDescription } from './ProjectDescription/ProjectDescription';
