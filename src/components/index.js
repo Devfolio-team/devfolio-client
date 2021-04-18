@@ -26,3 +26,4 @@ export { default as TechStacks } from './TechStacks/TechStacks';
 export { default as Span } from './Span/Span';
 export { default as GithubLink } from './GithubLink/GithubLink';
 export { default as ProjectThumbnail } from './ProjectThumbnail/ProjectThumbnail';
+export { default as UserNavigator } from './UserNavigator/UserNavigator';
