@@ -86,7 +86,7 @@ border-bottom: ${$borderBottom || ''};
 border-left: ${$borderLeft || ''};
 color: ${$color || ''};
 font-size: ${$fontSize ? `${$fontSize}rem` : ''};
-font-weight: ${getUnitByType($fontWeight)};
+font-weight: ${$fontWeight || ''};
 min-width: ${getUnitByType($minWidth)};
 max-width: ${getUnitByType($maxWidth)};
 min-height: ${getUnitByType($minHeight)};
