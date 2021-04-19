@@ -24,7 +24,7 @@ export { default as ProjectItem } from './ProjectItem/ProjectItem';
 export { default as Time } from './Time/Time';
 export { default as TechStacks } from './TechStacks/TechStacks';
 export { default as Span } from './Span/Span';
-export { default as GithubLink } from './GithubLink/GithubLink';
+export { default as GithubRepoInput } from './GithubRepoInput/GithubRepoInput';
 export { default as ProjectThumbnail } from './ProjectThumbnail/ProjectThumbnail';
 export { default as UserNavigator } from './UserNavigator/UserNavigator';
 export { default as ProjectDuration } from './ProjectDuration/ProjectDuration';

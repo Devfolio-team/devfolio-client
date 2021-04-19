@@ -1,4 +1,4 @@
-import { number, string } from 'prop-types';
+import { number, string, oneOfType } from 'prop-types';
 import { ReactComponent as Angry } from 'assets/Angry.svg';
 import { ReactComponent as Blog } from 'assets/Blog.svg';
 import { ReactComponent as Email } from 'assets/Email.svg';
@@ -78,9 +78,9 @@ SVGIcon.defaultProps = {
 
 SVGIcon.propTypes = {
   /** SVGIcon에 적용 할 width를 설정합니다. */
-  width: number,
+  width: oneOfType([string, number]),
   /** SVGIcon에 적용 할 height를 설정합니다. */
-  height: number,
+  height: oneOfType([string, number]),
   /** SVGIcon에 적용 할 type를 설정합니다. */
   type: string.isRequired,
   /** SVGIcon에 적용 할 색상을 설정합니다. */

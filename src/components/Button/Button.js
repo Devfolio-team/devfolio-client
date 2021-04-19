@@ -96,9 +96,9 @@ Button.propTypes = {
   /** 버튼 이벤트 리스너는 함수만 설정 가능합니다. */
   onClick: func,
   /** 버튼 넓이를 설정합니다. */
-  width: string,
+  width: oneOfType([string, number]),
   /** 버튼 높이를 설정합니다. */
-  height: string,
+  height: oneOfType([string, number]),
   /** 버튼 배경색을 설정합니다. */
   background: string,
   /** 버튼 폰트색을 설정합니다. */
@@ -118,19 +118,19 @@ Button.propTypes = {
   /** 버튼의 왼쪽 테두리를 설정합니다. */
   borderLeft: string,
   /** 버튼 테두리의 둥글기를 설정합니다. */
-  borderRadius: number,
+  borderRadius: oneOfType([string, number]),
   /** 버튼 테두리의 패딩을 설정합니다. */
   padding: string,
   /** 버튼요소를 배치하는 방법을 지정합니다. */
   position: string,
   /** position 속성이 있을 경우 컴포넌트의 위치를 상단을 기준으로 설정합니다. */
-  top: string,
+  top: oneOfType([string, number]),
   /** position 속성이 있을 경우 컴포넌트의 위치를 오른쪽을 기준으로 설정합니다. */
-  right: string,
+  right: oneOfType([string, number]),
   /** position 속성이 있을 경우 컴포넌트의 위치를 왼쪽을 기준으로 설정합니다. */
-  left: string,
+  left: oneOfType([string, number]),
   /** position 속성이 있을 경우 컴포넌트의 위치를 하단을 기준으로 설정합니다. */
-  bottom: string,
+  bottom: oneOfType([string, number]),
   /** 버튼의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
   margin: string,
   /** 버튼의 display속성을 설정합니다. */

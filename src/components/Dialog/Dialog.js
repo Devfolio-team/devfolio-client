@@ -19,18 +19,21 @@ const StyledDialog = styled.div.attrs(({ tabIndex }) => ({
   `}
 `;
 
-const Dialog = forwardRef(({ width, height, padding, children, ...restProps }, ref) => (
-  <StyledDialog
-    id="dialog"
-    $width={width}
-    $height={height}
-    $padding="20px"
-    ref={ref}
-    {...restProps}
-  >
-    {children}
-  </StyledDialog>
-));
+const Dialog = forwardRef(
+  ({ width, height, padding, borderRadius, children, ...restProps }, ref) => (
+    <StyledDialog
+      id="dialog"
+      $width={width}
+      $height={height}
+      $padding="20px"
+      $borderRadius={borderRadius}
+      ref={ref}
+      {...restProps}
+    >
+      {children}
+    </StyledDialog>
+  )
+);
 
 Dialog.propTypes = {
   /** Dialog에 적용 할 가로 너비를 설정합니다. */
