@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { string, number, oneOf } from 'prop-types';
+import { string, number, oneOf, oneOfType } from 'prop-types';
 import { applyStyle } from 'utils';
 
 // as 사용해서 heading level을 유동적으로 사용
@@ -43,7 +43,7 @@ Heading.propTypes = {
   /** Heading에 적용 할 fontWeight를 설정합니다. */
   fontWeight: number,
   /** Heading에 적용 할 lineHeight를 설정합니다. */
-  lineHeight: number,
+  lineHeight: oneOfType([string, number]),
   /** Heading에 적용 할 backgroundColor를 설정합니다. */
   backgroundColor: string,
   /** Heading에 적용 할 Heading-level을 설정합니다. */

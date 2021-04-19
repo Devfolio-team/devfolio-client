@@ -5,18 +5,18 @@ import { color, applyStyle } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
 
 const StyledLabel = styled.label`
-  display: block;
-  transition: 0.4s;
+  ${props => css`
+    font-size: ${props.fontSize}rem;
+    display: block;
+    transition: 0.4s;
+  `}
   transform: translateY(
     ${({ focus, inputValue, beforeTranslate, afterTranslate }) =>
-      focus || inputValue ? afterTranslate : beforeTranslate}rem
+    focus || inputValue ? afterTranslate : beforeTranslate}rem
   );
   margin-left: ${({ focus, inputValue, beforeMargin, afterMargin }) =>
     focus || inputValue ? afterMargin : beforeMargin}px;
   color: ${color.placeholder};
-  ${props => css`
-    font-size: ${props.$labelFontSize};
-  `}
 `;
 
 const StyledInput = styled.input.attrs(({ type, id }) => ({
@@ -74,7 +74,7 @@ const Input = ({
       ) : (
         <StyledLabel
           htmlFor={id}
-          $labelFontSize={labelFontSize}
+          fontSize={labelFontSize}
           focus={isFocused}
           inputValue={value}
           beforeTranslate={beforeTranslate}
@@ -113,7 +113,6 @@ const Input = ({
 };
 
 Input.defaultProps = {
-  id: 'exInput1',
   type: 'text',
   label: 'Example',
   fontSize: 1.2,
@@ -130,13 +129,13 @@ Input.propTypes = {
   /** 인풋의 label값을 설정합니다. */
   label: string.isRequired,
   /** 인풋의 placeholder의 기본 위치(위 아래로 이동)를 설정합니다. */
-  beforeTranslate: number,
+  beforeTranslate: oneOfType([string, number]),
   /** 인풋의 placeholder의 움직일 위치(위 아래로 이동)를 설정합니다. */
-  afterTranslate: number,
+  afterTranslate: oneOfType([string, number]),
   /** 인풋의 placeholder 기본 위치(좌우로 이동) 설정 합니다. */
-  beforeMargin: number,
+  beforeMargin: oneOfType([string, number]),
   /** 인풋의 placeholder 움직일 위치(좌우로 이동) 설정합니다. */
-  afterMargin: number,
+  afterMargin: oneOfType([string, number]),
   /** 인풋 넓이를 설정합니다. */
   width: oneOfType([string, number]),
   /** 인풋 높이를 설정합니다. */
