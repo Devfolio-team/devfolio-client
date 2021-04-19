@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  min-height: 87.4vh;
+  min-height: 100vh;
 `;
 
 function App() {
