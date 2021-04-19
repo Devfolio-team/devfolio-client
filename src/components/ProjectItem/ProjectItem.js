@@ -4,7 +4,6 @@ import React from 'react';
 import { css } from 'styled-components';
 import { string, number } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { applyStyle } from 'utils';
 
 const StyledProjectItem = styled.li`
   ${() => css`
@@ -23,10 +22,12 @@ const StyledProjectItem = styled.li`
 `;
 
 const StyledLink = styled(Link)`
-  ${props => css`
-    ${applyStyle(props)}
-  `}
+  display: block;
+  width: 100%;
+  height: 100%;
 `;
+
+StyledLink.displayName = 'Link';
 
 const ProjectItem = ({
   projectId,
@@ -55,14 +56,10 @@ const ProjectItem = ({
       </Link>
       <Container width={301} height={167} padding="16px" background="#FFFFFF">
         <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
-          <StyledLink to={`project/${projectId}`} $display="block" width="100%">
-            {subject}
-          </StyledLink>
+          <StyledLink to={`project/${projectId}`}>{subject}</StyledLink>
         </Heading>
         <Paragraph color="#495057" fontSize={1.4} height={65} margin="0 0 34px 0" cursor="pointer">
-          <StyledLink to={`project/${projectId}`} $display="block" $width="100%" $height="100%">
-            {planIntention}
-          </StyledLink>
+          <StyledLink to={`project/${projectId}`}>{planIntention}</StyledLink>
         </Paragraph>
         <Container color="#868E96">
           <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
