@@ -12,15 +12,8 @@ const StyledProjectList = styled.ul`
 `;
 
 const ProjectList = ({ viewport, children }) => {
-  const { vw, type } = viewport;
-  return (
-    <StyledProjectList
-      $width={vw > 1440 ? '1440px' : '100%'}
-      $padding={type === 'xs' ? '0 14px' : 0}
-    >
-      {children}
-    </StyledProjectList>
-  );
+  const { vw } = viewport;
+  return <StyledProjectList $width={vw > 1440 ? '1440px' : '100%'}>{children}</StyledProjectList>;
 };
 
 ProjectList.propTypes = {
