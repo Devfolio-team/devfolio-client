@@ -8,7 +8,7 @@ import {
   Portal,
   UserNavigator,
 } from 'components';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';

@@ -13,6 +13,11 @@ import {
 import useDetectViewport from 'hooks/useDetectViewport';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const StyledContainer = styled.div`
+  min-height: 87.4vh;
+`;
 
 function App() {
   const viewport = useDetectViewport();
@@ -39,31 +44,33 @@ function App() {
   return (
     <Router>
       <HeaderBar viewport={viewport} />
-      <Switch>
-        <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
-        <Route
-          path="/portfolio/:portfoilo_id"
-          exact
-          render={() => <PortfolioPage viewport={viewport} />}
-        />
-        <Route
-          path="/edit/portfolio/:portfolio_id"
-          exact
-          render={() => <PortfolioEditPage viewport={viewport} />}
-        />
-        <Route
-          path="/project/:project_id"
-          exact
-          render={() => <ProjectPage viewport={viewport} />}
-        />
-        <Route
-          path="/edit/project/:project_id"
-          exact
-          render={() => <ProjectEditPage viewport={viewport} />}
-        />
-        <Route path="/sign_in" exact component={SignIn} />
-        <Redirect to="page-not-found" render={() => <PageNotFound viewport={viewport} />} />
-      </Switch>
+      <StyledContainer>
+        <Switch>
+          <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
+          <Route
+            path="/portfolio/:portfoilo_id"
+            exact
+            render={() => <PortfolioPage viewport={viewport} />}
+          />
+          <Route
+            path="/edit/portfolio/:portfolio_id"
+            exact
+            render={() => <PortfolioEditPage viewport={viewport} />}
+          />
+          <Route
+            path="/project/:project_id"
+            exact
+            render={() => <ProjectPage viewport={viewport} />}
+          />
+          <Route
+            path="/edit/project/:project_id"
+            exact
+            render={() => <ProjectEditPage viewport={viewport} />}
+          />
+          <Route path="/sign_in" exact component={SignIn} />
+          <Redirect to="page-not-found" render={() => <PageNotFound viewport={viewport} />} />
+        </Switch>
+      </StyledContainer>
       <FooterBar />
     </Router>
   );
