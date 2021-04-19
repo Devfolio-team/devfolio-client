@@ -6,11 +6,11 @@ import { string, number } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const StyledProjectItem = styled.li`
-  ${() => css`
+  ${({ $width, $margin }) => css`
     display: inline-block;
-    width: 301px;
-    height: 380px;
-    margin: 16px;
+    width: ${$width};
+    height: 100%;
+    margin: 16px ${$margin};
     border: 1px solid transparent;
     border-radius: 5px;
     overflow: hidden;
@@ -39,7 +39,10 @@ const ProjectItem = ({
   author,
   authorProfile,
   likeCount,
+  viewport,
 }) => {
+  const { vw } = viewport;
+
   const createDate = new Date(created);
   const year = createDate.getFullYear();
   const month = createDate.getMonth() + 1;
@@ -50,11 +53,15 @@ const ProjectItem = ({
   const dateTime = createDate.toISOString();
 
   return (
-    <StyledProjectItem>
+    <StyledProjectItem
+      $width={vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'}
+      $margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '0'}
+    >
       <Link to={`project/${projectId}`}>
-        <Image src={thumbnail} alt="" width="100%" height={167} cursor="pointer" />
+        {/* 스크린 리더의 흐름상 Heading요소 바로 뒤에 있기 때문에 alt속성을 비워줌 */}
+        <Image src={thumbnail} alt="" width="100%" cursor="pointer" />
       </Link>
-      <Container width={301} height={167} padding="16px" background="#FFFFFF">
+      <Container width="100%" height={167} padding="16px" background="#FFFFFF">
         <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
           <StyledLink to={`project/${projectId}`}>{subject}</StyledLink>
         </Heading>
@@ -68,7 +75,7 @@ const ProjectItem = ({
         </Container>
       </Container>
       <Container
-        width={301}
+        width="100%"
         height={44}
         padding="10px 16px"
         background="#FFFFFF"
