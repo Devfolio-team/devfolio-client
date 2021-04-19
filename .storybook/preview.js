@@ -1,6 +1,7 @@
 // 한국어 설정
 import ko from 'axe-core/locales/ko.json';
 import { themes } from '@storybook/theming';
+import StoreProvider from '../src/store/store';
 
 export const parameters = {
   layout: 'centered',
@@ -29,3 +30,13 @@ export const globalTypes = {
     },
   },
 };
+
+export const decorators = [
+  Story => (
+    <>
+      <StoreProvider>
+        <Story />
+      </StoreProvider>
+    </>
+  ),
+];

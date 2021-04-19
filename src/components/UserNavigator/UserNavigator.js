@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { signOutMiddleware } from 'store/modules/auth/authMiddleware';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
+import { oneOf, oneOfType, string, number } from 'prop-types';
 
 const StyledUl = styled.ul`
   ${props =>
@@ -61,13 +62,17 @@ const UserNavigator = ({ height, tabIndex }) => {
   return (
     <StyledUl $height={height}>
       <StyledUserNavigatorMenuItem $color="#ffffff" $fontSize={1.6} $fontWeight={700}>
-        <StyledLink to={`/portfolio/${currentUser.user_id}`} $padding="20px" tabIndex={tabIndex}>
+        <StyledLink
+          to={`/portfolio/${currentUser ? currentUser.user_id : ''}`}
+          $padding="20px"
+          tabIndex={tabIndex}
+        >
           내 포트폴리오
         </StyledLink>
       </StyledUserNavigatorMenuItem>
       <StyledUserNavigatorMenuItem>
         <StyledLink
-          to={`/edit/portfolio/${currentUser.user_id}`}
+          to={`/edit/portfolio/${currentUser ? currentUser.user_id : ''}`}
           $padding="20px"
           tabIndex={tabIndex}
         >
@@ -94,6 +99,15 @@ const UserNavigator = ({ height, tabIndex }) => {
       </StyledUserNavigatorMenuItem>
     </StyledUl>
   );
+};
+
+UserNavigator.defaultProps = {
+  tabIndex: -1,
+};
+
+UserNavigator.propTypes = {
+  height: oneOfType([string, number]),
+  tabIndex: oneOf([-1, 0]),
 };
 
 export default UserNavigator;
