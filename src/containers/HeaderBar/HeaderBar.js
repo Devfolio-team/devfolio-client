@@ -8,7 +8,7 @@ import {
   Portal,
   UserNavigator,
 } from 'components';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
@@ -20,6 +20,8 @@ const StyledHeaderBar = styled.header`
   ${({ $background, $padding }) => css`
     width: 100%;
     height: 64px;
+    position: fixed;
+    z-index: 100;
     background: ${$background};
     display: flex;
     justify-content: space-between;
@@ -38,7 +40,15 @@ const HeaderBar = ({ viewport }) => {
   const { currentUser } = useSelector(state => state.auth);
 
   const { isDesktop, type } = viewport;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [userNavigatorIsOepn, setUserNavigatorIsOepn] = useState(false);
+
+  const onNavigatorToggleHandler = () => {
+    setUserNavigatorIsOepn(!userNavigatorIsOepn);
+  };
+
   const ref = useRef(null);
   const beforeRef = useRef(null);
 
@@ -82,7 +92,7 @@ const HeaderBar = ({ viewport }) => {
         {currentUser ? (
           <Container display="flex" alignItems="center" margin="0">
             <Button
-              width={105}
+              width={125}
               height={32}
               margin="0 20px 0 0"
               border="2px solid #f8f9fa"
@@ -92,11 +102,15 @@ const HeaderBar = ({ viewport }) => {
               fontSize={1.6}
               borderRadius={16}
               padding="0"
-              ref={beforeRef}
             >
-              새 글 작성
+              프로젝트 등록
             </Button>
-            <Container display="flex" alignItems="center" cursor="pointer">
+            <Container
+              display="flex"
+              alignItems="center"
+              cursor="pointer"
+              onClick={onNavigatorToggleHandler}
+            >
               <Button
                 width={40}
                 height={40}
@@ -113,9 +127,18 @@ const HeaderBar = ({ viewport }) => {
                   borderRadius="50%"
                 />
               </Button>
-              <StyledArrowDownIcon width={24} height={24} fill="#f8f9fa" />
+              <StyledArrowDownIcon
+                width={24}
+                height={24}
+                fill="#f8f9fa"
+                $transition=".5s"
+                $transform={`${userNavigatorIsOepn ? 'rotate(0.5turn)' : ''}`}
+              />
             </Container>
-            <UserNavigator />
+            <UserNavigator
+              height={userNavigatorIsOepn ? 171 : 0}
+              tabIndex={userNavigatorIsOepn ? 0 : -1}
+            />
           </Container>
         ) : (
           <Button

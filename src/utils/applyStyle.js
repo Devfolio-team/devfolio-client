@@ -60,6 +60,7 @@ const applyStyle = ({
   $fill,
   $transition,
   $verticalAlign,
+  $hoverBackground,
 }) => `
 display: ${$display || ''};
 width: ${getUnitByType($width)};
@@ -113,6 +114,9 @@ transition: ${$transition || ''};
 vertical-align: ${$verticalAlign || ''};
 path {
   fill: ${$fill || ''};
+}
+&:hover {
+  background: ${$hoverBackground};
 }
 `;
 

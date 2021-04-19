@@ -43,15 +43,22 @@ function App() {
         <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
         <Route
           path="/portfolio/:portfoilo_id"
+          exact
           render={() => <PortfolioPage viewport={viewport} />}
         />
         <Route
-          path="/portfolio_edit/:portfolio_id"
+          path="/edit/portfolio/:portfolio_id"
+          exact
           render={() => <PortfolioEditPage viewport={viewport} />}
         />
-        <Route path="/project/:project_id" render={() => <ProjectPage viewport={viewport} />} />
         <Route
-          path="/project_edit/:project_id"
+          path="/project/:project_id"
+          exact
+          render={() => <ProjectPage viewport={viewport} />}
+        />
+        <Route
+          path="/edit/project/:project_id"
+          exact
           render={() => <ProjectEditPage viewport={viewport} />}
         />
         <Route path="/sign_in" exact component={SignIn} />
