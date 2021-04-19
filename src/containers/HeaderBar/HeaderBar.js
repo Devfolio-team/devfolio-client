@@ -126,6 +126,7 @@ const HeaderBar = ({ viewport }) => {
             fontWeight={700}
             fontSize={1.6}
             borderRadius={16}
+            padding="0"
             border="0"
             onClick={onModalOpenHandler}
             ref={beforeRef}
