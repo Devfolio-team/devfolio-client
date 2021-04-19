@@ -91,10 +91,12 @@ const HomePage = ({ viewport }) => {
               return (
                 <ProjectItem
                   key={project.project_id}
+                  projectId={project.project_id}
                   thumbnail={project.thumbnail}
                   subject={project.subject}
                   planIntention={project.plan_intention}
                   created={project.created}
+                  authorId={project.user_user_id}
                   author={project.nickname}
                   authorProfile={project.profile_photo}
                   viewport={viewport}

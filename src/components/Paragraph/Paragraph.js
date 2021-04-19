@@ -16,6 +16,7 @@ const Paragraph = ({
   height,
   padding,
   margin,
+  cursor,
   ...restProps
 }) => (
   <StyledParagraph
@@ -26,6 +27,7 @@ const Paragraph = ({
     $height={height}
     $padding={padding}
     $margin={margin}
+    $cursor={cursor}
     {...restProps}
   />
 );

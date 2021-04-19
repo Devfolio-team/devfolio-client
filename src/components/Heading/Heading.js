@@ -17,6 +17,7 @@ const Heading = ({
   background,
   margin,
   textAlign,
+  cursor,
   ...restProps
 }) => (
   <StyledHeading
@@ -27,6 +28,7 @@ const Heading = ({
     $background={background}
     $margin={margin}
     $textAlign={textAlign}
+    $cursor={cursor}
     {...restProps}
   ></StyledHeading>
 );
