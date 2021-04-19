@@ -2,6 +2,7 @@ import { styled } from '@storybook/theming';
 import { Container, Heading, Image, Paragraph, Span, SVGIcon, Time } from 'components';
 import React from 'react';
 import { css } from 'styled-components';
+import { string, number } from 'prop-types';
 
 const StyledProjectItem = styled.li`
   ${() => css`
@@ -12,12 +13,10 @@ const StyledProjectItem = styled.li`
     border: 1px solid transparent;
     border-radius: 5px;
     overflow: hidden;
-    flex
   `}
 `;
 
 const ProjectItem = ({
-  children,
   thumbnail,
   subject,
   planIntention,
@@ -46,7 +45,7 @@ const ProjectItem = ({
           {planIntention}
         </Paragraph>
         <Container color="#868E96">
-          <Time dateTime={dateTime} color="#868E96" fontSize={1.2}>
+          <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
             {createdText}
           </Time>
         </Container>
@@ -70,7 +69,7 @@ const ProjectItem = ({
             height={24}
             borderRadius="50%"
           />
-          <Span margin="0 0 0 8px" color="#868E96" fontSize={1.2} verticalAlign="middle">
+          <Span margin="0 0 0 8px" color="#70777d" fontSize={1.2} verticalAlign="middle">
             by
           </Span>
           <Span verticalAlign="middle" fontSize={1.2}>
@@ -85,6 +84,23 @@ const ProjectItem = ({
       </Container>
     </StyledProjectItem>
   );
+};
+
+ProjectItem.propTypes = {
+  /** 프로젝트의 썸네일을 url형식으로 입력해줍니다. */
+  thumbnail: string,
+  /** 프로젝트의 제목을 입력해줍니다. */
+  subject: string,
+  /** 프로젝트의 기획의도를 입력해줍니다. */
+  planIntention: string,
+  /** 프로젝트를 애플리케이션에 등록 날짜를 ISOString형식으로 입력해줍니다. */
+  created: string,
+  /** 프로젝트를 애플리케이션에 등록한 유저의 닉네임을 입력해줍니다. */
+  author: string,
+  /** 프로젝트를 애플리케이션에 등록한 유저의 프로필 사진을 url형식으로 입력해줍니다. */
+  authorProfile: string,
+  /** 프로젝트의 좋아요 갯수를 입력해줍니다. */
+  likeCount: number,
 };
 
 export default ProjectItem;
