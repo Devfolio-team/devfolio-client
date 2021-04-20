@@ -38,6 +38,8 @@ const Container = ({
   borderLeft,
   cursor,
   overflow,
+  minWidth,
+  minHeight,
   ...restProps
 }) => {
   return (
@@ -65,6 +67,8 @@ const Container = ({
       $borderLeft={borderLeft}
       $cursor={cursor}
       $overflow={overflow}
+      $minWidth={minWidth}
+      $minHeight={minHeight}
       {...restProps}
     />
   );
