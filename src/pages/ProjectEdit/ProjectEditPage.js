@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ProjectEditForm } from 'containers';
 
 const StyledProjectEditPage = styled.main``;
 
 const ProjectEditPage = () => {
-  return <StyledProjectEditPage></StyledProjectEditPage>;
+  return (
+    <StyledProjectEditPage>
+      <ProjectEditForm />
+    </StyledProjectEditPage>
+  );
 };
 
 ProjectEditPage.defaultProps = {};
