@@ -63,6 +63,9 @@ const applyStyle = ({
   $hoverBackground,
   childrenPointerEvents,
   focusOutline,
+  $textOverflow,
+  webkitLineClamp,
+  webkitBoxOrient,
 }) => `
 display: ${$display || ''};
 width: ${getUnitByType($width)};
@@ -126,6 +129,9 @@ path {
 &:focus:not(:focus-visible) {
   outline: ${focusOutline || ''};
 }
+text-overflow: ${$textOverflow || ''};
+-webkit-line-clamp: ${webkitLineClamp || ''};
+-webkit-box-orient: ${webkitBoxOrient || ''};
 `;
 
 export default applyStyle;

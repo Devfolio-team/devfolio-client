@@ -9,6 +9,7 @@ const StyledParagraph = styled.p`
 `;
 
 const Paragraph = ({
+  display,
   fontSize,
   fontWeight,
   lineHeight,
@@ -17,9 +18,12 @@ const Paragraph = ({
   padding,
   margin,
   cursor,
+  overflow,
+  textOverflow,
   ...restProps
 }) => (
   <StyledParagraph
+    $display={display}
     $fontSize={fontSize}
     $fontWeight={fontWeight}
     $lineHeight={lineHeight}
@@ -28,6 +32,8 @@ const Paragraph = ({
     $padding={padding}
     $margin={margin}
     $cursor={cursor}
+    $overflow={overflow}
+    $textOverflow={textOverflow}
     {...restProps}
   />
 );

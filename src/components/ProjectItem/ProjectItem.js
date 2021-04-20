@@ -65,17 +65,29 @@ const ProjectItem = ({
         <Image src={thumbnail} alt="" width="100%" cursor="pointer" />
       </StyledLink>
       <Container width="100%" height={167} padding="16px" background="#FFFFFF">
-        <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
-          <StyledLink to={`project/${projectId}`}>{subject}</StyledLink>
-        </Heading>
-        <Paragraph color="#495057" fontSize={1.4} height={65} margin="0 0 34px 0" cursor="pointer">
-          <StyledLink to={`project/${projectId}`}>{planIntention}</StyledLink>
-        </Paragraph>
-        <Container color="#868E96">
+        <StyledLink to={`project/${projectId}`}>
+          <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
+            {subject}
+          </Heading>
+          <Paragraph
+            color="#495057"
+            fontSize={1.4}
+            height={82}
+            margin="0 0 18px 0"
+            cursor="pointer"
+            display="-webkit-box"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            webkitLineClamp={4}
+            webkitBoxOrient="vertical"
+            lineHeight={21}
+          >
+            {planIntention}
+          </Paragraph>
           <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
             {createdText}
           </Time>
-        </Container>
+        </StyledLink>
       </Container>
       <Container
         width="100%"

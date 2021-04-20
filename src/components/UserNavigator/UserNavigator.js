@@ -51,7 +51,7 @@ const StyledUserNavigatorMenuItem = styled.li`
   `}
 `;
 
-const UserNavigator = ({ height, tabIndex, navigatorTabCloseHandler, ...restProps }) => {
+const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, ...restProps }) => {
   const { currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
@@ -62,6 +62,14 @@ const UserNavigator = ({ height, tabIndex, navigatorTabCloseHandler, ...restProp
     history.push('/');
   };
 
+  const onCloseNavigatorShiftTabHandler = e => {
+    if (e.key === 'Tab' && !e.shiftKey) setUserNavigatorIsOepn(false);
+  };
+
+  const onCloseNavigatorTabHandler = e => {
+    if (e.key === 'Tab' && e.shiftKey) setUserNavigatorIsOepn(false);
+  };
+
   return (
     <StyledUl $height={height} {...restProps}>
       <StyledUserNavigatorMenuItem $color="#ffffff" $fontSize={1.6} $fontWeight={700}>
@@ -69,6 +77,7 @@ const UserNavigator = ({ height, tabIndex, navigatorTabCloseHandler, ...restProp
           to={`/portfolio/${currentUser ? currentUser.user_id : ''}`}
           $padding="20px"
           tabIndex={tabIndex}
+          onKeyDown={onCloseNavigatorTabHandler}
         >
           내 포트폴리오
         </StyledLink>
@@ -95,7 +104,7 @@ const UserNavigator = ({ height, tabIndex, navigatorTabCloseHandler, ...restProp
           height="100%"
           hoverBackground="#F0F0F0"
           onClick={onSignOutHandler}
-          onKeyDown={navigatorTabCloseHandler}
+          onKeyDown={onCloseNavigatorShiftTabHandler}
           tabIndex={tabIndex}
         >
           로그아웃

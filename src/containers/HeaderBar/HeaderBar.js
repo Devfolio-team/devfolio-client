@@ -54,11 +54,6 @@ const HeaderBar = ({ viewport }) => {
     setUserNavigatorIsOepn(false);
   };
 
-  const onNavigatorTabCloseHandler = ({ key }) => {
-    if (key !== 'Tab') return;
-    setUserNavigatorIsOepn(false);
-  };
-
   const ref = useRef(null);
   const beforeRef = useRef(null);
 
@@ -161,7 +156,7 @@ const HeaderBar = ({ viewport }) => {
             <UserNavigator
               height={userNavigatorIsOepn ? 171 : 0}
               tabIndex={userNavigatorIsOepn ? 0 : -1}
-              navigatorTabCloseHandler={onNavigatorTabCloseHandler}
+              setUserNavigatorIsOepn={setUserNavigatorIsOepn}
             />
           </Container>
         ) : (
