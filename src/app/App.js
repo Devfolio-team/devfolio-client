@@ -63,7 +63,7 @@ function App() {
             render={() => <ProjectPage viewport={viewport} />}
           />
           <Route
-            path="/edit/project/:project_id"
+            path="/edit/project/:project_id?"
             exact
             render={() => <ProjectEditPage viewport={viewport} />}
           />
