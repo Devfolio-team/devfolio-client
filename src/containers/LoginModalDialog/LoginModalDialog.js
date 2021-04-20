@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Button, Container, Heading, Input, SVGIcon, Modal, Dialog } from 'components';
+import { Button, Container, Heading, SVGIcon, Modal, Dialog } from 'components';
 import { forwardRef, useEffect, React } from 'react';
 
 const DivisionLine = styled.div`
@@ -97,9 +97,9 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
           tabIndex={0}
         >
           <Heading
-            as={'h2'}
+            as="h2"
             fontSize={+`${isDesktop ? 3.5 : type === 'sm' ? 3 : 2.5}`}
-            color={'#FFFFFF'}
+            color="#FFFFFF"
             margin="10px 0 35px 0"
             textAlign="center"
           >
@@ -116,7 +116,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               width={`${isDesktop ? '47%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
-              bgColor={'#ffffff'}
+              bgColor="#ffffff"
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
               fontWeight={700}
               onClick={() => {
@@ -133,7 +133,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               width={`${isDesktop ? '47%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
-              bgColor={'#ffffff'}
+              bgColor="#ffffff"
               fontWeight={700}
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
             >
@@ -176,7 +176,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               background={'#2c3035'}
               border="1px solid #ffffff"
               borderRadius={30}
-              color={'#ffffff'}
+              color="#ffffff"
               display="block"
               margin={`${isDesktop ? '55px auto 0 auto' : '10px 0 0 0 '}`}
             >
@@ -186,7 +186,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
           <Button
             width={22}
             height={22}
-            background={'transparent'}
+            background="transparent"
             border="0"
             position="absolute"
             top="20px"
