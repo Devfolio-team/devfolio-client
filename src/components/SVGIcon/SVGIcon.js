@@ -5,6 +5,7 @@ import { ReactComponent as Email } from 'assets/Email.svg';
 import { ReactComponent as Empty } from 'assets/Empty.svg';
 import { ReactComponent as GithubWhite } from 'assets/GithubWhite.svg';
 import { ReactComponent as GithubBlack } from 'assets/GithubBlack.svg';
+import { ReactComponent as GithubBlue } from 'assets/GithubBlue.svg';
 import { ReactComponent as Google } from 'assets/Google.svg';
 import { ReactComponent as HeartBlack } from 'assets/HeartBlack.svg';
 import { ReactComponent as HeartEmpty } from 'assets/HeartEmpty.svg';
@@ -15,6 +16,7 @@ import { ReactComponent as X } from 'assets/X.svg';
 import { ReactComponent as Camera } from 'assets/Camera.svg';
 import { ReactComponent as Folder } from 'assets/Folder.svg';
 import { ReactComponent as Calendar } from 'assets/Calendar.svg';
+import { ReactComponent as WebSite } from 'assets/WebSite.svg';
 
 const SVGIcon = ({ type, width, height, ...restProps }) => {
   let SVGIcon = null;
@@ -67,6 +69,12 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       break;
     case 'Calendar':
       SVGIcon = Calendar;
+      break;
+    case 'GithubBlue':
+      SVGIcon = GithubBlue;
+      break;
+    case 'WebSite':
+      SVGIcon = WebSite;
       break;
   }
   return <SVGIcon width={width} heigth={height} {...restProps} />;
