@@ -4,3 +4,4 @@ export { default as PortfolioEditPage } from 'pages/PortfolioEdit/PortfolioEditP
 export { default as ProjectPage } from 'pages/Project/ProjectPage';
 export { default as ProjectEditPage } from 'pages/ProjectEdit/ProjectEditPage';
 export { default as PageNotFound } from 'pages/PageNotFound/PageNotFound';
+export { default as SignIn } from 'pages/SignIn/SignIn';

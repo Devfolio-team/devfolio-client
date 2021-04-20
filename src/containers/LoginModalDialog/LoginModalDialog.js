@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
-import { Button, Container, Heading, Input, SVGIcon, Modal, Dialog } from 'components';
+import { Button, Container, Heading, SVGIcon, Modal, Dialog } from 'components';
 import { forwardRef, useEffect, React } from 'react';
-import axios from 'axios';
 
 const DivisionLine = styled.div`
   ${({ $height, $marginBottom }) => css`
@@ -91,16 +90,16 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
         <Dialog
           ref={ref}
           role="dialog"
-          width={`${isDesktop ? '710px' : type === 'sm' ? '80%' : '266px'}`}
-          height={`${isDesktop ? '500px' : type === 'sm' ? '500px' : '420px'}`}
+          width={`${isDesktop ? '710px' : type === 'sm' ? '85%' : '85%'}`}
+          height={`${isDesktop ? '500px' : type === 'sm' ? '400px' : '340px'}`}
           padding={`${isDesktop ? '30px' : type === 'sm' ? '50px' : '30px'}`}
-          borderRadius={8}
+          borderRadius={5}
           tabIndex={0}
         >
           <Heading
-            as={'h2'}
-            fontSize={3.5}
-            color={'#FFFFFF'}
+            as="h2"
+            fontSize={+`${isDesktop ? 3.5 : type === 'sm' ? 3 : 2.5}`}
+            color="#FFFFFF"
             margin="10px 0 35px 0"
             textAlign="center"
           >
@@ -117,10 +116,11 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               width={`${isDesktop ? '47%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
-              bgColor={'#ffffff'}
+              bgColor="#ffffff"
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
+              fontWeight={700}
               onClick={() => {
-                window.location.href = 'http://devfolio.world:3020/auth/google';
+                window.location.href = 'http://localhost:3020/auth/google';
               }}
             >
               <IconContainer>
@@ -133,11 +133,12 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               width={`${isDesktop ? '47%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
-              bgColor={'#ffffff'}
+              bgColor="#ffffff"
+              fontWeight={700}
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
             >
               <IconContainer>
-                <SVGIcon type={'GithubBlack'} width="30px" height="30px"></SVGIcon>
+                <SVGIcon type="GithubBlack" width="30px" height="30px"></SVGIcon>
                 <SVGIconName>Github</SVGIconName>
               </IconContainer>
             </Button>
@@ -152,12 +153,12 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             ></DivisionLine>
           </Container>
           <DialogForm onSubmit={onSubmitHandler}>
-            <Input
-              id={'dialogInput'}
+            {/* <Input
+              id="dialogInput"
               aria-label="이메일 로그인"
               label="이메일 주소를 입력해주세요 :)"
               autoComplete="off"
-              labelsize={`${isDesktop ? '2' : type === 'sm' ? '1.5' : '1.1'}`}
+              labelFontSize={`${isDesktop ? '2' : type === 'sm' ? '1.5' : '1.1'}`}
               width={`${isDesktop ? '550px' : type === 'sm' ? '100%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
@@ -168,14 +169,14 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               afterTranslate={`${isDesktop ? '-1.5' : type === 'sm' ? '-1' : '-1'}`}
               beforeMargin={`${isDesktop ? '80' : type === 'sm' ? '20' : '20'}`}
               afterMargin={`${isDesktop ? '60' : type === 'sm' ? '4.2' : '10'}`}
-            />
+            /> */}
             <Button
               width={`${isDesktop ? '195px' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '65px'}`}
               background={'#2c3035'}
               border="1px solid #ffffff"
               borderRadius={30}
-              color={'#ffffff'}
+              color="#ffffff"
               display="block"
               margin={`${isDesktop ? '55px auto 0 auto' : '10px 0 0 0 '}`}
             >
@@ -185,7 +186,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
           <Button
             width={22}
             height={22}
-            background={'transparent'}
+            background="transparent"
             border="0"
             position="absolute"
             top="20px"

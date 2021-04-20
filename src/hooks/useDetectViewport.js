@@ -12,6 +12,7 @@ const initialState = {
   type: '',
   isMobile: false,
   isDesktop: false,
+  vw: 0,
 };
 
 const reducer = (state, action) => {
@@ -46,30 +47,35 @@ export default function useDetectViewport(viewports = initialViewports) {
           type: 'xs',
           isMobile: true,
           isDesktop: false,
+          vw,
         });
       } else if (vw >= xs && vw < sm) {
         updateState({
           type: 'sm',
           isMobile: true,
           isDesktop: false,
+          vw,
         });
       } else if (vw >= sm && vw < md) {
         updateState({
           type: 'md',
           isMobile: false,
           isDesktop: true,
+          vw,
         });
       } else if (vw >= md && vw < lg) {
         updateState({
           type: 'lg',
           isMobile: false,
           isDesktop: true,
+          vw,
         });
       } else if (vw >= lg) {
         updateState({
           type: 'xl',
           isMobile: false,
           isDesktop: true,
+          vw,
         });
       }
     };

@@ -136,6 +136,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #212121;
+  background-color: #f8f9fa;
 }
 
 body,
@@ -145,6 +146,10 @@ body::after,
 body *::before,
 body *::after {
   box-sizing: border-box;
+}
+
+main {
+  padding-top: 64px;
 }
 
 a {

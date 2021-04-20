@@ -13,6 +13,8 @@ export default {
   argTypes: {
     width: { control: 'number' },
     height: { control: 'number' },
+    transform: { control: 'number' },
+    marginLeft: { control: 'number' },
     id: { control: 'text' },
     color: { control: 'color' },
     value: { control: 'text' },
@@ -34,4 +36,10 @@ ExampleTextArea.args = {
   width: 300,
   height: 95,
   id: 'text1',
+  label: 'text를 입력하세요',
+  value: '',
+  beforeTranslate: 3,
+  afterTranslate: -1,
+  beforeMargin: 10,
+  afterMargin: 0,
 };

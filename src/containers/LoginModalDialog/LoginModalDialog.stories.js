@@ -1,4 +1,6 @@
 import LoginModalDialog from './LoginModalDialog';
+import { React, useRef } from 'react';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 export default {
   title: 'Component/LoginModalDialog',
@@ -13,7 +15,15 @@ export default {
   argTypes: {},
 };
 
-const Template = args => <LoginModalDialog {...args}>{args.children}</LoginModalDialog>;
+const Template = args => {
+  const ref = useRef(null);
+  const viewport = useDetectViewport();
+  return (
+    <LoginModalDialog ref={ref} viewport={viewport} {...args}>
+      {args.children}
+    </LoginModalDialog>
+  );
+};
 
 export const ExampleLoginModalDialog = Template.bind({});
 

@@ -5,18 +5,14 @@ import ajax from 'apis/ajax';
 import { ProjectList } from 'containers';
 
 const StyledHomePage = styled.main`
-  ${({ $padding, $background }) => css`
+  ${({ $padding }) => css`
     padding: ${$padding};
     background: #f8f9fa;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
   `}
 `;
 
 const HomePage = ({ viewport }) => {
-  const { type, isMobile, isDesktop } = viewport;
+  const { isDesktop, vw } = viewport;
 
   const [projects, setProjects] = useState([]);
 
@@ -43,8 +39,8 @@ const HomePage = ({ viewport }) => {
       {/* isMobile일때는 프로젝트 아이템의 크기를 키우고 뷰포트에 따라서 작아지게(%) 설정 */}
       <Container
         as="section"
-        padding={isDesktop ? '30px 54px' : '30px 14px'}
-        width={type === 'xl' ? 1440 : '100%'}
+        padding={isDesktop ? '30px 54px' : vw >= 768 ? '30px 14px' : '30px'}
+        width={vw >= 1440 ? 1440 : '100%'}
       >
         <A11yHidden as="h2">프로젝트 목록</A11yHidden>
         <Container
@@ -52,7 +48,7 @@ const HomePage = ({ viewport }) => {
           display="flex"
           flexFlow="column nowrap"
         >
-          <Container position="relative" margin={'0 16px 16px'}>
+          <Container position="relative" margin={vw >= 1024 ? '0 16px 16px' : '0 0 16px'}>
             <Button
               title="좋아요가 많은 순서로 프로젝트 보기"
               aria-label="좋아요가 많은 순서로 프로젝트 보기"
@@ -86,15 +82,17 @@ const HomePage = ({ viewport }) => {
               transform="translate3D(0px, 0, 0)"
             />
           </Container>
-          <ProjectList>
+          <ProjectList viewport={viewport}>
             {projects.map(project => {
               return (
                 <ProjectItem
                   key={project.project_id}
+                  projectId={project.project_id}
                   thumbnail={project.thumbnail}
                   subject={project.subject}
                   planIntention={project.plan_intention}
                   created={project.created}
+                  authorId={project.user_user_id}
                   author={project.nickname}
                   authorProfile={project.profile_photo}
                   viewport={viewport}

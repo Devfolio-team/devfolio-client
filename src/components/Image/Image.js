@@ -25,6 +25,7 @@ const Image = ({
   right,
   zIndex,
   borderRadius,
+  cursor,
   ...restProps
 }) => (
   <StyledImage
@@ -40,6 +41,7 @@ const Image = ({
     $right={right}
     $zIndex={zIndex}
     $borderRadius={borderRadius}
+    $cursor={cursor}
     {...restProps}
   />
 );

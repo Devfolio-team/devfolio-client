@@ -60,6 +60,13 @@ const applyStyle = ({
   $fill,
   $transition,
   $verticalAlign,
+  $hoverBackground,
+  $hoverColor,
+  $textOverflow,
+  focusOutline,
+  childrenPointerEvents,
+  webkitLineClamp,
+  webkitBoxOrient,
 }) => `
 display: ${$display || ''};
 width: ${getUnitByType($width)};
@@ -86,7 +93,7 @@ border-bottom: ${$borderBottom || ''};
 border-left: ${$borderLeft || ''};
 color: ${$color || ''};
 font-size: ${$fontSize ? `${$fontSize}rem` : ''};
-font-weight: ${getUnitByType($fontWeight)};
+font-weight: ${$fontWeight || ''};
 min-width: ${getUnitByType($minWidth)};
 max-width: ${getUnitByType($maxWidth)};
 min-height: ${getUnitByType($minHeight)};
@@ -114,6 +121,19 @@ vertical-align: ${$verticalAlign || ''};
 path {
   fill: ${$fill || ''};
 }
+&:hover {
+  background: ${$hoverBackground || ''};
+  color: ${$hoverColor || ''};
+}
+& * {
+  pointer-events: ${childrenPointerEvents || ''};
+}
+&:focus:not(:focus-visible) {
+  outline: ${focusOutline || ''};
+}
+text-overflow: ${$textOverflow || ''};
+-webkit-line-clamp: ${webkitLineClamp || ''};
+-webkit-box-orient: ${webkitBoxOrient || ''};
 `;
 
 export default applyStyle;

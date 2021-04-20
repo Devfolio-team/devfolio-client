@@ -1,12 +1,12 @@
-import { GithubLink } from 'components';
+import { GithubRepoInput } from 'components';
 
 export default {
-  title: 'Component/GithubLink',
-  component: GithubLink,
+  title: 'Component/GithubRepoInput',
+  component: GithubRepoInput,
   parameters: {
     docs: {
       description: {
-        component: '**GithubLink** 깃허브 주소를 작성할 수 있는 인풋창이 있는 컴포넌트입니다.',
+        component: '**GithubRepoInput** 깃허브 주소를 작성할 수 있는 인풋창이 있는 컴포넌트입니다.',
       },
     },
   },
@@ -20,11 +20,11 @@ export default {
   },
 };
 
-const Template = args => <GithubLink {...args} />;
+const Template = args => <GithubRepoInput {...args} />;
 
-export const ExampleGithubLink = Template.bind({});
+export const ExampleGithubRepoInput = Template.bind({});
 
-ExampleGithubLink.argTypes = {
+ExampleGithubRepoInput.argTypes = {
   value: 'Example',
   beforeTranslate: 4.5,
   afterTranslate: 1,
