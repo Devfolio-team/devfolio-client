@@ -46,6 +46,8 @@ const Button = forwardRef(
       borderLeft,
       borderBottom,
       hoverBackground,
+      hoverColor,
+      cursor,
       ...restProps
     },
     ref
@@ -75,6 +77,8 @@ const Button = forwardRef(
       $borderLeft={borderLeft}
       $borderBottom={borderBottom}
       $hoverBackground={hoverBackground}
+      $hoverColor={hoverColor}
+      $cursor={cursor}
       {...restProps}
     />
   )

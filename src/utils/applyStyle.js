@@ -61,9 +61,10 @@ const applyStyle = ({
   $transition,
   $verticalAlign,
   $hoverBackground,
-  childrenPointerEvents,
-  focusOutline,
+  $hoverColor,
   $textOverflow,
+  focusOutline,
+  childrenPointerEvents,
   webkitLineClamp,
   webkitBoxOrient,
 }) => `
@@ -122,6 +123,7 @@ path {
 }
 &:hover {
   background: ${$hoverBackground || ''};
+  color: ${$hoverColor || ''};
 }
 & * {
   pointer-events: ${childrenPointerEvents || ''};

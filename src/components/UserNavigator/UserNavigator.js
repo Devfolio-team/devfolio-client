@@ -21,7 +21,6 @@ const StyledUl = styled.ul`
       background: #ffffff;
       box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
       text-align: center;
-      margin: 0 70px 0 0;
       border-radius: 2px;
       transition: 0.5s;
       overflow: hidden;
@@ -45,39 +44,68 @@ const StyledLink = styled(Link)`
   `}
 `;
 
+const ProjectEditLink = styled(Link)`
+  ${props => applyStyle(props)}
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #d5d5d5;
+  &:hover {
+    background: #f0f0f0;
+  }
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+`;
+
+ProjectEditLink.displayName = 'ProjectEditLink';
+
 const StyledUserNavigatorMenuItem = styled.li`
   ${props => css`
     ${applyStyle(props)}
   `}
 `;
 
-const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, ...restProps }) => {
+const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, viewport, ...restProps }) => {
   const { currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const history = useHistory();
+
+  const { vw, type } = viewport;
 
   const onSignOutHandler = () => {
     dispatch(signOutMiddleware());
     history.push('/');
   };
 
-  const onCloseNavigatorShiftTabHandler = e => {
+  const onCloseNavigatorTabHandler = e => {
     if (e.key === 'Tab' && !e.shiftKey) setUserNavigatorIsOepn(false);
   };
 
-  const onCloseNavigatorTabHandler = e => {
+  const onCloseNavigatorShiftTabHandler = e => {
     if (e.key === 'Tab' && e.shiftKey) setUserNavigatorIsOepn(false);
   };
 
   return (
-    <StyledUl $height={height} {...restProps}>
+    <StyledUl $height={height} $marginRight={vw >= 768 ? '70px' : '30px'} {...restProps}>
       <StyledUserNavigatorMenuItem $color="#ffffff" $fontSize={1.6} $fontWeight={700}>
+        {type === 'xs' ? (
+          <ProjectEditLink
+            to={'/edit/project'}
+            $padding="20px"
+            tabIndex={tabIndex}
+            onKeyDown={onCloseNavigatorShiftTabHandler}
+          >
+            프로젝트 등록
+          </ProjectEditLink>
+        ) : null}
         <StyledLink
           to={`/portfolio/${currentUser ? currentUser.user_id : ''}`}
           $padding="20px"
           tabIndex={tabIndex}
-          onKeyDown={onCloseNavigatorTabHandler}
+          onKeyDown={type === 'xs' ? null : onCloseNavigatorShiftTabHandler}
         >
           내 포트폴리오
         </StyledLink>
@@ -104,7 +132,7 @@ const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, ...restProps 
           height="100%"
           hoverBackground="#F0F0F0"
           onClick={onSignOutHandler}
-          onKeyDown={onCloseNavigatorShiftTabHandler}
+          onKeyDown={onCloseNavigatorTabHandler}
           tabIndex={tabIndex}
         >
           로그아웃

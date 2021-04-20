@@ -30,6 +30,12 @@ const StyledHeaderBar = styled.header`
   `}
 `;
 
+const ProjectEditLink = styled(Link)`
+  ${props => applyStyle(props)}
+`;
+
+ProjectEditLink.displayName = 'ProjectEditLink';
+
 const StyledArrowDownIcon = styled(arrowDownIcon)`
   ${props => css`
     ${applyStyle(props)}
@@ -103,20 +109,27 @@ const HeaderBar = ({ viewport }) => {
         </Heading>
         {currentUser ? (
           <Container display="flex" alignItems="center" margin="0">
-            <Button
-              width={125}
-              height={32}
-              margin="0 20px 0 0"
-              border="2px solid #f8f9fa"
-              background="#212121"
-              color="#f8f9fa"
-              fontWeight="700"
-              fontSize={1.6}
-              borderRadius={16}
-              padding="0"
-            >
-              프로젝트 등록
-            </Button>
+            {type === 'xs' ? null : (
+              <ProjectEditLink
+                to="/edit/project"
+                $width={125}
+                $height={36}
+                $margin="0 20px 0 0"
+                $border="2px solid #f8f9fa"
+                $background="#212121"
+                $color="#f8f9fa"
+                $fontWeight="700"
+                $fontSize={1.6}
+                $borderRadius={16}
+                $padding="0"
+                $hoverBackground="#f8f9fa"
+                $hoverColor="#212121"
+                $textAlign="center"
+                $lineHeight="1.88"
+              >
+                프로젝트 등록
+              </ProjectEditLink>
+            )}
             <Container
               className="userNavigator"
               display="flex"
@@ -154,7 +167,8 @@ const HeaderBar = ({ viewport }) => {
               />
             </Container>
             <UserNavigator
-              height={userNavigatorIsOepn ? 171 : 0}
+              viewport={viewport}
+              height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 228 : 171}
               tabIndex={userNavigatorIsOepn ? 0 : -1}
               setUserNavigatorIsOepn={setUserNavigatorIsOepn}
             />
@@ -165,6 +179,9 @@ const HeaderBar = ({ viewport }) => {
             height={36}
             color="#FFFFFF"
             background="#25272B"
+            hoverColor={isModalOpen ? null : '#25272B'}
+            hoverBackground={isModalOpen ? null : '#FFFFFF'}
+            cursor={isModalOpen ? 'default' : null}
             fontWeight={700}
             fontSize={1.6}
             borderRadius={16}
