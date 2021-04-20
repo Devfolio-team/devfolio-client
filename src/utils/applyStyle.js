@@ -61,6 +61,8 @@ const applyStyle = ({
   $transition,
   $verticalAlign,
   $hoverBackground,
+  childrenPointerEvents,
+  focusOutline,
 }) => `
 display: ${$display || ''};
 width: ${getUnitByType($width)};
@@ -116,7 +118,13 @@ path {
   fill: ${$fill || ''};
 }
 &:hover {
-  background: ${$hoverBackground};
+  background: ${$hoverBackground || ''};
+}
+& * {
+  pointer-events: ${childrenPointerEvents || ''};
+}
+&:focus:not(:focus-visible) {
+  outline: ${focusOutline || ''};
 }
 `;
 
