@@ -70,7 +70,7 @@ const ProjectPage = ({ viewport }) => {
   return (
     <StyledProjectPage
       $width={isDesktop ? '768px' : '100%'}
-      $margin="160px auto 0 auto"
+      $margin="96px auto 0 auto"
       $background="#F8F9FA"
     >
       <Container
@@ -338,7 +338,7 @@ const ProjectPage = ({ viewport }) => {
         $borderBottom="1px solid #666666"
         $margin="80px auto"
       />
-      <Container margin="0 0 50px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
+      <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
           color="#212121"
