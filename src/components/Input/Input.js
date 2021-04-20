@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { string, number, func, oneOfType } from 'prop-types';
+import { string, number, object, oneOfType, bool } from 'prop-types';
 import { color, applyStyle } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
 
@@ -25,7 +25,7 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
 }))`
   ${props => css`
     ${applyStyle(props)}
-    font-size: ${props.$inputFontSize}
+    font-size: ${props.$inputFontSize};
     outline: none;
   `}
 `;
@@ -34,8 +34,8 @@ const Input = ({
   type,
   id,
   label,
+  name,
   value,
-  onChange,
   mode,
   width,
   height,
@@ -52,9 +52,11 @@ const Input = ({
   afterTranslate,
   beforeMargin,
   afterMargin,
-  readOnly,
   disabled,
   labelFontSize,
+  opacity,
+  zIndex,
+  field,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -76,7 +78,7 @@ const Input = ({
           htmlFor={id}
           $labelFontSize={labelFontSize}
           focus={isFocused}
-          inputValue={value}
+          inputValue={field.value}
           beforeTranslate={beforeTranslate}
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
@@ -88,15 +90,14 @@ const Input = ({
       <StyledInput
         type={type}
         id={id}
-        readOnly={readOnly}
+        name={name}
         disabled={disabled}
-        value={value}
         autocomplete="off"
         onFocus={onFocusHandler}
-        onBlur={onBlurHandler}
-        onChange={onChange}
         $width={width}
         $height={height}
+        $zIndex={zIndex}
+        $opacity={opacity}
         $borderRadius={borderRadius}
         $inputFontSize={inputFontSize}
         $fontWeight={fontWeight}
@@ -106,6 +107,8 @@ const Input = ({
         $display={display}
         $padding={padding}
         $boxShadow={boxShadow}
+        {...field}
+        onBlur={onBlurHandler}
         {...restProps}
       />
     </>
@@ -120,6 +123,7 @@ Input.defaultProps = {
   width: 170,
   height: 40,
   value: '',
+  field: {},
 };
 
 Input.propTypes = {
@@ -142,7 +146,9 @@ Input.propTypes = {
   /** 인풋 높이를 설정합니다. */
   height: oneOfType([string, number]),
   /** 인풋 폰트 사이즈를 설정합니다. */
-  fontSize: number,
+  inputFontSize: number,
+  /** 레이블의 폰트 사이즈를 설정합니다. */
+  labelFontSize: number,
   /** 인풋 폰트 굵기를 설정합니다. */
   fontWeight: oneOfType([string, number]),
   /** 인풋 폰트색을 설정합니다. */
@@ -161,10 +167,18 @@ Input.propTypes = {
   padding: string,
   /** 인풋 박스 테두리의 그림자를 설정합니다. */
   boxShadow: string,
-  /** 인풋 박스 입력되는 값을 설정합니다. */
+  /** 인풋 박스의 이름을 설정합니다. */
+  name: string,
+  /** 인풋 박스의 투명도를 설정합니다. */
+  opacity: string,
+  /** 인풋 박스의 수직 위치를 설정합니다. 크면 클수록 요소가 위에 옵니다. */
+  zIndex: number,
+  /** formik이 제공하는 onBlur, onChange, name, value 값을 갖고 있는 객체입니다. */
+  field: object,
+  /** 인풋 박스의 비활성화를 설정합니다. */
+  disabled: bool,
+  /** 인풋 박스의 입력된 값을 설정합니다. */
   value: string,
-  /** 인풋의 변경되는 값을 감지하는 이벤트를 설정합니다. */
-  onChange: func,
 };
 
 export default Input;

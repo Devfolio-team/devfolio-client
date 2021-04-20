@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { color } from 'utils';
-import { string, func } from 'prop-types';
-import { Container, Image, SVGIcon, Input } from 'components';
+import { func } from 'prop-types';
+import { Container, Image, SVGIcon } from 'components';
+import { Field } from 'formik';
 
-const DNDInput = styled(Input)`
+const DNDInput = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -60,10 +61,9 @@ const HoverDNDMessage = styled.p`
   margin-top: 30px;
 `;
 
-const DND = ({ id, src, alt, onChange, value }) => {
-  // TODO: 후에 컨테이너에서 상태 관리
-  // const [src, setSrc] = useState(null);
-  // const [alt, setAlt] = useState(null);
+const DND = ({ setFieldValue }) => {
+  const [src, setSrc] = useState(null);
+  const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
 
@@ -78,34 +78,29 @@ const DND = ({ id, src, alt, onChange, value }) => {
     setIsUploaded(false);
   };
 
-  // TODO: 후에 컨테이너에서 핸들러 관리
-  // const onChange = async e => {
-  //   try {
-  //     console.log(e.target.value);
-  //     const { src, alt } = await uploadImage(e.target.files[0]);
-  //     setSrc(src);
-  //     setAlt(alt);
-  //     setIsDragged(false);
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // };
+  const onChange = async e => {
+    const { src, alt } = await uploadImage(e.target.files[0]);
+    setSrc(src);
+    setAlt(alt);
+    setIsDragged(false);
+    setFieldValue('file', src);
+  };
 
-  // TODO: 후에 컨테이너에서 관리
-  // const uploadImage = async file => {
-  //   const formData = new FormData();
-  //   formData.append('image', file);
-  //   try {
-  //     const res = await axios.post('http://15.165.145.100:3002/image_upload', formData, {
-  //       headers: {
-  //         'Content-type': 'multipart/form-data',
-  //       },
-  //     });
-  //     return res.data;
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // };
+  // TODO: 후에 컨테이너에서 관리, axios를 ajax로도 변경
+  const uploadImage = async file => {
+    const formData = new FormData();
+    formData.append('image', file);
+    try {
+      const res = await axios.post('http://devfolio.world:3020/api/image', formData, {
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   return (
     <Container
@@ -116,17 +111,16 @@ const DND = ({ id, src, alt, onChange, value }) => {
       borderRadius="5px"
       position="relative"
     >
-      <DNDInput
+      <Field
+        type="file"
+        name="imagePath"
+        component={DNDInput}
+        onChange={onChange}
+        id="imagePath"
         onDragOver={onDragOverHandler}
         onDragLeave={onDragLeaveHandler}
         accept="image/jpeg, image/png, image/jpg, image/webp"
         multiple
-        type="file"
-        id={id}
-        onChange={onChange}
-        value={value}
-        mode="hidden"
-        label="이미지 업로드 드래그 앤 드랍 창"
       />
       {src ? (
         <Image
@@ -158,22 +152,11 @@ const DND = ({ id, src, alt, onChange, value }) => {
   );
 };
 
-DND.defaultProps = {
-  id: 'dnd-1',
-  alt: '',
-};
+DND.defaultProps = {};
 
 DND.propTypes = {
-  /**드래그앤드랍의 input에 고유한 id값을 설정합니다. */
-  id: string.isRequired,
-  /** 이미지의 경로를 설정합니다. */
-  src: string,
-  /** 이미지의 대체 텍스트를 설정합니다. */
-  alt: string.isRequired,
-  /** 인풋의 변경되는 값을 감지하는 이벤트를 설정합니다. */
-  onChange: func,
-  /** 인풋 박스에 들어오는 이미지경로 값을 설정합니다. */
-  value: string,
+  /** file input의 값을 formik의 values로 설정해주는 함수입니다. */
+  setFieldValue: func,
 };
 
 export default DND;
