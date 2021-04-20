@@ -43,6 +43,7 @@ const TextArea = ({
   afterTranslate,
   beforeMargin,
   afterMargin,
+  field,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -63,7 +64,7 @@ const TextArea = ({
         <StyledLabel
           htmlFor={id}
           focus={isFocused}
-          areaValue={value}
+          areaValue={field.value}
           beforeTranslate={beforeTranslate}
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
@@ -76,14 +77,17 @@ const TextArea = ({
         id={id}
         $width={width}
         $height={height}
-        {...restProps}
         onFocus={onFocusHandler}
+        {...field}
         onBlur={onBlurHandler}
-        onChange={onChange}
-        value={value}
+        {...restProps}
       />
     </>
   );
+};
+
+TextArea.defaultProps = {
+  field: {},
 };
 
 TextArea.propTypes = {

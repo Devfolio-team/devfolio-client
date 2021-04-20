@@ -1,8 +1,33 @@
 import ChipInputSearch from './ChipInputSearch';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/ChipInputSearch',
   component: ChipInputSearch,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={values => {
+            console.log(values);
+          }}
+        >
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -13,10 +38,7 @@ export default {
   },
   argTypes: {
     id: { control: 'text' },
-    chipLabels: { control: 'array' },
-    onKeyUpHandler: { action: '키 입력!' },
-    value: { control: 'text' },
-    onChange: { action: '체인지!' },
+    setFieldValue: { action: '체인지!' },
   },
 };
 

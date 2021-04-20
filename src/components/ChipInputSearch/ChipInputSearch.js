@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
 import { SVGIcon } from 'components';
-import { string, func, array } from 'prop-types';
+import { string, func } from 'prop-types';
+import { Field } from 'formik';
 
 const ChipContainer = styled.div`
   display: flex;
@@ -66,48 +67,47 @@ const ChipInput = styled.input`
   }
 `;
 
-const ChipInputSearch = ({ id, chipLabels, onKeyUpHandler, value, onChange }) => {
-  // 후에 container에서 받아올 배열
-  // const [chipLabels, setChipLabels] = useState([]);
-
-  const chipInputRef = useRef(null);
-
-  // 후에 데이터베이스에서 받아올 데이터들
+const ChipInputSearch = ({ id, setFieldValue }) => {
+  const [chipLabels, setChipLabels] = useState([]);
   const dummyDatas = ['React', 'Javascript', 'HTML5', 'CSS3'];
 
-  // 후에 container에서 받아올 핸들러
-  // const onKeyUpHandler = e => {
-  //   if (e.key !== 'Enter') return;
-  //   if (e.target.value !== '' && dummyDatas.includes(e.target.value)) {
-  //     setChipLabels([...chipLabels, e.target.value]);
-  //     e.target.value = '';
-  //   }
-  // };
+  useEffect(() => {
+    setFieldValue('techStacks', chipLabels);
+  }, [setFieldValue, chipLabels]);
 
-  const onClikcFocusHandler = e => {
-    chipInputRef.current.focus();
+  const onKeyUpHandler = e => {
+    if (e.key !== 'Enter') return;
+    if (e.target.value !== '' && dummyDatas.includes(e.target.value)) {
+      setChipLabels([...chipLabels, e.target.value]);
+      e.target.value = '';
+    }
   };
 
   const onClickRemoveHandler = e => {
-    e.target.parentNode.remove();
+    const chipLabelText = e.target.parentNode.firstChild.innerHTML;
+    setChipLabels(chipLabels.filter(chipLabel => chipLabel !== chipLabelText));
   };
 
   return (
-    <ChipContainer onClick={onClikcFocusHandler}>
-      {chipLabels.map(chipLabel => (
-        <ChipItems>
+    <ChipContainer>
+      {chipLabels.map((chipLabel, index) => (
+        <ChipItems key={index}>
           <ChipLabel>{chipLabel}</ChipLabel>
           <XIcon type="X" onClick={onClickRemoveHandler} />
         </ChipItems>
       ))}
-      <ChipInput
-        value={value}
-        onChange={onChange}
-        ref={chipInputRef}
+      <Field
+        type="text"
+        name="techStacks"
+        id="techStacks"
+        onKeyUp={onKeyUpHandler}
+        component={ChipInput}
         placeholder="검색..."
         list={id}
-        type="text"
-        onKeyUp={onKeyUpHandler}
+        mode="hidden"
+        onChange={() => {
+          setFieldValue('techStacks', chipLabels);
+        }}
       />
       <ChipDataList id={id}>
         {/* index대신에 데이터베이스에서 데이터 가지고 오면 id값으로 key값 세팅해주기 */}
@@ -121,21 +121,13 @@ const ChipInputSearch = ({ id, chipLabels, onKeyUpHandler, value, onChange }) =>
 
 ChipInputSearch.defaultProps = {
   id: 'exId1',
-  chipLabels: [],
-  value: '',
 };
 
 ChipInputSearch.propTypes = {
   /** Data list의 고유한 id값을 정해줍니다. */
   id: string.isRequired,
-  /** Chip Item(말풍선 태그)안에 들어갈 text를 가지고있는 배열입니다. */
-  chipLabels: array,
-  /** 키보드로 입력된 키를 핸들링 하는 이벤트 핸들러 입니다. */
-  onKeyUpHandler: func,
-  /** 인풋 박스에 입력되는 값을 설정합니다. */
-  value: string,
-  /** 인풋의 변경되는 값을 감지하는 이벤트를 설정합니다. */
-  onChange: func,
+  /** ChipInputSearch의 인풋의 값을 formik의 values로 설정해주는 함수입니다. */
+  setFieldValue: func,
 };
 
 export default ChipInputSearch;
