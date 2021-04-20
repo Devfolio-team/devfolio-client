@@ -52,7 +52,7 @@ const HomePage = ({ viewport }) => {
           display="flex"
           flexFlow="column nowrap"
         >
-          <Container position="relative" margin={'0 0 16px'}>
+          <Container position="relative" margin={vw >= 1024 ? '0 16px 16px' : '0 0 16px'}>
             <Button
               title="좋아요가 많은 순서로 프로젝트 보기"
               aria-label="좋아요가 많은 순서로 프로젝트 보기"
