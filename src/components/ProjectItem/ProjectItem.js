@@ -25,6 +25,9 @@ const StyledLink = styled(Link)`
   display: block;
   width: 100%;
   height: 100%;
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 `;
 
 StyledLink.displayName = 'Link';
@@ -57,10 +60,10 @@ const ProjectItem = ({
       $width={vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'}
       $margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '0'}
     >
-      <Link to={`project/${projectId}`}>
+      <StyledLink to={`project/${projectId}`} tabIndex={-1}>
         {/* 스크린 리더의 흐름상 Heading요소 바로 뒤에 있기 때문에 alt속성을 비워줌 */}
         <Image src={thumbnail} alt="" width="100%" cursor="pointer" />
-      </Link>
+      </StyledLink>
       <Container width="100%" height={167} padding="16px" background="#FFFFFF">
         <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
           <StyledLink to={`project/${projectId}`}>{subject}</StyledLink>

@@ -8,7 +8,7 @@ import {
   Portal,
   UserNavigator,
 } from 'components';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
@@ -49,6 +49,16 @@ const HeaderBar = ({ viewport }) => {
     setUserNavigatorIsOepn(!userNavigatorIsOepn);
   };
 
+  const onNavigatorCloseHandler = ({ target }) => {
+    if (target.classList.contains('userNavigator')) return;
+    setUserNavigatorIsOepn(false);
+  };
+
+  const onNavigatorTabCloseHandler = ({ key }) => {
+    if (key !== 'Tab') return;
+    setUserNavigatorIsOepn(false);
+  };
+
   const ref = useRef(null);
   const beforeRef = useRef(null);
 
@@ -69,6 +79,13 @@ const HeaderBar = ({ viewport }) => {
       return;
     }
   };
+
+  useEffect(() => {
+    window.addEventListener('click', onNavigatorCloseHandler);
+    return () => {
+      window.removeEventListener('click', onNavigatorCloseHandler);
+    };
+  }, []);
 
   return (
     <StyledHeaderBar $background="#25272B">
@@ -106,12 +123,16 @@ const HeaderBar = ({ viewport }) => {
               프로젝트 등록
             </Button>
             <Container
+              className="userNavigator"
               display="flex"
               alignItems="center"
               cursor="pointer"
+              tabIndex={-1}
               onClick={onNavigatorToggleHandler}
+              focusOutline="none"
             >
               <Button
+                className="userNavigator"
                 width={40}
                 height={40}
                 border="0"
@@ -120,6 +141,7 @@ const HeaderBar = ({ viewport }) => {
                 margin="0 5px 0 0"
               >
                 <Image
+                  className="userNavigator"
                   src={currentUser.profile_photo}
                   alt=""
                   width={40}
@@ -128,6 +150,7 @@ const HeaderBar = ({ viewport }) => {
                 />
               </Button>
               <StyledArrowDownIcon
+                className="userNavigator"
                 width={24}
                 height={24}
                 fill="#f8f9fa"
@@ -138,6 +161,7 @@ const HeaderBar = ({ viewport }) => {
             <UserNavigator
               height={userNavigatorIsOepn ? 171 : 0}
               tabIndex={userNavigatorIsOepn ? 0 : -1}
+              navigatorTabCloseHandler={onNavigatorTabCloseHandler}
             />
           </Container>
         ) : (

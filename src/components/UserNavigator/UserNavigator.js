@@ -39,6 +39,9 @@ const StyledLink = styled(Link)`
     &:hover {
       background: #f0f0f0;
     }
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
   `}
 `;
 
@@ -48,7 +51,7 @@ const StyledUserNavigatorMenuItem = styled.li`
   `}
 `;
 
-const UserNavigator = ({ height, tabIndex }) => {
+const UserNavigator = ({ height, tabIndex, navigatorTabCloseHandler, ...restProps }) => {
   const { currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
@@ -60,7 +63,7 @@ const UserNavigator = ({ height, tabIndex }) => {
   };
 
   return (
-    <StyledUl $height={height}>
+    <StyledUl $height={height} {...restProps}>
       <StyledUserNavigatorMenuItem $color="#ffffff" $fontSize={1.6} $fontWeight={700}>
         <StyledLink
           to={`/portfolio/${currentUser ? currentUser.user_id : ''}`}
@@ -92,6 +95,7 @@ const UserNavigator = ({ height, tabIndex }) => {
           height="100%"
           hoverBackground="#F0F0F0"
           onClick={onSignOutHandler}
+          onKeyDown={navigatorTabCloseHandler}
           tabIndex={tabIndex}
         >
           로그아웃
