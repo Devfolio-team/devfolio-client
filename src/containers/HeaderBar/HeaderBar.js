@@ -8,7 +8,7 @@ import {
   Portal,
   UserNavigator,
 } from 'components';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
@@ -20,6 +20,8 @@ const StyledHeaderBar = styled.header`
   ${({ $background, $padding }) => css`
     width: 100%;
     height: 64px;
+    position: fixed;
+    z-index: 100;
     background: ${$background};
     display: flex;
     justify-content: space-between;
@@ -27,6 +29,12 @@ const StyledHeaderBar = styled.header`
     padding: ${$padding};
   `}
 `;
+
+const ProjectEditLink = styled(Link)`
+  ${props => applyStyle(props)}
+`;
+
+ProjectEditLink.displayName = 'ProjectEditLink';
 
 const StyledArrowDownIcon = styled(arrowDownIcon)`
   ${props => css`
@@ -38,7 +46,20 @@ const HeaderBar = ({ viewport }) => {
   const { currentUser } = useSelector(state => state.auth);
 
   const { isDesktop, type } = viewport;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [userNavigatorIsOepn, setUserNavigatorIsOepn] = useState(false);
+
+  const onNavigatorToggleHandler = () => {
+    setUserNavigatorIsOepn(!userNavigatorIsOepn);
+  };
+
+  const onNavigatorCloseHandler = ({ target }) => {
+    if (target.classList.contains('userNavigator')) return;
+    setUserNavigatorIsOepn(false);
+  };
+
   const ref = useRef(null);
   const beforeRef = useRef(null);
 
@@ -59,6 +80,13 @@ const HeaderBar = ({ viewport }) => {
       return;
     }
   };
+
+  useEffect(() => {
+    window.addEventListener('click', onNavigatorCloseHandler);
+    return () => {
+      window.removeEventListener('click', onNavigatorCloseHandler);
+    };
+  }, []);
 
   return (
     <StyledHeaderBar $background="#25272B">
@@ -81,23 +109,38 @@ const HeaderBar = ({ viewport }) => {
         </Heading>
         {currentUser ? (
           <Container display="flex" alignItems="center" margin="0">
-            <Button
-              width={105}
-              height={32}
-              margin="0 20px 0 0"
-              border="2px solid #f8f9fa"
-              background="#212121"
-              color="#f8f9fa"
-              fontWeight="700"
-              fontSize={1.6}
-              borderRadius={16}
-              padding="0"
-              ref={beforeRef}
+            {type === 'xs' ? null : (
+              <ProjectEditLink
+                to="/edit/project"
+                $width={125}
+                $height={36}
+                $margin="0 20px 0 0"
+                $border="2px solid #f8f9fa"
+                $background="#212121"
+                $color="#f8f9fa"
+                $fontWeight="700"
+                $fontSize={1.6}
+                $borderRadius={16}
+                $padding="0"
+                $hoverBackground="#f8f9fa"
+                $hoverColor="#212121"
+                $textAlign="center"
+                $lineHeight="1.88"
+              >
+                프로젝트 등록
+              </ProjectEditLink>
+            )}
+            <Container
+              className="userNavigator"
+              display="flex"
+              alignItems="center"
+              cursor="pointer"
+              tabIndex={-1}
+              onClick={onNavigatorToggleHandler}
+              focusOutline="none"
             >
-              새 글 작성
-            </Button>
-            <Container display="flex" alignItems="center" cursor="pointer">
               <Button
+                className="userNavigator"
                 width={40}
                 height={40}
                 border="0"
@@ -106,6 +149,7 @@ const HeaderBar = ({ viewport }) => {
                 margin="0 5px 0 0"
               >
                 <Image
+                  className="userNavigator"
                   src={currentUser.profile_photo}
                   alt=""
                   width={40}
@@ -113,9 +157,21 @@ const HeaderBar = ({ viewport }) => {
                   borderRadius="50%"
                 />
               </Button>
-              <StyledArrowDownIcon width={24} height={24} fill="#f8f9fa" />
+              <StyledArrowDownIcon
+                className="userNavigator"
+                width={24}
+                height={24}
+                fill="#f8f9fa"
+                $transition=".5s"
+                $transform={`${userNavigatorIsOepn ? 'rotate(0.5turn)' : ''}`}
+              />
             </Container>
-            <UserNavigator />
+            <UserNavigator
+              viewport={viewport}
+              height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 228 : 171}
+              tabIndex={userNavigatorIsOepn ? 0 : -1}
+              setUserNavigatorIsOepn={setUserNavigatorIsOepn}
+            />
           </Container>
         ) : (
           <Button
@@ -123,6 +179,9 @@ const HeaderBar = ({ viewport }) => {
             height={36}
             color="#FFFFFF"
             background="#25272B"
+            hoverColor={isModalOpen ? null : '#25272B'}
+            hoverBackground={isModalOpen ? null : '#FFFFFF'}
+            cursor={isModalOpen ? 'default' : null}
             fontWeight={700}
             fontSize={1.6}
             borderRadius={16}
