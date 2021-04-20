@@ -31,3 +31,4 @@ export { default as ProjectDuration } from './ProjectDuration/ProjectDuration';
 export { default as PublicStatus } from './PublicStatus/PublicStatus';
 export { default as DeploymentStatus } from './DeploymentStatus/DeploymentStatus';
 export { default as ProjectDescription } from './ProjectDescription/ProjectDescription';
+export { default as SkillIcon } from './SkillIcon/SkillIcon';
