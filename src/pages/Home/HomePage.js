@@ -5,13 +5,9 @@ import ajax from 'apis/ajax';
 import { ProjectList } from 'containers';
 
 const StyledHomePage = styled.main`
-  ${({ $padding, $background }) => css`
+  ${({ $padding }) => css`
     padding: ${$padding};
     background: #f8f9fa;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
   `}
 `;
 
