@@ -1,9 +1,11 @@
 import { styled } from '@storybook/theming';
 import { Container, Heading, Image, Paragraph, Span, SVGIcon, Time } from 'components';
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from 'styled-components';
 import { string, number } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { applyStyle } from 'utils';
+import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 
 const StyledProjectItem = styled.li`
   ${({ $width, $margin }) => css`
@@ -22,15 +24,25 @@ const StyledProjectItem = styled.li`
 `;
 
 const StyledLink = styled(Link)`
-  display: block;
-  width: 100%;
-  height: 100%;
-  &:focus:not(:focus-visible) {
-    outline: none;
-  }
+  ${props => css`
+    ${applyStyle(props)}
+    display: block;
+    width: 100%;
+    height: 100%;
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+  `}
 `;
 
 StyledLink.displayName = 'Link';
+
+const StyledLoadingSpinner = styled(LoadingSpinner)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+`;
 
 const ProjectItem = ({
   projectId,
@@ -44,6 +56,12 @@ const ProjectItem = ({
   likeCount,
   viewport,
 }) => {
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const onImageLoadingHandler = () => {
+    setImageLoading(false);
+  };
+
   const { vw } = viewport;
 
   const createDate = new Date(created);
@@ -60,10 +78,33 @@ const ProjectItem = ({
       $width={vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'}
       $margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '0'}
     >
-      <StyledLink to={`project/${projectId}`} tabIndex={-1}>
-        {/* 스크린 리더의 흐름상 Heading요소 바로 뒤에 있기 때문에 alt속성을 비워줌 */}
-        <Image src={thumbnail} alt="" width="100%" cursor="pointer" />
-      </StyledLink>
+      <Container
+        position="relative"
+        $minWidth="100%"
+        $minHeight={
+          vw >= 1440
+            ? 166
+            : vw >= 1126
+            ? '15.7vw'
+            : vw >= 1024
+            ? '23.8vw'
+            : vw >= 768
+            ? '47.6111vw'
+            : '49.4vw'
+        }
+      >
+        {imageLoading ? <StyledLoadingSpinner width={vw >= 1126 ? '35%' : '25%'} /> : null}
+        <StyledLink to={`project/${projectId}`} tabIndex={-1}>
+          <Image
+            src={thumbnail}
+            alt=""
+            width={imageLoading ? 0 : '100%'}
+            cursor="pointer"
+            onLoad={onImageLoadingHandler}
+          />
+          {/* 스크린 리더의 흐름상 Heading요소 바로 뒤에 있기 때문에 alt속성을 비워줌 */}
+        </StyledLink>
+      </Container>
       <Container width="100%" height={167} padding="16px" background="#FFFFFF">
         <StyledLink to={`project/${projectId}`}>
           <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
@@ -101,10 +142,14 @@ const ProjectItem = ({
         alignItems="center"
       >
         <Container margin="0" padding="0 5px 0 0" cursor="pointer">
-          <StyledLink to={`portfolio/${authorId}`}>
+          <StyledLink
+            to={`portfolio/${authorId}`}
+            title={`${author}님의 포트폴리오 페이지로 이동`}
+            aria-label={`${author}님의 포트폴리오 페이지로 이동`}
+          >
             <Image
               src={authorProfile}
-              alt={`${author}의 프로필 사진`}
+              alt={`${author}님의 프로필 사진`}
               width={24}
               height={24}
               borderRadius="50%"
