@@ -1,4 +1,14 @@
-import { Container, Heading, Image, Paragraph, SkillIcon, Span, SVGIcon, Time } from 'components';
+import {
+  Button,
+  Container,
+  Heading,
+  Image,
+  Paragraph,
+  SkillIcon,
+  Span,
+  SVGIcon,
+  Time,
+} from 'components';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
@@ -19,6 +29,15 @@ const StyledLink = styled.a`
   ${props => css`
     ${applyStyle(props)}
   `}
+
+  &:hover {
+    background: #428bca;
+    color: #fff;
+
+    path {
+      fill: #fff;
+    }
+  }
 `;
 
 const StyledIcon = styled(SVGIcon)`
@@ -45,8 +64,18 @@ const StyledLi = styled.li`
   `}
 `;
 
+const StyledButton = styled(Button)`
+  &:hover {
+    background: #e0e0e0;
+    path {
+      fill: #fff;
+    }
+  }
+`;
+
 const ProjectPage = ({ viewport }) => {
-  const { isDesktop, isMobile, type } = viewport;
+  const { isDesktop, vw, type } = viewport;
+
   const skills = [
     'Javascript',
     'StyledComponenet',
@@ -58,6 +87,9 @@ const ProjectPage = ({ viewport }) => {
     'Sass',
     'Node.js',
   ];
+
+  // const code = `<h1>2021년 03월 11일 목요일 TIL (CDD, StoryBook, type검사)</h1><br/><h2>오늘 한 일과 느낀점</h2><br/><ul><li> <p>오전 10시 ~ 오후 5시 리액트 현강 이번주 목, 금은 하루에 리액트 강의 시간이 점심시간 제외하고 6시간이나 된다. 오전 시간은 어제 얘기하던 컴포넌트의 추가적인 개념으로 defaultProps와 propTypes에 대해 알려주셨다.</p></li><br/> <li> <p>추가적으로 자바스크립트의 typeof가 배열과 객체, null을 구분하지 못하는것을 어떻게 해결하는지 배웠다.</p> </li> </ul>;`;
+  const code = `<pre class="lang-javascript"><code data-language="javascript">// 데이터 타입 검사 유틸리티 함수<br/> function validType(dataType, typeString) {   return Object.prototype.toString.call(dataType).slice(8,-1).toLowerCase() === typeString }  function calcTriangleCirc(x, y, z) {   // 데이터 타입 검사   if (      !validType(x, 'number') ||      !validType(y, 'number') ||      !validType(z, 'number')    ) {     throw new Error('전달되는 인자의 유형은 오직 숫자(number)여야 합니다.')   }   return x + y + z }`;
 
   const names = [
     { name: '신봉철', github: 'https://github.com/bcround' },
@@ -72,6 +104,7 @@ const ProjectPage = ({ viewport }) => {
       $width={isDesktop ? '768px' : '100%'}
       $margin="96px auto 0 auto"
       $background="#F8F9FA"
+      $position={isDesktop ? 'relative' : ''}
     >
       <Container
         width="100%"
@@ -80,8 +113,40 @@ const ProjectPage = ({ viewport }) => {
         display="flex"
         justifyContent="space-between"
       >
+        {vw > 840 ? (
+          <Container
+            display="flex"
+            flexFlow="column"
+            justifyContent="center"
+            alignItems="center"
+            margin="0"
+            position={vw > 100 ? 'fixed' : isDesktop ? 'absolute' : ''}
+            top={vw > 840 ? '200px' : ''}
+            left={vw > 840 ? '50px' : ''}
+          >
+            <StyledButton
+              borderRadius="50%"
+              background="inherit"
+              border="1px solid #A3ABB3"
+              width="44px"
+              height="44px"
+              padding="0"
+            >
+              <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+            </StyledButton>
+            <Span fontSize="16px" lineHeight="16px" margin="10px 0 0 0">
+              1255
+            </Span>
+          </Container>
+        ) : (
+          ''
+        )}
         <Container display="flex" alignItems="center" width="215px" margin="0">
-          <Time margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'} fontSize="16px">
+          <Time
+            margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
+            fontSize={1.6}
+            dateTime="2021-03-30T06:00:56.555Z"
+          >
             2021.03.30
           </Time>
           <Container margin="0">
@@ -97,12 +162,25 @@ const ProjectPage = ({ viewport }) => {
             </StyledNinkName>
           </Container>
         </Container>
-        <Container display="flex" alignItems="center" margin="0">
-          <SVGIcon type="HeartRed"></SVGIcon>
-          <Span fontSize="16px" lineHeight="16px" marginLeft="5px" marginRight="15px">
-            Like
-          </Span>
-        </Container>
+        {vw > 840 ? (
+          ''
+        ) : (
+          <StyledButton
+            borderRadius="5px"
+            background="inherit"
+            border="1px solid #A3ABB3"
+            width="102px"
+            height="44px"
+            padding="0"
+          >
+            <Container display="flex" justifyContent="center" alignItems="center" margin="0">
+              <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+              <Span fontSize="16px" lineHeight="16px" margin="0">
+                1255
+              </Span>
+            </Container>
+          </StyledButton>
+        )}
       </Container>
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
@@ -306,7 +384,7 @@ const ProjectPage = ({ viewport }) => {
           {skills.map((skill, index) => (
             <StyledLi
               $display="flex"
-              $width={isDesktop ? '50%' : type === 'sm' ? '50%' : '100%'}
+              $width={vw > 600 ? '50%' : '100%'}
               $margin="0 0 20px 0"
               key={index}
             >
@@ -352,15 +430,10 @@ const ProjectPage = ({ viewport }) => {
         >
           프로젝트 설명
         </Heading>
-        <Span>21.03.02 ~ 21.03.29</Span>
-        <Paragraph fontSize={1.6} lineHeight="25px" fontWeight="700">
-          Lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-          anim id est laborum. Main Function Hello these are main functions
-        </Paragraph>
+        <Time dateTime="2021-03-30T06:00:56.555Z">21.03.02</Time>
+        <Span> ~ </Span>
+        <Time dateTime="2021-03-30T06:00:56.555Z">21.03.29</Time>
+        <div dangerouslySetInnerHTML={{ __html: code }}></div>
       </Container>
     </StyledProjectPage>
   );
