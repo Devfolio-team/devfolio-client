@@ -30,6 +30,7 @@ const Container = ({
   left,
   bottom,
   right,
+  zIndex,
   textAlign,
   borderRadius,
   borderTop,
@@ -69,6 +70,7 @@ const Container = ({
       $overflow={overflow}
       $minWidth={minWidth}
       $minHeight={minHeight}
+      $zIndex={zIndex}
       {...restProps}
     />
   );
