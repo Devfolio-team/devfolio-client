@@ -16,6 +16,8 @@ const Image = ({
   src,
   alt,
   width,
+  maxWidth,
+  maxHeight,
   height,
   objectFit,
   position,
@@ -33,6 +35,8 @@ const Image = ({
     src={src}
     alt={alt}
     $width={width}
+    $maxWidth={maxWidth}
+    $maxHeight={maxHeight}
     $height={height}
     $objectFit={objectFit}
     $position={position}
