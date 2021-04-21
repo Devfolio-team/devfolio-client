@@ -77,7 +77,7 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       SVGIcon = WebSite;
       break;
   }
-  return <SVGIcon width={width} heigth={height} {...restProps} />;
+  return <SVGIcon width={width} height={height} {...restProps} />;
 };
 
 SVGIcon.defaultProps = {
