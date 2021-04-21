@@ -99,7 +99,19 @@ const ProjectItem = ({
             src={thumbnail}
             alt=""
             width={imageLoading ? 0 : '100%'}
+            maxHeight={
+              vw >= 1440
+                ? 166
+                : vw >= 1126
+                ? '15.7vw'
+                : vw >= 1024
+                ? '23.8vw'
+                : vw >= 768
+                ? '47.6111vw'
+                : '49.4vw'
+            }
             cursor="pointer"
+            objectFit="cover"
             onLoad={onImageLoadingHandler}
           />
           {/* 스크린 리더의 흐름상 Heading요소 바로 뒤에 있기 때문에 alt속성을 비워줌 */}

@@ -7,7 +7,7 @@ const StyledMenuUnderline = styled.span`
   ${({ $position, $transform, $top, $right, $bottom, $left }) => css`
     position: ${$position};
     transform: ${$transform};
-    transition: 0.5s;
+    transition: 0.3s;
     top: ${$top};
     right: ${$right};
     bottom: ${$bottom};
