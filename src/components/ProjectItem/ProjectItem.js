@@ -142,10 +142,14 @@ const ProjectItem = ({
         alignItems="center"
       >
         <Container margin="0" padding="0 5px 0 0" cursor="pointer">
-          <StyledLink to={`portfolio/${authorId}`}>
+          <StyledLink
+            to={`portfolio/${authorId}`}
+            title={`${author}님의 포트폴리오 페이지로 이동`}
+            aria-label={`${author}님의 포트폴리오 페이지로 이동`}
+          >
             <Image
               src={authorProfile}
-              alt={`${author}의 프로필 사진`}
+              alt={`${author}님의 프로필 사진`}
               width={24}
               height={24}
               borderRadius="50%"
