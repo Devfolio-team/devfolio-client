@@ -30,8 +30,8 @@ const DeploymentStatus = ({ values }) => {
       </Container>
       <Field
         component={Input}
-        id="deploymentURL"
-        name="deploymentURL"
+        id="deployUrl"
+        name="deployUrl"
         label="http://"
         labelFontSize={1.2}
         width={600}

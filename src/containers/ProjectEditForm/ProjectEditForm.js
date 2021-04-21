@@ -14,9 +14,14 @@ import {
   Button,
 } from 'components';
 import { color } from 'utils';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import ajax from 'apis/ajax';
 
 const ProjectEditForm = () => {
+  const authState = useSelector(state => state.auth);
   const editorRef = createRef();
+  const history = useHistory();
 
   const getContents = () => {
     return editorRef.current.getInstance().getHtml();
@@ -32,22 +37,33 @@ const ProjectEditForm = () => {
   return (
     <Formik
       initialValues={{
-        projectName: '',
+        subject: '',
+        thumbnail: '',
         teamNameRadio: '',
         planIntention: '',
-        techStacks: '',
-        teamNameInput: '',
-        gitHubRepo: '',
+        techStacks: [],
+        teamName: '',
+        githubUrl: '',
         deploymentStatus: '',
-        deploymentURL: '',
-        publicStatus: '',
-        projectStartDate: '',
-        projectEndDate: '',
+        deployUrl: '',
+        isPrivate: '',
+        startDate: '',
+        endDate: '',
       }}
-      onSubmit={values => {
+      onSubmit={async values => {
         const editorContent = getContents();
-        const datas = { ...values, editorContent };
-        console.log(datas);
+        const projectData = {
+          ...values,
+          mainContents: editorContent,
+          userUserId: authState.currentUser.user_id,
+        };
+        try {
+          const res = await ajax.postProject(projectData);
+          const projectId = res.data.insertId;
+          history.push(`/project/${projectId}`);
+        } catch (error) {
+          throw new Error(error);
+        }
       }}
     >
       {({ values, setFieldValue }) => {

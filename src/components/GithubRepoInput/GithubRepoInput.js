@@ -9,8 +9,8 @@ const GithubRepoInput = () => {
       </Heading>
       <Field
         component={Input}
-        name="gitHubRepo"
-        id="gitHubRepo"
+        name="githubUrl"
+        id="githubUrl"
         label="https://github.com/project"
         labelFontSize={1.2}
         width="600px"
