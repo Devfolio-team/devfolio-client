@@ -1,8 +1,33 @@
 import DeploymentStatus from './DeploymentStatus';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/DeploymentStatus',
   component: DeploymentStatus,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={values => {
+            console.log(values);
+          }}
+        >
+          <Form>
+            <Story values={initialValues} />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -12,17 +37,10 @@ export default {
     },
   },
   argTypes: {
-    value: { control: 'text' },
-    selectedOption: { control: 'text' },
-    onChangeInputHandler: { action: '체인지!' },
-    onChangeRadioHandler: { action: '체인지!' },
+    values: { control: 'object' },
   },
 };
 
 const Template = args => <DeploymentStatus {...args} />;
 
 export const ExampleDeplomentStatus = Template.bind({});
-
-ExampleDeplomentStatus.argTypes = {
-  value: 'Example',
-};
