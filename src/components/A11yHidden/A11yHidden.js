@@ -16,6 +16,10 @@ const StyledA11yHidden = styled.span`
 
 const A11yHidden = ({ as, ...restProps }) => <StyledA11yHidden as={as} {...restProps} />;
 
+A11yHidden.defaultProps = {
+  as: 'label',
+};
+
 A11yHidden.propTypes = {
   /** styled component의 요소를 정해줍니다 */
   as: string.isRequired,

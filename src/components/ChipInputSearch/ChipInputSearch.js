@@ -77,7 +77,11 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
 
   const onKeyUpHandler = e => {
     if (e.key !== 'Enter') return;
-    if (e.target.value !== '' && dummyDatas.includes(e.target.value)) {
+    if (
+      e.target.value !== '' &&
+      dummyDatas.includes(e.target.value) &&
+      !chipLabels.includes(e.target.value)
+    ) {
       setChipLabels([...chipLabels, e.target.value]);
       e.target.value = '';
     }
