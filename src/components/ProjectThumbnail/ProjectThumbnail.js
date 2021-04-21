@@ -4,7 +4,7 @@ import { Container, Heading, Paragraph, DND } from 'components';
 const ProjectThumbnail = ({ setFieldValue }) => {
   return (
     <Container>
-      <Heading as="h2" color="#212121" fontSize={1.6} margin="0 0 20px 0">
+      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 썸네일
       </Heading>
       <Paragraph color="#666" fontSize={1.4} lineHeight={28} margin="0 0 20px 0">

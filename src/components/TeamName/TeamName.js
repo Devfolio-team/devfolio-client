@@ -6,7 +6,7 @@ const TeamName = ({ values }) => {
   const { teamNameRadio } = values;
   return (
     <Container>
-      <Heading as="h2" color="#212121" fontSize={1.6} margin="0 0 20px 0">
+      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         팀 이름
       </Heading>
       <Paragraph color="#666" fontSize={1.4} lineHeight={28}>

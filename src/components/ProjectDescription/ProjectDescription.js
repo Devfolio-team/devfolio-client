@@ -12,7 +12,7 @@ const ProjectDescription = forwardRef((props, ref) => {
     try {
       const formData = new FormData();
       formData.append('image', blob);
-      const res = await axios.post('http://15.165.145.100:3002/image_upload', formData, {
+      const res = await axios.post('http://devfolio.world:3020/api/image', formData, {
         headers: {
           'Content-type': 'multipart/form-data',
         },
@@ -25,7 +25,7 @@ const ProjectDescription = forwardRef((props, ref) => {
 
   return (
     <Container>
-      <Heading as="h2" color="#212121" fontSize={1.6} margin="0 0 20px 0">
+      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 설명
       </Heading>
       <Paragraph color="#666" fontSize={1.4} lineHeight={28} margin="0 0 20px 0">
