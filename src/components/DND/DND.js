@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { color } from 'utils';
 import { func } from 'prop-types';
 import { Container, Image, SVGIcon } from 'components';
 import { Field } from 'formik';
+import ajax from 'apis/ajax';
 
 const DNDInput = styled.input`
   width: 100%;
@@ -91,11 +91,7 @@ const DND = ({ setFieldValue }) => {
     const formData = new FormData();
     formData.append('image', file);
     try {
-      const res = await axios.post('http://devfolio.world:3020/api/image', formData, {
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-      });
+      const res = await ajax.postImage(formData);
       return res.data;
     } catch (error) {
       throw new Error(error);

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
-import axios from 'axios';
+import ajax from 'apis/ajax';
 const { Container, Heading, Paragraph } = require('components');
 
 // TODO: ref위에서 받아와서 사용
@@ -12,11 +12,7 @@ const ProjectDescription = forwardRef((props, ref) => {
     try {
       const formData = new FormData();
       formData.append('image', blob);
-      const res = await axios.post('http://devfolio.world:3020/api/image', formData, {
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-      });
+      const res = await ajax.postImage(formData);
       return res.data;
     } catch (error) {
       throw new Error(error);
