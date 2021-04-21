@@ -40,12 +40,7 @@ export default {
       };
 
       return (
-        <Formik
-          initialValues={initialValues}
-          onSubmit={values => {
-            console.log(values);
-          }}
-        >
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
           <Form>
             <Story values={initialValues} />
           </Form>
