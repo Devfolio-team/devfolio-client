@@ -3,7 +3,6 @@ const API_URL = 'http://devfolio.world:3020';
 
 export const fetchProjects = async () => {
   return await axios.get(`${API_URL}/api/projects`);
-<<<<<<< HEAD
 };
 
 export const postProject = async projectData => {
@@ -12,6 +11,4 @@ export const postProject = async projectData => {
       'Content-type': 'application/json',
     },
   });
-=======
->>>>>>> dc465351ec81863fc0235796e993deaef1c38941
 };
