@@ -14,8 +14,8 @@ const ProjectName = () => {
       </Paragraph>
       <Field
         component={Input}
-        name="projectName"
-        id="projectName"
+        name="subject"
+        id="subject"
         mode="hidden"
         label="프로젝트 이름 입력칸"
         width={600}

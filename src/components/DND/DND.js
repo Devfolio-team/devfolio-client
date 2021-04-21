@@ -83,7 +83,7 @@ const DND = ({ setFieldValue }) => {
     setSrc(src);
     setAlt(alt);
     setIsDragged(false);
-    setFieldValue('file', src);
+    setFieldValue('thumbnail', src);
   };
 
   // TODO: 후에 컨테이너에서 관리, axios를 ajax로도 변경
@@ -117,6 +117,7 @@ const DND = ({ setFieldValue }) => {
         onDragLeave={onDragLeaveHandler}
         accept="image/jpeg, image/png, image/jpg, image/webp"
         multiple
+        required
       />
       {src ? (
         <Image
