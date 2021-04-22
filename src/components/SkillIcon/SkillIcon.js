@@ -8,7 +8,7 @@ import { ReactComponent as Sass } from 'assets/Sass.svg';
 import { ReactComponent as StyledComponent } from 'assets/StyledComponent.svg';
 import { ReactComponent as Typescript } from 'assets/Typescript.svg';
 
-const SkillIcon = ({ type, width, height, ...restProps }) => {
+const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
   switch (type.toUpperCase()) {
     default:
@@ -37,7 +37,7 @@ const SkillIcon = ({ type, width, height, ...restProps }) => {
       SkillIcon = Typescript;
       break;
   }
-  return <SkillIcon width={width} heigth={height} {...restProps} />;
+  return <SkillIcon {...restProps} />;
 };
 
 SkillIcon.defaultProps = {
