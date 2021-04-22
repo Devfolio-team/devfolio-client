@@ -9,7 +9,7 @@ import {
   SVGIcon,
   Time,
 } from 'components';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
 
@@ -75,6 +75,21 @@ const StyledButton = styled(Button)`
 
 const ProjectPage = ({ viewport }) => {
   const { isDesktop, vw, type } = viewport;
+  const [scrollY, setScrollY] = useState(0);
+
+  const onScroll = e => {
+    setScrollY(window.pageYOffset);
+  };
+
+  useEffect(() => {
+    function watchScroll() {
+      window.addEventListener('scroll', onScroll);
+    }
+    watchScroll();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  });
 
   const skills = [
     'Javascript',
@@ -104,7 +119,6 @@ const ProjectPage = ({ viewport }) => {
       $width={isDesktop ? '768px' : '100%'}
       $margin="96px auto 0 auto"
       $background="#F8F9FA"
-      $position={isDesktop ? 'relative' : ''}
     >
       <Container
         width="100%"
@@ -112,31 +126,34 @@ const ProjectPage = ({ viewport }) => {
         padding={isDesktop ? '0 70px' : '0 30px'}
         display="flex"
         justifyContent="space-between"
+        position={vw > 840 ? 'relative' : ''}
       >
         {vw > 840 ? (
-          <Container
-            display="flex"
-            flexFlow="column"
-            justifyContent="center"
-            alignItems="center"
-            margin="0"
-            position={vw > 100 ? 'fixed' : isDesktop ? 'absolute' : ''}
-            top={vw > 840 ? '200px' : ''}
-            left={vw > 840 ? '50px' : ''}
-          >
-            <StyledButton
-              borderRadius="50%"
-              background="inherit"
-              border="1px solid #A3ABB3"
-              width="44px"
-              height="44px"
-              padding="0"
+          <Container position="absolute" left="-10px">
+            <Container
+              display="flex"
+              flexFlow="column"
+              justifyContent="center"
+              alignItems="center"
+              margin="0"
+              position={scrollY > 100 ? 'fixed' : ''}
+              top={scrollY > 100 ? '100px' : ''}
+              // left={scrollLocation > 100 ? '0px' : ''}
             >
-              <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
-            </StyledButton>
-            <Span fontSize="16px" lineHeight="16px" margin="10px 0 0 0">
-              1255
-            </Span>
+              <StyledButton
+                borderRadius="50%"
+                background="inherit"
+                border="1px solid #A3ABB3"
+                width="44px"
+                height="44px"
+                padding="0"
+              >
+                <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+              </StyledButton>
+              <Span fontSize="16px" lineHeight="16px" margin="10px 0 0 0">
+                1255
+              </Span>
+            </Container>
           </Container>
         ) : (
           ''
