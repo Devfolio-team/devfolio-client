@@ -30,7 +30,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.3",
-    "tui-date-picker-react": "0.0.1-rebuild-3"
+    "tui-date-picker-react": "0.0.1-rebuild-3",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",
