@@ -67,9 +67,22 @@ const StyledLi = styled.li`
 const StyledButton = styled(Button)`
   &:hover {
     background: #e0e0e0;
+    stroke: none;
     path {
-      fill: #fff;
+      fill: #e74c3c;
     }
+    svg {
+      stroke: none;
+    }
+  }
+`;
+
+const StyledHeartIcon = styled(SVGIcon)`
+  & {
+    stroke: black;
+  }
+  path {
+    fill: white;
   }
 `;
 
@@ -136,8 +149,9 @@ const ProjectPage = ({ viewport }) => {
               justifyContent="center"
               alignItems="center"
               margin="0"
-              position={scrollY > 100 ? 'fixed' : ''}
-              top={scrollY > 100 ? '100px' : ''}
+              position={scrollY > 0 ? 'fixed' : ''}
+              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              transition="0.5s"
             >
               <StyledButton
                 borderRadius="50%"
@@ -147,9 +161,9 @@ const ProjectPage = ({ viewport }) => {
                 height="44px"
                 padding="0"
               >
-                <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+                <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
               </StyledButton>
-              <Span fontSize="16px" lineHeight="16px" margin="10px 0 0 0">
+              <Span fontSize="16px" lineHeight="16px" margin="0px 0 0 0">
                 1255
               </Span>
             </Container>
@@ -190,7 +204,7 @@ const ProjectPage = ({ viewport }) => {
             padding="0"
           >
             <Container display="flex" justifyContent="center" alignItems="center" margin="0">
-              <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+              <SVGIcon type="HeartEmpty" width={20} height={20}></SVGIcon>
               <Span fontSize="16px" lineHeight="16px" margin="0">
                 1255
               </Span>
@@ -240,7 +254,7 @@ const ProjectPage = ({ viewport }) => {
           $justifyContent="center"
           $alignItems="center"
         >
-          <StyledIcon type="WebSite" $margin="0 7px 0 0" />
+          <StyledIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
           Visit the Website
         </StyledLink>
         <StyledLink
@@ -260,7 +274,7 @@ const ProjectPage = ({ viewport }) => {
           $justifyContent="center"
           $alignItems="center"
         >
-          <StyledIcon type="GithubBlue" $marginRight="9px" />
+          <StyledIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
           GitHub
         </StyledLink>
       </Container>
@@ -308,7 +322,8 @@ const ProjectPage = ({ viewport }) => {
         $borderBottom="1px solid #666666"
         $margin="80px auto"
       />
-      <Container padding={isDesktop ? '0 70px' : '0 30px'}>
+
+      {/* <Container padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
           color="#212121"
@@ -351,7 +366,7 @@ const ProjectPage = ({ viewport }) => {
                   {name.github}
                 </StyledLink>
                 {/* 타입이 xs일때만 팀원 목록 밑으로 구분선 생성 */}
-                {type === 'xs' ? (
+      {/* {type === 'xs' ? (
                   index < names.length - 1 ? (
                     <StyledDivisionLine
                       $margin="0 auto"
@@ -369,12 +384,12 @@ const ProjectPage = ({ viewport }) => {
             </StyledLi>
           ))}
         </StyledUl>
-      </Container>
+      </Container> 
       <StyledDivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
         $margin="80px auto"
-      />
+      />*/}
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
@@ -411,7 +426,7 @@ const ProjectPage = ({ viewport }) => {
                 margin="0"
                 width="100%"
               >
-                <SkillIcon type={skill} width="60px" height="60px"></SkillIcon>
+                <SkillIcon type={skill} width={60} height={60}></SkillIcon>
                 <Span
                   color="#666666"
                   fontSize={1.6}

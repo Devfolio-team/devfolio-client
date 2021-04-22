@@ -41,6 +41,8 @@ const Container = ({
   overflow,
   minWidth,
   minHeight,
+  transition,
+  transform,
   ...restProps
 }) => {
   return (
@@ -71,6 +73,8 @@ const Container = ({
       $minWidth={minWidth}
       $minHeight={minHeight}
       $zIndex={zIndex}
+      $transition={transition}
+      $transform={transform}
       {...restProps}
     />
   );
