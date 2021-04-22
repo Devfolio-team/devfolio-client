@@ -32,7 +32,6 @@ const SkillIcon = ({ type, width, height, ...restProps }) => {
       break;
     case 'STYLEDCOMPONENT':
       SkillIcon = StyledComponent;
-      console.log(SkillIcon);
       break;
     case 'TYPESCRIPT':
       SkillIcon = Typescript;
