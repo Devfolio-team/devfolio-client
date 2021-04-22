@@ -34,8 +34,8 @@ const TeamName = ({ values }) => {
       </Container>
       <Field
         component={Input}
-        id="teamNameInput"
-        name="teamNameInput"
+        id="teamName"
+        name="teamName"
         mode="hidden"
         label="팀 이름 입력칸"
         width={600}

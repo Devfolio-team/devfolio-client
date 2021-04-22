@@ -62,7 +62,7 @@ const ProjectDuration = ({ setFieldValue }) => {
           <Field
             component={StyledDatePicker}
             id="startDate"
-            name="projectStartDate"
+            name="startDate"
             $width="270px"
             $height="40px"
             $background="#FFFFFF"
@@ -77,7 +77,7 @@ const ProjectDuration = ({ setFieldValue }) => {
               const timezoneDate = new Date(date.getTime() - timezoneOffset);
               const dateFormat = timezoneDate.toISOString();
               setStartDate(date);
-              setFieldValue('projectStartDate', dateFormat);
+              setFieldValue('startDate', dateFormat);
             }}
             selectsStart
             startDate={startDate}
@@ -103,7 +103,7 @@ const ProjectDuration = ({ setFieldValue }) => {
           <Field
             component={StyledDatePicker}
             id="endDate"
-            name="projectEndDate"
+            name="endDate"
             $width="270px"
             $height="40px"
             $background="#FFFFFF"
@@ -118,7 +118,7 @@ const ProjectDuration = ({ setFieldValue }) => {
               const timezoneDate = new Date(date.getTime() - timezoneOffset);
               const dateFormat = timezoneDate.toISOString();
               setEndDate(date);
-              setFieldValue('projectEndDate', dateFormat);
+              setFieldValue('endDate', dateFormat);
             }}
             selectsStart
             startDate={startDate}
