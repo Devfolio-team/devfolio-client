@@ -1,15 +1,27 @@
 import { Heading, Container, RadioButton, Input } from 'components';
 import { object } from 'prop-types';
 import { Field } from 'formik';
+import styled, { css } from 'styled-components';
 
-const DeploymentStatus = ({ values }) => {
+const StyledContainer = styled(Container)`
+  ${({ vw }) => css`
+    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
+    width: ${vw >= 1280 ? '100%' : '80%'};
+  `}
+`;
+
+const DeploymentStatus = ({ values, vw }) => {
   const { deploymentStatus } = values;
   return (
-    <Container>
+    <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         배포 여부
       </Heading>
-      <Container margin="0 0 20px 0">
+      <Container
+        margin="0 0 20px 0"
+        display="flex"
+        flexFlow={vw > 600 ? 'row nowrap' : 'column nowrap'}
+      >
         <Field
           component={RadioButton}
           name="deploymentStatus"
@@ -17,7 +29,7 @@ const DeploymentStatus = ({ values }) => {
           type="radio"
           id="deployed"
           label="네! 프로젝트를 배포하였습니다! 😄"
-          margin="0 70px 0 0"
+          margin={vw >= 1280 ? '13px 70px 0 0' : vw <= 600 ? '13px 70px 15px 0' : '13px 70px 0 0'}
         />
         <Field
           component={RadioButton}
@@ -26,6 +38,7 @@ const DeploymentStatus = ({ values }) => {
           type="radio"
           id="undeployed"
           label="아니오! 프로젝트를 배포하지 않았습니다 😭"
+          margin={vw >= 1280 ? '13px 0 0 0' : vw <= 600 ? '13px 0 0 0' : '13px 0 0 0'}
         />
       </Container>
       <Field
@@ -34,7 +47,7 @@ const DeploymentStatus = ({ values }) => {
         name="deployUrl"
         label="http://"
         labelFontSize={1.2}
-        width={600}
+        width="100%"
         height={40}
         border="1px solid #EAEAEA"
         borderRadius={5}
@@ -45,7 +58,7 @@ const DeploymentStatus = ({ values }) => {
         afterMargin={3}
         disabled={deploymentStatus === 'undeployed' || deploymentStatus === ''}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 

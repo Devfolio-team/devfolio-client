@@ -10,7 +10,7 @@ const ChipContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  width: 600px;
+  width: 100%;
   border: 1px solid #eaeaea;
   min-height: 40px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);

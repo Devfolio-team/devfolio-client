@@ -5,6 +5,7 @@ import { func } from 'prop-types';
 import { Container, Image, SVGIcon } from 'components';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 const DNDInput = styled.input`
   width: 100%;
@@ -67,6 +68,8 @@ const DND = ({ setFieldValue }) => {
   const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
+  const viewport = useDetectViewport();
+  const { vw } = viewport;
 
   const onDragOverHandler = e => {
     e.preventDefault();
@@ -109,8 +112,8 @@ const DND = ({ setFieldValue }) => {
   return (
     <Container
       display="inline-block"
-      width={400}
-      height={400}
+      width={vw > 560 ? 400 : '67vw'}
+      height={vw > 560 ? 400 : '67vw'}
       borderRadius="5px"
       position="relative"
     >
