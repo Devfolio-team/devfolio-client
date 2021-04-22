@@ -1,9 +1,18 @@
 import { Heading, Input, Container } from 'components';
 import { Field } from 'formik';
+import styled, { css } from 'styled-components';
 
-const GithubRepoInput = () => {
+const StyledContainer = styled(Container)`
+  justify-self: end;
+  ${({ vw }) => css`
+    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
+    width: ${vw >= 1280 ? '100%' : '80%'};
+  `}
+`;
+
+const GithubRepoInput = ({ vw }) => {
   return (
-    <Container>
+    <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         GitHub 저장소 링크
       </Heading>
@@ -13,7 +22,7 @@ const GithubRepoInput = () => {
         id="githubUrl"
         label="https://github.com/project"
         labelFontSize={1.2}
-        width="600px"
+        width="100%"
         height="40px"
         border="1px solid #EAEAEA"
         borderRadius={5}
@@ -23,7 +32,7 @@ const GithubRepoInput = () => {
         beforeMargin={8}
         afterMargin={3}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 

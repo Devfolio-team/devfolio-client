@@ -1,14 +1,22 @@
 import { func } from 'prop-types';
 import { Container, Heading, ChipInputSearch } from 'components';
+import styled, { css } from 'styled-components';
 
-const TechStacks = ({ setFieldValue }) => {
+const StyledContainer = styled(Container)`
+  ${({ vw }) => css`
+    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
+    width: ${vw >= 1280 ? '100%' : '80%'};
+  `}
+`;
+
+const TechStacks = ({ setFieldValue, vw }) => {
   return (
-    <Container>
-      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
+    <StyledContainer vw={vw}>
+      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 32px 0">
         사용 기술 스택
       </Heading>
       <ChipInputSearch id="techStacksList" setFieldValue={setFieldValue} />
-    </Container>
+    </StyledContainer>
   );
 };
 

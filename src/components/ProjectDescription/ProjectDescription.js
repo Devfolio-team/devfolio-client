@@ -3,11 +3,19 @@ import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import ajax from 'apis/ajax';
-const { Container, Heading, Paragraph } = require('components');
+import { Container, Heading, Paragraph } from 'components';
+import styled, { css } from 'styled-components';
 
-// TODO: ref위에서 받아와서 사용
-const ProjectDescription = forwardRef((props, ref) => {
-  // TODO: axios ajax로 바꾸고 s3 URL 나중에 바꿔주기
+const StyledContainer = styled(Container)`
+  grid-row: 6 /7;
+  grid-column: span 2;
+  ${({ vw }) => css`
+    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
+    width: ${vw >= 1280 ? '100%' : '80%'};
+  `}
+`;
+
+const ProjectDescription = forwardRef(({ vw }, ref) => {
   const uploadImage = async blob => {
     try {
       const formData = new FormData();
@@ -20,7 +28,7 @@ const ProjectDescription = forwardRef((props, ref) => {
   };
 
   return (
-    <Container>
+    <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 설명
       </Heading>
@@ -29,8 +37,8 @@ const ProjectDescription = forwardRef((props, ref) => {
       </Paragraph>
       <Editor
         previewStyle="vertical"
-        height="600px"
-        initialEditType="markdown"
+        height={vw >= 768 ? '500px' : '300px'}
+        initialEditType="wysiwyg"
         useCommandShortcut={true}
         ref={ref}
         hooks={{
@@ -45,7 +53,7 @@ const ProjectDescription = forwardRef((props, ref) => {
           },
         }}
       />
-    </Container>
+    </StyledContainer>
   );
 });
 
