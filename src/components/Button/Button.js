@@ -89,7 +89,6 @@ Button.defaultProps = {
   width: 110,
   height: 45,
   background: 'transparent',
-  color: color.mainColor,
   fontSize: 1.4,
   fontWeight: 500,
   borderRadius: 5,
