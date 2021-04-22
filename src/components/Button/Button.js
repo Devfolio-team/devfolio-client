@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { string, func, number, oneOfType } from 'prop-types';
-import { color, applyStyle } from 'utils';
+import { applyStyle } from 'utils';
 import { forwardRef } from 'react';
 
 const StyledButton = styled.button.attrs(({ type, onClick }) => ({
