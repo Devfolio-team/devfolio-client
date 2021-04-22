@@ -176,7 +176,7 @@ const ProjectItem = ({
           </StyledLink>
         </Container>
         <Container margin="0" display="flex" justifyContent="end" alignItems="center">
-          <SVGIcon type="HeartRed" />
+          <SVGIcon type="HeartRed" width="12" height="18" />
           <Span marginLeft={5}>{likeCount}</Span>
         </Container>
       </Container>

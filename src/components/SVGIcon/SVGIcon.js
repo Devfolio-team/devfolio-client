@@ -18,7 +18,7 @@ import { ReactComponent as Folder } from 'assets/Folder.svg';
 import { ReactComponent as Calendar } from 'assets/Calendar.svg';
 import { ReactComponent as WebSite } from 'assets/WebSite.svg';
 
-const SVGIcon = ({ type, width, height, ...restProps }) => {
+const SVGIcon = ({ type, ...restProps }) => {
   let SVGIcon = null;
   switch (type) {
     default:
@@ -77,7 +77,7 @@ const SVGIcon = ({ type, width, height, ...restProps }) => {
       SVGIcon = WebSite;
       break;
   }
-  return <SVGIcon width={width} height={height} {...restProps} />;
+  return <SVGIcon {...restProps} />;
 };
 
 SVGIcon.defaultProps = {
