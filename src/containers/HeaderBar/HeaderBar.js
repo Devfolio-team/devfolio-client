@@ -132,6 +132,8 @@ const HeaderBar = ({ viewport }) => {
               </ProjectEditLink>
             )}
             <Container
+              title="네비게이션 메뉴 열기"
+              aria-label="네비게이션 메뉴 열기"
               className="userNavigator"
               display="flex"
               alignItems="center"
@@ -168,6 +170,7 @@ const HeaderBar = ({ viewport }) => {
               />
             </Container>
             <UserNavigator
+              aria-hidden={!userNavigatorIsOepn}
               viewport={viewport}
               height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 228 : 171}
               tabIndex={userNavigatorIsOepn ? 0 : -1}

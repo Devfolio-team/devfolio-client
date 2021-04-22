@@ -1,4 +1,5 @@
 import { UserNavigator } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 export default {
   title: 'Component/UserNavigator',
@@ -14,7 +15,10 @@ export default {
   argTypes: {},
 };
 
-const Template = args => <UserNavigator {...args} />;
+const Template = args => {
+  const viewport = useDetectViewport();
+  return <UserNavigator viewport={viewport} {...args} />;
+};
 
 export const ExampleUserNavigator = Template.bind({});
 

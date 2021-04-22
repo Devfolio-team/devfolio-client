@@ -1,28 +1,28 @@
 import { Heading, Container, RadioButton } from 'components';
-import { string, func } from 'prop-types';
+import { Field } from 'formik';
 
-const PublicStatus = ({ selectedOption, onChangeRadioHandler }) => {
+const PublicStatus = () => {
   return (
     <Container>
-      <Heading as="h2" color="#212121" fontSize={1.6} margin="0 0 20px 0">
+      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         공개 여부
       </Heading>
       <Container>
-        <RadioButton
-          id="publicStatusRadio1"
-          name="public"
-          value="public"
-          onChange={onChangeRadioHandler}
-          checked={selectedOption === 'public'}
+        <Field
+          type="radio"
+          component={RadioButton}
+          name="isPrivate"
+          value="0"
+          id="public"
           label="네! 프로젝트를 사람들과 공유하고싶슾니다 😄"
           margin="0 70px 0 0"
         />
-        <RadioButton
-          id="publicStatusRadio2"
-          name="public"
-          value="private"
-          onChange={onChangeRadioHandler}
-          checked={selectedOption === 'private'}
+        <Field
+          type="radio"
+          component={RadioButton}
+          name="isPrivate"
+          value="1"
+          id="private"
           label="아니오! 혼자만 보고 싶어요 😭"
         />
       </Container>
@@ -30,11 +30,8 @@ const PublicStatus = ({ selectedOption, onChangeRadioHandler }) => {
   );
 };
 
-PublicStatus.propTypes = {
-  /** 라디오버튼 둘 중 하나 선택된 옵션을 나타냅니다. */
-  selectedOption: string.isRequired,
-  /** 라디오버튼 변경된 상태를 제어하는 이벤트핸들러입니다. */
-  onChangeRadioHandler: func.isRequired,
-};
+PublicStatus.defaultProps = {};
+
+PublicStatus.propTypes = {};
 
 export default PublicStatus;

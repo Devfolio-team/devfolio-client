@@ -1,8 +1,28 @@
 import TechStacks from './TechStacks';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/TechStacks',
   component: TechStacks,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -12,10 +32,7 @@ export default {
     },
   },
   argTypes: {
-    chipLabels: { control: 'array' },
-    onKeyUpHandler: { action: '키 입력!' },
-    value: { control: 'text' },
-    onChangeHandler: { action: '체인지!' },
+    setFieldValue: { action: '체인지!' },
   },
 };
 

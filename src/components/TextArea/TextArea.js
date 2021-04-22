@@ -12,7 +12,7 @@ const StyledLabel = styled.label.attrs(({ htmlFor }) => ({
     ${applyStyle(props)}
     display: block;
     transition: 0.4s;
-    font-size: 2rem;
+    font-size: 1.2rem;
     margin-top: 15px;
     color: #7e7272;
     transform: translateY(
@@ -29,7 +29,7 @@ const StyledTextArea = styled.textarea`
   ${props =>
     css`
       ${applyStyle(props)}
-      font-size: 2rem;
+      font-size: 1.2rem;
       padding: 10px 0 0 8px;
       box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
@@ -50,6 +50,7 @@ const TextArea = ({
   afterTranslate,
   beforeMargin,
   afterMargin,
+  field,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -70,7 +71,7 @@ const TextArea = ({
         <StyledLabel
           htmlFor={id}
           focus={isFocused}
-          areaValue={value}
+          areaValue={field.value}
           beforeTranslate={beforeTranslate}
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
@@ -83,14 +84,17 @@ const TextArea = ({
         id={id}
         $width={width}
         $height={height}
-        {...restProps}
         onFocus={onFocusHandler}
+        {...field}
         onBlur={onBlurHandler}
-        onChange={onChange}
-        value={value}
+        {...restProps}
       />
     </>
   );
+};
+
+TextArea.defaultProps = {
+  field: {},
 };
 
 TextArea.propTypes = {

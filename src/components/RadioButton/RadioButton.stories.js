@@ -12,16 +12,13 @@ export default {
     },
   },
   argTypes: {
-    name: { control: 'text' },
     id: { control: 'text' },
-    value: { control: 'text' },
-    checked: { control: 'boolean' },
     label: { control: 'text' },
     fontSize: { control: 'number' },
     fontWeight: { control: 'text' },
     color: { control: 'color' },
-    onChange: { action: '체인지!' },
     margin: { control: 'text' },
+    field: { control: 'object' },
   },
 };
 
@@ -30,7 +27,5 @@ const Template = args => <RadioButton {...args} />;
 export const ExampleRadioButton = Template.bind({});
 
 ExampleRadioButton.args = {
-  name: 'radio',
-  value: 'radio',
   id: 'rd-1',
 };

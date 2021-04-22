@@ -1,8 +1,28 @@
 import { ProjectDuration } from 'components';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/ProjectDuration',
   component: ProjectDuration,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -10,11 +30,11 @@ export default {
       },
     },
   },
-  argTypes: {},
+  argTypes: {
+    setFieldValue: { action: '체인지!' },
+  },
 };
 
 const Template = args => <ProjectDuration {...args} />;
 
 export const ExampleProjectDuration = Template.bind({});
-
-ExampleProjectDuration.argTypes = {};

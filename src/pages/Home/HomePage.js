@@ -16,6 +16,15 @@ const HomePage = ({ viewport }) => {
 
   const [projects, setProjects] = useState([]);
 
+  const [sortType, setSortType] = useState('popular');
+
+  const onPopularSortHandler = () => {
+    setSortType('popular');
+  };
+  const onLatestSortHandler = () => {
+    setSortType('latest');
+  };
+
   useEffect(() => {
     const fetchProejctList = async () => {
       try {
@@ -24,6 +33,14 @@ const HomePage = ({ viewport }) => {
           const {
             data: { projectsData },
           } = response;
+
+          if (sortType === 'popular') {
+            projectsData.sort(
+              ({ likeCount: nextLikeCount }, { likeCount: preLikeCount }) =>
+                preLikeCount - nextLikeCount
+            );
+          }
+
           setProjects(projectsData);
         } else throw new Error('서버의 응답이 올바르지 않습니다.');
       } catch (error) {
@@ -32,7 +49,7 @@ const HomePage = ({ viewport }) => {
     };
 
     fetchProejctList();
-  }, []);
+  }, [sortType]);
 
   return (
     <StyledHomePage>
@@ -55,22 +72,25 @@ const HomePage = ({ viewport }) => {
               width="112px"
               height="48px"
               background="transparent"
+              color={sortType === 'latest' ? '#868E96' : `#212121`}
               border="0"
               fontSize={1.9}
-              fontWeight={700}
-              // outline="none"
+              fontWeight={sortType === 'latest' ? 500 : 700}
+              onClick={onPopularSortHandler}
             >
               인기
             </Button>
             <Button
               title="최근에 작성된 순서로 프로젝트 보기"
               aria-label="최근에 작성된 순서로 프로젝트 보기"
-              color="#868E96"
+              color={sortType === 'latest' ? '#212121' : `#868E96`}
+              fontWeight={sortType === 'latest' ? 700 : 500}
               background="transparent"
               border="0"
               fontSize={1.9}
               width="112px"
               height="48px"
+              onClick={onLatestSortHandler}
             >
               최신
             </Button>
@@ -79,7 +99,7 @@ const HomePage = ({ viewport }) => {
               position="absolute"
               bottom="0"
               left="0"
-              transform="translate3D(0px, 0, 0)"
+              transform={`translate3D(${sortType === 'latest' ? '112px' : '0'}, 0, 0)`}
             />
           </Container>
           <ProjectList viewport={viewport}>

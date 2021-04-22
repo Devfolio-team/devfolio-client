@@ -1,8 +1,28 @@
 import ProjectThumbnail from './ProjectThumbnail';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/ProjectThumbnail',
   component: ProjectThumbnail,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -12,10 +32,7 @@ export default {
     },
   },
   argTypes: {
-    src: { control: 'text' },
-    alt: { control: 'text' },
-    value: { control: 'text' },
-    onChangeHandler: { action: '체인지!' },
+    setFieldValue: { action: '체인지!' },
   },
 };
 

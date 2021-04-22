@@ -1,8 +1,28 @@
 import ProjectName from './ProjectName';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/ProjectName',
   component: ProjectName,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -11,16 +31,8 @@ export default {
       },
     },
   },
-  argTypes: {
-    value: { control: 'text' },
-    onChange: { action: '체인지!' },
-  },
 };
 
 const Template = args => <ProjectName {...args} />;
 
 export const ExampleProjectName = Template.bind({});
-
-ExampleProjectName.argTypes = {
-  value: 'Example',
-};

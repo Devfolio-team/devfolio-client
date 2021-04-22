@@ -1,8 +1,53 @@
 import TeamName from './TeamName';
+import { Formik, Form } from 'formik';
+
+// const test = Story => {
+//   return () => {
+//     const initialValues = {
+//       projectName: '',
+//       teamNameRadio: '',
+//       planIntention: '',
+//       techStacks: '',
+//       teamNameInput: '',
+//     };
+
+//     return (
+//       <Formik
+//         initialValues={initialValues}
+//         onSubmit={values => {
+//           console.log(values);
+//         }}
+//       >
+//         <Form>
+//           <Story values={initialValues} />
+//         </Form>
+//       </Formik>
+//     );
+//   };
+// };
 
 export default {
   title: 'Component/TeamName',
   component: TeamName,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story values={initialValues} />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -12,17 +57,10 @@ export default {
     },
   },
   argTypes: {
-    value: { control: 'text' },
-    selectedOption: { control: 'text' },
-    onChangeInputHandler: { action: '체인지!' },
-    onChangeRadioHandler: { action: '체인지!' },
+    values: { control: 'object' },
   },
 };
 
 const Template = args => <TeamName {...args} />;
 
 export const ExampleTeamName = Template.bind({});
-
-ExampleTeamName.argTypes = {
-  value: 'Example',
-};

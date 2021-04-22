@@ -16,6 +16,8 @@ const Image = ({
   src,
   alt,
   width,
+  maxWidth,
+  maxHeight,
   height,
   objectFit,
   position,
@@ -26,12 +28,15 @@ const Image = ({
   zIndex,
   borderRadius,
   cursor,
+  onLoad,
   ...restProps
 }) => (
   <StyledImage
     src={src}
     alt={alt}
     $width={width}
+    $maxWidth={maxWidth}
+    $maxHeight={maxHeight}
     $height={height}
     $objectFit={objectFit}
     $position={position}
@@ -42,19 +47,21 @@ const Image = ({
     $zIndex={zIndex}
     $borderRadius={borderRadius}
     $cursor={cursor}
+    onLoad={onLoad}
     {...restProps}
   />
 );
 
 Image.defaultProps = {
   objectFit: 'cover',
+  alt: '',
 };
 
 Image.propTypes = {
   /** 이미지의 source를 설정합니다. */
   src: string.isRequired,
   /** 이미지의 대체텍스트를 설정합니다. */
-  alt: string.isRequired,
+  alt: string,
   /** 이미지의 넓이를 px단위로 설정합니다. */
   width: oneOfType([string, number]),
   /** 이미지의 높이를 px단위로 설정합니다. */

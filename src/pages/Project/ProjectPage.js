@@ -138,7 +138,6 @@ const ProjectPage = ({ viewport }) => {
               margin="0"
               position={scrollY > 100 ? 'fixed' : ''}
               top={scrollY > 100 ? '100px' : ''}
-              // left={scrollLocation > 100 ? '0px' : ''}
             >
               <StyledButton
                 borderRadius="50%"

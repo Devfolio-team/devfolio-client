@@ -1,8 +1,28 @@
 import { GithubRepoInput } from 'components';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/GithubRepoInput',
   component: GithubRepoInput,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -10,24 +30,8 @@ export default {
       },
     },
   },
-  argTypes: {
-    value: { control: 'text' },
-    onChange: { action: '체인지!' },
-    beforeTranslate: { control: 'number' },
-    afterTranslate: { control: 'number' },
-    beforeMargin: { control: 'number' },
-    afterMargin: { control: 'number' },
-  },
 };
 
 const Template = args => <GithubRepoInput {...args} />;
 
 export const ExampleGithubRepoInput = Template.bind({});
-
-ExampleGithubRepoInput.argTypes = {
-  value: 'Example',
-  beforeTranslate: 4.5,
-  afterTranslate: 1,
-  beforeMargin: 8,
-  afterMargin: 3,
-};

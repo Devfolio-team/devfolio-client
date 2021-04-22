@@ -1,10 +1,10 @@
-import { Heading, Paragraph, Input } from 'components';
-import { string, func } from 'prop-types';
+import { Heading, Paragraph, Input, Container } from 'components';
+import { Field } from 'formik';
 
-const ProjectName = ({ value, onChange }) => {
+const ProjectName = () => {
   return (
-    <div>
-      <Heading as="h2" color="#212121" fontSize={1.6} margin="0 0 20px 0">
+    <Container>
+      <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 이름
       </Heading>
       <Paragraph color="#666" fontSize={1.4} lineHeight={28}>
@@ -12,10 +12,10 @@ const ProjectName = ({ value, onChange }) => {
         <br />
         프로젝트 이름은 프로젝트 페이지의 제목으로 사용됩니다.
       </Paragraph>
-      <Input
-        id="projectName"
-        value={value}
-        onChange={onChange}
+      <Field
+        component={Input}
+        name="subject"
+        id="subject"
         mode="hidden"
         label="프로젝트 이름 입력칸"
         width={600}
@@ -25,17 +25,12 @@ const ProjectName = ({ value, onChange }) => {
         margin="20px 0 0 0"
         boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
       />
-    </div>
+    </Container>
   );
 };
 
-ProjectName.defaultProps = {
-  value: '',
-};
+ProjectName.defaultProps = {};
 
-ProjectName.propTypes = {
-  value: string.isRequired,
-  onChange: func.isRequired,
-};
+ProjectName.propTypes = {};
 
 export default ProjectName;

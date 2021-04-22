@@ -1,8 +1,28 @@
 import DND from './DND';
+import { Formik, Form } from 'formik';
 
 export default {
   title: 'Component/DND',
   component: DND,
+  decorators: [
+    Story => {
+      const initialValues = {
+        projectName: '',
+        teamNameRadio: '',
+        planIntention: '',
+        techStacks: '',
+        teamNameInput: '',
+      };
+
+      return (
+        <Formik initialValues={initialValues} onSubmit={values => {}}>
+          <Form>
+            <Story />
+          </Form>
+        </Formik>
+      );
+    },
+  ],
   parameters: {
     docs: {
       description: {
@@ -11,11 +31,7 @@ export default {
     },
   },
   argTypes: {
-    id: { control: 'text' },
-    src: { control: 'text' },
-    alt: { control: 'text' },
-    value: { control: 'text' },
-    onChange: { action: '체인지!' },
+    setFieldValue: { action: '체인지!' },
   },
 };
 

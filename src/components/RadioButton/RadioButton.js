@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { string, bool, number, func } from 'prop-types';
+import { string, object, number } from 'prop-types';
 import { color, applyStyle } from 'utils';
 
 const RadioInput = styled.input`
@@ -38,28 +38,10 @@ const RadioLabel = styled.label`
   }
 `;
 
-const RadioButton = ({
-  name,
-  id,
-  value,
-  label,
-  checked,
-  onChange,
-  fontSize,
-  fontWeight,
-  color,
-  margin,
-}) => {
+const RadioButton = ({ id, label, fontSize, fontWeight, color, margin, field }) => {
   return (
     <>
-      <RadioInput
-        type="radio"
-        id={id}
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-      />
+      <RadioInput type="radio" id={id} {...field} />
       <RadioLabel
         htmlFor={id}
         $fontSize={fontSize}
@@ -81,14 +63,8 @@ RadioButton.defaultProps = {
 };
 
 RadioButton.propTypes = {
-  /** 라디오버튼의 이름을 설정합니다. */
-  name: string.isRequired,
   /** 라디오버튼의 고유한 id값을 설정합니다. */
   id: string.isRequired,
-  /** 라디오버튼의 값을 설정합니다. */
-  value: string.isRequired,
-  /** 라디오버튼의 체크여부를 설정합니다. */
-  checked: bool.isRequired,
   /** 라디오버튼의 설명을 설정합니다. */
   label: string,
   /** 라디오버튼의 레이블의 폰트 크기를 설정합니다. */
@@ -97,10 +73,10 @@ RadioButton.propTypes = {
   fontWeight: string,
   /** 라디오버튼의 레이블의 폰트 색상을 설정합니다. */
   color: string,
-  /** 라디오버튼의 체크버튼이 변경되는 이벤트를 설정합니다. */
-  onChange: func,
   /** 라디오버튼의 바깥쪽 여백을 설정합니다. 단축표현을 사용하기 때문에 문자열을 전달해야 합니다. */
   margin: string,
+  /** formik이 제공하는 onBlur, onChange, name, value 값을 갖고 있는 객체입니다. */
+  field: object,
 };
 
 export default RadioButton;
