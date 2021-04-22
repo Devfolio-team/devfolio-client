@@ -1,4 +1,4 @@
-import { A11yHidden, Container } from 'components';
+import { A11yHidden } from 'components';
 import { PortfolioContents, PortfolioProfile } from 'containers';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';

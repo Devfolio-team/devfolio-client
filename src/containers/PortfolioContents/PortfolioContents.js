@@ -66,6 +66,7 @@ const PortfolioContents = () => {
       <Container maxWidth={1440} margin="0 auto" padding="0 70px">
         <Container>
           <Heading
+            as="h3"
             fontSize={4}
             fontWeight={700}
             display="inline-block"
@@ -91,6 +92,7 @@ const PortfolioContents = () => {
         </Container>
         <Container margin="80px 0 0">
           <Heading
+            as="h3"
             fontSize={4}
             fontWeight={700}
             display="inline-block"
@@ -100,13 +102,14 @@ const PortfolioContents = () => {
             SKILLS
           </Heading>
           <SkillIconList>
-            {skills.map(skill => (
-              <SkillIconItem type={skill} />
+            {skills.map((skill, index) => (
+              <SkillIconItem key={index} type={skill} />
             ))}
           </SkillIconList>
         </Container>
         <Container margin="50px 0 0">
           <Heading
+            as="h3"
             fontSize={4}
             fontWeight={700}
             margin="0 0 25px"
