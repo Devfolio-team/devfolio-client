@@ -98,7 +98,7 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
       {chipLabels.map((chipLabel, index) => (
         <ChipItems key={index}>
           <ChipLabel>{chipLabel}</ChipLabel>
-          <XIcon type="X" onClick={onClickRemoveHandler} />
+          <XIcon type="X" onClick={onClickRemoveHandler} width="10" height="10" />
         </ChipItems>
       ))}
       <Field

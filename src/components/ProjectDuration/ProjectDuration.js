@@ -57,7 +57,7 @@ const ProjectDuration = ({ setFieldValue }) => {
             $zIndex="1"
             htmlFor="startDate"
           >
-            <SVGIcon type="Calendar" />
+            <SVGIcon type="Calendar" width="20" height="20" />
           </StyledLabel>
           <Field
             component={StyledDatePicker}
@@ -98,7 +98,7 @@ const ProjectDuration = ({ setFieldValue }) => {
             프로젝트 종료일
           </StyledLabel>
           <StyledLabel $position="absolute" $top="30px" $right="15px" $zIndex="1" htmlFor="endDate">
-            <SVGIcon type="Calendar" />
+            <SVGIcon type="Calendar" width="20" height="20" />
           </StyledLabel>
           <Field
             component={StyledDatePicker}
