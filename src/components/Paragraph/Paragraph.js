@@ -20,6 +20,7 @@ const Paragraph = ({
   cursor,
   overflow,
   textOverflow,
+  width,
   ...restProps
 }) => (
   <StyledParagraph
@@ -28,6 +29,7 @@ const Paragraph = ({
     $fontWeight={fontWeight}
     $lineHeight={lineHeight}
     $color={color}
+    $width={width}
     $height={height}
     $padding={padding}
     $margin={margin}

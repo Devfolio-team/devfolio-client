@@ -5,3 +5,4 @@ export { default as SignupModalDialog } from './SignupModalDialog/SignupModalDia
 export { default as ProjectList } from './ProjectList/ProjectList';
 export { default as ProjectEditForm } from './ProjectEditForm/ProjectEditForm';
 export { default as PortfolioProfile } from './PortfolioProfile/PortfolioProfile';
+export { default as PortfolioContents } from './PortfolioContents/PortfolioContents';

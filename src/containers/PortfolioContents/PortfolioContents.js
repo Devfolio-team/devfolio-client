@@ -1,0 +1,145 @@
+import { Container, Heading, ProjectItem, SkillIconItem } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
+import React, { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { applyStyle } from 'utils';
+
+const StyledPortfolioContents = styled.div`
+  ${props => css`
+    ${applyStyle(props)}
+    position: relative;
+    z-index: 100;
+    margin: 100vh 0 0 0;
+    width: 100%;
+    padding: 80px 0;
+    background: #f8f9fa;
+  `}
+`;
+
+const Introduce = styled.pre`
+  ${props => css`
+    ${applyStyle(props)}
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+  `}
+`;
+
+const SkillIconList = styled.ul`
+  ${props => css`
+    ${applyStyle(props)}
+    display: flex;
+    flex-flow: row wrap;
+    margin: 30px 0 0 100px;
+  `}
+`;
+
+const ProjectList = styled.ul`
+  ${props => css`
+    ${applyStyle(props)}
+    display: flex;
+    flex-flow: row wrap;
+    /* margin: 30px 0 0 100px; */
+  `}
+`;
+
+const PortfolioContents = () => {
+  const [skills, setSkills] = useState([]);
+
+  const viewport = useDetectViewport();
+
+  useEffect(() => {
+    setSkills([
+      'Javascript',
+      'Typescript',
+      'React',
+      'Vue',
+      'Angular',
+      'SteyldComponents',
+      'Express',
+      'MySQL',
+      'Sass',
+      'Node.js',
+    ]);
+  }, []);
+  return (
+    <StyledPortfolioContents>
+      <Container maxWidth={1440} margin="0 auto" padding="0 70px">
+        <Container>
+          <Heading
+            as="h3"
+            fontSize={4}
+            fontWeight={700}
+            display="inline-block"
+            lineHeight="20px"
+            borderBottom="14px solid rgba(66,139,202,0.6)"
+          >
+            Introduce
+          </Heading>
+          <Introduce $margin="30px 0 0 100px" $lineHeight="3rem" $fontSize={2}>
+            {`웹 프론트엔드 엔지니어 김지원 입니다. 여러 프로젝트를 수행하면서 개발 역량을 쌓아왔고, 현재는 React와 Redux를 사용하여 프로젝트를 진행 하고 있습니다. 리액트 프레임워크를 사용한 웹 프론트엔드 개발에 가장 익숙합니다.
+
+자기개발에 손을 놓지 않습니다. 퇴근 후는 사이드프로젝트를 하며 공부합니다. 개인적으로 진행하는 프로젝트와 팀원 들과 협업하는
+프로젝트를 병행하고 있습니다.
+
+1인 개발 프로젝트를 개발 시작부터 배포까지 혼자 진행해보며, 프론트엔드 말고도 백엔드와 디자인 직군의 역할의 이 해도를 키웠습니다. 
+
+여러 프로젝트에서 디자인부분까지 맡으면서 디자인 역량도 조금이나마 쌓게 되었고, 현재는 어느정도의 디자인 감각 이 있는 프론트엔드 개발자를 지향하고 있습니다.
+
+또한, 여러 협업 프로젝트를 진행하면서 다른 직군과 소통하는 것의 중요성을 알게 되었고, 프로젝트 시 주기적으로 회의하고 수시로 소통합니다. 슬랙, 노션, 제플린 등의 협업 툴 활용능력도 쌓으며 다양한 프로젝트에 적용하고 있습니다.
+
+거의 모든 프로젝트를 깃허브를 활용해 관리하며 진행하고 있습니다.`}
+          </Introduce>
+        </Container>
+        <Container margin="80px 0 0">
+          <Heading
+            as="h3"
+            fontSize={4}
+            fontWeight={700}
+            display="inline-block"
+            lineHeight="20px"
+            borderBottom="14px solid rgba(66,139,202,0.6)"
+          >
+            SKILLS
+          </Heading>
+          <SkillIconList>
+            {skills.map((skill, index) => (
+              <SkillIconItem key={index} type={skill} />
+            ))}
+          </SkillIconList>
+        </Container>
+        <Container margin="50px 0 0">
+          <Heading
+            as="h3"
+            fontSize={4}
+            fontWeight={700}
+            margin="0 0 25px"
+            display="inline-block"
+            lineHeight="20px"
+            borderBottom="14px solid rgba(66,139,202,0.6)"
+          >
+            Projects
+          </Heading>
+          <ProjectList>
+            <ProjectItem
+              // containerMinHeight={'30vw'}
+              width={'80%'}
+              margin="25px auto "
+              viewport={viewport}
+              projectId={1}
+              thumbnail="https://user-images.githubusercontent.com/71176945/99017572-93841e80-259b-11eb-9d4f-8a66daca916c.PNG"
+              subject="realworld"
+              planIntention="기획의도"
+              created="2021-04-19T06:40:56.455Z"
+              authorId="1"
+              author="류하준"
+              authorProfile="https://avatars.githubusercontent.com/u/71176945?v=4"
+              likeCount={4}
+            />
+          </ProjectList>
+        </Container>
+      </Container>
+    </StyledPortfolioContents>
+  );
+};
+
+export default PortfolioContents;
