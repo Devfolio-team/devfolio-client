@@ -119,13 +119,13 @@ const ProjectPage = ({ viewport }) => {
   // const code = `<h1>2021년 03월 11일 목요일 TIL (CDD, StoryBook, type검사)</h1><br/><h2>오늘 한 일과 느낀점</h2><br/><ul><li> <p>오전 10시 ~ 오후 5시 리액트 현강 이번주 목, 금은 하루에 리액트 강의 시간이 점심시간 제외하고 6시간이나 된다. 오전 시간은 어제 얘기하던 컴포넌트의 추가적인 개념으로 defaultProps와 propTypes에 대해 알려주셨다.</p></li><br/> <li> <p>추가적으로 자바스크립트의 typeof가 배열과 객체, null을 구분하지 못하는것을 어떻게 해결하는지 배웠다.</p> </li> </ul>;`;
   const code = `<pre class="lang-javascript"><code data-language="javascript">// 데이터 타입 검사 유틸리티 함수<br/> function validType(dataType, typeString) {   return Object.prototype.toString.call(dataType).slice(8,-1).toLowerCase() === typeString }  function calcTriangleCirc(x, y, z) {   // 데이터 타입 검사   if (      !validType(x, 'number') ||      !validType(y, 'number') ||      !validType(z, 'number')    ) {     throw new Error('전달되는 인자의 유형은 오직 숫자(number)여야 합니다.')   }   return x + y + z }`;
 
-  const names = [
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-  ];
+  // const names = [
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  // ];
 
   return (
     <StyledProjectPage
