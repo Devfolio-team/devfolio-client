@@ -62,11 +62,7 @@ function App() {
             exact
             render={() => <ProjectPage viewport={viewport} />}
           />
-          <Route
-            path="/edit/project/:project_id?"
-            exact
-            render={() => <ProjectEditPage viewport={viewport} />}
-          />
+          <Route path="/edit/project/:project_id?" exact component={ProjectEditPage} />
           <Route path="/sign_in" exact component={SignIn} />
           <Redirect to="page-not-found" render={() => <PageNotFound viewport={viewport} />} />
         </Switch>
