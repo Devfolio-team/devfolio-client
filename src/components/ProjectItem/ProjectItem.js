@@ -12,7 +12,7 @@ const StyledProjectItem = styled.li`
     display: inline-block;
     width: ${$width};
     height: 100%;
-    margin: 16px ${$margin};
+    margin: ${$margin};
     border: 1px solid transparent;
     border-radius: 5px;
     overflow: hidden;
@@ -55,6 +55,10 @@ const ProjectItem = ({
   authorProfile,
   likeCount,
   viewport,
+  width,
+  margin,
+  imageMaxHeight,
+  containerMinHeight,
 }) => {
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -74,42 +78,20 @@ const ProjectItem = ({
   const dateTime = createDate.toISOString();
 
   return (
-    <StyledProjectItem
-      $width={vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'}
-      $margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '0'}
-    >
+    <StyledProjectItem $width={width} $margin={margin}>
       <Container
         position="relative"
-        $minWidth="100%"
-        $minHeight={
-          vw >= 1440
-            ? 166
-            : vw >= 1126
-            ? '15.7vw'
-            : vw >= 1024
-            ? '23.8vw'
-            : vw >= 768
-            ? '47.6111vw'
-            : '49.4vw'
-        }
+        minHeight={containerMinHeight}
+        background="#FFFFFF"
+        borderBottom="1px solid rgb(230, 230, 230)"
       >
         {imageLoading ? <StyledLoadingSpinner width={vw >= 1126 ? '35%' : '25%'} /> : null}
-        <StyledLink to={`project/${projectId}`} tabIndex={-1}>
+        <StyledLink to={`/project/${projectId}`} tabIndex={-1}>
           <Image
             src={thumbnail}
             alt=""
             width={imageLoading ? 0 : '100%'}
-            maxHeight={
-              vw >= 1440
-                ? 166
-                : vw >= 1126
-                ? '15.7vw'
-                : vw >= 1024
-                ? '23.8vw'
-                : vw >= 768
-                ? '47.6111vw'
-                : '49.4vw'
-            }
+            maxHeight={imageMaxHeight}
             cursor="pointer"
             objectFit="cover"
             onLoad={onImageLoadingHandler}
@@ -118,7 +100,7 @@ const ProjectItem = ({
         </StyledLink>
       </Container>
       <Container width="100%" height={167} padding="16px" background="#FFFFFF">
-        <StyledLink to={`project/${projectId}`}>
+        <StyledLink to={`/project/${projectId}`}>
           <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
             {subject}
           </Heading>
@@ -155,7 +137,7 @@ const ProjectItem = ({
       >
         <Container margin="0" padding="0 5px 0 0" cursor="pointer">
           <StyledLink
-            to={`portfolio/${authorId}`}
+            to={`/portfolio/${authorId}`}
             title={`${author}님의 포트폴리오 페이지로 이동`}
             aria-label={`${author}님의 포트폴리오 페이지로 이동`}
           >
