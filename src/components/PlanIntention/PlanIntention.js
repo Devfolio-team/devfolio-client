@@ -1,5 +1,5 @@
 import { Heading, Container, TextArea } from 'components';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
 
 const StyledContainer = styled(Container)`
@@ -28,6 +28,7 @@ const PlanIntention = ({ vw }) => {
         beforeMargin={15}
         afterMargin={0}
       />
+      <ErrorMessage name="planIntention" />
     </StyledContainer>
   );
 };

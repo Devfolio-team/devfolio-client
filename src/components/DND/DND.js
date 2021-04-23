@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { color } from 'utils';
 import { func } from 'prop-types';
 import { Container, Image, SVGIcon } from 'components';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import ajax from 'apis/ajax';
 import useDetectViewport from 'hooks/useDetectViewport';
 
@@ -63,7 +63,7 @@ const HoverDNDMessage = styled.p`
   margin-top: 30px;
 `;
 
-const DND = ({ setFieldValue }) => {
+const DND = ({ setFieldValue, errors }) => {
   const [src, setSrc] = useState(null);
   const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
@@ -85,11 +85,13 @@ const DND = ({ setFieldValue }) => {
   const onChange = async e => {
     if (e.target.files[0]) {
       try {
-        const { src, alt } = await uploadImage(e.target.files[0]);
+        const imageFile = await uploadImage(e.target.files[0]);
+        const { src, alt } = imageFile;
         setSrc(src);
         setAlt(alt);
         setIsDragged(false);
-        setFieldValue('thumbnail', src);
+        setIsUploaded(false);
+        setFieldValue('thumbnail', imageFile);
       } catch (error) {
         throw new Error(error);
       }
@@ -119,17 +121,19 @@ const DND = ({ setFieldValue }) => {
     >
       <Field
         type="file"
-        name="imagePath"
+        name="thumbnail"
         component={DNDInput}
         onChange={onChange}
         id="imagePath"
         onDragOver={onDragOverHandler}
         onDragLeave={onDragLeaveHandler}
-        accept="image/jpeg, image/png, image/jpg, image/webp"
+        accept="image/jpeg, image/png, image/jpg, image/webp, image/gif"
         multiple
         required
       />
-      {src ? (
+      <ErrorMessage name="thumbnail" />
+
+      {src && !errors.thumbnail ? (
         <Image
           src={src}
           alt={alt}

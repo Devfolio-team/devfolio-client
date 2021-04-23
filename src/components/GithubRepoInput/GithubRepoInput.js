@@ -1,5 +1,5 @@
 import { Heading, Input, Container } from 'components';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
 
 const StyledContainer = styled(Container)`
@@ -32,6 +32,7 @@ const GithubRepoInput = ({ vw }) => {
         beforeMargin={8}
         afterMargin={3}
       />
+      <ErrorMessage name="githubUrl" />
     </StyledContainer>
   );
 };
