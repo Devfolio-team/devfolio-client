@@ -43,6 +43,7 @@ const Container = ({
   minHeight,
   maxWidth,
   maxHeight,
+  transform,
   ...restProps
 }) => {
   return (
@@ -75,6 +76,7 @@ const Container = ({
       $minWidth={minWidth}
       $minHeight={minHeight}
       $zIndex={zIndex}
+      $transform={transform}
       {...restProps}
     />
   );

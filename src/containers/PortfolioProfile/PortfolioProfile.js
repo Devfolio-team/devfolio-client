@@ -1,4 +1,5 @@
 import { Anchor, Container, Image, Span, SVGIcon } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
@@ -9,10 +10,15 @@ const StyledPortfolioProfile = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 0;
+    inset: 0px;
     width: 100%;
     min-height: 100vh;
     background: #f19d85;
+    @media (max-height: 780px) {
+      position: relative;
+      min-height: 940px;
+    }
   `}
 `;
 
@@ -27,16 +33,21 @@ const SimpleIntroduce = styled.em`
 `;
 
 const PortfolioProfile = ({ userInfo, ...restProps }) => {
+  const { vh } = useDetectViewport();
+
   return (
     <StyledPortfolioProfile>
       <Container
         width={422}
-        height={704}
         display="flex"
         flexFlow="column nowrap"
         justifyContent="flex-start"
         alignItems="center"
-        padding="150px 0 0 0"
+        position="absolute"
+        margin={vh >= 780 ? '5vh 0 0' : '0'}
+        top="50%"
+        left="50%"
+        transform="translate3D(-50%, -50%, 0)"
       >
         <Image
           src={

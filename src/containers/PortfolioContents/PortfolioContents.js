@@ -8,11 +8,14 @@ const StyledPortfolioContents = styled.div`
   ${props => css`
     ${applyStyle(props)}
     position: relative;
-    z-index: 100;
+    z-index: 1;
     margin: 100vh 0 0 0;
     width: 100%;
     padding: 80px 0;
     background: #f8f9fa;
+    @media (max-height: 780px) {
+      margin: 0;
+    }
   `}
 `;
 
