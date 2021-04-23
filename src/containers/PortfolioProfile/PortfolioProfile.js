@@ -3,6 +3,7 @@ import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
+import Typewiter from 'react-simple-typewriter';
 
 const StyledPortfolioProfile = styled.div`
   ${props => css`
@@ -30,9 +31,39 @@ const SimpleIntroduce = styled.em`
   text-align: center;
   line-height: 3.5rem;
   color: #212121;
-  margin: 65px 0 65px;
   @media (max-width: 768px) {
     font-size: 1.6rem;
+  }
+`;
+
+const CustomTypewriter = styled.div`
+  @keyframes cursorAnimation {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  & > .typewriterEffectWraper > span:last-of-type {
+    animation: cursorAnimation 1s infinite;
+  }
+  line-height: 3rem;
+  margin: 65px 0 65px;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #212121;
+  @media (max-width: 1024px) {
+    font-size: 2.7rem;
+  }
+  @media (max-width: 768px) {
+    font-size: 2.4rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 
@@ -87,13 +118,29 @@ const PortfolioProfile = ({ userInfo, ...restProps }) => {
         <Span fontSize={vw >= 1024 ? 3 : 2} fontWeight={700} color="#212121">
           {userInfo ? `(${userInfo.nickname})` : null}
         </Span>
+
+        <CustomTypewriter>
+          저는{' '}
+          <Container
+            className="typewriterEffectWraper"
+            display={vw >= 768 ? 'inline-block' : 'block'}
+          >
+            <Typewiter
+              loop
+              cursor
+              typeSpeed={150}
+              deleteSpeed={140}
+              delaySpeed={1000}
+              words={['React.js', 'Vue.js', 'Styled Components', 'Javascript']}
+            />{' '}
+          </Container>
+          할 줄 아는 개발자 입니다.
+        </CustomTypewriter>
+
         <SimpleIntroduce>{userInfo ? userInfo.simple_introduction : null}</SimpleIntroduce>
 
-        <Span fontSize={vw >= 768 ? 2.2 : 1.6} fontWeight={700} color="#212121">
-          저는 React.js 할 줄 아는 개발자 입니다.
-        </Span>
         <Container
-          width={vw >= 270 ? 180 : '100%'}
+          width={vw >= 1024 ? 250 : vw >= 270 ? 180 : '100%'}
           margin="65px 0 0"
           display="flex"
           justifyContent="space-between"
