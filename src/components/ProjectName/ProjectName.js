@@ -1,5 +1,5 @@
 import { Heading, Paragraph, Input, Container } from 'components';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
 
 const StyledContainer = styled(Container)`
@@ -33,6 +33,7 @@ const ProjectName = ({ vw }) => {
         margin="20px 0 0 0"
         boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
       />
+      <ErrorMessage name="subject" />
     </StyledContainer>
   );
 };

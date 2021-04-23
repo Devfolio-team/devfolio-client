@@ -12,7 +12,7 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const ProjectThumbnail = ({ setFieldValue, vw }) => {
+const ProjectThumbnail = ({ setFieldValue, vw, errors }) => {
   return (
     <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
@@ -21,7 +21,7 @@ const ProjectThumbnail = ({ setFieldValue, vw }) => {
       <Paragraph color="#666" fontSize={1.4} lineHeight={28} margin="0 0 20px 0">
         프로젝트의 대표 이미지를 올려주세요!
       </Paragraph>
-      <DND setFieldValue={setFieldValue} />
+      <DND setFieldValue={setFieldValue} errors={errors} />
     </StyledContainer>
   );
 };
