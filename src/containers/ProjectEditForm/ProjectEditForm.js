@@ -14,7 +14,7 @@ import {
   Button,
   Container,
 } from 'components';
-import { color } from 'utils';
+import { color, validationSchema } from 'utils';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ajax from 'apis/ajax';
@@ -51,7 +51,7 @@ const ProjectEditForm = ({ vw }) => {
     <Formik
       initialValues={{
         subject: '',
-        thumbnail: '',
+        thumbnail: null,
         teamNameRadio: '',
         planIntention: '',
         techStacks: [],
@@ -62,6 +62,10 @@ const ProjectEditForm = ({ vw }) => {
         isPrivate: '',
         startDate: '',
         endDate: '',
+      }}
+      validationSchema={validationSchema}
+      initialTouched={{
+        thumbnail: true,
       }}
       onSubmit={async values => {
         const editorContent = getContents();
@@ -79,7 +83,7 @@ const ProjectEditForm = ({ vw }) => {
         }
       }}
     >
-      {({ values, setFieldValue }) => {
+      {({ values, errors, setFieldValue }) => {
         return (
           <Form>
             <StyledContainer vw={vw}>
@@ -91,7 +95,7 @@ const ProjectEditForm = ({ vw }) => {
               <GithubRepoInput vw={vw} />
               <DeploymentStatus values={values} vw={vw} />
               <PublicStatus vw={vw} />
-              <ProjectThumbnail setFieldValue={setFieldValue} vw={vw} />
+              <ProjectThumbnail setFieldValue={setFieldValue} vw={vw} errors={errors} />
               <ProjectDescription ref={editorRef} vw={vw} />
             </StyledContainer>
             <Container

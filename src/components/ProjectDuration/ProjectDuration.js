@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import ko from 'date-fns/locale/ko';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import { func } from 'prop-types';
 
 registerLocale('ko', ko);
@@ -107,6 +107,7 @@ const ProjectDuration = ({ setFieldValue, vw }) => {
             dateFormat="yyyy-MM-dd"
             autoComplete="off"
           />
+          <ErrorMessage name="startDate" />
         </Container>
         <Container
           width="100%"
@@ -150,6 +151,7 @@ const ProjectDuration = ({ setFieldValue, vw }) => {
             autoComplete="off"
             style={{ left: '115px' }}
           />
+          <ErrorMessage name="endDate" />
         </Container>
       </Container>
     </StyledContainer>
