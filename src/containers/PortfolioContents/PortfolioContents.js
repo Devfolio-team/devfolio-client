@@ -1,6 +1,6 @@
 import { Container, Heading, ProjectItem, SkillIconItem } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
 
@@ -23,7 +23,7 @@ const Introduce = styled.pre`
   ${props => css`
     ${applyStyle(props)}
     overflow: auto;
-    white-space: pre-wrap; /* pre tag내에 word wrap */
+    white-space: pre-wrap;
     margin: 30px 0 0 100px;
     line-height: 3rem;
     font-size: 2rem;
@@ -52,7 +52,6 @@ const ProjectList = styled.ul`
     ${applyStyle(props)}
     display: flex;
     flex-flow: row wrap;
-    /* margin: 30px 0 0 100px; */
   `}
 `;
 
