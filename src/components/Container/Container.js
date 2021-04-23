@@ -41,7 +41,10 @@ const Container = ({
   overflow,
   minWidth,
   minHeight,
+
   transition,
+  maxWidth,
+  maxHeight,
   transform,
   ...restProps
 }) => {
@@ -49,7 +52,9 @@ const Container = ({
     <StyledContainer
       $display={display}
       $width={width}
+      $maxWidth={maxWidth}
       $height={height}
+      $maxHeight={maxHeight}
       $padding={padding}
       $margin={margin}
       $background={background}

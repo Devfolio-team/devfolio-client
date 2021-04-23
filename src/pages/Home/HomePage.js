@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import ajax from 'apis/ajax';
 import { ProjectList } from 'containers';
+import scrollToTop from 'utils/scrollToTop';
 
 const StyledHomePage = styled.main`
   ${({ $padding }) => css`
@@ -50,6 +51,10 @@ const HomePage = ({ viewport }) => {
 
     fetchProejctList();
   }, [sortType]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <StyledHomePage>
@@ -106,6 +111,30 @@ const HomePage = ({ viewport }) => {
             {projects.map(project => {
               return (
                 <ProjectItem
+                  width={vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'}
+                  margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '25px 0'}
+                  containerMinHeight={
+                    vw >= 1440
+                      ? 166
+                      : vw >= 1126
+                      ? '15.7vw'
+                      : vw >= 1024
+                      ? '23.8vw'
+                      : vw >= 768
+                      ? '47.6111vw'
+                      : '49.4vw'
+                  }
+                  imageMaxHeight={
+                    vw >= 1440
+                      ? 166
+                      : vw >= 1126
+                      ? '15.7vw'
+                      : vw >= 1024
+                      ? '23.8vw'
+                      : vw >= 768
+                      ? '47.6111vw'
+                      : '49.4vw'
+                  }
                   key={project.project_id}
                   projectId={project.project_id}
                   thumbnail={project.thumbnail}

@@ -10,6 +10,7 @@ const StyledHeading = styled.h1`
 `;
 
 const Heading = ({
+  display,
   color,
   fontSize,
   fontWeight,
@@ -20,10 +21,15 @@ const Heading = ({
   border,
   borderBottom,
   width,
+  height,
   cursor,
+  overflow,
+  whiteSpace,
+  textOverflow,
   ...restProps
 }) => (
   <StyledHeading
+    $display={display}
     $color={color}
     $fontSize={fontSize}
     $fontWeight={fontWeight}
@@ -34,14 +40,16 @@ const Heading = ({
     $border={border}
     $borderBottom={borderBottom}
     $width={width}
+    $height={height}
     $cursor={cursor}
+    $overflow={overflow}
+    $whiteSpace={whiteSpace}
+    $textOverflow={textOverflow}
     {...restProps}
   ></StyledHeading>
 );
 
-Heading.defaultProps = {
-  color: '#ddd',
-};
+Heading.defaultProps = {};
 
 Heading.propTypes = {
   /** Heading에 적용 할 글자색을 설정합니다. */

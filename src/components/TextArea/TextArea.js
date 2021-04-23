@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
-import { number, string, func } from 'prop-types';
+import { number, string, func, oneOfType } from 'prop-types';
 import { useState } from 'react';
 import { color } from 'utils';
 import { A11yHidden } from 'components';
@@ -101,9 +101,9 @@ TextArea.propTypes = {
   /** TextArea와 label에 적용 할 공통의 ID를 설정합니다. */
   id: string.isRequired,
   /** TextArea 적용 할 width 크기를 설정합니다. */
-  width: number.isRequired,
+  width: oneOfType([string, number]),
   /** TextArea 적용 할 가로너비를 설정합니다. */
-  height: number.isRequired,
+  height: oneOfType([string, number]),
   /** TextArea 폰트색을 설정합니다. */
   color: string,
   /** TextArea 박스 입력되는 값을 설정합니다. */

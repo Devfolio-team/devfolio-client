@@ -33,3 +33,4 @@ export { default as DeploymentStatus } from './DeploymentStatus/DeploymentStatus
 export { default as ProjectDescription } from './ProjectDescription/ProjectDescription';
 export { default as SkillIcon } from './SkillIcon/SkillIcon';
 export { default as ProjectExplanation } from './ProjectExplanation/ProjectExplanation';
+export { default as SkillIconItem } from './SkillIconItem/SkillIconItem';

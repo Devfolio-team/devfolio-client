@@ -10,7 +10,7 @@ const ChipContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  width: 600px;
+  width: 100%;
   border: 1px solid #eaeaea;
   min-height: 40px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
@@ -98,7 +98,7 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
       {chipLabels.map((chipLabel, index) => (
         <ChipItems key={index}>
           <ChipLabel>{chipLabel}</ChipLabel>
-          <XIcon type="X" onClick={onClickRemoveHandler} />
+          <XIcon type="X" onClick={onClickRemoveHandler} width="10" height="10" />
         </ChipItems>
       ))}
       <Field
