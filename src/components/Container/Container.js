@@ -41,6 +41,8 @@ const Container = ({
   overflow,
   minWidth,
   minHeight,
+
+  transition,
   maxWidth,
   maxHeight,
   transform,
@@ -76,6 +78,7 @@ const Container = ({
       $minWidth={minWidth}
       $minHeight={minHeight}
       $zIndex={zIndex}
+      $transition={transition}
       $transform={transform}
       {...restProps}
     />

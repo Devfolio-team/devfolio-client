@@ -67,9 +67,22 @@ const StyledLi = styled.li`
 const StyledButton = styled(Button)`
   &:hover {
     background: #e0e0e0;
+    stroke: none;
     path {
-      fill: #fff;
+      fill: #e74c3c;
     }
+    svg {
+      stroke: none;
+    }
+  }
+`;
+
+const StyledHeartIcon = styled(SVGIcon)`
+  & {
+    stroke: black;
+  }
+  path {
+    fill: white;
   }
 `;
 
@@ -106,13 +119,13 @@ const ProjectPage = ({ viewport }) => {
   // const code = `<h1>2021년 03월 11일 목요일 TIL (CDD, StoryBook, type검사)</h1><br/><h2>오늘 한 일과 느낀점</h2><br/><ul><li> <p>오전 10시 ~ 오후 5시 리액트 현강 이번주 목, 금은 하루에 리액트 강의 시간이 점심시간 제외하고 6시간이나 된다. 오전 시간은 어제 얘기하던 컴포넌트의 추가적인 개념으로 defaultProps와 propTypes에 대해 알려주셨다.</p></li><br/> <li> <p>추가적으로 자바스크립트의 typeof가 배열과 객체, null을 구분하지 못하는것을 어떻게 해결하는지 배웠다.</p> </li> </ul>;`;
   const code = `<pre class="lang-javascript"><code data-language="javascript">// 데이터 타입 검사 유틸리티 함수<br/> function validType(dataType, typeString) {   return Object.prototype.toString.call(dataType).slice(8,-1).toLowerCase() === typeString }  function calcTriangleCirc(x, y, z) {   // 데이터 타입 검사   if (      !validType(x, 'number') ||      !validType(y, 'number') ||      !validType(z, 'number')    ) {     throw new Error('전달되는 인자의 유형은 오직 숫자(number)여야 합니다.')   }   return x + y + z }`;
 
-  const names = [
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-    { name: '신봉철', github: 'https://github.com/bcround' },
-  ];
+  // const names = [
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  //   { name: '신봉철', github: 'https://github.com/bcround' },
+  // ];
 
   return (
     <StyledProjectPage
@@ -136,8 +149,9 @@ const ProjectPage = ({ viewport }) => {
               justifyContent="center"
               alignItems="center"
               margin="0"
-              position={scrollY > 100 ? 'fixed' : ''}
-              top={scrollY > 100 ? '100px' : ''}
+              position={scrollY > 0 ? 'fixed' : ''}
+              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              transition="0.5s"
             >
               <StyledButton
                 borderRadius="50%"
@@ -147,9 +161,9 @@ const ProjectPage = ({ viewport }) => {
                 height="44px"
                 padding="0"
               >
-                <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+                <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
               </StyledButton>
-              <Span fontSize="16px" lineHeight="16px" margin="10px 0 0 0">
+              <Span fontSize="16px" lineHeight="16px" margin="0px 0 0 0">
                 1255
               </Span>
             </Container>
@@ -190,7 +204,7 @@ const ProjectPage = ({ viewport }) => {
             padding="0"
           >
             <Container display="flex" justifyContent="center" alignItems="center" margin="0">
-              <SVGIcon type="HeartRed" width="20px" height="20px"></SVGIcon>
+              <SVGIcon type="HeartEmpty" width={20} height={20}></SVGIcon>
               <Span fontSize="16px" lineHeight="16px" margin="0">
                 1255
               </Span>
@@ -240,7 +254,7 @@ const ProjectPage = ({ viewport }) => {
           $justifyContent="center"
           $alignItems="center"
         >
-          <StyledIcon type="WebSite" $margin="0 7px 0 0" />
+          <StyledIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
           Visit the Website
         </StyledLink>
         <StyledLink
@@ -260,7 +274,7 @@ const ProjectPage = ({ viewport }) => {
           $justifyContent="center"
           $alignItems="center"
         >
-          <StyledIcon type="GithubBlue" $marginRight="9px" />
+          <StyledIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
           GitHub
         </StyledLink>
       </Container>
@@ -308,7 +322,8 @@ const ProjectPage = ({ viewport }) => {
         $borderBottom="1px solid #666666"
         $margin="80px auto"
       />
-      <Container padding={isDesktop ? '0 70px' : '0 30px'}>
+
+      {/* <Container padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
           color="#212121"
@@ -351,7 +366,7 @@ const ProjectPage = ({ viewport }) => {
                   {name.github}
                 </StyledLink>
                 {/* 타입이 xs일때만 팀원 목록 밑으로 구분선 생성 */}
-                {type === 'xs' ? (
+      {/* {type === 'xs' ? (
                   index < names.length - 1 ? (
                     <StyledDivisionLine
                       $margin="0 auto"
@@ -369,12 +384,12 @@ const ProjectPage = ({ viewport }) => {
             </StyledLi>
           ))}
         </StyledUl>
-      </Container>
+      </Container> 
       <StyledDivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
         $margin="80px auto"
-      />
+      />*/}
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
@@ -411,7 +426,7 @@ const ProjectPage = ({ viewport }) => {
                 margin="0"
                 width="100%"
               >
-                <SkillIcon type={skill} width="60px" height="60px"></SkillIcon>
+                <SkillIcon type={skill} width={60} height={60}></SkillIcon>
                 <Span
                   color="#666666"
                   fontSize={1.6}
