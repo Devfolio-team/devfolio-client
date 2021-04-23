@@ -1,9 +1,17 @@
 import { Heading, Paragraph, Input, Container } from 'components';
 import { Field } from 'formik';
+import styled, { css } from 'styled-components';
 
-const ProjectName = () => {
+const StyledContainer = styled(Container)`
+  ${({ vw }) => css`
+    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
+    width: ${vw >= 1280 ? '100%' : '80%'};
+  `}
+`;
+
+const ProjectName = ({ vw }) => {
   return (
-    <Container>
+    <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 이름
       </Heading>
@@ -18,14 +26,14 @@ const ProjectName = () => {
         id="subject"
         mode="hidden"
         label="프로젝트 이름 입력칸"
-        width={600}
+        width="100%"
         height={42}
         border="1px solid #EAEAEA"
         borderRadius={5}
         margin="20px 0 0 0"
         boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
       />
-    </Container>
+    </StyledContainer>
   );
 };
 

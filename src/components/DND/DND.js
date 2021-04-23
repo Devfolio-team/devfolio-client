@@ -5,12 +5,14 @@ import { func } from 'prop-types';
 import { Container, Image, SVGIcon } from 'components';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 const DNDInput = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
   z-index: 9999;
+  cursor: pointer;
 `;
 
 const Display = styled.div`
@@ -66,6 +68,8 @@ const DND = ({ setFieldValue }) => {
   const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
+  const viewport = useDetectViewport();
+  const { vw } = viewport;
 
   const onDragOverHandler = e => {
     e.preventDefault();
@@ -79,11 +83,18 @@ const DND = ({ setFieldValue }) => {
   };
 
   const onChange = async e => {
-    const { src, alt } = await uploadImage(e.target.files[0]);
-    setSrc(src);
-    setAlt(alt);
-    setIsDragged(false);
-    setFieldValue('thumbnail', src);
+    if (e.target.files[0]) {
+      try {
+        const { src, alt } = await uploadImage(e.target.files[0]);
+        setSrc(src);
+        setAlt(alt);
+        setIsDragged(false);
+        setFieldValue('thumbnail', src);
+      } catch (error) {
+        throw new Error(error);
+      }
+    }
+    return;
   };
 
   // TODO: 후에 컨테이너에서 관리, axios를 ajax로도 변경
@@ -101,9 +112,8 @@ const DND = ({ setFieldValue }) => {
   return (
     <Container
       display="inline-block"
-      width={400}
-      height={400}
-      border="1px solid #EAEAEA"
+      width={vw > 560 ? 400 : '67vw'}
+      height={vw > 560 ? 400 : '67vw'}
       borderRadius="5px"
       position="relative"
     >
@@ -136,12 +146,12 @@ const DND = ({ setFieldValue }) => {
       {isUploaded ? null : (
         <Display>
           <RoundBackground />
-          <SVGIcon type="Camera" />
+          <SVGIcon type="Camera" width="50" height="50" />
         </Display>
       )}
       {isDragged ? (
         <HoverDisplay>
-          <SVGIcon type="Folder" />
+          <SVGIcon type="Folder" width="70" height="70" />
           <HoverDNDMessage>Drag &amp; Drop your files here</HoverDNDMessage>
         </HoverDisplay>
       ) : null}

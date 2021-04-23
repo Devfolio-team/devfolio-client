@@ -118,7 +118,7 @@ const Input = ({
 Input.defaultProps = {
   type: 'text',
   label: 'Example',
-  fontSize: 1.2,
+  inputFontSize: 1.2,
   width: 170,
   height: 40,
   value: '',
