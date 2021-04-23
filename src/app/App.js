@@ -53,11 +53,7 @@ function App() {
             exact
             render={() => <PortfolioEditPage viewport={viewport} />}
           />
-          <Route
-            path="/project/:project_id"
-            exact
-            render={() => <ProjectPage viewport={viewport} />}
-          />
+          <Route path="/project/:project_id" exact component={ProjectPage} />
           <Route
             path="/edit/project/:project_id?"
             exact
