@@ -1,4 +1,5 @@
 import { SkillIcon, Span } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -18,10 +19,11 @@ const StyledSkillIconItem = styled.li`
 `;
 
 const SkillIconItem = ({ type }) => {
+  const { vw } = useDetectViewport();
   return (
     <StyledSkillIconItem>
       <SkillIcon type={type} width="60" height="60" />
-      <Span fontSize={2.5} margin="0 0 0 30px">
+      <Span fontSize={vw >= 768 ? 2.3 : 2} fontWeight={700} margin="0 0 0 30px">
         {type}
       </Span>
     </StyledSkillIconItem>
