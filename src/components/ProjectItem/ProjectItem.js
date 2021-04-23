@@ -79,9 +79,14 @@ const ProjectItem = ({
 
   return (
     <StyledProjectItem $width={width} $margin={margin}>
-      <Container position="relative" minHeight={containerMinHeight} background="#FFFFFF">
+      <Container
+        position="relative"
+        minHeight={containerMinHeight}
+        background="#FFFFFF"
+        borderBottom="1px solid rgb(230, 230, 230)"
+      >
         {imageLoading ? <StyledLoadingSpinner width={vw >= 1126 ? '35%' : '25%'} /> : null}
-        <StyledLink to={`project/${projectId}`} tabIndex={-1}>
+        <StyledLink to={`/project/${projectId}`} tabIndex={-1}>
           <Image
             src={thumbnail}
             alt=""
@@ -95,7 +100,7 @@ const ProjectItem = ({
         </StyledLink>
       </Container>
       <Container width="100%" height={167} padding="16px" background="#FFFFFF">
-        <StyledLink to={`project/${projectId}`}>
+        <StyledLink to={`/project/${projectId}`}>
           <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
             {subject}
           </Heading>
@@ -132,7 +137,7 @@ const ProjectItem = ({
       >
         <Container margin="0" padding="0 5px 0 0" cursor="pointer">
           <StyledLink
-            to={`portfolio/${authorId}`}
+            to={`/portfolio/${authorId}`}
             title={`${author}님의 포트폴리오 페이지로 이동`}
             aria-label={`${author}님의 포트폴리오 페이지로 이동`}
           >

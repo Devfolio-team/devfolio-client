@@ -1,16 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, node, number } from 'prop-types';
+import { applyStyle } from 'utils';
 
 const StyledAnchor = styled.a`
-  ${({ $display, $color, $fontSize, $margin, $padding, $width, $height }) => css`
-    display: ${$display};
-    color: ${$color};
-    font-size: ${$fontSize}rem;
-    margin: ${$margin};
-    padding: ${$padding};
-    width: ${$width}px;
-    height: ${$height}px;
+  ${props => css`
+    ${applyStyle(props)}
   `}
 `;
 
@@ -25,6 +20,7 @@ const Anchor = ({
   padding,
   width,
   height,
+  cursor,
   ...restProps
 }) => {
   return (
@@ -39,6 +35,7 @@ const Anchor = ({
       $padding={padding}
       $width={width}
       $height={height}
+      $cursor={cursor}
       {...restProps}
     >
       {children}
