@@ -34,6 +34,7 @@ const DialogForm = styled.form`
 const IconContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const SVGIconName = styled.span`
@@ -116,7 +117,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               width={`${isDesktop ? '47%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
-              bgColor="#ffffff"
+              background="#ffffff"
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
               fontWeight={700}
               onClick={() => {
@@ -133,7 +134,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               width={`${isDesktop ? '47%' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
-              bgColor="#ffffff"
+              background="#ffffff"
               fontWeight={700}
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
             >

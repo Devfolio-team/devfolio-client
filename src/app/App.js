@@ -47,11 +47,7 @@ function App() {
       <StyledContainer>
         <Switch>
           <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
-          <Route
-            path="/portfolio/:portfoilo_id"
-            exact
-            render={() => <PortfolioPage viewport={viewport} />}
-          />
+          <Route path="/portfolio/:user_id" exact component={PortfolioPage} />
           <Route
             path="/edit/portfolio/:portfolio_id"
             exact

@@ -8,11 +8,14 @@ const StyledPortfolioContents = styled.div`
   ${props => css`
     ${applyStyle(props)}
     position: relative;
-    z-index: 100;
+    z-index: 1;
     margin: 100vh 0 0 0;
     width: 100%;
     padding: 80px 0;
     background: #f8f9fa;
+    @media (max-height: 780px) {
+      margin: 0;
+    }
   `}
 `;
 
@@ -42,25 +45,9 @@ const ProjectList = styled.ul`
   `}
 `;
 
-const PortfolioContents = () => {
-  const [skills, setSkills] = useState([]);
-
+const PortfolioContents = ({ skills, projects }) => {
   const viewport = useDetectViewport();
 
-  useEffect(() => {
-    setSkills([
-      'Javascript',
-      'Typescript',
-      'React',
-      'Vue',
-      'Angular',
-      'SteyldComponents',
-      'Express',
-      'MySQL',
-      'Sass',
-      'Node.js',
-    ]);
-  }, []);
   return (
     <StyledPortfolioContents>
       <Container maxWidth={1440} margin="0 auto" padding="0 70px">
@@ -83,7 +70,7 @@ const PortfolioContents = () => {
 
 1인 개발 프로젝트를 개발 시작부터 배포까지 혼자 진행해보며, 프론트엔드 말고도 백엔드와 디자인 직군의 역할의 이 해도를 키웠습니다. 
 
-여러 프로젝트에서 디자인부분까지 맡으면서 디자인 역량도 조금이나마 쌓게 되었고, 현재는 어느정도의 디자인 감각 이 있는 프론트엔드 개발자를 지향하고 있습니다.
+여러 프로젝트에서 디자인부분까지 맡으면서 디자인 역량도 조금이나마 쌓게 되었고, 현재는 어느정도의 디자인 감각이 있는 프론트엔드 개발자를 지향하고 있습니다.
 
 또한, 여러 협업 프로젝트를 진행하면서 다른 직군과 소통하는 것의 중요성을 알게 되었고, 프로젝트 시 주기적으로 회의하고 수시로 소통합니다. 슬랙, 노션, 제플린 등의 협업 툴 활용능력도 쌓으며 다양한 프로젝트에 적용하고 있습니다.
 
@@ -102,9 +89,9 @@ const PortfolioContents = () => {
             SKILLS
           </Heading>
           <SkillIconList>
-            {skills.map((skill, index) => (
-              <SkillIconItem key={index} type={skill} />
-            ))}
+            {skills
+              ? skills.map((skill, index) => <SkillIconItem key={index} type={skill.skill_name} />)
+              : null}
           </SkillIconList>
         </Container>
         <Container margin="50px 0 0">
@@ -120,21 +107,27 @@ const PortfolioContents = () => {
             Projects
           </Heading>
           <ProjectList>
-            <ProjectItem
-              // containerMinHeight={'30vw'}
-              width={'80%'}
-              margin="25px auto "
-              viewport={viewport}
-              projectId={1}
-              thumbnail="https://user-images.githubusercontent.com/71176945/99017572-93841e80-259b-11eb-9d4f-8a66daca916c.PNG"
-              subject="realworld"
-              planIntention="기획의도"
-              created="2021-04-19T06:40:56.455Z"
-              authorId="1"
-              author="류하준"
-              authorProfile="https://avatars.githubusercontent.com/u/71176945?v=4"
-              likeCount={4}
-            />
+            {projects
+              ? projects.map(project => (
+                  <ProjectItem
+                    key={project.project_id}
+                    containerMinHeight={'28.15vw'}
+                    imageMaxHeight={'28.15vw'}
+                    width={'70%'}
+                    margin="25px auto"
+                    viewport={viewport}
+                    projectId={project.project_id}
+                    thumbnail={project.thumbnail}
+                    subject={project.subject}
+                    planIntention={project.project_intention}
+                    created={project.created}
+                    authorId={project.user_user_id}
+                    author={project.nickname}
+                    authorProfile={project.profile_photo}
+                    likeCount={project.likeCount}
+                  />
+                ))
+              : null}
           </ProjectList>
         </Container>
       </Container>

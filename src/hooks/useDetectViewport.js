@@ -13,6 +13,7 @@ const initialState = {
   isMobile: false,
   isDesktop: false,
   vw: 0,
+  vh: 0,
 };
 
 const reducer = (state, action) => {
@@ -37,10 +38,7 @@ export default function useDetectViewport(viewports = initialViewports) {
     const updateState = newState => dispatch(updateAction(newState));
 
     const detectionViewport = () => {
-      const {
-        innerWidth: vw,
-        // innerHeight: vh
-      } = window;
+      const { innerWidth: vw, innerHeight: vh } = window;
 
       if (vw < xs) {
         updateState({
@@ -48,6 +46,7 @@ export default function useDetectViewport(viewports = initialViewports) {
           isMobile: true,
           isDesktop: false,
           vw,
+          vh,
         });
       } else if (vw >= xs && vw < sm) {
         updateState({
@@ -55,6 +54,7 @@ export default function useDetectViewport(viewports = initialViewports) {
           isMobile: true,
           isDesktop: false,
           vw,
+          vh,
         });
       } else if (vw >= sm && vw < md) {
         updateState({
@@ -62,6 +62,7 @@ export default function useDetectViewport(viewports = initialViewports) {
           isMobile: false,
           isDesktop: true,
           vw,
+          vh,
         });
       } else if (vw >= md && vw < lg) {
         updateState({
@@ -69,6 +70,7 @@ export default function useDetectViewport(viewports = initialViewports) {
           isMobile: false,
           isDesktop: true,
           vw,
+          vh,
         });
       } else if (vw >= lg) {
         updateState({
@@ -76,6 +78,7 @@ export default function useDetectViewport(viewports = initialViewports) {
           isMobile: false,
           isDesktop: true,
           vw,
+          vh,
         });
       }
     };
