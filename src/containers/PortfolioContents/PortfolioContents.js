@@ -11,7 +11,7 @@ const StyledPortfolioContents = styled.div`
     z-index: 1;
     margin: 100vh 0 0 0;
     width: 100%;
-    padding: 80px 0;
+    padding: 80px 0 25px;
     background: #f8f9fa;
     @media (max-height: 780px) {
       margin: 0;
@@ -33,6 +33,9 @@ const SkillIconList = styled.ul`
     display: flex;
     flex-flow: row wrap;
     margin: 30px 0 0 100px;
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
   `}
 `;
 
@@ -47,10 +50,11 @@ const ProjectList = styled.ul`
 
 const PortfolioContents = ({ skills, projects }) => {
   const viewport = useDetectViewport();
+  const { vw } = viewport;
 
   return (
     <StyledPortfolioContents>
-      <Container maxWidth={1440} margin="0 auto" padding="0 70px">
+      <Container maxWidth={1440} margin="0 auto" padding={vw >= 768 ? '0 70px' : '0 30px'}>
         <Container>
           <Heading
             as="h3"
@@ -62,7 +66,11 @@ const PortfolioContents = ({ skills, projects }) => {
           >
             Introduce
           </Heading>
-          <Introduce $margin="30px 0 0 100px" $lineHeight="3rem" $fontSize={2}>
+          <Introduce
+            $margin={vw >= 768 ? '30px 0 0 100px' : '30px 0 0'}
+            $lineHeight="3rem"
+            $fontSize={2}
+          >
             {`웹 프론트엔드 엔지니어 김지원 입니다. 여러 프로젝트를 수행하면서 개발 역량을 쌓아왔고, 현재는 React와 Redux를 사용하여 프로젝트를 진행 하고 있습니다. 리액트 프레임워크를 사용한 웹 프론트엔드 개발에 가장 익숙합니다.
 
 자기개발에 손을 놓지 않습니다. 퇴근 후는 사이드프로젝트를 하며 공부합니다. 개인적으로 진행하는 프로젝트와 팀원 들과 협업하는
@@ -112,8 +120,8 @@ const PortfolioContents = ({ skills, projects }) => {
                   <ProjectItem
                     key={project.project_id}
                     containerMinHeight={'28.15vw'}
-                    imageMaxHeight={'28.15vw'}
-                    width={'70%'}
+                    imageMaxHeight={vw >= 768 ? '28.15vw' : '49.4vw'}
+                    width={vw >= 768 ? '70%' : '100%'}
                     margin="25px auto"
                     viewport={viewport}
                     projectId={project.project_id}

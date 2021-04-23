@@ -101,7 +101,16 @@ const ProjectItem = ({
       </Container>
       <Container width="100%" height={167} padding="16px" background="#FFFFFF">
         <StyledLink to={`/project/${projectId}`}>
-          <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 10px 0" cursor="pointer">
+          <Heading
+            as="h3"
+            color="#212121"
+            fontSize={1.6}
+            margin="0 0 10px 0"
+            cursor="pointer"
+            overflow="hidden"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
+          >
             {subject}
           </Heading>
           <Paragraph

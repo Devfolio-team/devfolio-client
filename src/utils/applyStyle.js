@@ -67,6 +67,7 @@ const applyStyle = ({
   childrenPointerEvents,
   webkitLineClamp,
   webkitBoxOrient,
+  $whiteSpace,
 }) => `
 display: ${$display || ''};
 width: ${getUnitByType($width)};
@@ -114,6 +115,7 @@ padding-left: ${getUnitByType($paddingLeft)};
 line-height: ${getUnitByType($lineHeight)};
 object-fit: ${$objectFit || ''};
 overflow: ${$overflow || ''};
+white-space: ${$whiteSpace || ''};
 cursor: ${$cursor || ''};
 pointer-events: ${$pointerEvents || ''};
 transition: ${$transition || ''};

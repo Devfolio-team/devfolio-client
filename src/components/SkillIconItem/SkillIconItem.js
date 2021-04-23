@@ -8,6 +8,12 @@ const StyledSkillIconItem = styled.li`
     align-items: center;
     width: 33.3333%;
     margin-bottom: 30px;
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+    @media (max-width: 480px) {
+      width: 100%;
+    }
   `}
 `;
 
