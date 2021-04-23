@@ -24,6 +24,14 @@ const Introduce = styled.pre`
     ${applyStyle(props)}
     overflow: auto;
     white-space: pre-wrap; /* pre tag내에 word wrap */
+    margin: 30px 0 0 100px;
+    line-height: 3rem;
+    font-size: 2rem;
+    @media (max-width: 768px) {
+      margin-left: 0;
+      font-size: 1.6rem;
+      line-height: 2.5rem;
+    }
   `}
 `;
 
@@ -58,19 +66,15 @@ const PortfolioContents = ({ skills, projects }) => {
         <Container>
           <Heading
             as="h3"
-            fontSize={4}
+            fontSize={vw >= 768 ? 4 : 3}
             fontWeight={700}
             display="inline-block"
-            lineHeight="20px"
-            borderBottom="14px solid rgba(66,139,202,0.6)"
+            lineHeight={vw >= 768 ? '20px' : '12px'}
+            borderBottom={`${vw >= 768 ? '14px' : '12px'} solid rgba(66,139,202,0.6)`}
           >
             Introduce
           </Heading>
-          <Introduce
-            $margin={vw >= 768 ? '30px 0 0 100px' : '30px 0 0'}
-            $lineHeight="3rem"
-            $fontSize={2}
-          >
+          <Introduce>
             {`웹 프론트엔드 엔지니어 김지원 입니다. 여러 프로젝트를 수행하면서 개발 역량을 쌓아왔고, 현재는 React와 Redux를 사용하여 프로젝트를 진행 하고 있습니다. 리액트 프레임워크를 사용한 웹 프론트엔드 개발에 가장 익숙합니다.
 
 자기개발에 손을 놓지 않습니다. 퇴근 후는 사이드프로젝트를 하며 공부합니다. 개인적으로 진행하는 프로젝트와 팀원 들과 협업하는
@@ -88,11 +92,11 @@ const PortfolioContents = ({ skills, projects }) => {
         <Container margin="80px 0 0">
           <Heading
             as="h3"
-            fontSize={4}
+            fontSize={vw >= 768 ? 4 : 3}
             fontWeight={700}
             display="inline-block"
-            lineHeight="20px"
-            borderBottom="14px solid rgba(66,139,202,0.6)"
+            lineHeight={vw >= 768 ? '20px' : '12px'}
+            borderBottom={`${vw >= 768 ? '14px' : '12px'} solid rgba(66,139,202,0.6)`}
           >
             SKILLS
           </Heading>
@@ -105,12 +109,11 @@ const PortfolioContents = ({ skills, projects }) => {
         <Container margin="50px 0 0">
           <Heading
             as="h3"
-            fontSize={4}
+            fontSize={vw >= 768 ? 4 : 3}
             fontWeight={700}
-            margin="0 0 25px"
             display="inline-block"
-            lineHeight="20px"
-            borderBottom="14px solid rgba(66,139,202,0.6)"
+            lineHeight={vw >= 768 ? '20px' : '12px'}
+            borderBottom={`${vw >= 768 ? '14px' : '12px'} solid rgba(66,139,202,0.6)`}
           >
             Projects
           </Heading>

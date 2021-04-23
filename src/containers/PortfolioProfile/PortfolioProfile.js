@@ -93,7 +93,7 @@ const PortfolioProfile = ({ userInfo, ...restProps }) => {
           저는 React.js 할 줄 아는 개발자 입니다.
         </Span>
         <Container
-          width={vw >= 270 ? 270 : '100%'}
+          width={vw >= 270 ? 180 : '100%'}
           margin="65px 0 0"
           display="flex"
           justifyContent="space-between"
