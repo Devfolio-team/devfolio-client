@@ -34,6 +34,7 @@ const StyledTextArea = styled.textarea`
       box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       border: 0;
+      resize: none;
     `}
 `;
 

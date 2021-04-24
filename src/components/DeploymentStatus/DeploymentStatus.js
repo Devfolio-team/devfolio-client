@@ -45,7 +45,7 @@ const DeploymentStatus = ({ values, vw }) => {
         component={Input}
         id="deployUrl"
         name="deployUrl"
-        label="http://"
+        label="예) http://example.com"
         labelFontSize={1.2}
         width="100%"
         height={40}
