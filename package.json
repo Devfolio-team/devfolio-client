@@ -33,6 +33,7 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.3",
     "tui-date-picker-react": "0.0.1-rebuild-3",
+    "webkul-micron": "^1.1.6",
     "yup": "^0.32.9"
   },
   "scripts": {
