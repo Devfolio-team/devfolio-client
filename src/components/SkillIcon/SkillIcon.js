@@ -7,6 +7,33 @@ import { ReactComponent as Redux } from 'assets/Redux.svg';
 import { ReactComponent as Sass } from 'assets/Sass.svg';
 import { ReactComponent as StyledComponent } from 'assets/StyledComponent.svg';
 import { ReactComponent as Typescript } from 'assets/Typescript.svg';
+import { ReactComponent as Apache } from 'assets/Apache.svg';
+import { ReactComponent as AWSS3 } from 'assets/AWSS3.svg';
+import { ReactComponent as AWSEC2 } from 'assets/AWSEC2.svg';
+import { ReactComponent as AWSRDS } from 'assets/AWSRDS.svg';
+import { ReactComponent as C } from 'assets/C.svg';
+import { ReactComponent as CSHARP } from 'assets/CSHARP.svg';
+import { ReactComponent as CPP } from 'assets/CPP.svg';
+import { ReactComponent as Css3 } from 'assets/Css3.svg';
+import { ReactComponent as Dart } from 'assets/Dart.svg';
+import { ReactComponent as Django } from 'assets/Django.svg';
+import { ReactComponent as Electron } from 'assets/Electron.svg';
+import { ReactComponent as Firebase } from 'assets/Firebase.svg';
+import { ReactComponent as Flutter } from 'assets/Flutter.svg';
+import { ReactComponent as GraphQL } from 'assets/GraphQL.svg';
+import { ReactComponent as Html5 } from 'assets/Html5.svg';
+import { ReactComponent as Java } from 'assets/Java.svg';
+import { ReactComponent as Jest } from 'assets/Jest.svg';
+import { ReactComponent as Mobx } from 'assets/Mobx.svg';
+import { ReactComponent as MongoDB } from 'assets/MongoDB.svg';
+import { ReactComponent as NextJS } from 'assets/NextJS.svg';
+import { ReactComponent as NodeJS } from 'assets/NodeJS.svg';
+import { ReactComponent as Prisma } from 'assets/Prisma.svg';
+import { ReactComponent as Python } from 'assets/Python.svg';
+import { ReactComponent as Ruby } from 'assets/Ruby.svg';
+import { ReactComponent as Scala } from 'assets/Scala.svg';
+import { ReactComponent as Spring } from 'assets/Spring.svg';
+import { ReactComponent as Vue } from 'assets/Vue.svg';
 
 const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
@@ -33,8 +60,89 @@ const SkillIcon = ({ type, ...restProps }) => {
     case 'STYLEDCOMPONENT':
       SkillIcon = StyledComponent;
       break;
+    case 'APACHE':
+      SkillIcon = Apache;
+      break;
     case 'TYPESCRIPT':
       SkillIcon = Typescript;
+      break;
+    case 'AWSS3':
+      SkillIcon = AWSS3;
+      break;
+    case 'AWSEC2':
+      SkillIcon = AWSEC2;
+      break;
+    case 'AWSRDS':
+      SkillIcon = AWSRDS;
+      break;
+    case 'C':
+      SkillIcon = C;
+      break;
+    case 'CSHARP':
+      SkillIcon = CSHARP;
+      break;
+    case 'CPP':
+      SkillIcon = CPP;
+      break;
+    case 'CSS3':
+      SkillIcon = Css3;
+      break;
+    case 'DART':
+      SkillIcon = Dart;
+      break;
+    case 'DJANGO':
+      SkillIcon = Django;
+      break;
+    case 'ELECTRON':
+      SkillIcon = Electron;
+      break;
+    case 'FIREBASE':
+      SkillIcon = Firebase;
+      break;
+    case 'FLUTTER':
+      SkillIcon = Flutter;
+      break;
+    case 'GRAPHQL':
+      SkillIcon = GraphQL;
+      break;
+    case 'HTML5':
+      SkillIcon = Html5;
+      break;
+    case 'JAVA':
+      SkillIcon = Java;
+      break;
+    case 'JEST':
+      SkillIcon = Jest;
+      break;
+    case 'MOBX':
+      SkillIcon = Mobx;
+      break;
+    case 'MONGODB':
+      SkillIcon = MongoDB;
+      break;
+    case 'NEXTJS':
+      SkillIcon = NextJS;
+      break;
+    case 'NODEJS':
+      SkillIcon = NodeJS;
+      break;
+    case 'PRISMA':
+      SkillIcon = Prisma;
+      break;
+    case 'PYTHON':
+      SkillIcon = Python;
+      break;
+    case 'RUBY':
+      SkillIcon = Ruby;
+      break;
+    case 'SCALA':
+      SkillIcon = Scala;
+      break;
+    case 'SPRING':
+      SkillIcon = Spring;
+      break;
+    case 'VUE':
+      SkillIcon = Vue;
       break;
   }
   return <SkillIcon {...restProps} />;
