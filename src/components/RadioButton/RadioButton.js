@@ -3,7 +3,7 @@ import { string, object, number } from 'prop-types';
 import { color, applyStyle } from 'utils';
 
 const RadioInput = styled.input`
-  display: none;
+  opacity: 0;
   &:checked + label:after {
     content: '';
     position: absolute;
