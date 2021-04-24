@@ -25,7 +25,7 @@ const StyledProjectPage = styled.main`
   `}
 `;
 
-const ProjectWriter = styled.span`
+const ProjectWriter = styled.a`
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -95,6 +95,12 @@ const LinkToWebSiteWrapper = styled.div`
   `}
 `;
 
+const DisabledLink = styled(Span)`
+  ${props => css`
+    ${applyStyle(props)}
+  `}
+`;
+
 const ProjectPage = ({ match }) => {
   const { isDesktop, vw, type } = useDetectViewport();
   const [scrollY, setScrollY] = useState(0);
@@ -137,7 +143,7 @@ const ProjectPage = ({ match }) => {
     team_name,
     thumbnail,
     likeCount,
-    // user_user_id,
+    user_user_id,
   } = project.projectData;
 
   // eslint-disable-next-line prefer-destructuring
@@ -313,7 +319,12 @@ const ProjectPage = ({ match }) => {
               height="24px"
               borderRadius="50%"
             />
-            <ProjectWriter $width="200px" $fontSize={1.6} $marginLeft="10px">
+            <ProjectWriter
+              href={`/portfolio/${user_user_id}`}
+              $width="200px"
+              $fontSize={1.6}
+              $marginLeft="10px"
+            >
               {project_nickname}
             </ProjectWriter>
           </Container>
@@ -370,52 +381,112 @@ const ProjectPage = ({ match }) => {
         margin="0 0 22px 0"
         padding={isDesktop ? '0 70px' : '0 30px'}
       >
-        <LinkToWebSiteWrapper $cursor="not-allowed">
-          <LinkToWebSite
-            href={deploy_url}
-            target="_blank"
-            $fontSize={1.6}
-            $fontWeight="700"
-            $borderRadius={5}
-            $border="1px solid #428BCA"
-            $width={type === 'xs' ? '100%' : '200px'}
-            $marginBottom={type === 'xs' ? '5px' : ''}
-            $height="44px"
-            $textAlign="center"
-            $lineHeight="40px"
-            $color="#428BCA"
-            $background={deploy_url ? '#FFFFFF' : '#eeeeee'}
-            $display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $pointerEvents={deploy_url ? '' : 'none'}
-          >
-            <WebSiteIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
-            Visit the Website
-          </LinkToWebSite>
+        <LinkToWebSiteWrapper
+          $cursor="not-allowed"
+          title={deploy_url ? '배포된 사이트로 이동' : '배포된 사이트가 없습니다.'}
+        >
+          {deploy_url ? (
+            <LinkToWebSite
+              href={deploy_url ? deploy_url : '/'}
+              target="_blank"
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
+              $width={type === 'xs' ? '100%' : '200px'}
+              $marginBottom={type === 'xs' ? '5px' : ''}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={deploy_url ? '' : 'none'}
+            >
+              <WebSiteIcon
+                type={deploy_url ? 'WebSite' : 'WebSiteDisable'}
+                $margin="0 7px 0 0"
+                $width={20}
+                $height={20}
+              />
+              Visit the Website
+            </LinkToWebSite>
+          ) : (
+            <DisabledLink
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
+              $width={type === 'xs' ? '100%' : '200px'}
+              $marginBottom={type === 'xs' ? '5px' : ''}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={deploy_url ? '' : 'none'}
+            >
+              Visit the Website
+            </DisabledLink>
+          )}
         </LinkToWebSiteWrapper>
-        <LinkToWebSiteWrapper $cursor="not-allowed">
-          <LinkToWebSite
-            href={github_url}
-            target="_blank"
-            $fontSize={1.6}
-            $fontWeight="700"
-            $borderRadius={5}
-            $border="1px solid #428BCA"
-            $width={type === 'xs' ? '100%' : '145px'}
-            $height="44px"
-            $textAlign="center"
-            $lineHeight="40px"
-            $color="#428BCA"
-            $background={github_url ? '#FFFFFF' : '#eeeeee'}
-            $display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $pointerEvents={github_url ? '' : 'none'}
-          >
-            <WebSiteIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
-            GitHub
-          </LinkToWebSite>
+        <LinkToWebSiteWrapper
+          $cursor="not-allowed"
+          title={github_url ? '깃허브로 이동' : '깃허브 주소가 없습니다.'}
+        >
+          {github_url ? (
+            <LinkToWebSite
+              href={github_url ? github_url : '/'}
+              target="_blank"
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border="1px solid #428BCA"
+              $width={type === 'xs' ? '100%' : '145px'}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={github_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={github_url ? '' : 'none'}
+            >
+              <WebSiteIcon
+                type={github_url ? 'GithubBlue' : 'GithubBlueDisable'}
+                $marginRight="9px"
+                $width={20}
+                $height={20}
+              />
+              GitHub
+            </LinkToWebSite>
+          ) : (
+            <DisabledLink
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
+              $width={type === 'xs' ? '100%' : '200px'}
+              $marginBottom={type === 'xs' ? '5px' : ''}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={deploy_url ? '' : 'none'}
+            >
+              Visit the Website
+            </DisabledLink>
+          )}
         </LinkToWebSiteWrapper>
       </Container>
       <Container padding={isDesktop ? '0 70px' : '0 30px'}>
