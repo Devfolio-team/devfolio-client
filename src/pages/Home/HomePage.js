@@ -112,7 +112,7 @@ const HomePage = ({ viewport }) => {
               return (
                 <ProjectItem
                   width={vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'}
-                  margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '0'}
+                  margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '25px 0'}
                   containerMinHeight={
                     vw >= 1440
                       ? 166

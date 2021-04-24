@@ -1,17 +1,23 @@
+import axios from 'axios';
 import {
   Button,
   Container,
   Heading,
   Image,
   Paragraph,
+  ProjectExplanation,
   SkillIcon,
   Span,
   SVGIcon,
   Time,
 } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
+import { parseHtmlAndHighlighter } from 'utils/parseHtmlAndHighlighter';
+import scrollToTop from 'utils/scrollToTop';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -58,22 +64,25 @@ const StyledUl = styled.ul`
   `}
 `;
 
-const StyledLi = styled.li`
+const SkillIconItem = styled.li`
   ${props => css`
     ${applyStyle(props)}
   `}
 `;
 
 const StyledButton = styled(Button)`
+  ${props => css`
+    ${applyStyle(props)}
+  `}
   &:hover {
     background: #e0e0e0;
     stroke: none;
-    path {
+    /* path {
       fill: #e74c3c;
-    }
-    svg {
+    } */
+    /* svg {
       stroke: none;
-    }
+    } */
   }
 `;
 
@@ -86,48 +95,142 @@ const StyledHeartIcon = styled(SVGIcon)`
   }
 `;
 
-const ProjectPage = ({ viewport }) => {
-  const { isDesktop, vw, type } = viewport;
-  const [scrollY, setScrollY] = useState(0);
+const StyledLinkWrapper = styled.div`
+  ${props => css`
+    ${applyStyle(props)}
+  `}
+`;
 
-  const onScroll = e => {
+const ProjectPage = ({ match }) => {
+  const { isDesktop, vw, type } = useDetectViewport();
+  const [scrollY, setScrollY] = useState(0);
+  const initalProject = {
+    projectData: {
+      created: '',
+      deploy_url: '',
+      end_date: '',
+      github_url: '',
+      is_private: false,
+      main_contents: '',
+      plan_intention: '',
+      project_id: 0,
+      start_date: '',
+      subject: '',
+      team_name: '',
+      thumbnail: '',
+      user_id: '',
+    },
+    projectTechStack: [{}],
+  };
+  const [project, setProject] = useState(initalProject);
+  const [isLike, setIsLike] = useState(false);
+  const {
+    created,
+    deploy_url,
+    end_date,
+    github_url,
+    // is_private,
+    main_contents,
+    plan_itention,
+    project_id,
+    start_date,
+    subject,
+    team_name,
+    thumbnail,
+    likeCount,
+    // user_id,
+  } = project.projectData;
+
+  const { projectTechStacks } = project;
+  const loginUserId = useSelector(state => state.auth.currentUser.user_id);
+
+  const onScrollHandler = () => {
     setScrollY(window.pageYOffset);
   };
 
+  const onLikeCountPlusHandler = async () => {
+    const getLikeCount = await axios(
+      `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`
+    );
+
+    //좋아요 버튼을 안누르면 isLike는 false
+    const isLike = getLikeCount.data.existeLike;
+    try {
+      if (!isLike) {
+        // LikeCount++
+        const postLikeCountPlus = await axios({
+          method: 'post',
+          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`,
+        });
+
+        setProject(
+          { ...project },
+          (project.projectData.likeCount = postLikeCountPlus.data.likeCount)
+        );
+        setIsLike(true);
+      } else {
+        // likeCount--
+        const DelLikeCount = await axios({
+          method: 'delete',
+          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`,
+        });
+
+        setProject({ ...project }, (project.projectData.likeCount = DelLikeCount.data.likeCount));
+        setIsLike(false);
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  useEffect(() => {
+    scrollToTop();
+
+    const getProject = async () => {
+      try {
+        const getProject = await axios(
+          `http://devfolio.world:3020/api/project/${match.params.project_id}`
+        );
+        setProject(getProject.data.responseData);
+      } catch (e) {
+        throw new Error(e);
+      }
+    };
+    getProject();
+
+    //처음에 페이지 접속 했을 때 프로젝트에 좋아요를 눌렀는가?
+    const getIsLike = async () => {
+      try {
+        const Project = await axios(
+          `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`
+        );
+        const IsLikeProject = await Project.data.existeLike;
+
+        if (IsLikeProject) {
+          setIsLike(true);
+        } else {
+          setIsLike(false);
+        }
+      } catch (e) {
+        throw new Error(e);
+      }
+    };
+    getIsLike();
+  }, [loginUserId, match.params.project_id, project_id, isLike]);
+
   useEffect(() => {
     function watchScroll() {
-      window.addEventListener('scroll', onScroll);
+      window.addEventListener('scroll', onScrollHandler);
     }
     watchScroll();
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', onScrollHandler);
     };
   });
 
-  const skills = [
-    'Javascript',
-    'StyledComponenet',
-    'Typescript',
-    'Express',
-    'React',
-    'MySQL',
-    'Redux',
-    'Sass',
-    'Node.js',
-  ];
-
-  // const code = `<h1>2021년 03월 11일 목요일 TIL (CDD, StoryBook, type검사)</h1><br/><h2>오늘 한 일과 느낀점</h2><br/><ul><li> <p>오전 10시 ~ 오후 5시 리액트 현강 이번주 목, 금은 하루에 리액트 강의 시간이 점심시간 제외하고 6시간이나 된다. 오전 시간은 어제 얘기하던 컴포넌트의 추가적인 개념으로 defaultProps와 propTypes에 대해 알려주셨다.</p></li><br/> <li> <p>추가적으로 자바스크립트의 typeof가 배열과 객체, null을 구분하지 못하는것을 어떻게 해결하는지 배웠다.</p> </li> </ul>;`;
-  const code = `<pre class="lang-javascript"><code data-language="javascript">// 데이터 타입 검사 유틸리티 함수<br/> function validType(dataType, typeString) {   return Object.prototype.toString.call(dataType).slice(8,-1).toLowerCase() === typeString }  function calcTriangleCirc(x, y, z) {   // 데이터 타입 검사   if (      !validType(x, 'number') ||      !validType(y, 'number') ||      !validType(z, 'number')    ) {     throw new Error('전달되는 인자의 유형은 오직 숫자(number)여야 합니다.')   }   return x + y + z }`;
-
-  // const names = [
-  //   { name: '신봉철', github: 'https://github.com/bcround' },
-  //   { name: '신봉철', github: 'https://github.com/bcround' },
-  //   { name: '신봉철', github: 'https://github.com/bcround' },
-  //   { name: '신봉철', github: 'https://github.com/bcround' },
-  //   { name: '신봉철', github: 'https://github.com/bcround' },
-  // ];
-
-  return (
+  return project === null ? (
+    ''
+  ) : (
     <StyledProjectPage
       $width={isDesktop ? '768px' : '100%'}
       $margin="96px auto 0 auto"
@@ -141,6 +244,7 @@ const ProjectPage = ({ viewport }) => {
         justifyContent="space-between"
         position={vw > 840 ? 'relative' : ''}
       >
+        {/* 뷰포트크기가 840px 이상이면 동그란 좋아요버튼 생성 */}
         {vw > 840 ? (
           <Container position="absolute" left="-10px">
             <Container
@@ -160,11 +264,16 @@ const ProjectPage = ({ viewport }) => {
                 width="44px"
                 height="44px"
                 padding="0"
+                onClick={onLikeCountPlusHandler}
               >
-                <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
+                {isLike === false ? (
+                  <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
+                ) : (
+                  <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+                )}
               </StyledButton>
               <Span fontSize="16px" lineHeight="16px" margin="0px 0 0 0">
-                1255
+                {likeCount}
               </Span>
             </Container>
           </Container>
@@ -175,13 +284,13 @@ const ProjectPage = ({ viewport }) => {
           <Time
             margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
             fontSize={1.6}
-            dateTime="2021-03-30T06:00:56.555Z"
+            dateTime={created}
           >
-            2021.03.30
+            {created}
           </Time>
           <Container margin="0">
             <Image
-              src="https://avatars.githubusercontent.com/u/72919631?s=400&u=da82fb308f90b7ac6d6b03148c8475641e31e703&v=4"
+              src={deploy_url}
               alt="닉네임프로필사진"
               width="24px"
               height="24px"
@@ -192,6 +301,7 @@ const ProjectPage = ({ viewport }) => {
             </StyledNinkName>
           </Container>
         </Container>
+        {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
         {vw > 840 ? (
           ''
         ) : (
@@ -199,16 +309,23 @@ const ProjectPage = ({ viewport }) => {
             borderRadius="5px"
             background="inherit"
             border="1px solid #A3ABB3"
-            width="102px"
-            height="44px"
+            width="82px"
+            height="33px"
             padding="0"
+            display="flex"
+            $justifyContent="center"
+            $alignItems="center"
+            $color="#212121"
+            onClick={onLikeCountPlusHandler}
           >
-            <Container display="flex" justifyContent="center" alignItems="center" margin="0">
-              <SVGIcon type="HeartEmpty" width={20} height={20}></SVGIcon>
-              <Span fontSize="16px" lineHeight="16px" margin="0">
-                1255
-              </Span>
-            </Container>
+            {isLike === false ? (
+              <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
+            ) : (
+              <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+            )}
+            <Span fontSize="16px" lineHeight="16px" margin="0 0 0 10px">
+              {likeCount}
+            </Span>
           </StyledButton>
         )}
       </Container>
@@ -220,14 +337,14 @@ const ProjectPage = ({ viewport }) => {
           lineHeight="40px"
           margin={type === 'xs' ? '' : '20px 0'}
         >
-          프로젝트 이름
+          {subject}
         </Heading>
         <Span
           fontSize={type === 'xs' ? 1.8 : 2}
           lineHeight={type === 'xs' ? '' : '10px'}
           color="#212121"
         >
-          BHC 팀
+          {team_name}
         </Span>
       </Container>
       <Container
@@ -236,55 +353,56 @@ const ProjectPage = ({ viewport }) => {
         margin="0 0 22px 0"
         padding={isDesktop ? '0 70px' : '0 30px'}
       >
-        <StyledLink
-          href="http://naver.com"
-          target="_blank"
-          $fontSize={1.6}
-          $fontWeight="700"
-          $borderRadius={5}
-          $border="1px solid #428BCA"
-          $width={type === 'xs' ? '100%' : '200px'}
-          $marginBottom={type === 'xs' ? '5px' : ''}
-          $height="44px"
-          $textAlign="center"
-          $lineHeight="40px"
-          $color="#428BCA"
-          $background="#FFFFFF"
-          $display="flex"
-          $justifyContent="center"
-          $alignItems="center"
-        >
-          <StyledIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
-          Visit the Website
-        </StyledLink>
-        <StyledLink
-          href="https://github.com/choisuhyeok1255"
-          target="_blank"
-          $fontSize={1.6}
-          $fontWeight="700"
-          $borderRadius={5}
-          $border="1px solid #428BCA"
-          $width={type === 'xs' ? '100%' : '145px'}
-          $height="44px"
-          $textAlign="center"
-          $lineHeight="40px"
-          $color="#428BCA"
-          $background="#FFFFFF"
-          $display="flex"
-          $justifyContent="center"
-          $alignItems="center"
-        >
-          <StyledIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
-          GitHub
-        </StyledLink>
+        <StyledLinkWrapper $cursor="not-allowed">
+          <StyledLink
+            href={deploy_url}
+            target="_blank"
+            $fontSize={1.6}
+            $fontWeight="700"
+            $borderRadius={5}
+            $border="1px solid #428BCA"
+            $width={type === 'xs' ? '100%' : '200px'}
+            $marginBottom={type === 'xs' ? '5px' : ''}
+            $height="44px"
+            $textAlign="center"
+            $lineHeight="40px"
+            $color="#428BCA"
+            $background={deploy_url ? '#FFFFFF' : '#eeeeee'}
+            $display="flex"
+            $justifyContent="center"
+            $alignItems="center"
+            $pointerEvents={deploy_url ? '' : 'none'}
+          >
+            <StyledIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
+            Visit the Website
+          </StyledLink>
+        </StyledLinkWrapper>
+        <StyledLinkWrapper $cursor="not-allowed">
+          <StyledLink
+            href={github_url}
+            target="_blank"
+            $fontSize={1.6}
+            $fontWeight="700"
+            $borderRadius={5}
+            $border="1px solid #428BCA"
+            $width={type === 'xs' ? '100%' : '145px'}
+            $height="44px"
+            $textAlign="center"
+            $lineHeight="40px"
+            $color="#428BCA"
+            $background={github_url ? '#FFFFFF' : '#eeeeee'}
+            $display="flex"
+            $justifyContent="center"
+            $alignItems="center"
+            $pointerEvents={github_url ? '' : 'none'}
+          >
+            <StyledIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
+            GitHub
+          </StyledLink>
+        </StyledLinkWrapper>
       </Container>
       <Container padding={isDesktop ? '0 70px' : '0 30px'}>
-        <Image
-          src="https://github.com/HaJunRyu/FDS18_RWD/raw/master/_ASSETS_/cover.jpg"
-          alt="예시 이미지"
-          width="100%"
-          borderRadius="10px"
-        />
+        <Image src={thumbnail} alt="프로젝트 썸네일" width="100%" borderRadius="10px" />
       </Container>
       <StyledDivisionLine
         $width={isDesktop ? '500px' : '70%'}
@@ -312,9 +430,7 @@ const ProjectPage = ({ viewport }) => {
           lineHeight="25px"
           padding="0 15px"
         >
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-          deserunt mollit anim id est laborum.
+          {plan_itention}
         </Paragraph>
       </Container>
       <StyledDivisionLine
@@ -324,72 +440,72 @@ const ProjectPage = ({ viewport }) => {
       />
 
       {/* <Container padding={isDesktop ? '0 70px' : '0 30px'}>
-        <Heading
-          as="h3"
-          color="#212121"
-          fontWeight={700}
-          fontSize="3"
-          borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-          width="142px"
-          textAlign="center"
-          lineHeight="10px"
-          margin="0 0 47px 0"
-        >
-          팀원 목록
-        </Heading>
-        <StyledUl $display="flex" $flexDirection="row" $flexWrap="wrap">
-          {names.map((name, index) => (
-            <StyledLi
-              $width={isDesktop ? '50%' : type === 'sm' ? '100%' : '100%'}
-              $margin={isDesktop ? '0 0 50px 0' : '0 0 20px 0'}
-              key={index}
-            >
-              <Container textAlign="center">
-                <Span
-                  display="inline-block"
-                  color="#666666"
-                  fontSize={1.6}
-                  width="74px"
-                  textAlign="center"
-                  borderRight={type === 'xs' ? ' ' : '2px solid #A9C1FF'}
-                  marginRight={type === 'xs' ? ' ' : '30px'}
-                  marginBottom={type === 'xs' ? '10px' : ''}
-                >
-                  {name.name}
-                </Span>
-                <StyledLink
-                  href="https://github.com/bcround"
-                  target="_blank"
-                  $color="#666666"
-                  $fontSize={1.3}
-                >
-                  {name.github}
-                </StyledLink>
-                {/* 타입이 xs일때만 팀원 목록 밑으로 구분선 생성 */}
+          <Heading
+            as="h3"
+            color="#212121"
+            fontWeight={700}
+            fontSize="3"
+            borderBottom="14px solid rgba(66, 139, 202, 0.6)"
+            width="142px"
+            textAlign="center"
+            lineHeight="10px"
+            margin="0 0 47px 0"
+          >
+            팀원 목록
+          </Heading>
+          <StyledUl $display="flex" $flexDirection="row" $flexWrap="wrap">
+            {names.map((name, index) => (
+              <StyledLi
+                $width={isDesktop ? '50%' : type === 'sm' ? '100%' : '100%'}
+                $margin={isDesktop ? '0 0 50px 0' : '0 0 20px 0'}
+                key={index}
+              >
+                <Container textAlign="center">
+                  <Span
+                    display="inline-block"
+                    color="#666666"
+                    fontSize={1.6}
+                    width="74px"
+                    textAlign="center"
+                    borderRight={type === 'xs' ? ' ' : '2px solid #A9C1FF'}
+                    marginRight={type === 'xs' ? ' ' : '30px'}
+                    marginBottom={type === 'xs' ? '10px' : ''}
+                  >
+                    {name.name}
+                  </Span>
+                  <StyledLink
+                    href="https://github.com/bcround"
+                    target="_blank"
+                    $color="#666666"
+                    $fontSize={1.3}
+                  >
+                    {name.github}
+                  </StyledLink>
+                  {/* 타입이 xs일때만 팀원 목록 밑으로 구분선 생성 */}
       {/* {type === 'xs' ? (
-                  index < names.length - 1 ? (
-                    <StyledDivisionLine
-                      $margin="0 auto"
-                      $width="10%"
-                      $borderBottom="1px solid #A9C1FF"
-                      $padding="10px 0"
-                    />
+                    index < names.length - 1 ? (
+                      <StyledDivisionLine
+                        $margin="0 auto"
+                        $width="10%"
+                        $borderBottom="1px solid #A9C1FF"
+                        $padding="10px 0"
+                      />
+                    ) : (
+                      ''
+                    )
                   ) : (
                     ''
-                  )
-                ) : (
-                  ''
-                )}
-              </Container>
-            </StyledLi>
-          ))}
-        </StyledUl>
-      </Container> 
-      <StyledDivisionLine
-        $width={isDesktop ? '500px' : '70%'}
-        $borderBottom="1px solid #666666"
-        $margin="80px auto"
-      />*/}
+                  )}
+                </Container>
+              </StyledLi>
+            ))}
+          </StyledUl>
+        </Container>
+        <StyledDivisionLine
+          $width={isDesktop ? '500px' : '70%'}
+          $borderBottom="1px solid #666666"
+          $margin="80px auto"
+        />*/}
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
@@ -412,34 +528,29 @@ const ProjectPage = ({ viewport }) => {
           $flexWrap="wrap"
           $justifyContent="space-between"
         >
-          {skills.map((skill, index) => (
-            <StyledLi
-              $display="flex"
-              $width={vw > 600 ? '50%' : '100%'}
-              $margin="0 0 20px 0"
-              key={index}
-            >
-              <Container
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                margin="0"
-                width="100%"
+          {projectTechStacks &&
+            projectTechStacks.map((skill, index) => (
+              <SkillIconItem
+                $display="flex"
+                $width={vw > 600 ? '50%' : '100%'}
+                $margin="0 0 20px 0"
+                $justifyContent="center"
+                $alignItems="center"
+                key={index}
               >
-                <SkillIcon type={skill} width={60} height={60}></SkillIcon>
+                <SkillIcon type={skill.tech_name} width={60} height={60}></SkillIcon>
                 <Span
                   color="#666666"
-                  fontSize={1.6}
+                  fontSize={isDesktop ? 2.3 : 2}
                   fontWeight="700"
                   width={isDesktop ? '200px' : type === 'sm' ? '100px' : '100px'}
                   textAlign="left"
                   marginLeft={isDesktop ? '30px' : '10px'}
                 >
-                  {skill}
+                  {skill.tech_name}
                 </Span>
-              </Container>
-            </StyledLi>
-          ))}
+              </SkillIconItem>
+            ))}
         </StyledUl>
       </Container>
       <StyledDivisionLine
@@ -461,10 +572,10 @@ const ProjectPage = ({ viewport }) => {
         >
           프로젝트 설명
         </Heading>
-        <Time dateTime="2021-03-30T06:00:56.555Z">21.03.02</Time>
+        <Time dateTime="2021-03-30T06:00:56.555Z">{start_date}</Time>
         <Span> ~ </Span>
-        <Time dateTime="2021-03-30T06:00:56.555Z">21.03.29</Time>
-        <div dangerouslySetInnerHTML={{ __html: code }}></div>
+        <Time dateTime="2021-03-30T06:00:56.555Z">{end_date}</Time>
+        <ProjectExplanation>{parseHtmlAndHighlighter(main_contents)}</ProjectExplanation>
       </Container>
     </StyledProjectPage>
   );

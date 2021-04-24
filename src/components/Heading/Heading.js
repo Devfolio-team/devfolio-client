@@ -21,7 +21,11 @@ const Heading = ({
   border,
   borderBottom,
   width,
+  height,
   cursor,
+  overflow,
+  whiteSpace,
+  textOverflow,
   ...restProps
 }) => (
   <StyledHeading
@@ -36,7 +40,11 @@ const Heading = ({
     $border={border}
     $borderBottom={borderBottom}
     $width={width}
+    $height={height}
     $cursor={cursor}
+    $overflow={overflow}
+    $whiteSpace={whiteSpace}
+    $textOverflow={textOverflow}
     {...restProps}
   ></StyledHeading>
 );
