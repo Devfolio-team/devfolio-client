@@ -15,15 +15,21 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-const StyledContainer = styled.div`
+const FlexApp = styled.div`
+  display: flex;
   min-height: 100vh;
+  flex-flow: column nowrap;
 `;
 
-function App() {
+const EmptyContainer = styled.div`
+  flex-grow: 1;
+  flex-shrink: 1;
+`;
+
+const App = () => {
   const viewport = useDetectViewport();
 
   const auth = useSelector(state => state.auth);
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     const checkUser = () => {
@@ -43,29 +49,31 @@ function App() {
 
   return (
     <Router>
-      <HeaderBar viewport={viewport} />
-      <StyledContainer>
-        <Switch>
-          <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
-          <Route path="/portfolio/:user_id" exact component={PortfolioPage} />
-          <Route
-            path="/edit/portfolio/:portfolio_id"
-            exact
-            render={() => <PortfolioEditPage viewport={viewport} />}
-          />
-          <Route path="/project/:project_id" exact component={ProjectPage} />
-          <Route
-            path="/edit/project/:project_id?"
-            exact
-            render={() => <ProjectEditPage viewport={viewport} />}
-          />
-          <Route path="/sign_in" exact component={SignIn} />
-          <Redirect to="page-not-found" render={() => <PageNotFound viewport={viewport} />} />
-        </Switch>
-      </StyledContainer>
-      <FooterBar />
+      <FlexApp>
+        <HeaderBar viewport={viewport} />
+        <EmptyContainer>
+          <Switch>
+            <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
+            <Route path="/portfolio/:user_id" exact component={PortfolioPage} />
+            <Route
+              path="/edit/portfolio/:portfolio_id"
+              exact
+              render={() => <PortfolioEditPage viewport={viewport} />}
+            />
+            <Route path="/project/:project_id" exact component={ProjectPage} />
+            <Route
+              path="/edit/project/:project_id?"
+              exact
+              render={() => <ProjectEditPage viewport={viewport} />}
+            />
+            <Route path="/sign_in" exact component={SignIn} />
+            <Redirect to="page-not-found" render={() => <PageNotFound viewport={viewport} />} />
+          </Switch>
+        </EmptyContainer>
+        <FooterBar />
+      </FlexApp>
     </Router>
   );
-}
+};
 
 export default App;

@@ -23,6 +23,33 @@ export default {
           'Sass',
           'StyledComponent',
           'Typescript',
+          'Apache',
+          'Typescript',
+          'AWSS3',
+          'AWSEC2',
+          'AWSRDS',
+          'C',
+          'CSHARP',
+          'CPP',
+          'Css3',
+          'Dart',
+          'Django',
+          'Electron',
+          'Firebase',
+          'Flutter',
+          'GraphQL',
+          'Html5',
+          'Java',
+          'Jest',
+          'Mobx',
+          'MongoDB',
+          'NextJS',
+          'NodeJS',
+          'Prisma',
+          'Python',
+          'Ruby',
+          'Spring',
+          'Vue',
         ],
       },
     },
@@ -41,6 +68,33 @@ export const ReduxIcon = Template.bind({});
 export const SassIcon = Template.bind({});
 export const StyledComponentIcon = Template.bind({});
 export const TypescriptIcon = Template.bind({});
+export const Apache = Template.bind({});
+export const Typescript = Template.bind({});
+export const AWSS3 = Template.bind({});
+export const AWSEC2 = Template.bind({});
+export const AWSRDS = Template.bind({});
+export const C = Template.bind({});
+export const CSHARP = Template.bind({});
+export const CPP = Template.bind({});
+export const Css3 = Template.bind({});
+export const Dart = Template.bind({});
+export const Django = Template.bind({});
+export const Electron = Template.bind({});
+export const Firebase = Template.bind({});
+export const Flutter = Template.bind({});
+export const GraphQL = Template.bind({});
+export const Html5 = Template.bind({});
+export const Java = Template.bind({});
+export const Jest = Template.bind({});
+export const Mobx = Template.bind({});
+export const MongoDB = Template.bind({});
+export const NextJS = Template.bind({});
+export const NodeJS = Template.bind({});
+export const Prisma = Template.bind({});
+export const Python = Template.bind({});
+export const Ruby = Template.bind({});
+export const Spring = Template.bind({});
+export const Vue = Template.bind({});
 
 ExpressIcon.args = {
   type: 'Express',
@@ -82,4 +136,139 @@ TypescriptIcon.args = {
   type: 'Typescript',
   width: 40,
   height: 40,
+};
+Apache.args = {
+  type: 'Apache',
+  width: 40,
+  heigth: 40,
+};
+Typescript.args = {
+  type: 'Typescript',
+  width: 40,
+  heigth: 40,
+};
+AWSS3.args = {
+  type: 'AWSS3',
+  width: 40,
+  heigth: 40,
+};
+AWSEC2.args = {
+  type: 'AWSEC2',
+  width: 40,
+  heigth: 40,
+};
+AWSRDS.args = {
+  type: 'AWSRDS',
+  width: 40,
+  heigth: 40,
+};
+C.args = {
+  type: 'C',
+  width: 40,
+  heigth: 40,
+};
+CSHARP.args = {
+  type: 'CSHARP',
+  width: 40,
+  heigth: 40,
+};
+CPP.args = {
+  type: 'CPP',
+  width: 40,
+  heigth: 40,
+};
+Css3.args = {
+  type: 'Css3',
+  width: 40,
+  heigth: 40,
+};
+Dart.args = {
+  type: 'Dart',
+  width: 40,
+  heigth: 40,
+};
+Django.args = {
+  type: 'Django',
+  width: 40,
+  heigth: 40,
+};
+Electron.args = {
+  type: 'Electron',
+  width: 40,
+  heigth: 40,
+};
+Firebase.args = {
+  type: 'Firebase',
+  width: 40,
+  heigth: 40,
+};
+Flutter.args = {
+  type: 'Flutter',
+  width: 40,
+  heigth: 40,
+};
+GraphQL.args = {
+  type: 'GraphQL',
+  width: 40,
+  heigth: 40,
+};
+Html5.args = {
+  type: 'Html5',
+  width: 40,
+  heigth: 40,
+};
+Java.args = {
+  type: 'Java',
+  width: 40,
+  heigth: 40,
+};
+Jest.args = {
+  type: 'Jest',
+  width: 40,
+  heigth: 40,
+};
+Mobx.args = {
+  type: 'Mobx',
+  width: 40,
+  heigth: 40,
+};
+MongoDB.args = {
+  type: 'MongoDB',
+  width: 40,
+  heigth: 40,
+};
+NextJS.args = {
+  type: 'NextJS',
+  width: 40,
+  heigth: 40,
+};
+NodeJS.args = {
+  type: 'NodeJS',
+  width: 40,
+  heigth: 40,
+};
+Prisma.args = {
+  type: 'Prisma',
+  width: 40,
+  heigth: 40,
+};
+Python.args = {
+  type: 'Python',
+  width: 40,
+  heigth: 40,
+};
+Ruby.args = {
+  type: 'Ruby',
+  width: 40,
+  heigth: 40,
+};
+Spring.args = {
+  type: 'Spring',
+  width: 40,
+  heigth: 40,
+};
+Vue.args = {
+  type: 'Vue',
+  width: 40,
+  heigth: 40,
 };
