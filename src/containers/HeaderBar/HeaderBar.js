@@ -31,6 +31,24 @@ const StyledHeaderBar = styled.header`
   `}
 `;
 
+const Naigation = styled.nav`
+  display: flex;
+  margin: 0 auto;
+  width: 1440px;
+  height: 64px;
+  justify-content: space-between;
+  align-items: center;
+  background: #25272b;
+  padding: 0 70px;
+  position: relative;
+  @media (max-width: 1440px) {
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    padding: 30px;
+  }
+`;
+
 const ProjectEditLink = styled(Link)`
   ${props => applyStyle(props)}
 `;
@@ -91,17 +109,7 @@ const HeaderBar = ({ viewport }) => {
 
   return (
     <StyledHeaderBar $background="#25272B">
-      <Container
-        as="nav"
-        display="flex"
-        width={type === 'xl' ? 1440 : '100%'}
-        height={64}
-        justifyContent="space-between"
-        alignItems="center"
-        background="#25272B"
-        padding={`0 ${isDesktop ? '70px' : '30px'}`}
-        position="relative"
-      >
+      <Naigation>
         <Heading as="h1">
           <Link to="/">
             <A11yHidden as="span">Devfolio</A11yHidden>
@@ -208,7 +216,7 @@ const HeaderBar = ({ viewport }) => {
             ></LoginModalDialog>
           </Portal>
         ) : null}
-      </Container>
+      </Naigation>
     </StyledHeaderBar>
   );
 };
