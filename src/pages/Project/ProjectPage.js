@@ -568,14 +568,6 @@ const ProjectPage = ({ match }) => {
                 </Span>
               </SkillIconItem>
             ))}
-          <SkillIcon type="Express" width={60} height={60} />
-          <SkillIcon type="Javascript" width={60} height={60} />
-          <SkillIcon type="MySQL" width={60} height={60} />
-          <SkillIcon type="React" width={60} height={60} />
-          <SkillIcon type="Redux" width={60} height={60} />
-          <SkillIcon type="Sass" width={60} height={60} />
-          <SkillIcon type="StyledComponent" width={60} height={60} />
-          <SkillIcon type="Typescript" width={60} height={60} />
         </SkillList>
       </Container>
       <DivisionLine
