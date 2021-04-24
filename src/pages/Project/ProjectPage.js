@@ -117,7 +117,11 @@ const ProjectPage = ({ match }) => {
     },
     projectTechStack: [{}],
   };
+  const initalLoginUser = {
+    user_id: null,
+  };
   const [project, setProject] = useState(initalProject);
+  const [loginUser, setLoginUser] = useState(initalLoginUser);
   const [isLike, setIsLike] = useState(false);
   const {
     created,
@@ -126,7 +130,7 @@ const ProjectPage = ({ match }) => {
     github_url,
     // is_private,
     main_contents,
-    plan_itention,
+    plan_intention,
     project_id,
     start_date,
     subject,
@@ -136,22 +140,23 @@ const ProjectPage = ({ match }) => {
     // user_user_id,
   } = project.projectData;
 
+  // eslint-disable-next-line prefer-destructuring
   const {
     nickname: project_nickname,
     profile_photo: project_profile_photo,
   } = project.projectData.authorInfo[0];
 
   const { projectTechStacks } = project;
-  const loginUser = useSelector(state => state.auth.currentUser);
-  const { user_id: login_user_id } = loginUser;
+  const loginUserInfo = useSelector(state => state.auth.currentUser);
 
   const onScrollHandler = () => {
     setScrollY(window.pageYOffset);
   };
 
   const onLikeCountPlusHandler = async () => {
+    if (!loginUser.user_id) return;
     const getLikeCount = await axios(
-      `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`
+      `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`
     );
 
     //좋아요 버튼을 안누르면 isLike는 false
@@ -161,7 +166,7 @@ const ProjectPage = ({ match }) => {
         // LikeCount++
         const postLikeCountPlus = await axios({
           method: 'post',
-          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`,
+          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`,
         });
 
         setProject(
@@ -173,7 +178,7 @@ const ProjectPage = ({ match }) => {
         // likeCount--
         const DelLikeCount = await axios({
           method: 'delete',
-          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`,
+          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`,
         });
 
         setProject({ ...project }, (project.projectData.likeCount = DelLikeCount.data.likeCount));
@@ -195,6 +200,7 @@ const ProjectPage = ({ match }) => {
   };
 
   useEffect(() => {
+    if (loginUserInfo) setLoginUser(loginUserInfo);
     const getProject = async () => {
       try {
         const getProject = await axios(
@@ -209,9 +215,10 @@ const ProjectPage = ({ match }) => {
 
     //처음에 페이지 접속 했을 때 프로젝트에 좋아요를 눌렀는가?
     const getIsLike = async () => {
+      if (!loginUser.user_id) return;
       try {
         const Project = await axios(
-          `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`
+          `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`
         );
         const IsLikeProject = await Project.data.existeLike;
 
@@ -225,7 +232,7 @@ const ProjectPage = ({ match }) => {
       }
     };
     getIsLike();
-  }, [login_user_id, match.params.project_id, project_id, isLike]);
+  }, [loginUser.user_id, loginUserInfo, match.params.project_id, project_id]);
 
   useEffect(() => {
     function watchScroll() {
@@ -274,6 +281,7 @@ const ProjectPage = ({ match }) => {
                 height="44px"
                 padding="0"
                 onClick={onLikeCountPlusHandler}
+                title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
               >
                 {isLike === false ? (
                   <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
@@ -439,7 +447,7 @@ const ProjectPage = ({ match }) => {
           lineHeight="25px"
           padding="0 15px"
         >
-          {plan_itention}
+          {plan_intention}
         </Paragraph>
       </Container>
       <DivisionLine
@@ -560,6 +568,14 @@ const ProjectPage = ({ match }) => {
                 </Span>
               </SkillIconItem>
             ))}
+          <SkillIcon type="Express" width={60} height={60} />
+          <SkillIcon type="Javascript" width={60} height={60} />
+          <SkillIcon type="MySQL" width={60} height={60} />
+          <SkillIcon type="React" width={60} height={60} />
+          <SkillIcon type="Redux" width={60} height={60} />
+          <SkillIcon type="Sass" width={60} height={60} />
+          <SkillIcon type="StyledComponent" width={60} height={60} />
+          <SkillIcon type="Typescript" width={60} height={60} />
         </SkillList>
       </Container>
       <DivisionLine
