@@ -57,6 +57,7 @@ const Input = ({
   opacity,
   zIndex,
   field,
+  innerRef,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -88,6 +89,7 @@ const Input = ({
         </StyledLabel>
       )}
       <StyledInput
+        ref={innerRef}
         type={type}
         id={id}
         name={name}
@@ -113,16 +115,6 @@ const Input = ({
       />
     </>
   );
-};
-
-Input.defaultProps = {
-  type: 'text',
-  label: 'Example',
-  inputFontSize: 1.2,
-  width: 170,
-  height: 40,
-  value: '',
-  field: {},
 };
 
 Input.propTypes = {
