@@ -82,7 +82,7 @@ const LikeButton = styled(Button)`
 
 const HeartIcon = styled(SVGIcon)`
   & {
-    stroke: black;
+    stroke: #a3abb3;
   }
   path {
     fill: white;
@@ -351,7 +351,7 @@ const ProjectPage = ({ match }) => {
             ) : (
               <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
             )}
-            <Span fontSize="16px" lineHeight="16px" margin="0 0 0 10px">
+            <Span fontSize={1.6} lineHeight="16px" margin="20px 0 0 0">
               {likeCount}
             </Span>
           </LikeButton>
