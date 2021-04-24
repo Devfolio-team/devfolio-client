@@ -348,7 +348,7 @@ const ProjectPage = ({ match }) => {
       </Container>
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
-          as="h3"
+          as="h2"
           fontSize={type === 'xs' ? 2.7 : 4}
           color="#212121"
           lineHeight="40px"
