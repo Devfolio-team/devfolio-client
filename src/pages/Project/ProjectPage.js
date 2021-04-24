@@ -25,13 +25,13 @@ const StyledProjectPage = styled.main`
   `}
 `;
 
-const StyledNinkName = styled.span`
+const ProjectWriter = styled.span`
   ${props => css`
     ${applyStyle(props)}
   `}
 `;
 
-const StyledLink = styled.a`
+const LinkToWebSite = styled.a`
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -46,19 +46,19 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledIcon = styled(SVGIcon)`
+const WebSiteIcon = styled(SVGIcon)`
   ${props => css`
     ${applyStyle(props)}
   `}
 `;
 
-const StyledDivisionLine = styled.div`
+const DivisionLine = styled.div`
   ${props => css`
     ${applyStyle(props)}
   `}
 `;
 
-const StyledUl = styled.ul`
+const SkillList = styled.ul`
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -70,23 +70,17 @@ const SkillIconItem = styled.li`
   `}
 `;
 
-const StyledButton = styled(Button)`
+const LikeButton = styled(Button)`
   ${props => css`
     ${applyStyle(props)}
   `}
   &:hover {
     background: #e0e0e0;
     stroke: none;
-    /* path {
-      fill: #e74c3c;
-    } */
-    /* svg {
-      stroke: none;
-    } */
   }
 `;
 
-const StyledHeartIcon = styled(SVGIcon)`
+const HeartIcon = styled(SVGIcon)`
   & {
     stroke: black;
   }
@@ -95,7 +89,7 @@ const StyledHeartIcon = styled(SVGIcon)`
   }
 `;
 
-const StyledLinkWrapper = styled.div`
+const LinkToWebSiteWrapper = styled.div`
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -106,6 +100,7 @@ const ProjectPage = ({ match }) => {
   const [scrollY, setScrollY] = useState(0);
   const initalProject = {
     projectData: {
+      authorInfo: [{ nickname: '', profile_photo: '' }],
       created: '',
       deploy_url: '',
       end_date: '',
@@ -138,11 +133,17 @@ const ProjectPage = ({ match }) => {
     team_name,
     thumbnail,
     likeCount,
-    // user_id,
+    // user_user_id,
   } = project.projectData;
 
+  const {
+    nickname: project_nickname,
+    profile_photo: project_profile_photo,
+  } = project.projectData.authorInfo[0];
+
   const { projectTechStacks } = project;
-  const loginUserId = useSelector(state => state.auth.currentUser.user_id);
+  const loginUser = useSelector(state => state.auth.currentUser);
+  const { user_id: login_user_id } = loginUser;
 
   const onScrollHandler = () => {
     setScrollY(window.pageYOffset);
@@ -150,7 +151,7 @@ const ProjectPage = ({ match }) => {
 
   const onLikeCountPlusHandler = async () => {
     const getLikeCount = await axios(
-      `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`
+      `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`
     );
 
     //좋아요 버튼을 안누르면 isLike는 false
@@ -160,7 +161,7 @@ const ProjectPage = ({ match }) => {
         // LikeCount++
         const postLikeCountPlus = await axios({
           method: 'post',
-          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`,
+          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`,
         });
 
         setProject(
@@ -172,7 +173,7 @@ const ProjectPage = ({ match }) => {
         // likeCount--
         const DelLikeCount = await axios({
           method: 'delete',
-          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`,
+          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`,
         });
 
         setProject({ ...project }, (project.projectData.likeCount = DelLikeCount.data.likeCount));
@@ -183,9 +184,17 @@ const ProjectPage = ({ match }) => {
     }
   };
 
+  // 페이지 로딩 될 때 1번 뷰포트 최상단으로 올리기
   useEffect(() => {
     scrollToTop();
+  }, []);
 
+  // 날짜를 yyyy.mm.dd 형식으로 변환하는 함수
+  const DateFormMaker = date => {
+    return date.slice(0, 10).replace('-', '.').replace('-', '.');
+  };
+
+  useEffect(() => {
     const getProject = async () => {
       try {
         const getProject = await axios(
@@ -202,7 +211,7 @@ const ProjectPage = ({ match }) => {
     const getIsLike = async () => {
       try {
         const Project = await axios(
-          `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUserId}`
+          `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${login_user_id}`
         );
         const IsLikeProject = await Project.data.existeLike;
 
@@ -216,7 +225,7 @@ const ProjectPage = ({ match }) => {
       }
     };
     getIsLike();
-  }, [loginUserId, match.params.project_id, project_id, isLike]);
+  }, [login_user_id, match.params.project_id, project_id, isLike]);
 
   useEffect(() => {
     function watchScroll() {
@@ -257,7 +266,7 @@ const ProjectPage = ({ match }) => {
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
-              <StyledButton
+              <LikeButton
                 borderRadius="50%"
                 background="inherit"
                 border="1px solid #A3ABB3"
@@ -267,11 +276,11 @@ const ProjectPage = ({ match }) => {
                 onClick={onLikeCountPlusHandler}
               >
                 {isLike === false ? (
-                  <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
+                  <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
                 ) : (
                   <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
                 )}
-              </StyledButton>
+              </LikeButton>
               <Span fontSize="16px" lineHeight="16px" margin="0px 0 0 0">
                 {likeCount}
               </Span>
@@ -284,28 +293,28 @@ const ProjectPage = ({ match }) => {
           <Time
             margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
             fontSize={1.6}
-            dateTime={created}
+            dateTime={DateFormMaker(created)}
           >
-            {created}
+            {DateFormMaker(created)}
           </Time>
-          <Container margin="0">
+          <Container margin="0" display="flex" textAlign="left" alignItems="center">
             <Image
-              src={deploy_url}
+              src={project_profile_photo}
               alt="닉네임프로필사진"
               width="24px"
               height="24px"
               borderRadius="50%"
             />
-            <StyledNinkName $width="35px" $lineHeight="16px" $fontSize="16px" $marginLeft="10px">
-              닉네임
-            </StyledNinkName>
+            <ProjectWriter $width="200px" $fontSize={1.6} $marginLeft="10px">
+              {project_nickname}
+            </ProjectWriter>
           </Container>
         </Container>
         {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
         {vw > 840 ? (
           ''
         ) : (
-          <StyledButton
+          <LikeButton
             borderRadius="5px"
             background="inherit"
             border="1px solid #A3ABB3"
@@ -319,14 +328,14 @@ const ProjectPage = ({ match }) => {
             onClick={onLikeCountPlusHandler}
           >
             {isLike === false ? (
-              <StyledHeartIcon type="HeartRed" width={20} height={20}></StyledHeartIcon>
+              <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
             ) : (
               <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
             )}
             <Span fontSize="16px" lineHeight="16px" margin="0 0 0 10px">
               {likeCount}
             </Span>
-          </StyledButton>
+          </LikeButton>
         )}
       </Container>
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
@@ -353,8 +362,8 @@ const ProjectPage = ({ match }) => {
         margin="0 0 22px 0"
         padding={isDesktop ? '0 70px' : '0 30px'}
       >
-        <StyledLinkWrapper $cursor="not-allowed">
-          <StyledLink
+        <LinkToWebSiteWrapper $cursor="not-allowed">
+          <LinkToWebSite
             href={deploy_url}
             target="_blank"
             $fontSize={1.6}
@@ -373,12 +382,12 @@ const ProjectPage = ({ match }) => {
             $alignItems="center"
             $pointerEvents={deploy_url ? '' : 'none'}
           >
-            <StyledIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
+            <WebSiteIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
             Visit the Website
-          </StyledLink>
-        </StyledLinkWrapper>
-        <StyledLinkWrapper $cursor="not-allowed">
-          <StyledLink
+          </LinkToWebSite>
+        </LinkToWebSiteWrapper>
+        <LinkToWebSiteWrapper $cursor="not-allowed">
+          <LinkToWebSite
             href={github_url}
             target="_blank"
             $fontSize={1.6}
@@ -396,15 +405,15 @@ const ProjectPage = ({ match }) => {
             $alignItems="center"
             $pointerEvents={github_url ? '' : 'none'}
           >
-            <StyledIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
+            <WebSiteIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
             GitHub
-          </StyledLink>
-        </StyledLinkWrapper>
+          </LinkToWebSite>
+        </LinkToWebSiteWrapper>
       </Container>
       <Container padding={isDesktop ? '0 70px' : '0 30px'}>
         <Image src={thumbnail} alt="프로젝트 썸네일" width="100%" borderRadius="10px" />
       </Container>
-      <StyledDivisionLine
+      <DivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
         $margin="80px auto"
@@ -433,7 +442,7 @@ const ProjectPage = ({ match }) => {
           {plan_itention}
         </Paragraph>
       </Container>
-      <StyledDivisionLine
+      <DivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
         $margin="80px auto"
@@ -453,7 +462,7 @@ const ProjectPage = ({ match }) => {
           >
             팀원 목록
           </Heading>
-          <StyledUl $display="flex" $flexDirection="row" $flexWrap="wrap">
+          <SkillList $display="flex" $flexDirection="row" $flexWrap="wrap">
             {names.map((name, index) => (
               <StyledLi
                 $width={isDesktop ? '50%' : type === 'sm' ? '100%' : '100%'}
@@ -484,7 +493,7 @@ const ProjectPage = ({ match }) => {
                   {/* 타입이 xs일때만 팀원 목록 밑으로 구분선 생성 */}
       {/* {type === 'xs' ? (
                     index < names.length - 1 ? (
-                      <StyledDivisionLine
+                      <DivisionLine
                         $margin="0 auto"
                         $width="10%"
                         $borderBottom="1px solid #A9C1FF"
@@ -499,9 +508,9 @@ const ProjectPage = ({ match }) => {
                 </Container>
               </StyledLi>
             ))}
-          </StyledUl>
+          </SkillList>
         </Container>
-        <StyledDivisionLine
+        <DivisionLine
           $width={isDesktop ? '500px' : '70%'}
           $borderBottom="1px solid #666666"
           $margin="80px auto"
@@ -520,7 +529,7 @@ const ProjectPage = ({ match }) => {
         >
           사용 기술 스택
         </Heading>
-        <StyledUl
+        <SkillList
           $margin="0 auto"
           $width="100%"
           $padding={isDesktop ? '0 100px' : '0 30px'}
@@ -551,9 +560,9 @@ const ProjectPage = ({ match }) => {
                 </Span>
               </SkillIconItem>
             ))}
-        </StyledUl>
+        </SkillList>
       </Container>
-      <StyledDivisionLine
+      <DivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
         $margin="80px auto"
@@ -572,9 +581,13 @@ const ProjectPage = ({ match }) => {
         >
           프로젝트 설명
         </Heading>
-        <Time dateTime="2021-03-30T06:00:56.555Z">{start_date}</Time>
-        <Span> ~ </Span>
-        <Time dateTime="2021-03-30T06:00:56.555Z">{end_date}</Time>
+        <Time fontSize={2} dateTime={DateFormMaker(start_date)}>
+          {DateFormMaker(start_date)}
+        </Time>
+        <Span fontSize={2}> ~ </Span>
+        <Time fontSize={2} dateTime={DateFormMaker(end_date)}>
+          {DateFormMaker(end_date)}
+        </Time>
         <ProjectExplanation>{parseHtmlAndHighlighter(main_contents)}</ProjectExplanation>
       </Container>
     </StyledProjectPage>
