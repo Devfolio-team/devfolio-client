@@ -289,7 +289,7 @@ const ProjectPage = ({ match }) => {
                   <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
                 )}
               </LikeButton>
-              <Span fontSize="16px" lineHeight="16px" margin="0px 0 0 0">
+              <Span fontSize={1.4} lineHeight="16px" margin="5px 0 0 0">
                 {likeCount}
               </Span>
             </Container>
