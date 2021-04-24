@@ -12,6 +12,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
     "@toast-ui/react-editor": "^2.5.1",
+    "@yisheng90/react-loading": "^1.4.4",
     "axios": "^0.21.1",
     "formik": "^2.2.6",
     "framer-motion": "^4.1.3",
