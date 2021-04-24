@@ -660,13 +660,18 @@ const ProjectPage = ({ match }) => {
         >
           프로젝트 설명
         </Heading>
-        <Time fontSize={2} dateTime={DateFormMaker(start_date)}>
-          {DateFormMaker(start_date)}
-        </Time>
-        <Span fontSize={2}> ~ </Span>
-        <Time fontSize={2} dateTime={DateFormMaker(end_date)}>
-          {DateFormMaker(end_date)}
-        </Time>
+        <Container margin="0 0 10px">
+          <Time fontSize={1.6} dateTime={DateFormMaker(start_date)} color="#70777d">
+            {DateFormMaker(start_date)}
+          </Time>
+          <Span fontSize={1.6} color="#70777d">
+            {' '}
+            ~{' '}
+          </Span>
+          <Time fontSize={1.6} dateTime={DateFormMaker(end_date)} color="#70777d">
+            {DateFormMaker(end_date)}
+          </Time>
+        </Container>
         <ProjectExplanation>{parseHtmlAndHighlighter(main_contents)}</ProjectExplanation>
       </Container>
     </StyledProjectPage>
