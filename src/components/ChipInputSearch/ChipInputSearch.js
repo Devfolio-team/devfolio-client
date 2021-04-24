@@ -105,6 +105,7 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
         type="text"
         name="techStacks"
         id="techStacks"
+        autoComplete="off"
         onKeyUp={onKeyUpHandler}
         component={ChipInput}
         placeholder="검색..."
