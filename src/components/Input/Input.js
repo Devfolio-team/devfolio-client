@@ -27,6 +27,13 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
     ${applyStyle(props)}
     font-size: ${props.$inputFontSize};
     outline: none;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgb(66, 139, 202);
+    }
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
+    }
   `}
 `;
 

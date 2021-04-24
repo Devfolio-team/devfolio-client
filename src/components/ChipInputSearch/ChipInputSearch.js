@@ -67,6 +67,13 @@ const ChipInput = styled(Input)`
   &::-webkit-calendar-picker-indicator {
     display: none;
   }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(66, 139, 202);
+  }
+  &:focus:not(:focus-visible) {
+    box-shadow: none;
+  }
 `;
 
 const ChipInputSearch = ({ id, setFieldValue }) => {

@@ -14,6 +14,13 @@ const RadioInput = styled.input`
     background: ${color.mainColor};
     border-radius: 50%;
   }
+  &:focus + label {
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(66, 139, 202);
+  }
+  &:focus:not(:focus-visible) + label {
+    box-shadow: none;
+  }
 `;
 
 const RadioLabel = styled.label`

@@ -35,6 +35,13 @@ const StyledTextArea = styled.textarea`
       border-radius: 5px;
       border: 0;
       resize: none;
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgb(66, 139, 202);
+      }
+      &:focus:not(:focus-visible) {
+        box-shadow: none;
+      }
     `}
 `;
 

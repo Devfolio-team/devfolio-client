@@ -13,6 +13,13 @@ const DNDInput = styled.input`
   opacity: 0;
   z-index: 9999;
   cursor: pointer;
+  &:focus + div {
+    outline: none;
+    box-shadow: 0 0 0 10px rgb(156, 194, 226);
+  }
+  &:focus:not(:focus-visible) + div {
+    box-shadow: none;
+  }
 `;
 
 const Display = styled.div`
