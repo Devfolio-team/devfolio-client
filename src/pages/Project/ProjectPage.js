@@ -344,6 +344,9 @@ const ProjectPage = ({ match }) => {
             $justifyContent="center"
             $alignItems="center"
             $color="#212121"
+            $position={vw < 450 ? 'absolute' : ''}
+            $top="120px"
+            $right="30px"
             onClick={onLikeCountPlusHandler}
           >
             {isLike === false ? (
@@ -351,7 +354,7 @@ const ProjectPage = ({ match }) => {
             ) : (
               <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
             )}
-            <Span fontSize={1.6} lineHeight="16px" margin="20px 0 0 0">
+            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
               {likeCount}
             </Span>
           </LikeButton>
