@@ -64,7 +64,6 @@ const Input = ({
   opacity,
   zIndex,
   field,
-  innerRef,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -96,7 +95,6 @@ const Input = ({
         </StyledLabel>
       )}
       <StyledInput
-        ref={innerRef}
         type={type}
         id={id}
         name={name}

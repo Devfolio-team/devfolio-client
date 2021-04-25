@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
-import { SVGIcon, Input } from 'components';
+import { SVGIcon } from 'components';
 import { string, func } from 'prop-types';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
@@ -51,8 +51,8 @@ const XIcon = styled(SVGIcon)`
   }
 `;
 
-const ChipInput = styled(Input)`
-  width: 150px;
+const ChipInput = styled.input`
+  width: 100%;
   background: transparent;
   color: currentColor;
   padding-top: 7px;
@@ -67,19 +67,12 @@ const ChipInput = styled(Input)`
   &::-webkit-calendar-picker-indicator {
     display: none;
   }
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgb(66, 139, 202);
-  }
-  &:focus:not(:focus-visible) {
-    box-shadow: none;
-  }
 `;
 
 const ChipInputSearch = ({ id, setFieldValue }) => {
   const [chipLabels, setChipLabels] = useState([]);
   const [techStacks, setTechStacks] = useState([]);
-  const inputRef = useRef();
+  const chipRef = useRef();
 
   useEffect(() => {
     setFieldValue('techStacks', chipLabels);
@@ -116,12 +109,16 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
     setChipLabels(chipLabels.filter(chipLabel => chipLabel !== chipLabelText));
   };
 
-  const onClickFocusHandler = e => {
-    inputRef.current.focus();
+  const onFocusHandler = () => {
+    chipRef.current.style.boxShadow = '0 0 0 4px rgb(66, 139, 202)';
+  };
+
+  const onBlurHandler = () => {
+    chipRef.current.style.boxShadow = 'none';
   };
 
   return (
-    <ChipContainer onClick={onClickFocusHandler}>
+    <ChipContainer ref={chipRef}>
       {chipLabels.map((chipLabel, index) => (
         <ChipItems key={index}>
           <ChipLabel>{chipLabel}</ChipLabel>
@@ -133,19 +130,17 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
         name="techStacks"
         id="techStacks"
         label="기술 스택 작성칸"
-        innerRef={inputRef}
         autoComplete="off"
         onKeyUp={onKeyUpHandler}
         component={ChipInput}
         placeholder="검색..."
         list={id}
         mode="hidden"
-        // onChange={e => {
-        //   console.log('heeloo');
-        //   handleChange(e.target.value);
-        // e.target.value = '';
-        //   setFieldValue('techStacks', chipLabels);
-        // }}
+        onChange={() => {
+          setFieldValue('techStacks', chipLabels);
+        }}
+        onFocus={onFocusHandler}
+        onBlur={onBlurHandler}
       />
       <ChipDataList id={id}>
         {techStacks.map(({ stack_name, tech_stacks_id }) => (
