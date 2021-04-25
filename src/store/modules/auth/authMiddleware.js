@@ -1,4 +1,5 @@
 import ajax from 'apis/ajax';
+import { cookie } from 'utils';
 import {
   deleteAccountErrorAction,
   deleteAccountLoadingAction,
@@ -29,11 +30,11 @@ export const signUpMiddleware = () => async dispatch => {
   }
 };
 
-export const signInMiddleware = () => async dispatch => {
+export const signInMiddleware = auth_token => async dispatch => {
   dispatch(signInLoadingAction());
 
   try {
-    const response = await ajax.signIn();
+    const response = await ajax.signIn(auth_token);
     const { currentUser: payload } = response.data;
     dispatch(signInSuccessAction(payload));
   } catch (error) {
@@ -48,6 +49,7 @@ export const signOutMiddleware = () => dispatch => {
     // const response = await ajax.signOut();
     // const { currentUser: payload } = response.data;
     dispatch(signOutSuccessAction());
+    cookie.delete('auth_token');
   } catch (error) {
     dispatch(signOutErrorAction(error));
   }
