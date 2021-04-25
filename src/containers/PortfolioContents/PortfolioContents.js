@@ -13,7 +13,7 @@ const StyledPortfolioContents = styled.div`
     width: 100%;
     padding: 80px 0 25px;
     background: #f8f9fa;
-    @media (max-height: 780px) {
+    @media (max-height: 740px) {
       margin: 0;
     }
   `}
