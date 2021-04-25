@@ -47,6 +47,13 @@ const ProjectEditForm = ({ vw }) => {
     return 'You have unsaved work.';
   };
 
+  const scrollToErrors = errors => {
+    const errorKeys = Object.keys(errors);
+    if (errorKeys.length > 0) {
+      document.getElementById(errorKeys[0]).focus();
+    }
+  };
+
   return (
     <Formik
       initialValues={{
@@ -65,6 +72,12 @@ const ProjectEditForm = ({ vw }) => {
       }}
       validationSchema={validationSchema}
       initialTouched={{
+        subject: true,
+        planIntention: true,
+        startDate: true,
+        endDate: true,
+        deployUrl: true,
+        githubUrl: true,
         thumbnail: true,
       }}
       onSubmit={async values => {
@@ -87,10 +100,10 @@ const ProjectEditForm = ({ vw }) => {
         return (
           <Form>
             <StyledContainer vw={vw}>
-              <ProjectName vw={vw} />
+              <ProjectName vw={vw} errors={errors} />
               <TeamName values={values} vw={vw} />
-              <PlanIntention vw={vw} />
-              <ProjectDuration setFieldValue={setFieldValue} vw={vw} />
+              <PlanIntention vw={vw} errors={errors} />
+              <ProjectDuration setFieldValue={setFieldValue} vw={vw} errors={errors} />
               <TechStacks setFieldValue={setFieldValue} vw={vw} />
               <GithubRepoInput vw={vw} />
               <DeploymentStatus values={values} vw={vw} />
@@ -122,6 +135,9 @@ const ProjectEditForm = ({ vw }) => {
                 hoverColor={color.white}
                 hoverBackground={color.mainColor}
                 border={`1px solid ${color.mainColor}`}
+                onClick={() => {
+                  scrollToErrors(errors);
+                }}
               />
             </Container>
           </Form>

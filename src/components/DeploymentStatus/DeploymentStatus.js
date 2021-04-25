@@ -1,4 +1,4 @@
-import { Heading, Container, RadioButton, Input } from 'components';
+import { Heading, Container, RadioButton, Input, FormErrorMessage } from 'components';
 import { object } from 'prop-types';
 import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
@@ -58,7 +58,7 @@ const DeploymentStatus = ({ values, vw }) => {
         afterMargin={3}
         disabled={deploymentStatus === 'undeployed' || deploymentStatus === ''}
       />
-      <ErrorMessage name="deployUrl" />
+      <ErrorMessage name="deployUrl" component={FormErrorMessage} />
     </StyledContainer>
   );
 };
