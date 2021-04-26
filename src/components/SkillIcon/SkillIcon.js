@@ -56,6 +56,7 @@ import { ReactComponent as Svelte } from 'assets/Svelte.svg';
 import { ReactComponent as TailwindCSS } from 'assets/TailwindCSS.svg';
 import { ReactComponent as Tomcat } from 'assets/Tomcat.svg';
 import { ReactComponent as Webpack } from 'assets/Webpack.svg';
+import { ReactComponent as Firestore } from 'assets/Firestore.svg';
 
 const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
@@ -231,6 +232,9 @@ const SkillIcon = ({ type, ...restProps }) => {
       break;
     case 'WEBPACK':
       SkillIcon = Webpack;
+      break;
+    case 'FIRESTORE':
+      SkillIcon = Firestore;
       break;
   }
   return <SkillIcon {...restProps} />;
