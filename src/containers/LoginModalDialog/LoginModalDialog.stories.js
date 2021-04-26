@@ -3,12 +3,12 @@ import { React, useRef } from 'react';
 import useDetectViewport from 'hooks/useDetectViewport';
 
 export default {
-  title: 'Component/LoginModalDialog',
+  title: 'Container/LoginModalDialog',
   component: LoginModalDialog,
   parameters: {
     docs: {
       description: {
-        component: '**로그인모달다이어로그** 컴포넌트는 로그인을 하기 위한 모달다이어로그 입니다. ',
+        component: '**LoginModalDialog** 컴포넌트는 로그인을 하기 위한 모달다이어로그 입니다. ',
       },
     },
   },

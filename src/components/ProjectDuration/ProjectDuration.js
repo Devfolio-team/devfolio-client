@@ -157,6 +157,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             startDate={startDate}
             endDate={endDate}
             maxDate={new Date()}
+            minDate={startDate}
             dateFormat="yyyy-MM-dd"
             autoComplete="off"
             style={{ left: '115px' }}
