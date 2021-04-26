@@ -1,4 +1,4 @@
-import { Heading, Paragraph, Input, Container } from 'components';
+import { Heading, Paragraph, Input, Container, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
 
@@ -9,7 +9,7 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const ProjectName = ({ vw }) => {
+const ProjectName = ({ vw, errors }) => {
   return (
     <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
@@ -32,8 +32,9 @@ const ProjectName = ({ vw }) => {
         borderRadius={5}
         margin="20px 0 0 0"
         boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
+        errors={errors}
       />
-      <ErrorMessage name="subject" />
+      <ErrorMessage name="subject" component={FormErrorMessage} />
     </StyledContainer>
   );
 };

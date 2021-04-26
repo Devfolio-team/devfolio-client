@@ -1,4 +1,4 @@
-import { Heading, Container, TextArea } from 'components';
+import { Heading, Container, TextArea, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
 
@@ -9,7 +9,7 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const PlanIntention = ({ vw }) => {
+const PlanIntention = ({ vw, errors }) => {
   return (
     <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
@@ -27,8 +27,9 @@ const PlanIntention = ({ vw }) => {
         afterTranslate={-0.5}
         beforeMargin={15}
         afterMargin={0}
+        errors={errors}
       />
-      <ErrorMessage name="planIntention" />
+      <ErrorMessage name="planIntention" component={FormErrorMessage} />
     </StyledContainer>
   );
 };

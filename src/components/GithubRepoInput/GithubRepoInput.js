@@ -1,4 +1,4 @@
-import { Heading, Input, Container } from 'components';
+import { Heading, Input, Container, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import styled, { css } from 'styled-components';
 
@@ -32,7 +32,7 @@ const GithubRepoInput = ({ vw }) => {
         beforeMargin={8}
         afterMargin={3}
       />
-      <ErrorMessage name="githubUrl" />
+      <ErrorMessage name="githubUrl" component={FormErrorMessage} />
     </StyledContainer>
   );
 };

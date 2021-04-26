@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { string, number, object, oneOfType, bool } from 'prop-types';
 import { color, applyStyle } from 'utils';
 import A11yHidden from 'components/A11yHidden/A11yHidden';
+import { getIn } from 'formik';
 
 const StyledLabel = styled.label`
   ${props => css`
@@ -27,6 +28,15 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
     ${applyStyle(props)}
     font-size: ${props.$inputFontSize};
     outline: none;
+    &:focus {
+      outline: none;
+      box-shadow: ${getIn(props.errors, props.name)
+        ? '0 0 0 4px rgb(255, 0, 0)'
+        : '0 0 0 4px rgb(66, 139, 202)'};
+    }
+    &:focus:not(:focus-visible) {
+      box-shadow: none;
+    }
   `}
 `;
 
@@ -57,6 +67,7 @@ const Input = ({
   opacity,
   zIndex,
   field,
+  errors,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -107,22 +118,13 @@ const Input = ({
         $display={display}
         $padding={padding}
         $boxShadow={boxShadow}
+        errors={errors}
         {...field}
         onBlur={onBlurHandler}
         {...restProps}
       />
     </>
   );
-};
-
-Input.defaultProps = {
-  type: 'text',
-  label: 'Example',
-  inputFontSize: 1.2,
-  width: 170,
-  height: 40,
-  value: '',
-  field: {},
 };
 
 Input.propTypes = {

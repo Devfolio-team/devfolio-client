@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
 import { SVGIcon } from 'components';
 import { string, func } from 'prop-types';
 import { Field } from 'formik';
+import ajax from 'apis/ajax';
 
 const ChipContainer = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ const XIcon = styled(SVGIcon)`
 `;
 
 const ChipInput = styled.input`
-  width: 150px;
+  width: 100%;
   background: transparent;
   color: currentColor;
   padding-top: 7px;
@@ -70,19 +71,34 @@ const ChipInput = styled.input`
 
 const ChipInputSearch = ({ id, setFieldValue }) => {
   const [chipLabels, setChipLabels] = useState([]);
-  const dummyDatas = ['React', 'Javascript', 'HTML5', 'CSS3'];
+  const [techStacks, setTechStacks] = useState([]);
+  const chipRef = useRef();
 
   useEffect(() => {
     setFieldValue('techStacks', chipLabels);
   }, [setFieldValue, chipLabels]);
 
+  useEffect(() => {
+    const fetchTechStacks = async () => {
+      try {
+        const res = await ajax.fetchTechStacks();
+        setTechStacks(res.data.techStacks);
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
+
+    fetchTechStacks();
+  }, []);
+
   const onKeyUpHandler = e => {
     if (e.key !== 'Enter') return;
-    if (
-      e.target.value !== '' &&
-      dummyDatas.includes(e.target.value) &&
-      !chipLabels.includes(e.target.value)
-    ) {
+
+    const techStack = techStacks.filter(({ stack_name }) => {
+      return stack_name === e.target.value;
+    });
+
+    if (e.target.value !== '' && techStack.length && !chipLabels.includes(e.target.value)) {
       setChipLabels([...chipLabels, e.target.value]);
       e.target.value = '';
     }
@@ -93,8 +109,16 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
     setChipLabels(chipLabels.filter(chipLabel => chipLabel !== chipLabelText));
   };
 
+  const onFocusHandler = () => {
+    chipRef.current.style.boxShadow = '0 0 0 4px rgb(66, 139, 202)';
+  };
+
+  const onBlurHandler = () => {
+    chipRef.current.style.boxShadow = 'none';
+  };
+
   return (
-    <ChipContainer>
+    <ChipContainer ref={chipRef}>
       {chipLabels.map((chipLabel, index) => (
         <ChipItems key={index}>
           <ChipLabel>{chipLabel}</ChipLabel>
@@ -105,6 +129,7 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
         type="text"
         name="techStacks"
         id="techStacks"
+        label="기술 스택 작성칸"
         autoComplete="off"
         onKeyUp={onKeyUpHandler}
         component={ChipInput}
@@ -114,11 +139,12 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
         onChange={() => {
           setFieldValue('techStacks', chipLabels);
         }}
+        onFocus={onFocusHandler}
+        onBlur={onBlurHandler}
       />
       <ChipDataList id={id}>
-        {/* index대신에 데이터베이스에서 데이터 가지고 오면 id값으로 key값 세팅해주기 */}
-        {dummyDatas.map((dummyData, index) => (
-          <ChipDataListOption key={index} value={dummyData}></ChipDataListOption>
+        {techStacks.map(({ stack_name, tech_stacks_id }) => (
+          <ChipDataListOption key={tech_stacks_id} value={stack_name}></ChipDataListOption>
         ))}
       </ChipDataList>
     </ChipContainer>

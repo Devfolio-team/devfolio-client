@@ -1,11 +1,11 @@
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Container, Heading, Paragraph, SVGIcon } from 'components';
+import { Container, Heading, Paragraph, SVGIcon, FormErrorMessage } from 'components';
 import React, { useState } from 'react';
 import ko from 'date-fns/locale/ko';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
-import { Field, ErrorMessage } from 'formik';
+import { Field, ErrorMessage, getIn } from 'formik';
 import { func } from 'prop-types';
 
 registerLocale('ko', ko);
@@ -25,6 +25,15 @@ const StyledDatePicker = styled(DatePicker).attrs(({ id, style }) => ({
   ${props =>
     css`
       ${applyStyle(props)}
+      &:focus {
+        outline: none;
+        box-shadow: ${getIn(props.errors, props.name)
+          ? '0 0 0 4px rgb(255, 0, 0)'
+          : '0 0 0 4px rgb(66, 139, 202)'};
+      }
+      &:focus:not(:focus-visible) {
+        box-shadow: none;
+      }
     `}
 `;
 
@@ -35,7 +44,7 @@ const StyledLabel = styled.label`
     `}
 `;
 
-const ProjectDuration = ({ setFieldValue, vw }) => {
+const ProjectDuration = ({ setFieldValue, vw, errors }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
@@ -106,8 +115,9 @@ const ProjectDuration = ({ setFieldValue, vw }) => {
             maxDate={new Date()}
             dateFormat="yyyy-MM-dd"
             autoComplete="off"
+            errors={errors}
           />
-          <ErrorMessage name="startDate" />
+          <ErrorMessage name="startDate" component={FormErrorMessage} />
         </Container>
         <Container
           width="100%"
@@ -150,8 +160,9 @@ const ProjectDuration = ({ setFieldValue, vw }) => {
             dateFormat="yyyy-MM-dd"
             autoComplete="off"
             style={{ left: '115px' }}
+            errors={errors}
           />
-          <ErrorMessage name="endDate" />
+          <ErrorMessage name="endDate" component={FormErrorMessage} />
         </Container>
       </Container>
     </StyledContainer>

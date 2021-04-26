@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
 import { func } from 'prop-types';
-import { Container, Image, SVGIcon } from 'components';
+import { Container, Image, SVGIcon, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import ajax from 'apis/ajax';
 import useDetectViewport from 'hooks/useDetectViewport';
@@ -13,6 +13,20 @@ const DNDInput = styled.input`
   opacity: 0;
   z-index: 9999;
   cursor: pointer;
+  &:focus + div {
+    outline: none;
+    box-shadow: 0 0 0 10px rgb(156, 194, 226);
+  }
+  &:focus:not(:focus-visible) + div {
+    box-shadow: none;
+  }
+  &:focus + img {
+    outline: none;
+    box-shadow: 0 0 0 10px rgb(156, 194, 226);
+  }
+  &:focus:not(:focus-visible) + img {
+    box-shadow: none;
+  }
 `;
 
 const Display = styled.div`
@@ -124,14 +138,13 @@ const DND = ({ setFieldValue, errors }) => {
         name="thumbnail"
         component={DNDInput}
         onChange={onChange}
-        id="imagePath"
+        id="thumbnail"
         onDragOver={onDragOverHandler}
         onDragLeave={onDragLeaveHandler}
         accept="image/jpeg, image/png, image/jpg, image/webp, image/gif"
         multiple
         required
       />
-      <ErrorMessage name="thumbnail" />
 
       {src && !errors.thumbnail ? (
         <Image
@@ -159,6 +172,7 @@ const DND = ({ setFieldValue, errors }) => {
           <HoverDNDMessage>Drag &amp; Drop your files here</HoverDNDMessage>
         </HoverDisplay>
       ) : null}
+      <ErrorMessage name="thumbnail" component={FormErrorMessage} />
     </Container>
   );
 };

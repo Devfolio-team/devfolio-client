@@ -3,7 +3,7 @@ import { string, object, number } from 'prop-types';
 import { color, applyStyle } from 'utils';
 
 const RadioInput = styled.input`
-  display: none;
+  opacity: 0;
   &:checked + label:after {
     content: '';
     position: absolute;
@@ -13,6 +13,13 @@ const RadioInput = styled.input`
     height: 12px;
     background: ${color.mainColor};
     border-radius: 50%;
+  }
+  &:focus + label {
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(66, 139, 202);
+  }
+  &:focus:not(:focus-visible) + label {
+    box-shadow: none;
   }
 `;
 
