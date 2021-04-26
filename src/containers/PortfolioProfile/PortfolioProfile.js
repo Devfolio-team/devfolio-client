@@ -98,7 +98,6 @@ const UsersSite = ({ href, type, margin, vw, iconMargin, children }) => {
       </Anchor>
       <Anchor
         display="inline-block"
-        width="100%"
         target="_blank"
         href={href}
         fontSize={vw >= 768 ? 1.4 : 1.3}
@@ -267,7 +266,8 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
           )} */}
         </Container>
         <Container
-          width={vw >= 768 ? 300 : vw >= 480 ? 250 : 208}
+          width={vw >= 768 ? 'auto' : vw > 480 ? 250 : 208}
+          maxWidth={vw >= 768 ? 250 : null}
           margin="30px auto"
           display="flex"
           flexFlow="column nowrap"
