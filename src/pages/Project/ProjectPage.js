@@ -6,6 +6,7 @@ import {
   Image,
   Paragraph,
   ProjectExplanation,
+  ProjectNav,
   SkillIcon,
   Span,
   SVGIcon,
@@ -98,6 +99,20 @@ const LinkToWebSiteWrapper = styled.div`
 const DisabledLink = styled(Span)`
   ${props => css`
     ${applyStyle(props)}
+  `}
+`;
+
+const NavList = styled.li`
+  ${props => css`
+    ${applyStyle(props)}
+    margin-bottom: 10px;
+  `}
+`;
+
+const NavLink = styled.a`
+  ${props => css`
+    ${applyStyle(props)}
+    color : rgb(134, 142, 150);
   `}
 `;
 
@@ -195,7 +210,7 @@ const ProjectPage = ({ match }) => {
     }
   };
 
-  // 페이지 로딩 될 때 1번 뷰포트 최상단으로 올리기
+  // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
   useEffect(() => {
     scrollToTop();
   }, []);
@@ -329,6 +344,34 @@ const ProjectPage = ({ match }) => {
             </ProjectWriter>
           </Container>
         </Container>
+        <Container position="relative" display={vw > 1050 ? '' : 'none'}>
+          <Container position="absolute" left="250px" width="200px">
+            <Container
+              position={scrollY > 0 ? 'fixed' : ''}
+              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              transition="0.5s"
+            >
+              <ProjectNav
+                borderLeft="1.5px solid rgba(134, 142, 150, .5)"
+                padding="0 0 0 10px"
+                fontSize={1.5}
+              >
+                <NavList>
+                  <NavLink href="#제목">제목</NavLink>
+                </NavList>
+                <NavList>
+                  <NavLink href="#기획의도">기획의도</NavLink>
+                </NavList>
+                <NavList>
+                  <NavLink href="#사용기술스택">사용기술스택</NavLink>
+                </NavList>
+                <NavList>
+                  <NavLink href="#프로젝트설명">프로젝트설명</NavLink>
+                </NavList>
+              </ProjectNav>
+            </Container>
+          </Container>
+        </Container>
         {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
         {vw > 840 ? (
           ''
@@ -363,6 +406,7 @@ const ProjectPage = ({ match }) => {
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h2"
+          id="제목"
           fontSize={type === 'xs' ? 2.7 : 4}
           color="#212121"
           lineHeight="40px"
@@ -503,6 +547,7 @@ const ProjectPage = ({ match }) => {
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '70px' : '30px'}>
         <Heading
           as="h3"
+          id="기획의도"
           color="#212121"
           fontWeight={700}
           fontSize="3"
@@ -600,6 +645,7 @@ const ProjectPage = ({ match }) => {
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
+          id="사용기술스택"
           color="#212121"
           fontWeight={700}
           fontSize="3"
@@ -652,6 +698,7 @@ const ProjectPage = ({ match }) => {
       <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
+          id="프로젝트설명"
           color="#212121"
           fontWeight={700}
           fontSize="3"
