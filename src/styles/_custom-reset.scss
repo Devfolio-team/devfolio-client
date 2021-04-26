@@ -136,6 +136,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #212121;
+  background-color: #f8f9fa;
 }
 
 body,
@@ -147,6 +148,15 @@ body *::after {
   box-sizing: border-box;
 }
 
+main {
+  padding-top: 64px;
+}
+
+a {
+  text-decoration: none;
+  color: #212121;
+}
+
 img {
   vertical-align: middle;
 }
@@ -154,6 +164,8 @@ img {
 button {
   user-select: none;
   cursor: pointer;
+  border-color: transparent;
+  color: #212121;
 }
 
 abbr[title] {
@@ -162,4 +174,8 @@ abbr[title] {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+path {
+  pointer-events: none;
 }

@@ -1,0 +1,19 @@
+export const SIGN_UP_LOADING = 'auth/SIGNUP_LOADING';
+export const SIGN_UP_SUCCESS = 'auth/SIGNUP_SUCCESS';
+export const SIGN_UP_ERROR = 'auth/SIGNUP_ERROR';
+
+export const SIGN_IN_LOADING = 'auth/SIGNIN_LOADING';
+export const SIGN_IN_SUCCESS = 'auth/SIGNIN_SUCCESS';
+export const SIGN_IN_ERROR = 'auth/SIGNIN_ERROR';
+
+export const SIGN_OUT_LOADING = 'auth/SIGNOUT_LOADING';
+export const SIGN_OUT_SUCCESS = 'auth/SIGNOUT_SUCCESS';
+export const SIGN_OUT_ERROR = 'auth/SIGNOUT_ERROR';
+
+export const EDIT_ACCOUNT_LOADING = 'auth/EDIT_ACCOUNT_LOADING';
+export const EDIT_ACCOUNT_SUCCESS = 'auth/EDIT_ACCOUNT_SUCCESS';
+export const EDIT_ACCOUNT_ERROR = 'auth/EDIT_ACCOUNT_ERROR';
+
+export const DELETE_ACCOUNT_LOADING = 'auth/DELETE_ACCOUNT_LOADING';
+export const DELETE_ACCOUNT_SUCCESS = 'auth/DELETE_ACCOUNT_SUCCESS';
+export const DELETE_ACCOUNT_ERROR = 'auth/DELETE_ACCOUNT_ERROR';
