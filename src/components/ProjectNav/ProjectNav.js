@@ -11,7 +11,7 @@ const StyledProjectNav = styled.nav`
   }
 `;
 
-const styledProjectNavList = styled.ol`
+const StyledProjectNavList = styled.ol`
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -37,7 +37,7 @@ const ProjectNav = ({
       $fontSize={fontSize}
       {...restProps}
     >
-      <styledProjectNavList>{children}</styledProjectNavList>
+      <StyledProjectNavList>{children}</StyledProjectNavList>
     </StyledProjectNav>
   );
 };
