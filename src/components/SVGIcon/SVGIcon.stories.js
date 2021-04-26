@@ -21,6 +21,8 @@ export default {
           'Empty',
           'GithubWhite',
           'GithubBlack',
+          'GithubBlue',
+          'GithubBlueDisable',
           'Google',
           'HeartBlack',
           'HeartEmpty',
@@ -29,6 +31,8 @@ export default {
           'Smile',
           'X',
           'Calendar',
+          'WebSite',
+          'WebSiteDisable',
         ],
       },
     },
@@ -53,6 +57,10 @@ export const SadIcon = Template.bind({});
 export const SmileIcon = Template.bind({});
 export const XIcon = Template.bind({});
 export const Calendar = Template.bind({});
+export const GithubBlueIcon = Template.bind({});
+export const GithubBlueDisableIcon = Template.bind({});
+export const WebSiteIcon = Template.bind({});
+export const WebSiteDisableIcon = Template.bind({});
 
 AngryIcon.args = {
   type: 'Angry',
@@ -125,4 +133,24 @@ Calendar.arg = {
   type: 'Calendar',
   width: 15,
   height: 19,
+};
+GithubBlueIcon.arg = {
+  type: 'GithubBlue',
+  width: 40,
+  height: 40,
+};
+GithubBlueDisableIcon.arg = {
+  type: 'GithubBlueDisable',
+  width: 40,
+  height: 40,
+};
+WebSiteIcon.arg = {
+  type: 'WebSite',
+  width: 40,
+  height: 40,
+};
+WebSiteDisableIcon.arg = {
+  type: 'WebSiteDisable',
+  width: 40,
+  height: 40,
 };

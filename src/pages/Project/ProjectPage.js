@@ -6,6 +6,7 @@ import {
   Image,
   Paragraph,
   ProjectExplanation,
+  ProjectNav,
   SkillIcon,
   Span,
   SVGIcon,
@@ -25,7 +26,7 @@ const StyledProjectPage = styled.main`
   `}
 `;
 
-const ProjectWriter = styled.span`
+const ProjectWriter = styled.a`
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -82,7 +83,7 @@ const LikeButton = styled(Button)`
 
 const HeartIcon = styled(SVGIcon)`
   & {
-    stroke: black;
+    stroke: #a3abb3;
   }
   path {
     fill: white;
@@ -92,6 +93,26 @@ const HeartIcon = styled(SVGIcon)`
 const LinkToWebSiteWrapper = styled.div`
   ${props => css`
     ${applyStyle(props)}
+  `}
+`;
+
+const DisabledLink = styled(Span)`
+  ${props => css`
+    ${applyStyle(props)}
+  `}
+`;
+
+const NavList = styled.li`
+  ${props => css`
+    ${applyStyle(props)}
+    margin-bottom: 10px;
+  `}
+`;
+
+const NavLink = styled.a`
+  ${props => css`
+    ${applyStyle(props)}
+    color : rgb(134, 142, 150);
   `}
 `;
 
@@ -137,7 +158,7 @@ const ProjectPage = ({ match }) => {
     team_name,
     thumbnail,
     likeCount,
-    // user_user_id,
+    user_user_id,
   } = project.projectData;
 
   // eslint-disable-next-line prefer-destructuring
@@ -189,7 +210,7 @@ const ProjectPage = ({ match }) => {
     }
   };
 
-  // 페이지 로딩 될 때 1번 뷰포트 최상단으로 올리기
+  // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
   useEffect(() => {
     scrollToTop();
   }, []);
@@ -313,9 +334,42 @@ const ProjectPage = ({ match }) => {
               height="24px"
               borderRadius="50%"
             />
-            <ProjectWriter $width="200px" $fontSize={1.6} $marginLeft="10px">
+            <ProjectWriter
+              href={`/portfolio/${user_user_id}`}
+              $width="200px"
+              $fontSize={1.6}
+              $marginLeft="10px"
+            >
               {project_nickname}
             </ProjectWriter>
+          </Container>
+        </Container>
+        <Container position="relative" display={vw > 1050 ? '' : 'none'}>
+          <Container position="absolute" left="250px" width="200px">
+            <Container
+              position={scrollY > 0 ? 'fixed' : ''}
+              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              transition="0.5s"
+            >
+              <ProjectNav
+                borderLeft="1.5px solid rgba(134, 142, 150, .5)"
+                padding="0 0 0 10px"
+                fontSize={1.5}
+              >
+                <NavList>
+                  <NavLink href="#제목">제목</NavLink>
+                </NavList>
+                <NavList>
+                  <NavLink href="#기획의도">기획의도</NavLink>
+                </NavList>
+                <NavList>
+                  <NavLink href="#사용기술스택">사용기술스택</NavLink>
+                </NavList>
+                <NavList>
+                  <NavLink href="#프로젝트설명">프로젝트설명</NavLink>
+                </NavList>
+              </ProjectNav>
+            </Container>
           </Container>
         </Container>
         {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
@@ -333,6 +387,9 @@ const ProjectPage = ({ match }) => {
             $justifyContent="center"
             $alignItems="center"
             $color="#212121"
+            $position={vw < 450 ? 'absolute' : ''}
+            $top="120px"
+            $right="30px"
             onClick={onLikeCountPlusHandler}
           >
             {isLike === false ? (
@@ -340,7 +397,7 @@ const ProjectPage = ({ match }) => {
             ) : (
               <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
             )}
-            <Span fontSize="16px" lineHeight="16px" margin="0 0 0 10px">
+            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
               {likeCount}
             </Span>
           </LikeButton>
@@ -349,6 +406,7 @@ const ProjectPage = ({ match }) => {
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h2"
+          id="제목"
           fontSize={type === 'xs' ? 2.7 : 4}
           color="#212121"
           lineHeight="40px"
@@ -370,52 +428,112 @@ const ProjectPage = ({ match }) => {
         margin="0 0 22px 0"
         padding={isDesktop ? '0 70px' : '0 30px'}
       >
-        <LinkToWebSiteWrapper $cursor="not-allowed">
-          <LinkToWebSite
-            href={deploy_url}
-            target="_blank"
-            $fontSize={1.6}
-            $fontWeight="700"
-            $borderRadius={5}
-            $border="1px solid #428BCA"
-            $width={type === 'xs' ? '100%' : '200px'}
-            $marginBottom={type === 'xs' ? '5px' : ''}
-            $height="44px"
-            $textAlign="center"
-            $lineHeight="40px"
-            $color="#428BCA"
-            $background={deploy_url ? '#FFFFFF' : '#eeeeee'}
-            $display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $pointerEvents={deploy_url ? '' : 'none'}
-          >
-            <WebSiteIcon type="WebSite" $margin="0 7px 0 0" $width={20} $height={20} />
-            Visit the Website
-          </LinkToWebSite>
+        <LinkToWebSiteWrapper
+          $cursor="not-allowed"
+          title={deploy_url ? '배포된 사이트로 이동' : '배포된 사이트가 없습니다.'}
+        >
+          {deploy_url ? (
+            <LinkToWebSite
+              href={deploy_url ? deploy_url : '/'}
+              target="_blank"
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
+              $width={type === 'xs' ? '100%' : '200px'}
+              $marginBottom={type === 'xs' ? '5px' : ''}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={deploy_url ? '' : 'none'}
+            >
+              <WebSiteIcon
+                type={deploy_url ? 'WebSite' : 'WebSiteDisable'}
+                $margin="0 7px 0 0"
+                $width={20}
+                $height={20}
+              />
+              Visit the Website
+            </LinkToWebSite>
+          ) : (
+            <DisabledLink
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
+              $width={type === 'xs' ? '100%' : '200px'}
+              $marginBottom={type === 'xs' ? '5px' : ''}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={deploy_url ? '' : 'none'}
+            >
+              Visit the Website
+            </DisabledLink>
+          )}
         </LinkToWebSiteWrapper>
-        <LinkToWebSiteWrapper $cursor="not-allowed">
-          <LinkToWebSite
-            href={github_url}
-            target="_blank"
-            $fontSize={1.6}
-            $fontWeight="700"
-            $borderRadius={5}
-            $border="1px solid #428BCA"
-            $width={type === 'xs' ? '100%' : '145px'}
-            $height="44px"
-            $textAlign="center"
-            $lineHeight="40px"
-            $color="#428BCA"
-            $background={github_url ? '#FFFFFF' : '#eeeeee'}
-            $display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $pointerEvents={github_url ? '' : 'none'}
-          >
-            <WebSiteIcon type="GithubBlue" $marginRight="9px" $width={20} $height={20} />
-            GitHub
-          </LinkToWebSite>
+        <LinkToWebSiteWrapper
+          $cursor="not-allowed"
+          title={github_url ? '깃허브로 이동' : '깃허브 주소가 없습니다.'}
+        >
+          {github_url ? (
+            <LinkToWebSite
+              href={github_url ? github_url : '/'}
+              target="_blank"
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border="1px solid #428BCA"
+              $width={type === 'xs' ? '100%' : '145px'}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={github_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={github_url ? '' : 'none'}
+            >
+              <WebSiteIcon
+                type={github_url ? 'GithubBlue' : 'GithubBlueDisable'}
+                $marginRight="9px"
+                $width={20}
+                $height={20}
+              />
+              GitHub
+            </LinkToWebSite>
+          ) : (
+            <DisabledLink
+              $fontSize={1.6}
+              $fontWeight="700"
+              $borderRadius={5}
+              $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
+              $width={type === 'xs' ? '100%' : '200px'}
+              $marginBottom={type === 'xs' ? '5px' : ''}
+              $height="44px"
+              $textAlign="center"
+              $lineHeight="40px"
+              $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
+              $background={'#FFFFFF'}
+              $display="flex"
+              $justifyContent="center"
+              $alignItems="center"
+              $pointerEvents={deploy_url ? '' : 'none'}
+            >
+              Visit the Website
+            </DisabledLink>
+          )}
         </LinkToWebSiteWrapper>
       </Container>
       <Container padding={isDesktop ? '0 70px' : '0 30px'}>
@@ -429,6 +547,7 @@ const ProjectPage = ({ match }) => {
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '70px' : '30px'}>
         <Heading
           as="h3"
+          id="기획의도"
           color="#212121"
           fontWeight={700}
           fontSize="3"
@@ -526,6 +645,7 @@ const ProjectPage = ({ match }) => {
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
+          id="사용기술스택"
           color="#212121"
           fontWeight={700}
           fontSize="3"
@@ -578,6 +698,7 @@ const ProjectPage = ({ match }) => {
       <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
+          id="프로젝트설명"
           color="#212121"
           fontWeight={700}
           fontSize="3"
@@ -589,13 +710,18 @@ const ProjectPage = ({ match }) => {
         >
           프로젝트 설명
         </Heading>
-        <Time fontSize={2} dateTime={DateFormMaker(start_date)}>
-          {DateFormMaker(start_date)}
-        </Time>
-        <Span fontSize={2}> ~ </Span>
-        <Time fontSize={2} dateTime={DateFormMaker(end_date)}>
-          {DateFormMaker(end_date)}
-        </Time>
+        <Container margin="0 0 10px">
+          <Time fontSize={1.6} dateTime={DateFormMaker(start_date)} color="#70777d">
+            {DateFormMaker(start_date)}
+          </Time>
+          <Span fontSize={1.6} color="#70777d">
+            {' '}
+            ~{' '}
+          </Span>
+          <Time fontSize={1.6} dateTime={DateFormMaker(end_date)} color="#70777d">
+            {DateFormMaker(end_date)}
+          </Time>
+        </Container>
         <ProjectExplanation>{parseHtmlAndHighlighter(main_contents)}</ProjectExplanation>
       </Container>
     </StyledProjectPage>
