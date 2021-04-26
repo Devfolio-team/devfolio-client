@@ -20,7 +20,7 @@ const GithubRepoInput = ({ vw }) => {
         component={Input}
         name="githubUrl"
         id="githubUrl"
-        label="예) https://github.com/project"
+        label="예) https://github.com/id/projectRepo"
         labelFontSize={1.2}
         width="100%"
         height="40px"
