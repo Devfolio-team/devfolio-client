@@ -92,7 +92,6 @@ Button.defaultProps = {
   fontSize: 1.4,
   fontWeight: 500,
   borderRadius: 5,
-  padding: '5px 20px',
 };
 
 Button.propTypes = {

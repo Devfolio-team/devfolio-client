@@ -50,6 +50,27 @@ export default {
           'Ruby',
           'Spring',
           'Vue',
+          'Aws',
+          'Bootstrap',
+          'CouchDB',
+          'DynamoDB',
+          'Git',
+          'Github',
+          'Jekyll',
+          'JQuery',
+          'Linux',
+          'MariaDB',
+          'MaterialUI',
+          'Oracle',
+          'PostCSS',
+          'Redis',
+          'RethinkDB',
+          'Rollup',
+          'RxJS',
+          'Svelte',
+          'TailwindCSS',
+          'Tomcat',
+          'Webpack',
         ],
       },
     },
@@ -95,6 +116,27 @@ export const Python = Template.bind({});
 export const Ruby = Template.bind({});
 export const Spring = Template.bind({});
 export const Vue = Template.bind({});
+export const Aws = Template.bind({});
+export const Bootstrap = Template.bind({});
+export const CouchDB = Template.bind({});
+export const DynamoDB = Template.bind({});
+export const Git = Template.bind({});
+export const Github = Template.bind({});
+export const Jekyll = Template.bind({});
+export const JQuery = Template.bind({});
+export const Linux = Template.bind({});
+export const MariaDB = Template.bind({});
+export const MaterialUI = Template.bind({});
+export const Oracle = Template.bind({});
+export const PostCSS = Template.bind({});
+export const Redis = Template.bind({});
+export const RethinkDB = Template.bind({});
+export const Rollup = Template.bind({});
+export const RxJS = Template.bind({});
+export const Svelte = Template.bind({});
+export const TailwindCSS = Template.bind({});
+export const Tomcat = Template.bind({});
+export const Webpack = Template.bind({});
 
 ExpressIcon.args = {
   type: 'Express',
@@ -271,4 +313,109 @@ Vue.args = {
   type: 'Vue',
   width: 40,
   heigth: 40,
+};
+Aws.args = {
+  typd: 'Aws',
+  width: 40,
+  height: 40,
+};
+Bootstrap.args = {
+  typd: 'Bootstrap',
+  width: 40,
+  height: 40,
+};
+CouchDB.args = {
+  typd: 'CouchDB',
+  width: 40,
+  height: 40,
+};
+DynamoDB.args = {
+  typd: 'DynamoDB',
+  width: 40,
+  height: 40,
+};
+Git.args = {
+  typd: 'Git',
+  width: 40,
+  height: 40,
+};
+Github.args = {
+  typd: 'Github',
+  width: 40,
+  height: 40,
+};
+Jekyll.args = {
+  typd: 'Jekyll',
+  width: 40,
+  height: 40,
+};
+JQuery.args = {
+  typd: 'JQuery',
+  width: 40,
+  height: 40,
+};
+Linux.args = {
+  typd: 'Linux',
+  width: 40,
+  height: 40,
+};
+MariaDB.args = {
+  typd: 'MariaDB',
+  width: 40,
+  height: 40,
+};
+MaterialUI.args = {
+  typd: 'MaterialUI',
+  width: 40,
+  height: 40,
+};
+Oracle.args = {
+  typd: 'Oracle',
+  width: 40,
+  height: 40,
+};
+PostCSS.args = {
+  typd: 'PostCSS',
+  width: 40,
+  height: 40,
+};
+Redis.args = {
+  typd: 'Redis',
+  width: 40,
+  height: 40,
+};
+RethinkDB.args = {
+  typd: 'RethinkDB',
+  width: 40,
+  height: 40,
+};
+Rollup.args = {
+  typd: 'Rollup',
+  width: 40,
+  height: 40,
+};
+RxJS.args = {
+  typd: 'RxJS',
+  width: 40,
+  height: 40,
+};
+Svelte.args = {
+  typd: 'Svelte',
+  width: 40,
+  height: 40,
+};
+TailwindCSS.args = {
+  typd: 'TailwindCSS',
+  width: 40,
+  height: 40,
+};
+Tomcat.args = {
+  typd: 'Tomcat',
+  width: 40,
+  height: 40,
+};
+Webpack.args = {
+  typd: 'Webpack',
+  width: 40,
+  height: 40,
 };

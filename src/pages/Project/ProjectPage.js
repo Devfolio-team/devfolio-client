@@ -544,16 +544,15 @@ const ProjectPage = ({ match }) => {
         $borderBottom="1px solid #666666"
         $margin="80px auto"
       />
-      <Container margin=" 0 0 80px 0" padding={isDesktop ? '70px' : '30px'}>
+      <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
           as="h3"
           id="기획의도"
           color="#212121"
+          display="inline-block"
           fontWeight={700}
           fontSize="3"
           borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-          width="142px"
-          textAlign="center"
           lineHeight="10px"
           margin="0 0 47px 0"
         >
@@ -646,12 +645,11 @@ const ProjectPage = ({ match }) => {
         <Heading
           as="h3"
           id="사용기술스택"
+          display="inline-block"
           color="#212121"
           fontWeight={700}
           fontSize="3"
           borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-          width="217px"
-          textAlign="center"
           lineHeight="10px"
           margin="0 0 47px 0"
         >
@@ -671,7 +669,7 @@ const ProjectPage = ({ match }) => {
                 $display="flex"
                 $width={vw > 600 ? '50%' : '100%'}
                 $margin="0 0 20px 0"
-                $justifyContent="center"
+                $justifyContent={vw > 520 ? 'center' : 'left'}
                 $alignItems="center"
                 key={index}
               >
@@ -699,12 +697,11 @@ const ProjectPage = ({ match }) => {
         <Heading
           as="h3"
           id="프로젝트설명"
+          display="inline-block"
           color="#212121"
           fontWeight={700}
           fontSize="3"
           borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-          width="217px"
-          textAlign="center"
           lineHeight="10px"
           margin="0 0 47px 0"
         >

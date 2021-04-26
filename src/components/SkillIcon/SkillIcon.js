@@ -34,6 +34,28 @@ import { ReactComponent as Ruby } from 'assets/Ruby.svg';
 import { ReactComponent as Scala } from 'assets/Scala.svg';
 import { ReactComponent as Spring } from 'assets/Spring.svg';
 import { ReactComponent as Vue } from 'assets/Vue.svg';
+import { ReactComponent as Angular } from 'assets/Angular.svg';
+import { ReactComponent as Aws } from 'assets/Aws.svg';
+import { ReactComponent as Bootstrap } from 'assets/Bootstrap.svg';
+import { ReactComponent as CouchDB } from 'assets/CouchDB.svg';
+import { ReactComponent as DynamoDB } from 'assets/DynamoDB.svg';
+import { ReactComponent as Git } from 'assets/Git.svg';
+import { ReactComponent as Github } from 'assets/Github.svg';
+import { ReactComponent as Jekyll } from 'assets/Jekyll.svg';
+import { ReactComponent as JQuery } from 'assets/JQuery.svg';
+import { ReactComponent as Linux } from 'assets/Linux.svg';
+import { ReactComponent as MariaDB } from 'assets/MariaDB.svg';
+import { ReactComponent as MaterialUI } from 'assets/MaterialUI.svg';
+import { ReactComponent as Oracle } from 'assets/Oracle.svg';
+import { ReactComponent as PostCSS } from 'assets/PostCSS.svg';
+import { ReactComponent as Redis } from 'assets/Redis.svg';
+import { ReactComponent as RethinkDB } from 'assets/RethinkDB.svg';
+import { ReactComponent as Rollup } from 'assets/Rollup.svg';
+import { ReactComponent as RxJS } from 'assets/RxJS.svg';
+import { ReactComponent as Svelte } from 'assets/Svelte.svg';
+import { ReactComponent as TailwindCSS } from 'assets/TailwindCSS.svg';
+import { ReactComponent as Tomcat } from 'assets/Tomcat.svg';
+import { ReactComponent as Webpack } from 'assets/Webpack.svg';
 
 const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
@@ -143,6 +165,72 @@ const SkillIcon = ({ type, ...restProps }) => {
       break;
     case 'VUE':
       SkillIcon = Vue;
+      break;
+    case 'ANGULAR':
+      SkillIcon = Angular;
+      break;
+    case 'AWS':
+      SkillIcon = Aws;
+      break;
+    case 'BOOTSTRAP':
+      SkillIcon = Bootstrap;
+      break;
+    case 'COUCHDB':
+      SkillIcon = CouchDB;
+      break;
+    case 'DYNAMODB':
+      SkillIcon = DynamoDB;
+      break;
+    case 'GIT':
+      SkillIcon = Git;
+      break;
+    case 'GITHUB':
+      SkillIcon = Github;
+      break;
+    case 'JEKYLL':
+      SkillIcon = Jekyll;
+      break;
+    case 'JQUERY':
+      SkillIcon = JQuery;
+      break;
+    case 'LINUX':
+      SkillIcon = Linux;
+      break;
+    case 'MARIADB':
+      SkillIcon = MariaDB;
+      break;
+    case 'MATERIALUI':
+      SkillIcon = MaterialUI;
+      break;
+    case 'ORACLE':
+      SkillIcon = Oracle;
+      break;
+    case 'POSTCSS':
+      SkillIcon = PostCSS;
+      break;
+    case 'REDIS':
+      SkillIcon = Redis;
+      break;
+    case 'RETHINKDB':
+      SkillIcon = RethinkDB;
+      break;
+    case 'ROLLUP':
+      SkillIcon = Rollup;
+      break;
+    case 'RXJS':
+      SkillIcon = RxJS;
+      break;
+    case 'SVELTE':
+      SkillIcon = Svelte;
+      break;
+    case 'TAILWINDCSS':
+      SkillIcon = TailwindCSS;
+      break;
+    case 'TOMCAT':
+      SkillIcon = Tomcat;
+      break;
+    case 'WEBPACK':
+      SkillIcon = Webpack;
       break;
   }
   return <SkillIcon {...restProps} />;
