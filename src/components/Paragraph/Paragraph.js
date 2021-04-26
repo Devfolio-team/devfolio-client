@@ -5,6 +5,7 @@ import { applyStyle } from 'utils';
 const StyledParagraph = styled.p`
   ${props => css`
     ${applyStyle(props)}
+    word-break: break-all;
   `}
 `;
 
