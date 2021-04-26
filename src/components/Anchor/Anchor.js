@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { string, node, number } from 'prop-types';
+import { string, node, number, oneOfType } from 'prop-types';
 import { applyStyle } from 'utils';
 
 const StyledAnchor = styled.a`
@@ -21,6 +21,8 @@ const Anchor = ({
   width,
   height,
   cursor,
+  opacity,
+  zIndex,
   ...restProps
 }) => {
   return (
@@ -36,6 +38,8 @@ const Anchor = ({
       $width={width}
       $height={height}
       $cursor={cursor}
+      $opacity={opacity}
+      $zIndex={zIndex}
       {...restProps}
     >
       {children}
@@ -65,9 +69,9 @@ Anchor.propTypes = {
   /** Anchor요소의 안쪽여백을 설정합니다. */
   padding: string,
   /** Anchor요소의 넓이를 설정합니다. */
-  width: number,
+  width: oneOfType([number, string]),
   /** Anchor요소의 높이를 설정합니다. */
-  height: number,
+  height: oneOfType([number, string]),
 };
 
 export default Anchor;

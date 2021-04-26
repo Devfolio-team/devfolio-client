@@ -121,7 +121,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
               fontWeight={700}
               onClick={() => {
-                window.location.href = 'http://localhost:3020/auth/google';
+                window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
               }}
             >
               <IconContainer>
@@ -137,6 +137,9 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               background="#ffffff"
               fontWeight={700}
               margin={`${isMobile ? '0 0 10px 0' : ''}`}
+              onClick={() => {
+                window.location.href = `${process.env.REACT_APP_API_URL}/auth/github`;
+              }}
             >
               <IconContainer>
                 <SVGIcon type="GithubBlack" width="30px" height="30px"></SVGIcon>

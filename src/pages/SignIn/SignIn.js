@@ -8,15 +8,16 @@ const SignIn = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const fetchUserInfo = () => {
-      if (new RegExp(/auth_token/).test(document.cookie)) {
-        dispatch(signInMiddleware());
-      }
-    };
-    fetchUserInfo();
+    const authToken = document.cookie.split(';').find(cookie => cookie.includes('auth_token'));
+
+    const authTokenValue = authToken ? authToken.split('=')[1] : null;
+
+    if (authTokenValue) {
+      dispatch(signInMiddleware(authTokenValue));
+    }
     history.push('/');
   }, [dispatch, history]);
-  return <div></div>;
+  return <></>;
 };
 
 export default SignIn;

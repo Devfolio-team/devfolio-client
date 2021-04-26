@@ -36,8 +36,9 @@ const PortfolioPage = ({ match }) => {
 
   return (
     <StyledPortfolioPage>
-      {/* TODO: 회원의 정보를 받으면 그 유저의 이름으로 h2를 설정하여 주기 */}
-      <A11yHidden as="h2">{'유저의'} 포트폴리오 페이지</A11yHidden>
+      <A11yHidden as="h2">
+        {portfolio.user ? portfolio.user.name : null}의 포트폴리오 페이지
+      </A11yHidden>
       <PortfolioProfile userInfo={portfolio.user} skills={portfolio.skills} />
 
       <PortfolioContents skills={portfolio.skills} projects={portfolio.projects} />

@@ -32,7 +32,7 @@ const HomepageSection = styled.section`
 `;
 
 const HomePage = ({ viewport }) => {
-  const { isDesktop, vw } = viewport;
+  const { vw } = viewport;
 
   const [projects, setProjects] = useState([]);
 

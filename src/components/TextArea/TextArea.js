@@ -4,6 +4,7 @@ import { number, string, func, oneOfType } from 'prop-types';
 import { useState } from 'react';
 import { color } from 'utils';
 import { A11yHidden } from 'components';
+import { getIn } from 'formik';
 
 const StyledLabel = styled.label.attrs(({ htmlFor }) => ({
   htmlFor,
@@ -35,6 +36,15 @@ const StyledTextArea = styled.textarea`
       border-radius: 5px;
       border: 0;
       resize: none;
+      &:focus {
+        outline: none;
+        box-shadow: ${getIn(props.errors, props.name)
+          ? '0 0 0 4px rgb(255, 0, 0)'
+          : '0 0 0 4px rgb(66, 139, 202)'};
+      }
+      &:focus:not(:focus-visible) {
+        box-shadow: none;
+      }
     `}
 `;
 
@@ -52,6 +62,7 @@ const TextArea = ({
   beforeMargin,
   afterMargin,
   field,
+  errors,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -88,6 +99,7 @@ const TextArea = ({
         onFocus={onFocusHandler}
         {...field}
         onBlur={onBlurHandler}
+        errors={errors}
         {...restProps}
       />
     </>

@@ -64,7 +64,7 @@ const StyledArrowDownIcon = styled(arrowDownIcon)`
 const HeaderBar = ({ viewport }) => {
   const { currentUser } = useSelector(state => state.auth);
 
-  const { isDesktop, type } = viewport;
+  const { type } = viewport;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
