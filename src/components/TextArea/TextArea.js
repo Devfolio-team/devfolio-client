@@ -31,7 +31,7 @@ const StyledTextArea = styled.textarea`
     css`
       ${applyStyle(props)}
       font-size: 1.2rem;
-      padding: 10px 0 0 8px;
+      padding: 12px 0 0 12px;
       box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       border: 0;

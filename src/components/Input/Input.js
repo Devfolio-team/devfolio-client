@@ -127,6 +127,10 @@ const Input = ({
   );
 };
 
+Input.defaultProps = {
+  padding: '0 0 0 12px',
+};
+
 Input.propTypes = {
   /** 인풋의 종류를 설정합니다. */
   type: string,
