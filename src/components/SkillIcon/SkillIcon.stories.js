@@ -72,6 +72,7 @@ export default {
           'Tomcat',
           'Webpack',
           'Firestore',
+          'Docker',
         ],
       },
     },
@@ -139,6 +140,7 @@ export const TailwindCSS = Template.bind({});
 export const Tomcat = Template.bind({});
 export const Webpack = Template.bind({});
 export const Firestore = Template.bind({});
+export const Docker = Template.bind({});
 
 ExpressIcon.args = {
   type: 'Express',
@@ -423,6 +425,11 @@ Webpack.args = {
 };
 Firestore.args = {
   type: 'Firestore',
+  width: 40,
+  height: 40,
+};
+Docker.args = {
+  type: 'Docker',
   width: 40,
   height: 40,
 };
