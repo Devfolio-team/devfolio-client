@@ -105,7 +105,7 @@ const DisabledLink = styled(Span)`
 const NavList = styled.li`
   ${props => css`
     ${applyStyle(props)}
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   `}
 `;
 
@@ -275,7 +275,7 @@ const ProjectPage = ({ match }) => {
     >
       <Container
         width="100%"
-        margin={isDesktop ? '0 30px 89px 0' : '0'}
+        margin={isDesktop ? '0 30px 30px 0' : '0'}
         padding={isDesktop ? '0 70px' : '0 30px'}
         display="flex"
         justifyContent="space-between"
@@ -347,7 +347,7 @@ const ProjectPage = ({ match }) => {
         <Container position="relative" display={vw > 1050 ? '' : 'none'}>
           <Container position="absolute" left="250px" width="200px">
             <Container
-              position={scrollY > 0 ? 'fixed' : ''}
+              position="fixed"
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
@@ -357,7 +357,7 @@ const ProjectPage = ({ match }) => {
                 fontSize={1.5}
               >
                 <NavList>
-                  <NavLink href="#제목">제목</NavLink>
+                  <NavLink href="#제목">{subject}</NavLink>
                 </NavList>
                 <NavList>
                   <NavLink href="#기획의도">기획의도</NavLink>
@@ -409,8 +409,9 @@ const ProjectPage = ({ match }) => {
           id="제목"
           fontSize={type === 'xs' ? 2.7 : 4}
           color="#212121"
-          lineHeight="40px"
+          lineHeight="4rem"
           margin={type === 'xs' ? '' : '20px 0'}
+          $padding="80px 0 0 0"
         >
           {subject}
         </Heading>
@@ -542,7 +543,7 @@ const ProjectPage = ({ match }) => {
       <DivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
-        $margin="80px auto"
+        $margin="100px auto 0 auto"
       />
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
@@ -555,6 +556,7 @@ const ProjectPage = ({ match }) => {
           borderBottom="14px solid rgba(66, 139, 202, 0.6)"
           lineHeight="10px"
           margin="0 0 47px 0"
+          $padding="100px 0 0 0"
         >
           기획 의도
         </Heading>
@@ -571,7 +573,7 @@ const ProjectPage = ({ match }) => {
       <DivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
-        $margin="80px auto"
+        $margin="100px auto 0 auto"
       />
 
       {/* <Container padding={isDesktop ? '0 70px' : '0 30px'}>
@@ -652,6 +654,7 @@ const ProjectPage = ({ match }) => {
           borderBottom="14px solid rgba(66, 139, 202, 0.6)"
           lineHeight="10px"
           margin="0 0 47px 0"
+          $padding="100px 0 0 0"
         >
           사용 기술 스택
         </Heading>
@@ -691,7 +694,7 @@ const ProjectPage = ({ match }) => {
       <DivisionLine
         $width={isDesktop ? '500px' : '70%'}
         $borderBottom="1px solid #666666"
-        $margin="80px auto"
+        $margin="100px auto 0 auto"
       />
       <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         <Heading
@@ -704,6 +707,7 @@ const ProjectPage = ({ match }) => {
           borderBottom="14px solid rgba(66, 139, 202, 0.6)"
           lineHeight="10px"
           margin="0 0 47px 0"
+          $padding="100px 0 0 0"
         >
           프로젝트 설명
         </Heading>
