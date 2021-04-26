@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ProjectEditForm } from 'containers';
 import { Heading, Container } from 'components';
 import { useSelector } from 'react-redux';
 import scrollToTop from 'utils/scrollToTop';
+import { Prompt } from 'react-router-dom';
 
 const StyledProjectEditPage = styled.main``;
 
 const ProjectEditPage = ({ viewport }) => {
+  const [leave, setLeave] = useState(true);
   const userName = useSelector(state => state.auth.currentUser.name);
 
   useEffect(() => {
@@ -15,9 +17,27 @@ const ProjectEditPage = ({ viewport }) => {
   }, []);
 
   const { vw, isDesktop } = viewport;
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser);
+    return () => {
+      window.removeEventListener('beforeunload', alertUser);
+    };
+  }, []);
+  const alertUser = e => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
 
   return (
     <StyledProjectEditPage>
+      <Prompt
+        when={leave}
+        message={() =>
+          `이 페이지를 벗어나면 정성껏 작성하신 모든 정보들이 날아갑니다. 
+
+정말로 나가시겠습니까?`
+        }
+      />
       <Container
         padding={isDesktop ? '80px 70px' : '25px 30px'}
         width={vw >= 1440 ? 1440 : '100%'}
@@ -34,7 +54,7 @@ const ProjectEditPage = ({ viewport }) => {
           <br />
           프로젝트 등록을 시작해 볼까요?
         </Heading>
-        <ProjectEditForm vw={vw} />
+        <ProjectEditForm vw={vw} setLeave={setLeave} />
       </Container>
     </StyledProjectEditPage>
   );
