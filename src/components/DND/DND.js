@@ -11,6 +11,7 @@ const DNDInput = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
+  position: relative;
   z-index: 9999;
   cursor: pointer;
   &:focus + div {
@@ -38,7 +39,7 @@ const Display = styled.div`
   position: absolute;
   top: 0;
   font-size: 3rem;
-  z-index: -3;
+  z-index: 1;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -58,7 +59,7 @@ const HoverDisplay = styled.div`
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  z-index: -1;
+  z-index: 4;
 `;
 
 const WhiteDisplay = styled.div`
@@ -68,7 +69,7 @@ const WhiteDisplay = styled.div`
   border-radius: 5px;
   position: absolute;
   top: 0;
-  z-index: -2;
+  z-index: 2;
 `;
 
 const RoundBackground = styled.div`
@@ -77,7 +78,7 @@ const RoundBackground = styled.div`
   background: #a9c1ff;
   position: absolute;
   border-radius: 50%;
-  z-index: -2;
+  z-index: -1;
 `;
 
 const HoverDNDMessage = styled.p`
@@ -86,6 +87,10 @@ const HoverDNDMessage = styled.p`
   color: ${color.white};
   margin-top: 30px;
 `;
+
+// const StyledSVGIcon = styled(SVGIcon)`
+//   z-index: 3;
+// `;
 
 const DND = ({ setFieldValue, errors }) => {
   const [src, setSrc] = useState(null);
@@ -167,7 +172,7 @@ const DND = ({ setFieldValue, errors }) => {
             position="absolute"
             top="0"
             left="0"
-            zIndex={-1}
+            zIndex={3}
             borderRadius="5px"
           />
           <WhiteDisplay />
@@ -175,8 +180,8 @@ const DND = ({ setFieldValue, errors }) => {
       ) : null}
       {isUploaded ? null : (
         <Display>
-          <RoundBackground />
           <SVGIcon type="Camera" width="50" height="50" />
+          <RoundBackground />
         </Display>
       )}
       {isDragged ? (
