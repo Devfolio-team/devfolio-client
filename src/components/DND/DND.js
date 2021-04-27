@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { color } from 'utils';
 import { func } from 'prop-types';
@@ -6,6 +6,7 @@ import { Container, Image, SVGIcon, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import ajax from 'apis/ajax';
 import useDetectViewport from 'hooks/useDetectViewport';
+import { useSelector } from 'react-redux';
 
 const DNDInput = styled.input`
   width: 100%;
@@ -97,13 +98,24 @@ const HoverDNDMessage = styled.p`
   margin-top: 30px;
 `;
 
-const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
+const DND = ({
+  setFieldValue,
+  errors,
+  profile,
+  borderRadius,
+  isDeleted,
+  setIsDeleted,
+  setIsDisabled,
+}) => {
   const [src, setSrc] = useState(null);
   const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const viewport = useDetectViewport();
   const { vw } = viewport;
+  const authState = useSelector(state => state.auth);
+  const defaultProfilePhoto =
+    'https://aws-devfolio.s3.ap-northeast-2.amazonaws.com/default_user_profile.jpeg';
 
   const onDragOverHandler = e => {
     e.preventDefault();
@@ -125,7 +137,11 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
         setAlt(alt);
         setIsDragged(false);
         setIsUploaded(false);
-        setFieldValue('thumbnail', imageFile);
+        if (profile) {
+          setIsDeleted(false);
+          setIsDisabled(false);
+        }
+        setFieldValue(profile ? 'profilePhoto' : 'thumbnail', imageFile);
       } catch (error) {
         throw new Error(error);
       }
@@ -144,10 +160,25 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
     }
   };
 
-  // Database나 redux store에서 프로필 이미지 불러와 setSrc 해주기
-  // useEffect(() => {
-  //   if (profile) setSrc('https://aws-devfolio.s3.ap-northeast-2.amazonaws.com/goyangi.jpg');
-  // }, []);
+  useEffect(() => {
+    if (profile) {
+      const userImage = { src: authState.currentUser.profile_photo };
+      setSrc(authState.currentUser.profile_photo);
+      setFieldValue('profilePhoto', userImage);
+    }
+  }, [authState.currentUser.profile_photo, profile, setFieldValue]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      const defaultPhotoInfo = {
+        alt: 'default_user_profile.jpeg',
+        src: defaultProfilePhoto,
+        type: 'image/jpeg',
+        size: 4230,
+      };
+      setFieldValue('profilePhoto', defaultPhotoInfo);
+    }
+  }, [setFieldValue, isDeleted]);
 
   return (
     <Container
@@ -159,7 +190,7 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
     >
       <Field
         type="file"
-        name="thumbnail"
+        name={profile ? 'profilePhoto' : 'thumbnail'}
         component={DNDInput}
         onChange={onChange}
         id="thumbnail"
@@ -174,10 +205,10 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
       {src && !errors.thumbnail ? (
         <>
           <Image
-            src={src}
+            src={isDeleted ? defaultProfilePhoto : src}
             alt={alt}
-            width={vw > 560 ? (profile ? 250 : 400) : profile ? '40vw' : '67vw'}
-            height={vw > 560 ? (profile ? 250 : 400) : profile ? '40vw' : '67vw'}
+            width={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+            height={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
             object-fit="cover"
             position="absolute"
             top="0"
@@ -205,7 +236,9 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
   );
 };
 
-DND.defaultProps = {};
+DND.defaultProps = {
+  isDeleted: false,
+};
 
 DND.propTypes = {
   /** file input의 값을 formik의 values로 설정해주는 함수입니다. */

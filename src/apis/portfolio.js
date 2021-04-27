@@ -6,3 +6,7 @@ const API_URL = 'http://devfolio.world:3020';
 export const getPortfolio = async userId => {
   return await axios.get(`${API_URL}/api/portfolio?user_id=${userId}`);
 };
+
+export const editPortfolio = async (userId, editedInfo) => {
+  return await axios.patch(`${API_URL}/api/portfolio?user_id=${userId}`, editedInfo);
+};

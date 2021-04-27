@@ -55,11 +55,13 @@ export const signOutMiddleware = () => dispatch => {
   }
 };
 
-export const editAccountMiddleware = payload => dispatch => {
+export const editAccountMiddleware = (userId, editedInfo) => async dispatch => {
   dispatch(editAccountLoadingAction());
 
   try {
-    dispatch(editAccountSuccessAction());
+    const response = await ajax.editPortfolio(userId, editedInfo);
+    const { currentUser: payload } = response.data;
+    dispatch(editAccountSuccessAction(payload));
   } catch (error) {
     dispatch(editAccountErrorAction(error));
   }
