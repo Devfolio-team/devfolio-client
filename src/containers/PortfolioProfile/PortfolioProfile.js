@@ -1,9 +1,15 @@
-import { Anchor, Container, Span, SVGIcon } from 'components';
+import {
+  Anchor,
+  Container,
+  SkillsTypewriterEffect,
+  SkillsTypewriterEffectSkeleton,
+  Span,
+  SVGIcon,
+} from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
-import Typewiter from 'react-simple-typewriter';
 import Skeleton from '@yisheng90/react-loading';
 import scrollToTop from 'utils/scrollToTop';
 
@@ -41,53 +47,6 @@ const ProfileImate = styled.img`
   @media (max-width: 768px) {
     width: 180px;
     height: 180px;
-  }
-`;
-
-// const SimpleIntroduce = styled.em`
-//   display: block;
-//   max-width: 600px;
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 2.2rem;
-//   text-align: center;
-//   line-height: 3.5rem;
-//   color: #212121;
-//   @media (max-width: 768px) {
-//     font-size: 1.6rem;
-//     max-width: 300px;
-//   }
-// `;
-
-const CustomTypewriter = styled.div`
-  @keyframes cursorAnimation {
-    0% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  & > .typewriterEffectWraper > span:last-of-type {
-    animation: cursorAnimation 1s infinite;
-  }
-  line-height: 3.3rem;
-  margin: 60px 0 40px;
-  font-size: 3rem;
-  font-weight: 700;
-  color: #212121;
-  @media (max-width: 1024px) {
-    font-size: 2.7rem;
-  }
-  @media (max-width: 768px) {
-    font-size: 2.4rem;
-    margin: 45px 0 35px;
-  }
-  @media (max-width: 480px) {
-    font-size: 2rem;
   }
 `;
 
@@ -179,80 +138,12 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
           )}
         </Span>
 
-        {vw >= 768 ? (
-          <CustomTypewriter>
-            {skills ? (
-              <>
-                저는{' '}
-                <Container
-                  className="typewriterEffectWraper"
-                  display={vw >= 768 ? 'inline-block' : 'block'}
-                >
-                  <Typewiter
-                    loop
-                    cursor
-                    typeSpeed={150}
-                    deleteSpeed={140}
-                    delaySpeed={1000}
-                    words={['React.js', 'Vue.js', 'Styled Components', 'Javascript']}
-                  />{' '}
-                </Container>
-                할 줄 아는 개발자 입니다.
-              </>
-            ) : (
-              <Span margin="0 0 -4px">
-                {vw >= 768 ? (
-                  <Skeleton
-                    color="#cccccc"
-                    width={vw >= 1024 ? 750 : 600}
-                    height={vw >= 1024 ? 36 : 36}
-                    translucent
-                  />
-                ) : (
-                  <Skeleton rows={3} color="#cccccc" width={250} height={33} translucent />
-                )}
-              </Span>
-            )}
-          </CustomTypewriter>
-        ) : null}
-        <Container display="flex" flexFlow="column nowrap" alignItems="flex-start">
-          {vw < 768 ? (
-            <CustomTypewriter>
-              {skills ? (
-                <>
-                  저는{' '}
-                  <Container
-                    className="typewriterEffectWraper"
-                    display={vw >= 768 ? 'inline-block' : 'block'}
-                  >
-                    <Typewiter
-                      loop
-                      cursor
-                      typeSpeed={150}
-                      deleteSpeed={140}
-                      delaySpeed={1000}
-                      words={['React.js', 'Vue.js', 'Styled Components', 'Javascript']}
-                    />{' '}
-                  </Container>
-                  할 줄 아는 개발자 입니다.
-                </>
-              ) : (
-                <Span margin="0 0 -4px">
-                  {vw >= 768 ? (
-                    <Skeleton
-                      color="#cccccc"
-                      width={vw >= 1024 ? 750 : 600}
-                      height={vw >= 1024 ? 36 : 36}
-                      translucent
-                    />
-                  ) : (
-                    <Skeleton rows={3} color="#cccccc" width={250} height={33} translucent />
-                  )}
-                </Span>
-              )}
-            </CustomTypewriter>
-          ) : null}
-        </Container>
+        {skills ? (
+          <SkillsTypewriterEffect skills={skills.map(({ skill_name }) => skill_name)} />
+        ) : (
+          <SkillsTypewriterEffectSkeleton />
+        )}
+
         <Container
           width={vw >= 768 ? 'auto' : vw > 480 ? 250 : 208}
           maxWidth={vw >= 768 ? 250 : null}
