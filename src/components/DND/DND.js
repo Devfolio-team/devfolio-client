@@ -38,7 +38,7 @@ const Display = styled.div`
   position: absolute;
   top: 0;
   font-size: 3rem;
-  z-index: -2;
+  z-index: -3;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -59,6 +59,16 @@ const HoverDisplay = styled.div`
   align-items: center;
   justify-content: center;
   z-index: -1;
+`;
+
+const WhiteDisplay = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${color.white};
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  z-index: -2;
 `;
 
 const RoundBackground = styled.div`
@@ -147,18 +157,21 @@ const DND = ({ setFieldValue, errors }) => {
       />
 
       {src && !errors.thumbnail ? (
-        <Image
-          src={src}
-          alt={alt}
-          width={400}
-          height={400}
-          object-fit="cover"
-          position="absolute"
-          top="0"
-          left="0"
-          zIndex={-1}
-          borderRadius="5px"
-        />
+        <>
+          <Image
+            src={src}
+            alt={alt}
+            width={400}
+            height={400}
+            object-fit="cover"
+            position="absolute"
+            top="0"
+            left="0"
+            zIndex={-1}
+            borderRadius="5px"
+          />
+          <WhiteDisplay />
+        </>
       ) : null}
       {isUploaded ? null : (
         <Display>

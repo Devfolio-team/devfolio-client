@@ -31,7 +31,7 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const ProjectEditForm = ({ vw }) => {
+const ProjectEditForm = ({ vw, setLeave }) => {
   const authState = useSelector(state => state.auth);
   const editorRef = createRef();
   const history = useHistory();
@@ -42,9 +42,6 @@ const ProjectEditForm = ({ vw }) => {
 
   const onGoBackHandler = () => {
     window.history.back();
-  };
-  window.onbeforeunload = e => {
-    return 'You have unsaved work.';
   };
 
   const scrollToErrors = errors => {
@@ -87,6 +84,7 @@ const ProjectEditForm = ({ vw }) => {
           mainContents: editorContent,
           userUserId: authState.currentUser.user_id,
         };
+        setLeave(false);
         try {
           const res = await ajax.postProject(projectData);
           const projectId = res.data.insertId;
@@ -118,7 +116,7 @@ const ProjectEditForm = ({ vw }) => {
             >
               <Button
                 type="button"
-                children="← 뒤로가기"
+                children="뒤로가기"
                 onClick={onGoBackHandler}
                 color={color.darkGray}
                 fontWeight="700"
