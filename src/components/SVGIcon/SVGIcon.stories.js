@@ -33,6 +33,7 @@ export default {
           'Calendar',
           'WebSite',
           'WebSiteDisable',
+          'SuitsIcon',
         ],
       },
     },
@@ -61,6 +62,7 @@ export const GithubBlueIcon = Template.bind({});
 export const GithubBlueDisableIcon = Template.bind({});
 export const WebSiteIcon = Template.bind({});
 export const WebSiteDisableIcon = Template.bind({});
+export const SuitsIcon = Template.bind({});
 
 AngryIcon.args = {
   type: 'Angry',
@@ -151,6 +153,11 @@ WebSiteIcon.arg = {
 };
 WebSiteDisableIcon.arg = {
   type: 'WebSiteDisable',
+  width: 40,
+  height: 40,
+};
+SuitsIcon.arg = {
+  type: 'Suits',
   width: 40,
   height: 40,
 };
