@@ -17,6 +17,7 @@ const ChipContainer = styled.div`
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background: ${color.white};
+  text-align: left;
 `;
 
 const ChipItems = styled.div`
