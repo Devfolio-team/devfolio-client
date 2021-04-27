@@ -121,7 +121,7 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           children="회원탈퇴"
           color={color.white}
           fontWeight="700"
-          fontSize={isDesktop ? 2.4 : 1.6}
+          fontSize={isDesktop ? 1.8 : 1.6}
           margin={isDesktop ? '50px 0 15px 0' : '30px 0 15px 0'}
           hoverColor="#FF6B6B"
           hoverBackground={color.white}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { color } from 'utils';
 import { func } from 'prop-types';
@@ -6,6 +6,7 @@ import { Container, Image, SVGIcon, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import ajax from 'apis/ajax';
 import useDetectViewport from 'hooks/useDetectViewport';
+import { useSelector } from 'react-redux';
 
 const DNDInput = styled.input`
   width: 100%;
@@ -104,6 +105,7 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const viewport = useDetectViewport();
   const { vw } = viewport;
+  const authState = useSelector(state => state.auth);
 
   const onDragOverHandler = e => {
     e.preventDefault();
@@ -144,10 +146,9 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
     }
   };
 
-  // Database나 redux store에서 프로필 이미지 불러와 setSrc 해주기
-  // useEffect(() => {
-  //   if (profile) setSrc('https://aws-devfolio.s3.ap-northeast-2.amazonaws.com/goyangi.jpg');
-  // }, []);
+  useEffect(() => {
+    if (profile) setSrc(authState.currentUser.profile_photo);
+  }, [authState.currentUser.profile_photo, profile]);
 
   return (
     <Container
@@ -176,8 +177,8 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
           <Image
             src={src}
             alt={alt}
-            width={vw > 560 ? (profile ? 250 : 400) : profile ? '40vw' : '67vw'}
-            height={vw > 560 ? (profile ? 250 : 400) : profile ? '40vw' : '67vw'}
+            width={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+            height={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
             object-fit="cover"
             position="absolute"
             top="0"

@@ -47,7 +47,7 @@ const PortfolioEditContents = forwardRef(({ setFieldValue }, ref) => {
         </Paragraph>
         <Editor
           previewStyle="vertical"
-          height="1000px"
+          height={isDesktop ? '1000px' : '450px'}
           initialEditType="wysiwyg"
           useCommandShortcut={true}
           ref={ref}
@@ -76,7 +76,7 @@ const PortfolioEditContents = forwardRef(({ setFieldValue }, ref) => {
         >
           보유 기술 스택
         </Heading>
-        <ChipInputSearch id="ownTechStacks" setFieldValue={setFieldValue} />
+        <ChipInputSearch id="ownTechStacks" setFieldValue={setFieldValue} profile={true} />
       </Container>
       <Container display="flex" justifyContent="center">
         <Button
