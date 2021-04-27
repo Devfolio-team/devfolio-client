@@ -2,9 +2,22 @@ import { Container, DND, Button, Input, Paragraph } from 'components';
 import { color } from 'utils';
 import { Field } from 'formik';
 import useDetectViewport from 'hooks/useDetectViewport';
+import { useState } from 'react';
 
 const PortfolioEditProfile = ({ setFieldValue, errors }) => {
   const { isDesktop, vw } = useDetectViewport();
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const onClickDeleteHandler = () => {
+    if (!isDeleted && window.confirm('정말로 프로필 사진을 지우시겠습니까?')) {
+      setIsDeleted(true);
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  };
+
   return (
     <Container background="#F19D85" height={isDesktop ? '970px' : '890px'}>
       <Container
@@ -16,7 +29,15 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
         minWidth="320px"
         textAlign="center"
       >
-        <DND setFieldValue={setFieldValue} errors={errors} profile={true} borderRadius="50%" />
+        <DND
+          setFieldValue={setFieldValue}
+          errors={errors}
+          profile={true}
+          borderRadius="50%"
+          isDeleted={isDeleted}
+          setIsDeleted={setIsDeleted}
+          setIsDisabled={setIsDisabled}
+        />
         <Button
           children="이미지 제거"
           color={color.mainColor}
@@ -26,11 +47,13 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           hoverBackground={color.mainColor}
           border={`1px solid ${color.mainColor}`}
           background={color.white}
+          onClick={onClickDeleteHandler}
+          disabled={isDisabled}
         />
         <Field
           component={Input}
-          name="userName"
-          id="userName"
+          name="name"
+          id="name"
           label="이름"
           labelFontSize={isDesktop ? 2 : 1.6}
           inputFontSize={2}

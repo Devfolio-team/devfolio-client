@@ -98,7 +98,15 @@ const HoverDNDMessage = styled.p`
   margin-top: 30px;
 `;
 
-const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
+const DND = ({
+  setFieldValue,
+  errors,
+  profile,
+  borderRadius,
+  isDeleted,
+  setIsDeleted,
+  setIsDisabled,
+}) => {
   const [src, setSrc] = useState(null);
   const [alt, setAlt] = useState(null);
   const [isDragged, setIsDragged] = useState(false);
@@ -106,6 +114,8 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
   const viewport = useDetectViewport();
   const { vw } = viewport;
   const authState = useSelector(state => state.auth);
+  const defaultProfilePhoto =
+    'https://aws-devfolio.s3.ap-northeast-2.amazonaws.com/default_user_profile.jpeg';
 
   const onDragOverHandler = e => {
     e.preventDefault();
@@ -127,7 +137,9 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
         setAlt(alt);
         setIsDragged(false);
         setIsUploaded(false);
-        setFieldValue('thumbnail', imageFile);
+        setIsDeleted(false);
+        setIsDisabled(false);
+        setFieldValue(profile ? 'profilePhoto' : 'thumbnail', imageFile);
       } catch (error) {
         throw new Error(error);
       }
@@ -150,6 +162,18 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
     if (profile) setSrc(authState.currentUser.profile_photo);
   }, [authState.currentUser.profile_photo, profile]);
 
+  useEffect(() => {
+    if (isDeleted) {
+      const defaultPhotoInfo = {
+        alt: 'default_user_profile.jpeg',
+        src: defaultProfilePhoto,
+        type: 'image/jpeg',
+        size: 4230,
+      };
+      setFieldValue('profilePhoto', defaultPhotoInfo);
+    }
+  }, [setFieldValue, isDeleted]);
+
   return (
     <Container
       display="inline-block"
@@ -160,7 +184,7 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
     >
       <Field
         type="file"
-        name="thumbnail"
+        name={profile ? 'profilePhoto' : 'thumbnail'}
         component={DNDInput}
         onChange={onChange}
         id="thumbnail"
@@ -175,7 +199,7 @@ const DND = ({ setFieldValue, errors, profile, borderRadius }) => {
       {src && !errors.thumbnail ? (
         <>
           <Image
-            src={src}
+            src={isDeleted ? defaultProfilePhoto : src}
             alt={alt}
             width={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
             height={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}

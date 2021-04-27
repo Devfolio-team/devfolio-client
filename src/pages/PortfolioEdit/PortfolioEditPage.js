@@ -23,16 +23,16 @@ const PortfolioEditPage = () => {
     <StyledPortfolioEditPage>
       <Formik
         initialValues={{
-          userName: authState.currentUser.name,
+          name: authState.currentUser.name,
           nickname: authState.currentUser.nickname,
           githubUrl: authState.currentUser.github_url || '',
           email: authState.currentUser.email,
           blogUrl: authState.currentUser.blog_url || '',
           techStacks: [],
-          thumbnail: null,
+          profilePhoto: null,
         }}
         onSubmit={values => {
-          // console.log(values);
+          console.log(values);
         }}
       >
         {({ errors, setFieldValue }) => {
