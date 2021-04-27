@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
 import Typewiter from 'react-simple-typewriter';
 import Skeleton from '@yisheng90/react-loading';
+import scrollToTop from 'utils/scrollToTop';
 
 const StyledPortfolioProfile = styled.div`
   ${props => css`
@@ -93,7 +94,7 @@ const CustomTypewriter = styled.div`
 const UsersSite = ({ href, type, margin, vw, iconMargin, children }) => {
   return (
     <Container width="100%" margin={margin} display="flex" alignItems="center">
-      <Anchor href={href} target="_blank" margin={iconMargin}>
+      <Anchor href={href} target="_blank" margin={iconMargin} onFocus={scrollToTop}>
         <SVGIcon type={type} width={vw >= 768 ? 30 : 25} height={vw >= 768 ? 30 : 25} />
       </Anchor>
       <Anchor
@@ -251,19 +252,6 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
               )}
             </CustomTypewriter>
           ) : null}
-
-          {/* {userInfo ? (
-            <SimpleIntroduce>{userInfo.simple_introduction}</SimpleIntroduce>
-          ) : (
-            <Container margin="-5px 0 -8px">
-              <Skeleton
-                color="#cccccc"
-                width={vw >= 1024 ? 480 : vw >= 768 ? 480 : vw >= 480 ? 400 : vw >= 365 ? 315 : 260}
-                height={vw >= 1024 ? 30 : vw >= 768 ? 30 : 25}
-                translucent
-              />
-            </Container>
-          )} */}
         </Container>
         <Container
           width={vw >= 768 ? 'auto' : vw > 480 ? 250 : 208}
