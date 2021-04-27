@@ -18,7 +18,7 @@ import { signOutMiddleware } from 'store/modules/auth/authMiddleware';
 
 const FlexApp = styled.div`
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   flex-flow: column nowrap;
 `;
 
@@ -61,7 +61,8 @@ const App = () => {
               render={() => <ProjectEditPage viewport={viewport} />}
             />
             <Route path="/sign_in" exact component={SignIn} />
-            <Redirect to="page-not-found" render={() => <PageNotFound viewport={viewport} />} />
+            <Route path="/page-not-found" component={PageNotFound} />
+            <Redirect to="/page-not-found" />
           </Switch>
         </EmptyContainer>
         <FooterBar />
