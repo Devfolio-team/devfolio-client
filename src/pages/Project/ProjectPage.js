@@ -19,6 +19,8 @@ import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
 import { parseHtmlAndHighlighter } from 'utils/parseHtmlAndHighlighter';
 import scrollToTop from 'utils/scrollToTop';
+import ajax from 'apis/ajax';
+import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -176,19 +178,16 @@ const ProjectPage = ({ match }) => {
 
   const onLikeCountPlusHandler = async () => {
     if (!loginUser.user_id) return;
-    const getLikeCount = await axios(
-      `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`
-    );
+
+    //해당 유저가 게시글에 좋아요를 눌렀는지 확인
+    const getLikeCount = await ajax.getIsPressLikeButton(project_id, loginUser.user_id);
 
     //좋아요 버튼을 안누르면 isLike는 false
     const isLike = getLikeCount.data.existeLike;
     try {
       if (!isLike) {
         // LikeCount++
-        const postLikeCountPlus = await axios({
-          method: 'post',
-          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`,
-        });
+        const postLikeCountPlus = await ajax.postLikeCountPlus(project_id, loginUser.user_id);
 
         setProject(
           { ...project },
@@ -197,10 +196,7 @@ const ProjectPage = ({ match }) => {
         setIsLike(true);
       } else {
         // likeCount--
-        const DelLikeCount = await axios({
-          method: 'delete',
-          url: `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`,
-        });
+        const DelLikeCount = await ajax.delLikeCountMinus(project_id, loginUser.user_id);
 
         setProject({ ...project }, (project.projectData.likeCount = DelLikeCount.data.likeCount));
         setIsLike(false);
@@ -222,28 +218,25 @@ const ProjectPage = ({ match }) => {
 
   useEffect(() => {
     if (loginUserInfo) setLoginUser(loginUserInfo);
-    const getProject = async () => {
+    const project = async () => {
       try {
-        const getProject = await axios(
-          `http://devfolio.world:3020/api/project/${match.params.project_id}`
-        );
-        setProject(getProject.data.responseData);
+        const projectData = await ajax.getProject(match.params.project_id);
+
+        setProject(projectData.data.responseData);
       } catch (e) {
         throw new Error(e);
       }
     };
-    getProject();
+    project();
 
     //처음에 페이지 접속 했을 때 프로젝트에 좋아요를 눌렀는가?
     const getIsLike = async () => {
       if (!loginUser.user_id) return;
       try {
-        const Project = await axios(
-          `http://devfolio.world:3020/api/project_like?project_id=${project_id}&user_id=${loginUser.user_id}`
-        );
-        const IsLikeProject = await Project.data.existeLike;
+        const isPressLikeButton = await ajax.getIsPressLikeButton(project_id, loginUser.user_id);
+        const isLikeProject = await isPressLikeButton.data.existeLike;
 
-        if (IsLikeProject) {
+        if (isLikeProject) {
           setIsLike(true);
         } else {
           setIsLike(false);
@@ -265,8 +258,10 @@ const ProjectPage = ({ match }) => {
     };
   });
 
-  return project === null ? (
-    ''
+  return project.projectData.created === '' ? (
+    <Container display="flex" justifyContent="center" width="100vw" height="100vh">
+      <LoadingSpinner></LoadingSpinner>
+    </Container>
   ) : (
     <StyledProjectPage
       $width={isDesktop ? '768px' : '100%'}
