@@ -137,8 +137,10 @@ const DND = ({
         setAlt(alt);
         setIsDragged(false);
         setIsUploaded(false);
-        setIsDeleted(false);
-        setIsDisabled(false);
+        if (profile) {
+          setIsDeleted(false);
+          setIsDisabled(false);
+        }
         setFieldValue(profile ? 'profilePhoto' : 'thumbnail', imageFile);
       } catch (error) {
         throw new Error(error);
@@ -159,8 +161,12 @@ const DND = ({
   };
 
   useEffect(() => {
-    if (profile) setSrc(authState.currentUser.profile_photo);
-  }, [authState.currentUser.profile_photo, profile]);
+    if (profile) {
+      const userImage = { src: authState.currentUser.profile_photo };
+      setSrc(authState.currentUser.profile_photo);
+      setFieldValue('profilePhoto', userImage);
+    }
+  }, [authState.currentUser.profile_photo, profile, setFieldValue]);
 
   useEffect(() => {
     if (isDeleted) {
@@ -230,7 +236,9 @@ const DND = ({
   );
 };
 
-DND.defaultProps = {};
+DND.defaultProps = {
+  isDeleted: false,
+};
 
 DND.propTypes = {
   /** file input의 값을 formik의 values로 설정해주는 함수입니다. */
