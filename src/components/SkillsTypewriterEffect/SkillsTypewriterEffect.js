@@ -42,7 +42,11 @@ const TypewriterEffectWraper = styled.div`
 
 const SkillsTypewriterEffect = ({ skills }) => {
   return (
-    <CustomTypewriter aria-label={`저는 ${skills} 할 줄 아는 개발자입니다.`}>
+    <CustomTypewriter
+      aria-label={
+        skills.length ? `저는 ${skills} 할 줄 아는 개발자입니다.` : '등록된 기술스택이 없습니다.'
+      }
+    >
       {skills.length ? '저는 ' : null}
       <TypewriterEffectWraper className="typewriterEffectWraper">
         <Typewiter
