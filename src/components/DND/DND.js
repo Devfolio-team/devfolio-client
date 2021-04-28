@@ -166,7 +166,7 @@ const DND = ({
       setSrc(authState.currentUser.profile_photo);
       setFieldValue('profilePhoto', userImage);
     }
-  }, [authState.currentUser.profile_photo, profile, setFieldValue]);
+  }, [authState.currentUser?.profile_photo, profile, setFieldValue]);
 
   useEffect(() => {
     if (isDeleted) {

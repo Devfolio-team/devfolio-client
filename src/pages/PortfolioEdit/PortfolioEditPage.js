@@ -60,18 +60,23 @@ const PortfolioEditPage = () => {
 
   useEffect(() => {
     scrollToTop();
-    editorRef.current.getInstance().setHtml(authState.currentUser.introduce);
-  }, [authState.currentUser.introduce]);
+    editorRef.current?.getInstance().setHtml(authState.currentUser.introduce);
+  }, [authState.currentUser?.introduce]);
+
+  if (!authState.currentUser) {
+    history.push('/page-not-found');
+    return null;
+  }
 
   return (
     <StyledPortfolioEditPage>
       <Formik
         initialValues={{
-          name: authState.currentUser.name,
-          nickname: authState.currentUser.nickname,
-          githubUrl: authState.currentUser.github_url || '',
-          email: authState.currentUser.email,
-          blogUrl: authState.currentUser.blog_url || '',
+          name: authState.currentUser?.name,
+          nickname: authState.currentUser?.nickname,
+          githubUrl: authState.currentUser?.github_url || '',
+          email: authState.currentUser?.email,
+          blogUrl: authState.currentUser?.blog_url || '',
           techStacks: [],
           profilePhoto: null,
         }}
