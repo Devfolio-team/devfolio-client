@@ -8,6 +8,7 @@ const StyledProjectNav = styled.nav`
 
   li {
     list-style: none;
+    word-break: break-all;
   }
 `;
 
