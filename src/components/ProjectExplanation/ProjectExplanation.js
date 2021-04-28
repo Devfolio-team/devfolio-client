@@ -30,6 +30,7 @@ const StyledProjectExplanation = styled.div`
   p,
   li {
     list-style-type: disc;
+    list-style-position: inside;
     font-size: 1.7rem;
     line-height: 2.8rem;
     margin-bottom: 1rem;

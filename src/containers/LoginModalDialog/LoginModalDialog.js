@@ -13,14 +13,14 @@ const DivisionLine = styled.div`
 `;
 
 const DivisionDiv = styled.div`
-  ${({ $width }) => css`
-    color: #ffffff;
+  ${({ $width, $fontSize }) => css`
+    color: #bdbdbd;
     background-color: #2c3035;
     width: ${$width};
     height: 23px;
     line-height: 23px;
+    font-size: ${$fontSize};
     text-align: center;
-    font-size: 16px;
     position: absolute;
     margin: 0 auto;
     left: 50%;
@@ -98,8 +98,9 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
         <Dialog
           ref={ref}
           role="dialog"
-          width={`${isDesktop ? '500px' : type === 'sm' ? '85%' : '85%'}`}
-          height={`${isDesktop ? '500px' : type === 'sm' ? '400px' : '340px'}`}
+          // width={`${isDesktop ? '500px' : type === 'sm' ? '85%' : '345px'}`}
+          width={`${isDesktop ? '500px' : type === 'sm' ? '85%' : '93%'}`}
+          height={`${isDesktop ? '500px' : type === 'sm' ? '430px' : '378px'}`}
           padding={`${isDesktop ? '30px' : type === 'sm' ? '50px' : '30px'}`}
           borderRadius={5}
           tabIndex={0}
@@ -114,19 +115,19 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             시작하기
           </Heading>
           <Container
-            width={`${isDesktop ? '100%' : '100%'}`}
-            display={`${isDesktop ? 'flex' : ''}`}
-            justifyContent={`${isDesktop ? 'center' : ''}`}
+            width="100%"
+            display="flex"
+            justifyContent="center"
             alignItems="center"
             flexFlow="column"
           >
             <Button
               aria-label="구글 로그인"
-              width={`${isDesktop ? '320px' : '100%'}`}
+              width={`${isDesktop ? '320px' : type === 'xs' ? '225px' : '70%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
               background="#ffffff"
-              margin={`${isMobile ? '0 0 10px 0' : '0 0 30px 0'}`}
+              margin={`${isMobile ? '0 0 20px 0' : '0 0 30px 0'}`}
               fontWeight={700}
               onClick={() => {
                 window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
@@ -139,7 +140,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             </Button>
             <Button
               aria-label="깃허브 로그인"
-              width={`${isDesktop ? '320px' : '100%'}`}
+              width={`${isDesktop ? '320px' : type === 'xs' ? '225px' : '70%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
               background="#ffffff"
@@ -156,7 +157,10 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             </Button>
           </Container>
           <Container display="flex" alignItems="center" position="relactive">
-            <DivisionDiv $width={`${isDesktop ? '146px' : type === 'sm' ? '80px' : '80px'}`}>
+            <DivisionDiv
+              $width={`${isDesktop ? '146px' : type === 'sm' ? '80px' : '80px'}`}
+              $fontSize={`${isDesktop ? '1.6rem' : '1.3rem'}`}
+            >
               또는
             </DivisionDiv>
             <DivisionLine
@@ -186,43 +190,46 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               as="h3"
               color="#FFFFFF"
               fontSize={isDesktop ? 2 : type === 'sm' ? 1.8 : 1.4}
-              fontWeight={400}
+              fontWeight={700}
               textAlign="center"
+              // margin={type === 'xs' ? '0 0 20px 0' : ''}
+              margin={type === 'sm' ? '0 0 20px 0' : type === 'xs' ? '0 0 20px 0' : ''}
             >
               Suits에서 기술면접 준비하기
             </Heading>
             <LinkToWebSite
               href="https://github.com/TEAM-SUITS/Suits"
               target="_blank"
-              $width={`${isDesktop ? '320px' : '100%'}`}
-              $height={`${type === 'xs' ? '48px' : '66px'}`}
+              $width={`${isDesktop ? '320px' : type === 'xs' ? '225px' : '70%'}`}
+              $height={`${type === 'xs' ? '58px' : '66px'}`}
               $background="#ffffff"
               $borderRadius={30}
               $display="flex"
               $flexFlow="column"
               $alignItems="center"
               $justifyContent="center"
-              $margin={`${isDesktop ? '21px auto' : '10px 0 0 0 '}`}
+              $margin={`${isDesktop ? '21px auto' : '10px auto 0 auto '}`}
             >
-              <Span fontSize={1.4} fontWeight={400} margin="0 0 4px 0">
+              <Span fontSize={`${type === 'xs' ? 1.2 : 1.4}`} fontWeight={700} margin="0 0 4px 0">
                 기술 면접을 준비하는 단정한 습관
               </Span>
               <SVGIcon type="Suits" />
             </LinkToWebSite>
           </DialogForm>
           <Button
-            width={22}
-            height={22}
+            width="15px"
+            height="15px"
             background="transparent"
             border="0"
             position="absolute"
-            top="20px"
-            right="20px"
+            top="15px"
+            right="15px"
             onClick={onModalCloseHandler}
             color="#FFFFFF"
-            fontSize={2.2}
+            padding="0"
+            margin="0"
           >
-            X
+            <SVGIcon type="X" width="15" height="15" onClick={onModalCloseHandler} />
           </Button>
         </Dialog>
       </Modal>
