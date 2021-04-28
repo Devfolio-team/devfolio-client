@@ -166,7 +166,13 @@ const ProjectItem = ({
             </Span>
           </StyledLink>
         </Container>
-        <Container margin="0" display="flex" justifyContent="end" alignItems="center">
+        <Container
+          margin="0"
+          display="flex"
+          justifyContent="end"
+          alignItems="center"
+          aria-label={`좋아요 ${likeCount}개`}
+        >
           <SVGIcon type="HeartRed" width="12" height="18" />
           <Span marginLeft={5}>{likeCount}</Span>
         </Container>

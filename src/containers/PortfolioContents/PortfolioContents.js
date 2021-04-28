@@ -95,7 +95,7 @@ const PortfolioContents = ({ portfolio }) => {
               <Container textAlign="center">
                 <EmptyMessage>텅-</EmptyMessage>
                 <Span fontSize={2} fontWeight={700}>
-                  등록된 자기소개가 없습니다 :(
+                  등록된 자기소개가 없습니다<span aria-hidden> :(</span>
                 </Span>
               </Container>
             ))}
@@ -122,7 +122,7 @@ const PortfolioContents = ({ portfolio }) => {
               <Container textAlign="center">
                 <EmptyMessage>텅-</EmptyMessage>
                 <Span fontSize={2} fontWeight={700}>
-                  등록된 기술스택이 없습니다 :(
+                  등록된 기술스택이 없습니다<span aria-hidden> :(</span>
                 </Span>
               </Container>
             ))}
@@ -165,7 +165,7 @@ const PortfolioContents = ({ portfolio }) => {
               <Container textAlign="center">
                 <EmptyMessage>텅-</EmptyMessage>
                 <Span fontSize={2} fontWeight={700}>
-                  등록된 프로젝트가 없습니다 :(
+                  등록된 프로젝트가 없습니다<span aria-hidden> :(</span>
                 </Span>
               </Container>
             ))}

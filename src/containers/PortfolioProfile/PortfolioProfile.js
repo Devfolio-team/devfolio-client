@@ -51,10 +51,17 @@ const ProfileImage = styled.img`
   }
 `;
 
-const UsersSite = ({ href, type, margin, vw, iconMargin, children }) => {
+const UsersSite = ({ href, type, margin, vw, iconMargin, children, title, ariaLabel }) => {
   return (
     <Container width="100%" margin={margin} display="flex" alignItems="center">
-      <Anchor href={href} target="_blank" margin={iconMargin} onFocus={scrollToTop}>
+      <Anchor
+        href={href}
+        target="_blank"
+        margin={iconMargin}
+        onFocus={scrollToTop}
+        title={title}
+        aria-label={ariaLabel}
+      >
         <SVGIcon type={type} width={vw >= 768 ? 30 : 25} height={vw >= 768 ? 30 : 25} />
       </Anchor>
       <Anchor
@@ -63,6 +70,7 @@ const UsersSite = ({ href, type, margin, vw, iconMargin, children }) => {
         href={href}
         fontSize={vw >= 768 ? 1.4 : 1.3}
         margin="0 0 0 8px"
+        title={title}
       >
         {children}
       </Anchor>
@@ -94,7 +102,8 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                 ? userInfo.profile_photo
                 : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'
             }
-            alt=""
+            alt={`${userInfo.name}님의 프로필 사진`}
+            title={`${userInfo.name}님의 프로필 사진`}
           />
         ) : (
           <Skeleton
@@ -155,7 +164,7 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
           zIndex={10}
           justifyContent="space-between"
         >
-          {userInfo ? (
+          {userInfo && (
             <>
               {userInfo.github_url ? (
                 <UsersSite
@@ -165,6 +174,8 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                   vw={vw}
                   type="GithubBlack"
                   alignItems="center"
+                  title={`${userInfo.name}님의 github 주소로 이동`}
+                  ariaLabel={`${userInfo.name}님의 github 주소로 이동`}
                 />
               ) : null}
               {userInfo.email ? (
@@ -175,6 +186,8 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                   vw={vw}
                   type="Email"
                   alignItems="center"
+                  title={`${userInfo.name}님에게 email 전송`}
+                  ariaLabel={`${userInfo.name}님에게 email 전송`}
                 />
               ) : null}
               {userInfo.blog_url ? (
@@ -186,10 +199,12 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                   type="Blog"
                   alignItems="center"
                   iconMargin="0 0 -7px"
+                  title={`${userInfo.name}님의 blog 주소로 이동`}
+                  ariaLabel={`${userInfo.name}님의 blog 주소로 이동`}
                 />
               ) : null}
             </>
-          ) : null}
+          )}
         </Container>
       </Container>
     </StyledPortfolioProfile>
