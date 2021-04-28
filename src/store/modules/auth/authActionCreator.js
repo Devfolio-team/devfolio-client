@@ -29,7 +29,7 @@ export const signOutSuccessAction = () => ({ type: SIGN_OUT_SUCCESS });
 export const signOutErrorAction = () => ({ type: SIGN_OUT_ERROR });
 
 export const editAccountLoadingAction = () => ({ type: EDIT_ACCOUNT_LOADING });
-export const editAccountSuccessAction = () => ({ type: EDIT_ACCOUNT_SUCCESS });
+export const editAccountSuccessAction = payload => ({ type: EDIT_ACCOUNT_SUCCESS, payload });
 export const editAccountErrorAction = () => ({ type: EDIT_ACCOUNT_ERROR });
 
 export const deleteAccountLoadingAction = () => ({ type: DELETE_ACCOUNT_LOADING });

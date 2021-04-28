@@ -8,12 +8,12 @@ const StyledProjectList = styled.ul`
   ${props =>
     css`
       ${applyStyle(props)}
+      width: 100%;
     `}
 `;
 
-const ProjectList = ({ viewport, children }) => {
-  const { vw } = viewport;
-  return <StyledProjectList $width={vw > 1440 ? '1440px' : '100%'}>{children}</StyledProjectList>;
+const ProjectList = ({ children }) => {
+  return <StyledProjectList>{children}</StyledProjectList>;
 };
 
 ProjectList.propTypes = {

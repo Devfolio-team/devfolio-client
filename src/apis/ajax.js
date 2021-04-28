@@ -9,6 +9,7 @@ import {
   postLikeCountPlus,
   delLikeCountMinus,
 } from 'apis/project';
+import { editPortfolio } from 'apis/portfolio';
 
 const ajax = {
   signIn,
@@ -21,6 +22,7 @@ const ajax = {
   getIsPressLikeButton,
   postLikeCountPlus,
   delLikeCountMinus,
+  editPortfolio,
 };
 
 export default ajax;
