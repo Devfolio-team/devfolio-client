@@ -56,10 +56,18 @@ import { ReactComponent as Svelte } from 'assets/Svelte.svg';
 import { ReactComponent as TailwindCSS } from 'assets/TailwindCSS.svg';
 import { ReactComponent as Tomcat } from 'assets/Tomcat.svg';
 import { ReactComponent as Webpack } from 'assets/Webpack.svg';
+import { ReactComponent as Firestore } from 'assets/Firestore.svg';
+import { ReactComponent as Docker } from 'assets/Docker.svg';
 
 const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
-  switch (type.toUpperCase()) {
+  const spaceDelete = type => {
+    let result = '';
+    result = type.replace(/ /g, '');
+    return result.toUpperCase();
+  };
+
+  switch (spaceDelete(type)) {
     default:
     case 'EXPRESS':
       SkillIcon = Express;
@@ -231,6 +239,12 @@ const SkillIcon = ({ type, ...restProps }) => {
       break;
     case 'WEBPACK':
       SkillIcon = Webpack;
+      break;
+    case 'FIRESTORE':
+      SkillIcon = Firestore;
+      break;
+    case 'DOCKER':
+      SkillIcon = Docker;
       break;
   }
   return <SkillIcon {...restProps} />;

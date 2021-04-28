@@ -31,7 +31,7 @@ const StyledPortfolioProfile = styled.div`
   `}
 `;
 
-const ProfileImate = styled.img`
+const ProfileImage = styled.img`
   border-radius: 50%;
   width: 250px;
   height: 250px;
@@ -87,7 +87,7 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
         transform={`translate3D(-50%, ${vw >= 780 ? '-44%' : '-50%'}, 0)`}
       >
         {userInfo ? (
-          <ProfileImate
+          <ProfileImage
             src={
               userInfo
                 ? userInfo.profile_photo

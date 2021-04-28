@@ -6,6 +6,7 @@ import { applyStyle } from 'utils';
 const StyledHeading = styled.h1`
   ${props => css`
     ${applyStyle(props)}
+    word-break: break-all;
   `}
 `;
 
