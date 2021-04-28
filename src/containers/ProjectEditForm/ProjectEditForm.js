@@ -14,7 +14,7 @@ import {
   Button,
   Container,
 } from 'components';
-import { color, validationSchema } from 'utils';
+import { color, projectValidationSchema } from 'utils';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ajax from 'apis/ajax';
@@ -67,7 +67,7 @@ const ProjectEditForm = ({ vw, setLeave }) => {
         startDate: '',
         endDate: '',
       }}
-      validationSchema={validationSchema}
+      validationSchema={projectValidationSchema}
       initialTouched={{
         subject: true,
         planIntention: true,
@@ -103,7 +103,7 @@ const ProjectEditForm = ({ vw, setLeave }) => {
               <PlanIntention vw={vw} errors={errors} />
               <ProjectDuration setFieldValue={setFieldValue} vw={vw} errors={errors} />
               <TechStacks setFieldValue={setFieldValue} vw={vw} />
-              <GithubRepoInput vw={vw} />
+              <GithubRepoInput vw={vw} errors={errors} />
               <DeploymentStatus values={values} vw={vw} />
               <PublicStatus vw={vw} />
               <ProjectThumbnail setFieldValue={setFieldValue} vw={vw} errors={errors} />

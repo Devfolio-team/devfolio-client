@@ -1,4 +1,4 @@
-import { Container, Heading, ProjectItem, SkillIconItem } from 'components';
+import { Container, Heading, ProjectExplanation, ProjectItem, SkillIconItem } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
@@ -19,18 +19,13 @@ const StyledPortfolioContents = styled.div`
   `}
 `;
 
-const Introduce = styled.pre`
+const Introduce = styled.div`
   ${props => css`
     ${applyStyle(props)}
-    overflow: auto;
-    white-space: pre-wrap;
+
     margin: 30px 0 0 100px;
-    line-height: 3rem;
-    font-size: 2rem;
     @media (max-width: 768px) {
       margin-left: 0;
-      font-size: 1.6rem;
-      line-height: 2.5rem;
     }
   `}
 `;
@@ -55,7 +50,9 @@ const ProjectList = styled.ul`
   `}
 `;
 
-const PortfolioContents = ({ skills, projects }) => {
+const PortfolioContents = ({ portfolio }) => {
+  const { user, skills, projects } = portfolio;
+
   const viewport = useDetectViewport();
   const { vw } = viewport;
 
@@ -73,20 +70,8 @@ const PortfolioContents = ({ skills, projects }) => {
           >
             Introduce
           </Heading>
-          <Introduce>
-            {`웹 프론트엔드 엔지니어 김지원 입니다. 여러 프로젝트를 수행하면서 개발 역량을 쌓아왔고, 현재는 React와 Redux를 사용하여 프로젝트를 진행 하고 있습니다. 리액트 프레임워크를 사용한 웹 프론트엔드 개발에 가장 익숙합니다.
 
-자기개발에 손을 놓지 않습니다. 퇴근 후는 사이드프로젝트를 하며 공부합니다. 개인적으로 진행하는 프로젝트와 팀원 들과 협업하는
-프로젝트를 병행하고 있습니다.
-
-1인 개발 프로젝트를 개발 시작부터 배포까지 혼자 진행해보며, 프론트엔드 말고도 백엔드와 디자인 직군의 역할의 이 해도를 키웠습니다. 
-
-여러 프로젝트에서 디자인부분까지 맡으면서 디자인 역량도 조금이나마 쌓게 되었고, 현재는 어느정도의 디자인 감각이 있는 프론트엔드 개발자를 지향하고 있습니다.
-
-또한, 여러 협업 프로젝트를 진행하면서 다른 직군과 소통하는 것의 중요성을 알게 되었고, 프로젝트 시 주기적으로 회의하고 수시로 소통합니다. 슬랙, 노션, 제플린 등의 협업 툴 활용능력도 쌓으며 다양한 프로젝트에 적용하고 있습니다.
-
-거의 모든 프로젝트를 깃허브를 활용해 관리하며 진행하고 있습니다.`}
-          </Introduce>
+          <Introduce>{user && <ProjectExplanation>{user.introduce}</ProjectExplanation>}</Introduce>
         </Container>
         <Container margin="80px 0 0">
           <Heading

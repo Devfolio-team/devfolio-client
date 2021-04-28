@@ -10,7 +10,7 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const GithubRepoInput = ({ vw }) => {
+const GithubRepoInput = ({ vw, errors }) => {
   return (
     <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
@@ -31,8 +31,9 @@ const GithubRepoInput = ({ vw }) => {
         afterTranslate={-1}
         beforeMargin={8}
         afterMargin={3}
+        errors={errors}
       />
-      <ErrorMessage name="githubUrl" component={FormErrorMessage} />
+      <ErrorMessage name="githubUrl" component={FormErrorMessage} margin="10px 0 0 0" />
     </StyledContainer>
   );
 };

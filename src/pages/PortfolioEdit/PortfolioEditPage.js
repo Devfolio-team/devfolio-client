@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { editAccountMiddleware } from 'store/modules/auth/authMiddleware';
 import { useHistory } from 'react-router-dom';
 import scrollToTop from 'utils/scrollToTop';
+import { portfolioValidationSchema, color } from 'utils';
+import { Container, Button } from 'components';
 
 const StyledPortfolioEditPage = styled.main``;
 
@@ -17,6 +19,13 @@ const PortfolioEditPage = () => {
 
   const getContents = () => {
     return editorRef.current.getInstance().getHtml();
+  };
+
+  const scrollToErrors = errors => {
+    const errorKeys = Object.keys(errors);
+    if (errorKeys.length > 0) {
+      document.getElementById(errorKeys[0]).focus();
+    }
   };
 
   useEffect(() => {
@@ -36,6 +45,12 @@ const PortfolioEditPage = () => {
           techStacks: [],
           profilePhoto: null,
         }}
+        validationSchema={portfolioValidationSchema}
+        initialTouched={{
+          githubUrl: true,
+          blogUrl: true,
+          email: true,
+        }}
         onSubmit={values => {
           const editedInfo = { ...values, introduce: getContents() };
           dispatch(editAccountMiddleware(authState.currentUser.user_id, editedInfo));
@@ -47,6 +62,21 @@ const PortfolioEditPage = () => {
             <Form>
               <PortfolioEditProfile errors={errors} setFieldValue={setFieldValue} />
               <PortfolioEditContents ref={editorRef} setFieldValue={setFieldValue} />
+              <Container display="flex" justifyContent="center">
+                <Button
+                  type="submit"
+                  children="저장"
+                  color={color.mainColor}
+                  fontWeight="700"
+                  margin="100px 0 0 0"
+                  hoverColor={color.white}
+                  hoverBackground={color.mainColor}
+                  border={`1px solid ${color.mainColor}`}
+                  onClick={() => {
+                    scrollToErrors(errors);
+                  }}
+                />
+              </Container>
             </Form>
           );
         }}

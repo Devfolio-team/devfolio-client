@@ -1,6 +1,6 @@
-import { Container, DND, Button, Input, Paragraph } from 'components';
+import { Container, DND, Button, Input, Paragraph, FormErrorMessage } from 'components';
 import { color } from 'utils';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { useState } from 'react';
 
@@ -55,91 +55,97 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           name="name"
           id="name"
           label="이름"
-          labelFontSize={isDesktop ? 2 : 1.6}
-          inputFontSize={2}
+          labelFontSize={isDesktop ? 1.6 : 1.4}
+          inputFontSize={isDesktop ? 1.6 : 1.4}
           width={isDesktop ? 300 : 315}
           height={42}
           border="1px solid #EAEAEA"
           borderRadius={5}
           margin="10px 0 10px 0"
           boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
-          beforeTranslate={isDesktop ? 4 : 3.8}
+          beforeTranslate={isDesktop ? 3.9 : 3.8}
           afterTranslate={0}
-          beforeMargin={isDesktop ? -240 : -255}
-          afterMargin={isDesktop ? -260 : -275}
+          beforeMargin={isDesktop ? -245 : -260}
+          afterMargin={isDesktop ? -265 : -280}
         />
         <Field
           component={Input}
           name="nickname"
           id="nickname"
           label="닉네임"
-          labelFontSize={isDesktop ? 2 : 1.6}
-          inputFontSize={2}
+          labelFontSize={isDesktop ? 1.6 : 1.4}
+          inputFontSize={isDesktop ? 1.6 : 1.4}
           width={isDesktop ? 300 : 315}
           height={42}
           border="1px solid #EAEAEA"
           borderRadius={5}
           margin="10px 0 10px 0"
           boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
-          beforeTranslate={isDesktop ? 4 : 3.8}
+          beforeTranslate={isDesktop ? 3.9 : 3.8}
           afterTranslate={0}
-          beforeMargin={isDesktop ? -225 : -240}
-          afterMargin={isDesktop ? -245 : -260}
+          beforeMargin={isDesktop ? -230 : -245}
+          afterMargin={isDesktop ? -250 : -265}
         />
         <Field
           component={Input}
           name="githubUrl"
           id="githubUrl"
           label="GitHub 주소를 입력하세요"
-          labelFontSize={isDesktop ? 2 : 1.6}
-          inputFontSize={2}
+          labelFontSize={isDesktop ? 1.6 : 1.4}
+          inputFontSize={isDesktop ? 1.6 : 1.4}
           width={isDesktop ? 300 : 315}
           height={42}
           border="1px solid #EAEAEA"
           borderRadius={5}
           margin="10px 0 10px 0"
           boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
-          beforeTranslate={isDesktop ? 4 : 3.8}
+          beforeTranslate={isDesktop ? 3.9 : 3.8}
           afterTranslate={0}
-          beforeMargin={isDesktop ? -55 : -110}
-          afterMargin={isDesktop ? -75 : -130}
+          beforeMargin={isDesktop ? -95 : -130}
+          afterMargin={isDesktop ? -115 : -150}
+          errors={errors}
         />
+        <ErrorMessage name="githubUrl" component={FormErrorMessage} margin="0 0 10px -120px" />
         <Field
           component={Input}
           name="email"
           id="email"
           label="이메일을 입력하세요"
-          labelFontSize={isDesktop ? 2 : 1.6}
-          inputFontSize={2}
+          labelFontSize={isDesktop ? 1.6 : 1.4}
+          inputFontSize={isDesktop ? 1.6 : 1.4}
           width={isDesktop ? 300 : 315}
           height={42}
           border="1px solid #EAEAEA"
           borderRadius={5}
           margin="10px 0 10px 0"
           boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
-          beforeTranslate={isDesktop ? 4 : 3.8}
+          beforeTranslate={isDesktop ? 3.9 : 3.8}
           afterTranslate={0}
-          beforeMargin={isDesktop ? -110 : -155}
-          afterMargin={isDesktop ? -130 : -175}
+          beforeMargin={isDesktop ? -135 : -165}
+          afterMargin={isDesktop ? -155 : -185}
+          errors={errors}
         />
+        <ErrorMessage name="email" component={FormErrorMessage} margin="0 0 10px -50px" />
         <Field
           component={Input}
           name="blogUrl"
           id="blogUrl"
           label="블로그 주소를 입력하세요"
-          labelFontSize={isDesktop ? 2 : 1.6}
-          inputFontSize={2}
+          labelFontSize={isDesktop ? 1.6 : 1.4}
+          inputFontSize={isDesktop ? 1.6 : 1.4}
           width={isDesktop ? 300 : 315}
           height={42}
           border="1px solid #EAEAEA"
           borderRadius={5}
           margin="10px 0 0 0"
           boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
-          beforeTranslate={isDesktop ? 4 : 3.8}
+          beforeTranslate={isDesktop ? 3.9 : 3.8}
           afterTranslate={0}
-          beforeMargin={isDesktop ? -70 : -120}
-          afterMargin={isDesktop ? -90 : -140}
+          beforeMargin={isDesktop ? -100 : -140}
+          afterMargin={isDesktop ? -120 : -160}
+          errors={errors}
         />
+        <ErrorMessage name="blogUrl" component={FormErrorMessage} margin="10px 0 10px -120px" />
         <Button
           children="회원탈퇴"
           color={color.white}

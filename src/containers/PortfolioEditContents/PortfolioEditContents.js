@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
-import { Container, Heading, Paragraph, ChipInputSearch, Button } from 'components';
+import { Container, Heading, Paragraph, ChipInputSearch } from 'components';
 import { Editor } from '@toast-ui/react-editor';
-import { color } from 'utils';
 import useDetectViewport from 'hooks/useDetectViewport';
 import ajax from 'apis/ajax';
 
@@ -42,8 +41,9 @@ const PortfolioEditContents = forwardRef(({ setFieldValue }, ref) => {
           fontSize={isDesktop ? 2.4 : 1.6}
           fontWeight={600}
           margin="0 0 60px 0"
+          lineHeight={isDesktop ? 0 : 22}
         >
-          포트폴리오에 보여질 자기 소개를 최대한 자세히 적어주세요!
+          포트폴리오에 보여질 자기 소개를 {isDesktop ? null : <br />}최대한 자세히 적어주세요!
         </Paragraph>
         <Editor
           previewStyle="vertical"
@@ -77,18 +77,6 @@ const PortfolioEditContents = forwardRef(({ setFieldValue }, ref) => {
           보유 기술 스택
         </Heading>
         <ChipInputSearch id="ownTechStacks" setFieldValue={setFieldValue} profile={true} />
-      </Container>
-      <Container display="flex" justifyContent="center">
-        <Button
-          type="submit"
-          children="저장"
-          color={color.mainColor}
-          fontWeight="700"
-          margin="100px 0 0 0"
-          hoverColor={color.white}
-          hoverBackground={color.mainColor}
-          border={`1px solid ${color.mainColor}`}
-        />
       </Container>
     </Container>
   );

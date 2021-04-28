@@ -44,7 +44,7 @@ const PortfolioPage = ({ match }) => {
       </A11yHidden>
       <PortfolioProfile userInfo={portfolio.user} skills={portfolio.skills} />
 
-      <PortfolioContents skills={portfolio.skills} projects={portfolio.projects} />
+      <PortfolioContents portfolio={portfolio} />
     </StyledPortfolioPage>
   );
 };

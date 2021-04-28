@@ -207,8 +207,8 @@ const DND = ({
           <Image
             src={isDeleted ? defaultProfilePhoto : src}
             alt={alt}
-            width={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
-            height={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+            width={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+            height={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
             object-fit="cover"
             position="absolute"
             top="0"
@@ -231,7 +231,7 @@ const DND = ({
           <HoverDNDMessage>Drag &amp; Drop your files here</HoverDNDMessage>
         </HoverDisplay>
       ) : null}
-      <ErrorMessage name="thumbnail" component={FormErrorMessage} />
+      <ErrorMessage name="thumbnail" component={FormErrorMessage} margin="10px 0 0 0" />
     </Container>
   );
 };
