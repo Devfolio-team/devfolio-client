@@ -1,4 +1,11 @@
-import { Container, Heading, ProjectExplanation, ProjectItem, SkillIconItem } from 'components';
+import {
+  Container,
+  Heading,
+  ProjectExplanation,
+  ProjectItem,
+  SkillIconItem,
+  Span,
+} from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
@@ -50,6 +57,14 @@ const ProjectList = styled.ul`
   `}
 `;
 
+const EmptyMessage = styled.span`
+  display: block;
+  width: 100px;
+  font-size: 10rem;
+  margin: 50px auto 80px;
+  text-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+`;
+
 const PortfolioContents = ({ portfolio }) => {
   const { user, skills, projects } = portfolio;
 
@@ -71,7 +86,19 @@ const PortfolioContents = ({ portfolio }) => {
             Introduce
           </Heading>
 
-          <Introduce>{user && <ProjectExplanation>{user.introduce}</ProjectExplanation>}</Introduce>
+          {user &&
+            (user.introduce ? (
+              <Introduce>
+                <ProjectExplanation>{user.introduce}</ProjectExplanation>
+              </Introduce>
+            ) : (
+              <Container textAlign="center">
+                <EmptyMessage>텅-</EmptyMessage>
+                <Span fontSize={2} fontWeight={700}>
+                  등록된 자기소개가 없습니다 :(
+                </Span>
+              </Container>
+            ))}
         </Container>
         <Container margin="80px 0 0">
           <Heading
@@ -84,11 +111,21 @@ const PortfolioContents = ({ portfolio }) => {
           >
             SKILLS
           </Heading>
-          <SkillIconList>
-            {skills
-              ? skills.map((skill, index) => <SkillIconItem key={index} type={skill.skill_name} />)
-              : null}
-          </SkillIconList>
+          {skills &&
+            (skills.lenght ? (
+              <SkillIconList>
+                {skills.map((skill, index) => (
+                  <SkillIconItem key={index} type={skill.skill_name} />
+                ))}
+              </SkillIconList>
+            ) : (
+              <Container textAlign="center">
+                <EmptyMessage>텅-</EmptyMessage>
+                <Span fontSize={2} fontWeight={700}>
+                  등록된 기술스택이 없습니다 :(
+                </Span>
+              </Container>
+            ))}
         </Container>
         <Container margin="50px 0 0">
           <Heading
@@ -101,9 +138,10 @@ const PortfolioContents = ({ portfolio }) => {
           >
             Projects
           </Heading>
-          <ProjectList>
-            {projects
-              ? projects.map(project => (
+          {projects &&
+            (projects.length ? (
+              <ProjectList>
+                {projects.map(project => (
                   <ProjectItem
                     key={project.project_id}
                     containerMinHeight={'28.15vw'}
@@ -121,9 +159,16 @@ const PortfolioContents = ({ portfolio }) => {
                     authorProfile={project.profile_photo}
                     likeCount={project.likeCount}
                   />
-                ))
-              : null}
-          </ProjectList>
+                ))}
+              </ProjectList>
+            ) : (
+              <Container textAlign="center">
+                <EmptyMessage>텅-</EmptyMessage>
+                <Span fontSize={2} fontWeight={700}>
+                  등록된 프로젝트가 없습니다 :(
+                </Span>
+              </Container>
+            ))}
         </Container>
       </Container>
     </StyledPortfolioContents>
