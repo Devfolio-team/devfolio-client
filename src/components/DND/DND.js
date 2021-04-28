@@ -231,7 +231,7 @@ const DND = ({
           <HoverDNDMessage>Drag &amp; Drop your files here</HoverDNDMessage>
         </HoverDisplay>
       ) : null}
-      <ErrorMessage name="thumbnail" component={FormErrorMessage} />
+      <ErrorMessage name="thumbnail" component={FormErrorMessage} margin="10px 0 0 0" />
     </Container>
   );
 };

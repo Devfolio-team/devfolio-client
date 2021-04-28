@@ -1,6 +1,6 @@
-import { Container, DND, Button, Input, Paragraph } from 'components';
+import { Container, DND, Button, Input, Paragraph, FormErrorMessage } from 'components';
 import { color } from 'utils';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { useState } from 'react';
 
@@ -103,7 +103,9 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           afterTranslate={0}
           beforeMargin={isDesktop ? -95 : -130}
           afterMargin={isDesktop ? -115 : -150}
+          errors={errors}
         />
+        <ErrorMessage name="githubUrl" component={FormErrorMessage} margin="0 0 10px -120px" />
         <Field
           component={Input}
           name="email"
@@ -121,7 +123,9 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           afterTranslate={0}
           beforeMargin={isDesktop ? -135 : -165}
           afterMargin={isDesktop ? -155 : -185}
+          errors={errors}
         />
+        <ErrorMessage name="email" component={FormErrorMessage} margin="0 0 10px -50px" />
         <Field
           component={Input}
           name="blogUrl"
@@ -139,7 +143,9 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           afterTranslate={0}
           beforeMargin={isDesktop ? -100 : -140}
           afterMargin={isDesktop ? -120 : -160}
+          errors={errors}
         />
+        <ErrorMessage name="blogUrl" component={FormErrorMessage} margin="10px 0 10px -120px" />
         <Button
           children="회원탈퇴"
           color={color.white}
