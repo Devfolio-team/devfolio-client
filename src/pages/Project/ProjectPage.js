@@ -21,6 +21,20 @@ import scrollToTop from 'utils/scrollToTop';
 import ajax from 'apis/ajax';
 import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
+import {
+  Blink,
+  Bounce,
+  Fade,
+  Flicker,
+  Groove,
+  Jelly,
+  Jerk,
+  Pop,
+  Shake,
+  Squeeze,
+  Swing,
+  Tada,
+} from 'react-micron';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -33,7 +47,6 @@ const ProjectWriter = styled(Anchor)`
     ${applyStyle(props)}
     width: ${'200px'};
     font-size: ${'1.6rem'};
-    margin-left: ${'10px'};
   `}
 `;
 
@@ -256,6 +269,9 @@ const ProjectPage = ({ match }) => {
     };
     project();
 
+    const list = document.querySelectorAll('h3');
+    console.log(list);
+
     //처음에 페이지 접속 했을 때 프로젝트에 좋아요를 눌렀는가?
     const getIsLike = async () => {
       if (!loginUser.user_id) return;
@@ -312,24 +328,32 @@ const ProjectPage = ({ match }) => {
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
-              {likeCount ? (
+              {project ? (
                 <>
-                  <LikeButton
-                    borderRadius="50%"
-                    background="inherit"
-                    border="1px solid #A3ABB3"
-                    width="44px"
-                    height="44px"
-                    padding="0"
-                    onClick={onLikeCountPlusHandler}
-                    title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+                  <Flicker
+                    events="onMouseEnter"
+                    timing="ease-in-out"
+                    duration={0.45}
+                    inline={false}
                   >
-                    {isLike === false ? (
-                      <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-                    ) : (
-                      <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-                    )}
-                  </LikeButton>
+                    <LikeButton
+                      borderRadius="50%"
+                      background="inherit"
+                      border="1px solid #A3ABB3"
+                      width="44px"
+                      height="44px"
+                      padding="0"
+                      onClick={onLikeCountPlusHandler}
+                      title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+                      $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
+                    >
+                      {isLike === false ? (
+                        <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+                      ) : (
+                        <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+                      )}
+                    </LikeButton>
+                  </Flicker>
                   <Span fontSize={1.4} lineHeight="16px" margin="5px 0 0 0">
                     {likeCount}
                   </Span>{' '}
@@ -343,7 +367,7 @@ const ProjectPage = ({ match }) => {
           ''
         )}
         <Container display="flex" alignItems="center" width="215px" margin="0">
-          {created ? (
+          {project ? (
             <>
               <Time
                 margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
@@ -352,15 +376,16 @@ const ProjectPage = ({ match }) => {
               >
                 {DateFormMaker(created)}
               </Time>
-              <Container margin="0" display="flex" textAlign="left" alignItems="center">
-                <Image
-                  src={project_profile_photo}
-                  alt="닉네임프로필사진"
-                  width="24px"
-                  height="24px"
-                  borderRadius="50%"
-                />
+              <Container display="flex">
                 <ProjectWriter href={`/portfolio/${user_user_id}`}>
+                  <Image
+                    src={project_profile_photo}
+                    alt="닉네임프로필사진"
+                    width="24px"
+                    height="24px"
+                    borderRadius="50%"
+                    $margin="0 8px 0 0"
+                  />
                   {project_nickname}
                 </ProjectWriter>
               </Container>
@@ -376,7 +401,7 @@ const ProjectPage = ({ match }) => {
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
-              {subject ? (
+              {project ? (
                 <ProjectNav
                   borderLeft="1.5px solid rgba(134, 142, 150, .5)"
                   padding="0 40px 0 10px"
@@ -419,6 +444,8 @@ const ProjectPage = ({ match }) => {
             $position={vw < 450 ? 'absolute' : ''}
             $top="120px"
             $right="30px"
+            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
             onClick={onLikeCountPlusHandler}
           >
             {isLike === false ? (
@@ -433,7 +460,7 @@ const ProjectPage = ({ match }) => {
         )}
       </Container>
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
-        {subject === '' ? (
+        {project === '' ? (
           <SkeletonUI $width="300px" $height="50px" $margin="120px 0 0 0" />
         ) : (
           <Heading
@@ -441,17 +468,19 @@ const ProjectPage = ({ match }) => {
             id="제목"
             fontSize={type === 'xs' ? 2.7 : 4}
             color="#212121"
-            lineHeight="5rem"
+            lineHeight={type === 'xs' ? '3.5rem' : '5rem'}
             margin={type === 'xs' ? '' : '20px 0'}
-            $padding="80px 0 0 0"
+            $padding={type === 'xs' ? '30px 0 0 0' : '80px 0 0 0'}
           >
             {subject}
           </Heading>
         )}
-        {subject ? (
+        {project ? (
           <Span
+            display="inline-block"
             fontSize={type === 'xs' ? 1.8 : 2}
             lineHeight={type === 'xs' ? '' : '10px'}
+            margin={type === 'xs' ? '15px 0 0 0' : ''}
             color="#212121"
           >
             {team_name}
@@ -466,7 +495,7 @@ const ProjectPage = ({ match }) => {
         margin="0 0 22px 0"
         padding={isDesktop ? '0 70px' : '0 30px'}
       >
-        {subject ? (
+        {project ? (
           <LinkToWebSiteWrapper
             $cursor="not-allowed"
             title={deploy_url ? '배포된 사이트로 이동' : '배포된 사이트가 없습니다.'}
@@ -524,7 +553,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI width={type === 'xs' ? '100%' : '200px'} height="44px" />
         )}
-        {subject ? (
+        {project ? (
           <LinkToWebSiteWrapper
             $cursor="not-allowed"
             title={github_url ? '깃허브로 이동' : '깃허브 주소가 없습니다.'}
@@ -583,7 +612,7 @@ const ProjectPage = ({ match }) => {
         )}
       </Container>
       <Container position="relative" padding={isDesktop ? '0 70px' : '0 30px'} minHeight="300px">
-        {thumbnail ? (
+        {project ? (
           <>
             {isIMGLoading ? (
               <Spinner
@@ -607,7 +636,7 @@ const ProjectPage = ({ match }) => {
       </Container>
       <DivisionLine $width={isDesktop ? '500px' : '70%'} />
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
-        {subject ? (
+        {project ? (
           <Heading
             as="h3"
             id="기획의도"
@@ -625,7 +654,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
-        {plan_intention ? (
+        {project ? (
           <Paragraph
             color="#666666"
             fontSize={1.6}
@@ -709,7 +738,7 @@ const ProjectPage = ({ match }) => {
           $margin="80px auto"
         />*/}
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
-        {subject ? (
+        {project ? (
           <Heading
             as="h3"
             id="사용기술스택"
@@ -727,7 +756,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
-        {projectTechStacks ? (
+        {project ? (
           <SkillList
             $margin="0 auto"
             $width="100%"
@@ -766,7 +795,7 @@ const ProjectPage = ({ match }) => {
       </Container>
       <DivisionLine $width={isDesktop ? '500px' : '70%'} />
       <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
-        {subject ? (
+        {project ? (
           <Heading
             as="h3"
             id="프로젝트설명"
@@ -785,7 +814,7 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
         <Container margin="0 0 10px">
-          {start_date && end_date ? (
+          {project ? (
             <>
               <Time fontSize={1.6} dateTime={DateFormMaker(start_date)} color="#70777d">
                 {DateFormMaker(start_date)}
@@ -802,7 +831,7 @@ const ProjectPage = ({ match }) => {
             <SkeletonUI $width="200px" $height="10px" />
           )}
         </Container>
-        {main_contents ? (
+        {project ? (
           <ProjectExplanation>{main_contents}</ProjectExplanation>
         ) : (
           <SkeletonUI width="100%" height="200px" />
