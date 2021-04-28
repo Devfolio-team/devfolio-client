@@ -22,6 +22,7 @@ const Paragraph = ({
   overflow,
   textOverflow,
   width,
+  textAlign,
   ...restProps
 }) => (
   <StyledParagraph
@@ -37,6 +38,7 @@ const Paragraph = ({
     $cursor={cursor}
     $overflow={overflow}
     $textOverflow={textOverflow}
+    $textAlign={textAlign}
     {...restProps}
   />
 );

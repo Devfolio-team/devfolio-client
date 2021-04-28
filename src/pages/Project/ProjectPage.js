@@ -22,10 +22,13 @@ import ajax from 'apis/ajax';
 import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
 import { Flicker } from 'react-micron';
+import DeleteModifyButton from './DeleteModifyButton';
+import DeleteModalDialog from './DeleteModalDialog';
 
 const StyledProjectPage = styled.main`
   ${props => css`
     ${applyStyle(props)}
+    position: relative;
   `}
 `;
 
@@ -233,6 +236,12 @@ const ProjectPage = ({ match }) => {
     setIsIMGLoading(false);
   };
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const onDeleteModalOpenHandler = () => {
+    setIsDeleteModalOpen(true);
+  };
+
   // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
   useEffect(() => {
     scrollToTop();
@@ -410,6 +419,7 @@ const ProjectPage = ({ match }) => {
             </Container>
           </Container>
         </Container>
+
         {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
         {vw > 840 ? (
           ''
@@ -471,6 +481,12 @@ const ProjectPage = ({ match }) => {
           </Span>
         ) : (
           <SkeletonUI $width="150px" $height="30px" $margin="10px 0 0 0" />
+        )}
+        {loginUserInfo && project && loginUserInfo.user_id === project.projectData.user_user_id && (
+          <Container margin="0 30px 0" position="absolute" top="64px" right="70px">
+            <DeleteModifyButton>수정</DeleteModifyButton>
+            <DeleteModifyButton onClick={onDeleteModalOpenHandler}>삭제</DeleteModifyButton>
+          </Container>
         )}
       </Container>
       <Container
@@ -821,6 +837,12 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
+      {isDeleteModalOpen && (
+        <DeleteModalDialog
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          projectId={project && project.projectData.project_id}
+        />
+      )}
     </StyledProjectPage>
   );
 };
