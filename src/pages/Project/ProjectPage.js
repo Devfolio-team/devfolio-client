@@ -419,41 +419,8 @@ const ProjectPage = ({ match }) => {
             </Container>
           </Container>
         </Container>
-
-        {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
-        {vw > 840 ? (
-          ''
-        ) : (
-          <LikeButton
-            borderRadius="5px"
-            background="inherit"
-            border="1px solid #A3ABB3"
-            width="82px"
-            height="33px"
-            padding="0"
-            display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $color="#212121"
-            $position={vw < 450 ? 'absolute' : ''}
-            $top="120px"
-            $right="30px"
-            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
-            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
-            onClick={onLikeCountPlusHandler}
-          >
-            {isLike === false ? (
-              <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-            ) : (
-              <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-            )}
-            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
-              {likeCount}
-            </Span>
-          </LikeButton>
-        )}
       </Container>
-      <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
+      <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'} position="relative">
         {subject === '' ? (
           <SkeletonUI $width="300px" $height="50px" $margin="120px 0 0 0" />
         ) : (
@@ -469,6 +436,36 @@ const ProjectPage = ({ match }) => {
             {subject}
           </Heading>
         )}
+        {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
+        {vw > 840 ? null : (
+          <LikeButton
+            borderRadius="5px"
+            background="inherit"
+            border="1px solid #A3ABB3"
+            width="82px"
+            height="33px"
+            padding="0"
+            display="flex"
+            $justifyContent="center"
+            $alignItems="center"
+            $color="#212121"
+            $position="absolute"
+            $top={vw >= 480 ? '-50px' : '-70px'}
+            $right={vw >= 768 ? '70px' : '30px'}
+            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
+            onClick={onLikeCountPlusHandler}
+          >
+            {isLike === false ? (
+              <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+            ) : (
+              <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+            )}
+            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
+              {likeCount}
+            </Span>
+          </LikeButton>
+        )}
         {subject ? (
           <Span
             display="inline-block"
@@ -483,7 +480,12 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI $width="150px" $height="30px" $margin="10px 0 0 0" />
         )}
         {loginUserInfo && project && loginUserInfo.user_id === project.projectData.user_user_id && (
-          <Container margin="0 30px 0" position="absolute" top="64px" right="70px">
+          <Container
+            margin="0"
+            position="absolute"
+            top={vw > 840 ? '-50px' : 0}
+            right={vw >= 768 ? '70px' : '30px'}
+          >
             <DeleteModifyButton>수정</DeleteModifyButton>
             <DeleteModifyButton onClick={onDeleteModalOpenHandler}>삭제</DeleteModifyButton>
           </Container>
