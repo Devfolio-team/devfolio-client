@@ -71,6 +71,8 @@ export default {
           'TailwindCSS',
           'Tomcat',
           'Webpack',
+          'Firestore',
+          'Docker',
         ],
       },
     },
@@ -137,6 +139,8 @@ export const Svelte = Template.bind({});
 export const TailwindCSS = Template.bind({});
 export const Tomcat = Template.bind({});
 export const Webpack = Template.bind({});
+export const Firestore = Template.bind({});
+export const Docker = Template.bind({});
 
 ExpressIcon.args = {
   type: 'Express',
@@ -315,107 +319,117 @@ Vue.args = {
   heigth: 40,
 };
 Aws.args = {
-  typd: 'Aws',
+  type: 'Aws',
   width: 40,
   height: 40,
 };
 Bootstrap.args = {
-  typd: 'Bootstrap',
+  type: 'Bootstrap',
   width: 40,
   height: 40,
 };
 CouchDB.args = {
-  typd: 'CouchDB',
+  type: 'CouchDB',
   width: 40,
   height: 40,
 };
 DynamoDB.args = {
-  typd: 'DynamoDB',
+  type: 'DynamoDB',
   width: 40,
   height: 40,
 };
 Git.args = {
-  typd: 'Git',
+  type: 'Git',
   width: 40,
   height: 40,
 };
 Github.args = {
-  typd: 'Github',
+  type: 'Github',
   width: 40,
   height: 40,
 };
 Jekyll.args = {
-  typd: 'Jekyll',
+  type: 'Jekyll',
   width: 40,
   height: 40,
 };
 JQuery.args = {
-  typd: 'JQuery',
+  type: 'JQuery',
   width: 40,
   height: 40,
 };
 Linux.args = {
-  typd: 'Linux',
+  type: 'Linux',
   width: 40,
   height: 40,
 };
 MariaDB.args = {
-  typd: 'MariaDB',
+  type: 'MariaDB',
   width: 40,
   height: 40,
 };
 MaterialUI.args = {
-  typd: 'MaterialUI',
+  type: 'MaterialUI',
   width: 40,
   height: 40,
 };
 Oracle.args = {
-  typd: 'Oracle',
+  type: 'Oracle',
   width: 40,
   height: 40,
 };
 PostCSS.args = {
-  typd: 'PostCSS',
+  type: 'PostCSS',
   width: 40,
   height: 40,
 };
 Redis.args = {
-  typd: 'Redis',
+  type: 'Redis',
   width: 40,
   height: 40,
 };
 RethinkDB.args = {
-  typd: 'RethinkDB',
+  type: 'RethinkDB',
   width: 40,
   height: 40,
 };
 Rollup.args = {
-  typd: 'Rollup',
+  type: 'Rollup',
   width: 40,
   height: 40,
 };
 RxJS.args = {
-  typd: 'RxJS',
+  type: 'RxJS',
   width: 40,
   height: 40,
 };
 Svelte.args = {
-  typd: 'Svelte',
+  type: 'Svelte',
   width: 40,
   height: 40,
 };
 TailwindCSS.args = {
-  typd: 'TailwindCSS',
+  type: 'TailwindCSS',
   width: 40,
   height: 40,
 };
 Tomcat.args = {
-  typd: 'Tomcat',
+  type: 'Tomcat',
   width: 40,
   height: 40,
 };
 Webpack.args = {
-  typd: 'Webpack',
+  type: 'Webpack',
+  width: 40,
+  height: 40,
+};
+Firestore.args = {
+  type: 'Firestore',
+  width: 40,
+  height: 40,
+};
+Docker.args = {
+  type: 'Docker',
   width: 40,
   height: 40,
 };

@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
-import { Button, Container, Heading, SVGIcon, Modal, Dialog } from 'components';
+import { Button, Container, Heading, SVGIcon, Modal, Dialog, Span } from 'components';
 import { forwardRef, useEffect, React } from 'react';
+import { applyStyle } from 'utils';
 
 const DivisionLine = styled.div`
   ${({ $height, $marginBottom }) => css`
@@ -16,8 +17,8 @@ const DivisionDiv = styled.div`
     color: #ffffff;
     background-color: #2c3035;
     width: ${$width};
-    height: 46px;
-    line-height: 46px;
+    height: 23px;
+    line-height: 23px;
     text-align: center;
     font-size: 16px;
     position: absolute;
@@ -41,6 +42,12 @@ const SVGIconName = styled.span`
   font-size: 1.6rem;
   line-height: 1.6rem;
   margin-left: 16px;
+`;
+
+const LinkToWebSite = styled.a`
+  ${props => css`
+    ${applyStyle(props)}
+  `}
 `;
 
 const onSubmitHandler = e => {
@@ -91,7 +98,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
         <Dialog
           ref={ref}
           role="dialog"
-          width={`${isDesktop ? '710px' : type === 'sm' ? '85%' : '85%'}`}
+          width={`${isDesktop ? '500px' : type === 'sm' ? '85%' : '85%'}`}
           height={`${isDesktop ? '500px' : type === 'sm' ? '400px' : '340px'}`}
           padding={`${isDesktop ? '30px' : type === 'sm' ? '50px' : '30px'}`}
           borderRadius={5}
@@ -107,18 +114,19 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             시작하기
           </Heading>
           <Container
-            width={`${isDesktop ? '550px' : '100%'}`}
+            width={`${isDesktop ? '100%' : '100%'}`}
             display={`${isDesktop ? 'flex' : ''}`}
-            justifyContent={`${isDesktop ? 'space-between' : ''}`}
-            flexFlow={`${isDesktop ? '' : 'column'}`}
+            justifyContent={`${isDesktop ? 'center' : ''}`}
+            alignItems="center"
+            flexFlow="column"
           >
             <Button
               aria-label="구글 로그인"
-              width={`${isDesktop ? '47%' : '100%'}`}
+              width={`${isDesktop ? '320px' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
               background="#ffffff"
-              margin={`${isMobile ? '0 0 10px 0' : ''}`}
+              margin={`${isMobile ? '0 0 10px 0' : '0 0 30px 0'}`}
               fontWeight={700}
               onClick={() => {
                 window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
@@ -131,7 +139,7 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             </Button>
             <Button
               aria-label="깃허브 로그인"
-              width={`${isDesktop ? '47%' : '100%'}`}
+              width={`${isDesktop ? '320px' : '100%'}`}
               height={`${type === 'xs' ? '48px' : '66px'}`}
               borderRadius={30}
               background="#ffffff"
@@ -174,18 +182,33 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               beforeMargin={`${isDesktop ? '80' : type === 'sm' ? '20' : '20'}`}
               afterMargin={`${isDesktop ? '60' : type === 'sm' ? '4.2' : '10'}`}
             /> */}
-            <Button
-              width={`${isDesktop ? '195px' : '100%'}`}
-              height={`${type === 'xs' ? '48px' : '65px'}`}
-              background={'#2c3035'}
-              border="1px solid #ffffff"
-              borderRadius={30}
-              color="#ffffff"
-              display="block"
-              margin={`${isDesktop ? '55px auto 0 auto' : '10px 0 0 0 '}`}
+            <Heading
+              as="h3"
+              color="#FFFFFF"
+              fontSize={isDesktop ? 2 : type === 'sm' ? 1.8 : 1.4}
+              fontWeight={400}
+              textAlign="center"
             >
-              로그인 / 회원가입
-            </Button>
+              Suits에서 기술면접 준비하기
+            </Heading>
+            <LinkToWebSite
+              href="https://github.com/TEAM-SUITS/Suits"
+              target="_blank"
+              $width={`${isDesktop ? '320px' : '100%'}`}
+              $height={`${type === 'xs' ? '48px' : '66px'}`}
+              $background="#ffffff"
+              $borderRadius={30}
+              $display="flex"
+              $flexFlow="column"
+              $alignItems="center"
+              $justifyContent="center"
+              $margin={`${isDesktop ? '21px auto' : '10px 0 0 0 '}`}
+            >
+              <Span fontSize={1.4} fontWeight={400} margin="0 0 4px 0">
+                기술 면접을 준비하는 단정한 습관
+              </Span>
+              <SVGIcon type="Suits" />
+            </LinkToWebSite>
           </DialogForm>
           <Button
             width={22}
@@ -196,8 +219,10 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
             top="20px"
             right="20px"
             onClick={onModalCloseHandler}
+            color="#FFFFFF"
+            fontSize={2.2}
           >
-            <SVGIcon type="X" onClick={onModalCloseHandler} width={22} height={22} />
+            X
           </Button>
         </Dialog>
       </Modal>
