@@ -4,13 +4,16 @@ import { ProjectEditForm } from 'containers';
 import { Heading, Container } from 'components';
 import { useSelector } from 'react-redux';
 import scrollToTop from 'utils/scrollToTop';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 
 const StyledProjectEditPage = styled.main``;
 
 const ProjectEditPage = ({ viewport }) => {
+  const currentUser = useSelector(({ auth }) => auth.currentUser);
+
+  const history = useHistory();
+
   const [leave, setLeave] = useState(true);
-  const userName = useSelector(state => state.auth.currentUser.name);
 
   useEffect(() => {
     scrollToTop();
@@ -27,6 +30,11 @@ const ProjectEditPage = ({ viewport }) => {
     e.preventDefault();
     e.returnValue = '';
   };
+
+  if (!currentUser) {
+    history.push('/page-not-found');
+    return null;
+  }
 
   return (
     <StyledProjectEditPage>
@@ -50,7 +58,7 @@ const ProjectEditPage = ({ viewport }) => {
           textAlign="center"
           lineHeight="46px"
         >
-          {userName}님 안녕하세요!
+          {currentUser.nickname}님 안녕하세요!
           <br />
           프로젝트 등록을 시작해 볼까요?
         </Heading>

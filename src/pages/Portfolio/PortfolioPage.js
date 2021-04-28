@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import scrollToTop from 'utils/scrollToTop';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 const StyledPortfolioPage = styled.main``;
 
@@ -21,6 +22,8 @@ const PortfolioPage = ({ match }) => {
 
   const authState = useSelector(state => state.auth);
 
+  const history = useHistory();
+
   useEffect(() => {
     scrollToTop();
 
@@ -31,11 +34,11 @@ const PortfolioPage = ({ match }) => {
           setPortfolio(response.data.responseData);
         }
       } catch (error) {
-        throw new Error(error);
+        history.push('/page-not-found');
       }
     };
     getPortfolioAsync();
-  }, [user_id, authState.currentUser]);
+  }, [user_id, authState.currentUser, history]);
 
   return (
     <StyledPortfolioPage>

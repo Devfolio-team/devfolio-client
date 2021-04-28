@@ -1,9 +1,9 @@
 import React from 'react';
 import parse from 'html-react-parser';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export const parseHtmlAndHighlighter = (html, { style = dracula } = {}) => {
+export const parseHtmlAndHighlighter = (html, { style = xonokai } = {}) => {
   // data-languege 위치 찾기 (위치를 찾고 "" 사이에 있는 값을 찾기 위해)
   const searchDataLanguege = html.indexOf('data-language');
   // 첫번째 "
