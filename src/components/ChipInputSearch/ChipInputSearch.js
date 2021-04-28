@@ -97,7 +97,7 @@ const ChipInputSearch = ({ id, setFieldValue, profile }) => {
   useEffect(() => {
     if (profile)
       setChipLabels(authState.currentUser.currentUsersSkills.map(skill => skill.skill_name));
-  }, [authState.currentUser.currentUsersSkills, profile]);
+  }, [authState.currentUser?.currentUsersSkills, profile]);
 
   const onKeyUpHandler = e => {
     if (e.key !== 'Enter') return;
