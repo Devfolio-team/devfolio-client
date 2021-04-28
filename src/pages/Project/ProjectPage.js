@@ -21,20 +21,7 @@ import scrollToTop from 'utils/scrollToTop';
 import ajax from 'apis/ajax';
 import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
-import {
-  Blink,
-  Bounce,
-  Fade,
-  Flicker,
-  Groove,
-  Jelly,
-  Jerk,
-  Pop,
-  Shake,
-  Squeeze,
-  Swing,
-  Tada,
-} from 'react-micron';
+import { Flicker } from 'react-micron';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -268,9 +255,6 @@ const ProjectPage = ({ match }) => {
       }
     };
     project();
-
-    const list = document.querySelectorAll('h3');
-    console.log(list);
 
     //처음에 페이지 접속 했을 때 프로젝트에 좋아요를 눌렀는가?
     const getIsLike = async () => {
