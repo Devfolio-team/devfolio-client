@@ -34,7 +34,7 @@ const ProjectName = ({ vw, errors }) => {
         boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
         errors={errors}
       />
-      <ErrorMessage name="subject" component={FormErrorMessage} />
+      <ErrorMessage name="subject" component={FormErrorMessage} margin="10px 0 0 0" />
     </StyledContainer>
   );
 };

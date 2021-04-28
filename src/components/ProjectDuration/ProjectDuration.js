@@ -117,7 +117,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             autoComplete="off"
             errors={errors}
           />
-          <ErrorMessage name="startDate" component={FormErrorMessage} />
+          <ErrorMessage name="startDate" component={FormErrorMessage} margin="10px 0 0 0" />
         </Container>
         <Container
           width="100%"
@@ -163,7 +163,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             style={{ left: '115px' }}
             errors={errors}
           />
-          <ErrorMessage name="endDate" component={FormErrorMessage} />
+          <ErrorMessage name="endDate" component={FormErrorMessage} margin="10px 0 0 0" />
         </Container>
       </Container>
     </StyledContainer>
