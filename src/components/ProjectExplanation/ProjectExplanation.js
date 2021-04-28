@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { parseHtmlAndHighlighter } from 'utils/parseHtmlAndHighlighter';
 
 const StyledProjectExplanation = styled.div`
   h1 {
@@ -16,7 +17,10 @@ const StyledProjectExplanation = styled.div`
     padding: 10px 0;
   }
 
-  h3 {
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: 1rem;
     line-height: 2.5rem;
     margin-bottom: 1rem;
@@ -31,6 +35,10 @@ const StyledProjectExplanation = styled.div`
     margin-bottom: 1rem;
   }
 
+  div {
+    font-size: 2rem;
+  }
+
   code {
     overflow: hidden;
     white-space: pre-wrap;
@@ -43,19 +51,19 @@ const StyledProjectExplanation = styled.div`
   }
 
   em,
-  string,
+  strong,
   del,
   strike,
   sup,
   sub,
-  samll,
+  small,
   u {
     font-size: 1.7rem;
   }
 `;
 
 const ProjectExplanation = ({ children }) => {
-  return <StyledProjectExplanation>{children}</StyledProjectExplanation>;
+  return <StyledProjectExplanation>{parseHtmlAndHighlighter(children)}</StyledProjectExplanation>;
 };
 
 export default ProjectExplanation;
