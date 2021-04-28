@@ -1,9 +1,17 @@
 import React from 'react';
 import parse from 'html-react-parser';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-export const parseHtmlAndHighlighter = (html, { language = 'javascript', style = docco } = {}) => {
+export const parseHtmlAndHighlighter = (html, { style = dracula } = {}) => {
+  // data-languege 위치 찾기 (위치를 찾고 "" 사이에 있는 값을 찾기 위해)
+  const searchDataLanguege = html.indexOf('data-language');
+  // 첫번째 "
+  const startPoint = html.indexOf('"', searchDataLanguege + 12);
+  // 두번째 "
+  const endPoint = html.indexOf('"', startPoint + 1);
+  const language = html.substring(startPoint + 1, endPoint);
+
   return parse(html, {
     replace: domNode => {
       if (domNode.name === 'pre') {
