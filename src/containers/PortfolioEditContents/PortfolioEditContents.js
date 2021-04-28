@@ -42,8 +42,9 @@ const PortfolioEditContents = forwardRef(({ setFieldValue }, ref) => {
           fontSize={isDesktop ? 2.4 : 1.6}
           fontWeight={600}
           margin="0 0 60px 0"
+          lineHeight={isDesktop ? 0 : 22}
         >
-          포트폴리오에 보여질 자기 소개를 최대한 자세히 적어주세요!
+          포트폴리오에 보여질 자기 소개를 {isDesktop ? null : <br />}최대한 자세히 적어주세요!
         </Paragraph>
         <Editor
           previewStyle="vertical"

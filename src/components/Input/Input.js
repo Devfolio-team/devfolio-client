@@ -26,7 +26,7 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
 }))`
   ${props => css`
     ${applyStyle(props)}
-    font-size: ${props.$inputFontSize};
+    font-size: ${props.$inputFontSize}rem;
     outline: none;
     &:focus {
       outline: none;

@@ -207,8 +207,8 @@ const DND = ({
           <Image
             src={isDeleted ? defaultProfilePhoto : src}
             alt={alt}
-            width={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
-            height={vw > 560 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+            width={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+            height={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
             object-fit="cover"
             position="absolute"
             top="0"
