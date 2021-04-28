@@ -24,6 +24,7 @@ const StyledPortfolioProfile = styled.div`
     width: 100%;
     min-height: 100vh;
     background: #f19d85;
+    /* #eaeaea */
     @media (max-height: 740px) {
       position: relative;
       min-height: 740px;

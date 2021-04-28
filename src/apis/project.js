@@ -19,6 +19,10 @@ export const getProject = async userId => {
   return await axios(`${API_URL}/api/project/${userId}`);
 };
 
+export const deleteProject = async projectId => {
+  return await axios.delete(`${API_URL}/api/project/${projectId}`);
+};
+
 export const getIsPressLikeButton = async (projectId, loginUserId) => {
   return await axios(`${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`);
 };

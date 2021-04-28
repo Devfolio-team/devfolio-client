@@ -84,20 +84,24 @@ const HeaderBar = ({ viewport }) => {
 
   const onModalOpenHandler = () => {
     setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
   };
 
   const onModalCloseHandler = e => {
     if (e.keyCode === 27) {
       setIsModalOpen(false);
       beforeRef.current.focus();
+      document.body.style.overflow = 'unset';
       return;
     }
 
     if (e.target === e.currentTarget) {
       setIsModalOpen(false);
       beforeRef.current.focus();
+      document.body.style.overflow = 'unset';
       return;
     }
+    // document.body.style.overflow = 'unset';
   };
 
   useEffect(() => {

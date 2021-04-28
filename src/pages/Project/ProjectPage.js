@@ -21,10 +21,14 @@ import scrollToTop from 'utils/scrollToTop';
 import ajax from 'apis/ajax';
 import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
+import { Flicker } from 'react-micron';
+import DeleteModifyButton from './DeleteModifyButton';
+import DeleteModalDialog from './DeleteModalDialog';
 
 const StyledProjectPage = styled.main`
   ${props => css`
     ${applyStyle(props)}
+    position: relative;
   `}
 `;
 
@@ -33,7 +37,6 @@ const ProjectWriter = styled(Anchor)`
     ${applyStyle(props)}
     width: ${'200px'};
     font-size: ${'1.6rem'};
-    margin-left: ${'10px'};
   `}
 `;
 
@@ -233,6 +236,12 @@ const ProjectPage = ({ match }) => {
     setIsIMGLoading(false);
   };
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const onDeleteModalOpenHandler = () => {
+    setIsDeleteModalOpen(true);
+  };
+
   // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
   useEffect(() => {
     scrollToTop();
@@ -312,24 +321,32 @@ const ProjectPage = ({ match }) => {
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
-              {likeCount ? (
+              {subject ? (
                 <>
-                  <LikeButton
-                    borderRadius="50%"
-                    background="inherit"
-                    border="1px solid #A3ABB3"
-                    width="44px"
-                    height="44px"
-                    padding="0"
-                    onClick={onLikeCountPlusHandler}
-                    title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+                  <Flicker
+                    events="onMouseEnter"
+                    timing="ease-in-out"
+                    duration={0.45}
+                    inline={false}
                   >
-                    {isLike === false ? (
-                      <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-                    ) : (
-                      <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-                    )}
-                  </LikeButton>
+                    <LikeButton
+                      borderRadius="50%"
+                      background="inherit"
+                      border="1px solid #A3ABB3"
+                      width="44px"
+                      height="44px"
+                      padding="0"
+                      onClick={onLikeCountPlusHandler}
+                      title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+                      $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
+                    >
+                      {isLike === false ? (
+                        <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+                      ) : (
+                        <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+                      )}
+                    </LikeButton>
+                  </Flicker>
                   <Span fontSize={1.4} lineHeight="16px" margin="5px 0 0 0">
                     {likeCount}
                   </Span>{' '}
@@ -343,7 +360,7 @@ const ProjectPage = ({ match }) => {
           ''
         )}
         <Container display="flex" alignItems="center" width="215px" margin="0">
-          {created ? (
+          {subject ? (
             <>
               <Time
                 margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
@@ -352,15 +369,16 @@ const ProjectPage = ({ match }) => {
               >
                 {DateFormMaker(created)}
               </Time>
-              <Container margin="0" display="flex" textAlign="left" alignItems="center">
-                <Image
-                  src={project_profile_photo}
-                  alt="닉네임프로필사진"
-                  width="24px"
-                  height="24px"
-                  borderRadius="50%"
-                />
+              <Container display="flex">
                 <ProjectWriter href={`/portfolio/${user_user_id}`}>
+                  <Image
+                    src={project_profile_photo}
+                    alt="닉네임프로필사진"
+                    width="24px"
+                    height="24px"
+                    borderRadius="50%"
+                    $margin="0 8px 0 0"
+                  />
                   {project_nickname}
                 </ProjectWriter>
               </Container>
@@ -401,6 +419,7 @@ const ProjectPage = ({ match }) => {
             </Container>
           </Container>
         </Container>
+
         {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
         {vw > 840 ? (
           ''
@@ -419,6 +438,8 @@ const ProjectPage = ({ match }) => {
             $position={vw < 450 ? 'absolute' : ''}
             $top="120px"
             $right="30px"
+            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
             onClick={onLikeCountPlusHandler}
           >
             {isLike === false ? (
@@ -441,23 +462,31 @@ const ProjectPage = ({ match }) => {
             id="제목"
             fontSize={type === 'xs' ? 2.7 : 4}
             color="#212121"
-            lineHeight="5rem"
+            lineHeight={type === 'xs' ? '3.5rem' : '5rem'}
             margin={type === 'xs' ? '' : '20px 0'}
-            $padding="80px 0 0 0"
+            $padding={type === 'xs' ? '30px 0 0 0' : '80px 0 0 0'}
           >
             {subject}
           </Heading>
         )}
         {subject ? (
           <Span
+            display="inline-block"
             fontSize={type === 'xs' ? 1.8 : 2}
             lineHeight={type === 'xs' ? '' : '10px'}
+            margin={type === 'xs' ? '15px 0 0 0' : ''}
             color="#212121"
           >
             {team_name}
           </Span>
         ) : (
           <SkeletonUI $width="150px" $height="30px" $margin="10px 0 0 0" />
+        )}
+        {loginUserInfo && project && loginUserInfo.user_id === project.projectData.user_user_id && (
+          <Container margin="0 30px 0" position="absolute" top="64px" right="70px">
+            <DeleteModifyButton>수정</DeleteModifyButton>
+            <DeleteModifyButton onClick={onDeleteModalOpenHandler}>삭제</DeleteModifyButton>
+          </Container>
         )}
       </Container>
       <Container
@@ -583,7 +612,7 @@ const ProjectPage = ({ match }) => {
         )}
       </Container>
       <Container position="relative" padding={isDesktop ? '0 70px' : '0 30px'} minHeight="300px">
-        {thumbnail ? (
+        {subject ? (
           <>
             {isIMGLoading ? (
               <Spinner
@@ -625,7 +654,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
-        {plan_intention ? (
+        {subject ? (
           <Paragraph
             color="#666666"
             fontSize={1.6}
@@ -727,7 +756,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
-        {projectTechStacks ? (
+        {subject ? (
           <SkillList
             $margin="0 auto"
             $width="100%"
@@ -785,7 +814,7 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
         <Container margin="0 0 10px">
-          {start_date && end_date ? (
+          {subject ? (
             <>
               <Time fontSize={1.6} dateTime={DateFormMaker(start_date)} color="#70777d">
                 {DateFormMaker(start_date)}
@@ -802,12 +831,18 @@ const ProjectPage = ({ match }) => {
             <SkeletonUI $width="200px" $height="10px" />
           )}
         </Container>
-        {main_contents ? (
+        {subject ? (
           <ProjectExplanation>{main_contents}</ProjectExplanation>
         ) : (
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
+      {isDeleteModalOpen && (
+        <DeleteModalDialog
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          projectId={project && project.projectData.project_id}
+        />
+      )}
     </StyledProjectPage>
   );
 };

@@ -8,6 +8,7 @@ import {
   getIsPressLikeButton,
   postLikeCountPlus,
   delLikeCountMinus,
+  deleteProject,
 } from 'apis/project';
 
 const ajax = {
@@ -23,6 +24,7 @@ const ajax = {
   delLikeCountMinus,
   editPortfolio,
   deleteAccount,
+  deleteProject,
 };
 
 export default ajax;
