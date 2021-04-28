@@ -43,9 +43,7 @@ const DeleteModalDialog = ({ setIsDeleteModalOpen, projectId }) => {
 
   const onDeleteProjectHandler = async () => {
     try {
-      console.log(projectId);
-      const response = await ajax.deleteProject(projectId);
-      console.log(response);
+      await ajax.deleteProject(projectId);
       history.push('/');
     } catch (error) {
       history.push('/page-not-found');
