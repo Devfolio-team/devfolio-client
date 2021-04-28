@@ -312,7 +312,7 @@ const ProjectPage = ({ match }) => {
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
-              {project ? (
+              {subject ? (
                 <>
                   <Flicker
                     events="onMouseEnter"
@@ -351,7 +351,7 @@ const ProjectPage = ({ match }) => {
           ''
         )}
         <Container display="flex" alignItems="center" width="215px" margin="0">
-          {project ? (
+          {subject ? (
             <>
               <Time
                 margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
@@ -385,7 +385,7 @@ const ProjectPage = ({ match }) => {
               transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
-              {project ? (
+              {subject ? (
                 <ProjectNav
                   borderLeft="1.5px solid rgba(134, 142, 150, .5)"
                   padding="0 40px 0 10px"
@@ -444,7 +444,7 @@ const ProjectPage = ({ match }) => {
         )}
       </Container>
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
-        {project === '' ? (
+        {subject === '' ? (
           <SkeletonUI $width="300px" $height="50px" $margin="120px 0 0 0" />
         ) : (
           <Heading
@@ -459,7 +459,7 @@ const ProjectPage = ({ match }) => {
             {subject}
           </Heading>
         )}
-        {project ? (
+        {subject ? (
           <Span
             display="inline-block"
             fontSize={type === 'xs' ? 1.8 : 2}
@@ -479,7 +479,7 @@ const ProjectPage = ({ match }) => {
         margin="0 0 22px 0"
         padding={isDesktop ? '0 70px' : '0 30px'}
       >
-        {project ? (
+        {subject ? (
           <LinkToWebSiteWrapper
             $cursor="not-allowed"
             title={deploy_url ? '배포된 사이트로 이동' : '배포된 사이트가 없습니다.'}
@@ -537,7 +537,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI width={type === 'xs' ? '100%' : '200px'} height="44px" />
         )}
-        {project ? (
+        {subject ? (
           <LinkToWebSiteWrapper
             $cursor="not-allowed"
             title={github_url ? '깃허브로 이동' : '깃허브 주소가 없습니다.'}
@@ -596,7 +596,7 @@ const ProjectPage = ({ match }) => {
         )}
       </Container>
       <Container position="relative" padding={isDesktop ? '0 70px' : '0 30px'} minHeight="300px">
-        {project ? (
+        {subject ? (
           <>
             {isIMGLoading ? (
               <Spinner
@@ -620,7 +620,7 @@ const ProjectPage = ({ match }) => {
       </Container>
       <DivisionLine $width={isDesktop ? '500px' : '70%'} />
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
-        {project ? (
+        {subject ? (
           <Heading
             as="h3"
             id="기획의도"
@@ -638,7 +638,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
-        {project ? (
+        {subject ? (
           <Paragraph
             color="#666666"
             fontSize={1.6}
@@ -722,7 +722,7 @@ const ProjectPage = ({ match }) => {
           $margin="80px auto"
         />*/}
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
-        {project ? (
+        {subject ? (
           <Heading
             as="h3"
             id="사용기술스택"
@@ -740,7 +740,7 @@ const ProjectPage = ({ match }) => {
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
-        {project ? (
+        {subject ? (
           <SkillList
             $margin="0 auto"
             $width="100%"
@@ -779,7 +779,7 @@ const ProjectPage = ({ match }) => {
       </Container>
       <DivisionLine $width={isDesktop ? '500px' : '70%'} />
       <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
-        {project ? (
+        {subject ? (
           <Heading
             as="h3"
             id="프로젝트설명"
@@ -798,7 +798,7 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
         <Container margin="0 0 10px">
-          {project ? (
+          {subject ? (
             <>
               <Time fontSize={1.6} dateTime={DateFormMaker(start_date)} color="#70777d">
                 {DateFormMaker(start_date)}
@@ -815,7 +815,7 @@ const ProjectPage = ({ match }) => {
             <SkeletonUI $width="200px" $height="10px" />
           )}
         </Container>
-        {project ? (
+        {subject ? (
           <ProjectExplanation>{main_contents}</ProjectExplanation>
         ) : (
           <SkeletonUI width="100%" height="200px" />
