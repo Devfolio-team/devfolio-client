@@ -76,7 +76,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors, editStartDate, editEndDate
           height="70px"
           display="flex"
           flexFlow="column"
-          margin="0"
+          margin={vw >= 768 ? '0' : '0 0 30px 0'}
           position="relative"
         >
           <StyledLabel $margin="0 0 10px 0" htmlFor="startDate">
