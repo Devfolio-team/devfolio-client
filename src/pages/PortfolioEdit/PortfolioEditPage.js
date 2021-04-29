@@ -28,6 +28,13 @@ const PortfolioEditPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef(null);
   const beforeRef = useRef(null);
+  const [profileColor, setProfileColor] = useState(
+    authState.currentUser.profile_background || '#eaeaea'
+  );
+
+  const onColorChangeHandler = updatedColor => {
+    setProfileColor(updatedColor.hex);
+  };
 
   const getContents = () => {
     return editorRef.current.getInstance().getHtml();
@@ -73,7 +80,12 @@ const PortfolioEditPage = () => {
           email: true,
         }}
         onSubmit={values => {
-          const editedInfo = { ...values, introduce: getContents() };
+          console.log(profileColor);
+          const editedInfo = {
+            ...values,
+            introduce: getContents(),
+            profileBackground: profileColor,
+          };
           dispatch(editAccountMiddleware(authState.currentUser.user_id, editedInfo));
           history.push(`/portfolio/${authState.currentUser.user_id}`);
         }}
@@ -81,7 +93,12 @@ const PortfolioEditPage = () => {
         {({ errors, setFieldValue }) => {
           return (
             <Form>
-              <PortfolioEditProfile errors={errors} setFieldValue={setFieldValue} />
+              <PortfolioEditProfile
+                errors={errors}
+                setFieldValue={setFieldValue}
+                onColorChangeHandler={onColorChangeHandler}
+                profileColor={profileColor}
+              />
               <PortfolioEditContents ref={editorRef} setFieldValue={setFieldValue} />
               <Container
                 display="flex"

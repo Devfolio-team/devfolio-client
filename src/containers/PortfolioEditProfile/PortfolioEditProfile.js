@@ -5,11 +5,10 @@ import useDetectViewport from 'hooks/useDetectViewport';
 import { useState } from 'react';
 import { SwatchesPicker } from 'react-color';
 
-const PortfolioEditProfile = ({ setFieldValue, errors }) => {
+const PortfolioEditProfile = ({ setFieldValue, errors, profileColor, onColorChangeHandler }) => {
   const { isDesktop, vw } = useDetectViewport();
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [profileColor, setProfileColor] = useState('#fff');
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   const onClickDeleteHandler = () => {
@@ -19,10 +18,6 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
     } else {
       setIsDisabled(false);
     }
-  };
-
-  const onColorChangeHandler = updatedColor => {
-    setProfileColor(updatedColor.hex);
   };
 
   const onClickShowColorPickerHandler = () => {
@@ -52,7 +47,7 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
         >
           <SVGIcon type="Palette" />
         </Button>
-        <Container position="absolute" top="152px" right="30px">
+        <Container position="absolute" top="152px" right="30px" zIndex="10000">
           {showColorPicker && (
             <SwatchesPicker color={profileColor} onChange={onColorChangeHandler} />
           )}
