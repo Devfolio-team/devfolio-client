@@ -18,6 +18,7 @@ const Heading = ({
   lineHeight,
   background,
   margin,
+  padding,
   textAlign,
   border,
   borderBottom,
@@ -46,6 +47,7 @@ const Heading = ({
     $overflow={overflow}
     $whiteSpace={whiteSpace}
     $textOverflow={textOverflow}
+    $padding={padding}
     {...restProps}
   ></StyledHeading>
 );
