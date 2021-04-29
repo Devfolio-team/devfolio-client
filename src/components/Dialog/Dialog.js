@@ -3,8 +3,8 @@ import { string } from 'prop-types';
 import { forwardRef } from 'react';
 import { applyStyle } from 'utils';
 
-const StyledDialog = styled.div.attrs(({ tabIndex }) => ({
-  tabIndex,
+const StyledDialog = styled.div.attrs(() => ({
+  tabIndex: 0,
 }))`
   ${props => css`
     ${applyStyle(props)}
