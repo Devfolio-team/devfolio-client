@@ -10,11 +10,11 @@ import {
 } from 'components';
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { LoginModalDialog } from 'containers';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReactComponent as arrowDownIcon } from 'assets/arrowDownIcon.svg';
 import { applyStyle } from 'utils';
+import { LoginModalDialog2 } from 'containers';
 
 const StyledHeaderBar = styled.header`
   ${({ $background, $padding }) => css`
@@ -87,22 +87,21 @@ const HeaderBar = ({ viewport }) => {
     document.body.style.overflow = 'hidden';
   };
 
-  const onModalCloseHandler = e => {
-    if (e.keyCode === 27) {
-      setIsModalOpen(false);
-      beforeRef.current.focus();
-      document.body.style.overflow = 'unset';
-      return;
-    }
+  // const onModalCloseHandler = e => {
+  //   if (e.keyCode === 27) {
+  //     setIsModalOpen(false);
+  //     beforeRef.current.focus();
+  //     document.body.style.overflow = 'unset';
+  //     return;
+  //   }
 
-    if (e.target === e.currentTarget) {
-      setIsModalOpen(false);
-      beforeRef.current.focus();
-      document.body.style.overflow = 'unset';
-      return;
-    }
-    // document.body.style.overflow = 'unset';
-  };
+  //   if (e.target === e.currentTarget) {
+  //     setIsModalOpen(false);
+  //     beforeRef.current.focus();
+  //     document.body.style.overflow = 'unset';
+  //     return;
+  //   }
+  // };
 
   useEffect(() => {
     window.addEventListener('click', onNavigatorCloseHandler);
@@ -195,9 +194,6 @@ const HeaderBar = ({ viewport }) => {
             height={36}
             color="#FFFFFF"
             background="#25272B"
-            hoverColor={isModalOpen ? null : '#25272B'}
-            hoverBackground={isModalOpen ? null : '#FFFFFF'}
-            cursor={isModalOpen ? 'default' : null}
             fontWeight={700}
             fontSize={1.6}
             borderRadius={16}
@@ -211,13 +207,28 @@ const HeaderBar = ({ viewport }) => {
         )}
         {isModalOpen ? (
           <Portal id="modal-root">
-            <LoginModalDialog
+            {/* <LoginModalDialog
               viewport={viewport}
               ref={ref}
               onModalCloseHandler={onModalCloseHandler}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
-            ></LoginModalDialog>
+            ></LoginModalDialog> */}
+            {/* <ModalDialog
+              viewport={viewport}
+              ref={ref}
+              onModalCloseHandler={onModalCloseHandler}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            ></ModalDialog> */}
+            <LoginModalDialog2
+              viewport={viewport}
+              ref={ref}
+              beforeRef={beforeRef}
+              // onModalCloseHandler={onModalCloseHandler}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            ></LoginModalDialog2>
           </Portal>
         ) : null}
       </Naigation>
