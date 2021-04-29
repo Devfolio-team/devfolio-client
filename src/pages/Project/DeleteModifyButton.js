@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const StyledDeleteButton = styled.button`
@@ -12,8 +12,12 @@ const StyledDeleteButton = styled.button`
   }
 `;
 
-const DeleteModifyButton = ({ children, ...restProps }) => {
-  return <StyledDeleteButton {...restProps}>{children}</StyledDeleteButton>;
-};
+const DeleteModifyButton = forwardRef(({ children, ...restProps }, ref) => {
+  return (
+    <StyledDeleteButton ref={ref} {...restProps}>
+      {children}
+    </StyledDeleteButton>
+  );
+});
 
 export default DeleteModifyButton;
