@@ -1,7 +1,16 @@
 import { Button, Dialog, Modal, SVGIcon } from 'components';
 import { useEffect, React, useCallback, useRef } from 'react';
 
-const ModalDialog = ({ setIsModalOpen, beforeRef, children, width, height, padding }) => {
+const ModalDialog = ({
+  setIsModalOpen,
+  beforeRef,
+  children,
+  width,
+  height,
+  padding,
+  textAlign,
+  minWidth,
+}) => {
   const $rootNode = document.getElementById('root');
   $rootNode.setAttribute('aria-hidden', 'true');
 
@@ -66,6 +75,8 @@ const ModalDialog = ({ setIsModalOpen, beforeRef, children, width, height, paddi
         height={height}
         padding={padding}
         borderRadius={5}
+        textAlign={textAlign}
+        minWidth={minWidth}
       >
         {children}
         <Button

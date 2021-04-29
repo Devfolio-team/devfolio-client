@@ -106,6 +106,7 @@ const DND = ({
   isDeleted,
   setIsDeleted,
   setIsDisabled,
+  editThumbnail,
 }) => {
   const [src, setSrc] = useState(null);
   const [alt, setAlt] = useState(null);
@@ -178,7 +179,11 @@ const DND = ({
       };
       setFieldValue('profilePhoto', defaultPhotoInfo);
     }
-  }, [setFieldValue, isDeleted]);
+    if (editThumbnail) {
+      setSrc(editThumbnail);
+      // setFieldValue('thumbnail', editThumbnail);
+    }
+  }, [setFieldValue, isDeleted, editThumbnail]);
 
   return (
     <Container
@@ -202,23 +207,40 @@ const DND = ({
         $borderRadius={borderRadius}
       />
 
-      {src && !errors.thumbnail ? (
-        <>
-          <Image
-            src={isDeleted ? defaultProfilePhoto : src}
-            alt={alt}
-            width={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
-            height={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
-            object-fit="cover"
-            position="absolute"
-            top="0"
-            left="0"
-            zIndex={3}
-            borderRadius={borderRadius}
-          />
-          <WhiteDisplay $borderRadius={borderRadius} />
-        </>
-      ) : null}
+      {src &&
+        (!errors.thumbnail ? (
+          <>
+            <Image
+              src={isDeleted ? defaultProfilePhoto : src}
+              alt={alt}
+              width={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+              height={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+              object-fit="cover"
+              position="absolute"
+              top="0"
+              left="0"
+              zIndex={3}
+              borderRadius={borderRadius}
+            />
+            <WhiteDisplay $borderRadius={borderRadius} />
+          </>
+        ) : (
+          <>
+            <Image
+              src={src}
+              alt={alt}
+              width={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+              height={vw >= 768 ? (profile ? 250 : 400) : profile ? 200 : '52vw'}
+              object-fit="cover"
+              position="absolute"
+              top="0"
+              left="0"
+              zIndex={3}
+              borderRadius={borderRadius}
+            />
+            <WhiteDisplay $borderRadius={borderRadius} />
+          </>
+        ))}
       {isUploaded ? null : (
         <Display $borderRadius={borderRadius}>
           <SVGIcon type="Camera" width="50" height="50" />

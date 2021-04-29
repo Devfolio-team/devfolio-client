@@ -71,7 +71,7 @@ const ChipInput = styled.input`
   }
 `;
 
-const ChipInputSearch = ({ id, setFieldValue, profile }) => {
+const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const [chipLabels, setChipLabels] = useState([]);
   const [techStacks, setTechStacks] = useState([]);
   const chipRef = useRef();
@@ -97,7 +97,8 @@ const ChipInputSearch = ({ id, setFieldValue, profile }) => {
   useEffect(() => {
     if (profile)
       setChipLabels(authState.currentUser.currentUsersSkills.map(skill => skill.skill_name));
-  }, [authState.currentUser?.currentUsersSkills, profile]);
+    if (editTechStacks) setChipLabels(editTechStacks.map(stack => stack.tech_name));
+  }, [authState.currentUser.currentUsersSkills, editTechStacks, profile]);
 
   const onKeyUpHandler = e => {
     if (e.key !== 'Enter') return;

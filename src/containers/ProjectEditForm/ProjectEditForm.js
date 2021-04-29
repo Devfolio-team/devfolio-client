@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { createRef, useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import {
   TeamName,
@@ -31,15 +31,17 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const ProjectEditForm = ({ vw, setLeave, editProjectData }) => {
+const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
   const authState = useSelector(state => state.auth);
   const editorRef = createRef();
   const history = useHistory();
 
-  console.log(editProjectData);
+  useEffect(() => {
+    editorRef.current.getInstance().setHtml(editProjectData?.projectData.main_contents);
+  }, [editProjectData, editorRef]);
 
   const getContents = () => {
-    return editorRef.current.getInstance().getHtml();
+    return editorRef.current.getInstance().getHtml() || editProjectData?.projectData.main_contents;
   };
 
   const onGoBackHandler = () => {
@@ -56,18 +58,20 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData }) => {
   return (
     <Formik
       initialValues={{
-        subject: '',
-        thumbnail: null,
-        teamNameRadio: 'no',
-        planIntention: '',
+        subject: editProjectData?.projectData.subject || '',
+        thumbnail: editProjectData?.projectData.thumbnail
+          ? { src: null, size: 0, type: 'image/jpeg' }
+          : null,
+        teamNameRadio: editProjectData?.projectData.team_name ? 'yes' : 'no',
+        planIntention: editProjectData?.projectData.plan_intention || '',
         techStacks: [],
-        teamName: '',
-        githubUrl: '',
-        deploymentStatus: 'undeployed',
-        deployUrl: '',
-        isPrivate: '',
-        startDate: '',
-        endDate: '',
+        teamName: editProjectData?.projectData.team_name || '',
+        githubUrl: editProjectData?.projectData.github_url || '',
+        deploymentStatus: editProjectData?.projectData.deploy_url ? 'deployed' : 'undeployed',
+        deployUrl: editProjectData?.projectData.deploy_url || '',
+        isPrivate: String(editProjectData?.projectData.is_private) || '',
+        startDate: editProjectData?.projectData.start_date || '',
+        endDate: editProjectData?.projectData.end_date || '',
       }}
       validationSchema={projectValidationSchema}
       initialTouched={{
@@ -87,12 +91,21 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData }) => {
           userUserId: authState.currentUser.user_id,
         };
         setLeave(false);
-        try {
-          const res = await ajax.postProject(projectData);
-          const projectId = res.data.insertId;
-          history.push(`/project/${projectId}`);
-        } catch (error) {
-          throw new Error(error);
+        if (editProjectData) {
+          try {
+            await ajax.editProject(projectData, projectId);
+            history.push(`/project/${projectId}`);
+          } catch (error) {
+            throw new Error(error);
+          }
+        } else {
+          try {
+            const res = await ajax.postProject(projectData);
+            const projectId = res.data.insertId;
+            history.push(`/project/${projectId}`);
+          } catch (error) {
+            throw new Error(error);
+          }
         }
       }}
     >
@@ -103,12 +116,27 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData }) => {
               <ProjectName vw={vw} errors={errors} />
               <TeamName values={values} vw={vw} />
               <PlanIntention vw={vw} errors={errors} />
-              <ProjectDuration setFieldValue={setFieldValue} vw={vw} errors={errors} />
-              <TechStacks setFieldValue={setFieldValue} vw={vw} />
+              <ProjectDuration
+                setFieldValue={setFieldValue}
+                vw={vw}
+                errors={errors}
+                editStartDate={editProjectData?.projectData.start_date}
+                editEndDate={editProjectData?.projectData.end_date}
+              />
+              <TechStacks
+                setFieldValue={setFieldValue}
+                vw={vw}
+                editTechStacks={editProjectData?.projectTechStacks}
+              />
               <GithubRepoInput vw={vw} errors={errors} />
               <DeploymentStatus values={values} vw={vw} />
               <PublicStatus vw={vw} />
-              <ProjectThumbnail setFieldValue={setFieldValue} vw={vw} errors={errors} />
+              <ProjectThumbnail
+                setFieldValue={setFieldValue}
+                vw={vw}
+                errors={errors}
+                editThumbnail={editProjectData?.projectData.thumbnail}
+              />
               <ProjectDescription ref={editorRef} vw={vw} />
             </StyledContainer>
             <Container
@@ -128,7 +156,7 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData }) => {
               />
               <Button
                 type="submit"
-                children="게시하기"
+                children={editProjectData ? '수정하기' : '게시하기'}
                 color={color.mainColor}
                 fontWeight="700"
                 margin="0 0 0 30px"
