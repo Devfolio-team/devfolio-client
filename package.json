@@ -113,7 +113,6 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.7",
     "@storybook/theming": "^6.1.21",
-    "classnames": "^2.2.6",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "sass": "^1.32.8",
     "serve": "^11.3.2",
