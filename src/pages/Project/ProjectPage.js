@@ -24,7 +24,6 @@ import Skeleton from '@yisheng90/react-loading';
 import { Flicker } from 'react-micron';
 import DeleteModifyButton from './DeleteModifyButton';
 import DeleteModalDialog from './DeleteModalDialog';
-import { Link } from 'react-router-dom';
 import StyledToEditPageLink from './ToEditPageLink';
 
 const StyledProjectPage = styled.main`
