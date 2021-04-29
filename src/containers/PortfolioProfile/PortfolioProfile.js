@@ -78,11 +78,11 @@ const UsersSite = ({ href, type, margin, vw, iconMargin, children, title, ariaLa
   );
 };
 
-const PortfolioProfile = ({ userInfo, skills, background, ...restProps }) => {
+const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
   const { vw } = useDetectViewport();
 
   return (
-    <StyledPortfolioProfile $background={background}>
+    <StyledPortfolioProfile $background={userInfo && userInfo.profile_background}>
       <Container
         width={'100%'}
         padding="0 30px"
