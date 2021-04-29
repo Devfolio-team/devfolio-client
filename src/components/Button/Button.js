@@ -18,12 +18,12 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
         box-shadow: none;
       }
       &[disabled] {
-        opacity: 0.3;
+        opacity: 0.4;
         cursor: not-allowed;
       }
       &[disabled]:hover {
         background: ${color.white};
-        color: ${color.mainColor};
+        color: ${props.$background === '#fafbfc' ? '#d73a49' : color.mainColor};
       }
     `}
 `;

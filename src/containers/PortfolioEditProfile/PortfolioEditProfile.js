@@ -1,4 +1,4 @@
-import { Container, DND, Button, Input, Paragraph, FormErrorMessage } from 'components';
+import { Container, DND, Button, Input, FormErrorMessage } from 'components';
 import { color } from 'utils';
 import { Field, ErrorMessage } from 'formik';
 import useDetectViewport from 'hooks/useDetectViewport';
@@ -146,25 +146,6 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
           errors={errors}
         />
         <ErrorMessage name="blogUrl" component={FormErrorMessage} margin="10px 0 10px -120px" />
-        <Button
-          children="회원탈퇴"
-          color={color.white}
-          fontWeight="700"
-          fontSize={isDesktop ? 1.8 : 1.6}
-          margin={isDesktop ? '50px 0 15px 0' : '30px 0 15px 0'}
-          hoverColor="#FF6B6B"
-          hoverBackground={color.white}
-          background="#FF6B6B"
-        />
-        <Paragraph
-          color="#666"
-          fontSize={isDesktop ? 1.4 : 1.2}
-          fontWeight={700}
-          lineHeight={isDesktop ? 0 : 16}
-        >
-          탈퇴 시 작성하신 프로젝트 및 포트폴리오는{isDesktop ? null : <br />} 삭제되며 복구되지
-          않습니다.
-        </Paragraph>
       </Container>
     </Container>
   );

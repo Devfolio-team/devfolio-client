@@ -67,11 +67,13 @@ export const editAccountMiddleware = (userId, editedInfo) => async dispatch => {
   }
 };
 
-export const deleteAccountMiddleware = playload => dispatch => {
+export const deleteAccountMiddleware = userId => async dispatch => {
   dispatch(deleteAccountLoadingAction());
 
   try {
+    await ajax.deleteAccount(userId);
     dispatch(deleteAccountSuccessAction());
+    cookie.delete('auth_token');
   } catch (error) {
     dispatch(deleteAccountErrorAction(error));
   }

@@ -31,10 +31,12 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const ProjectEditForm = ({ vw, setLeave }) => {
+const ProjectEditForm = ({ vw, setLeave, editProjectData }) => {
   const authState = useSelector(state => state.auth);
   const editorRef = createRef();
   const history = useHistory();
+
+  console.log(editProjectData);
 
   const getContents = () => {
     return editorRef.current.getInstance().getHtml();

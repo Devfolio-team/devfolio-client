@@ -10,7 +10,7 @@ const StyledDialog = styled.div.attrs(() => ({
     ${applyStyle(props)}
     background-color: #2c3035;
     border-radius: 8;
-    z-index: 10;
+    z-index: 100001;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -20,13 +20,15 @@ const StyledDialog = styled.div.attrs(() => ({
 `;
 
 const Dialog = forwardRef(
-  ({ width, height, padding, borderRadius, children, ...restProps }, ref) => (
+  ({ width, height, padding, borderRadius, textAlign, children, minWidth, ...restProps }, ref) => (
     <StyledDialog
       id="dialog"
       $width={width}
       $height={height}
-      $padding="20px"
+      $padding={padding}
       $borderRadius={borderRadius}
+      $textAlign={textAlign}
+      $minWidth={minWidth}
       ref={ref}
       {...restProps}
     >
