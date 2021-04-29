@@ -5,7 +5,7 @@ import { ReactComponent as MySQL } from 'assets/MySQL.svg';
 import { ReactComponent as React } from 'assets/React.svg';
 import { ReactComponent as Redux } from 'assets/Redux.svg';
 import { ReactComponent as Sass } from 'assets/Sass.svg';
-import { ReactComponent as StyledComponent } from 'assets/StyledComponent.svg';
+import { ReactComponent as StyledComponents } from 'assets/StyledComponent.svg';
 import { ReactComponent as Typescript } from 'assets/Typescript.svg';
 import { ReactComponent as Apache } from 'assets/Apache.svg';
 import { ReactComponent as AWSS3 } from 'assets/AWSS3.svg';
@@ -58,6 +58,22 @@ import { ReactComponent as Tomcat } from 'assets/Tomcat.svg';
 import { ReactComponent as Webpack } from 'assets/Webpack.svg';
 import { ReactComponent as Firestore } from 'assets/Firestore.svg';
 import { ReactComponent as Docker } from 'assets/Docker.svg';
+import { ReactComponent as Hugo } from 'assets/Hugo.svg';
+import { ReactComponent as Jsp } from 'assets/Jsp.svg';
+import { ReactComponent as Koa } from 'assets/Koa.svg';
+import { ReactComponent as Less } from 'assets/Less.svg';
+import { ReactComponent as MsSQL } from 'assets/MsSQL.svg';
+import { ReactComponent as NginX } from 'assets/NginX.svg';
+import { ReactComponent as NGRX } from 'assets/NGRX.svg';
+import { ReactComponent as NuxtJS } from 'assets/NuxtJS.svg';
+import { ReactComponent as PHP } from 'assets/PHP.svg';
+import { ReactComponent as PostgreSQL } from 'assets/PostgreSQL.svg';
+import { ReactComponent as Emotion } from 'assets/Emotion.svg';
+import { ReactComponent as Parcel } from 'assets/Parcel.svg';
+import { ReactComponent as ReactHooks } from 'assets/ReactHooks.svg';
+import { ReactComponent as Reactnative } from 'assets/Reactnative.svg';
+import { ReactComponent as ReactStrap } from 'assets/ReactStrap.svg';
+import { ReactComponent as VueX } from 'assets/VueX.svg';
 
 const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
@@ -87,8 +103,8 @@ const SkillIcon = ({ type, ...restProps }) => {
     case 'SASS':
       SkillIcon = Sass;
       break;
-    case 'STYLEDCOMPONENT':
-      SkillIcon = StyledComponent;
+    case 'STYLEDCOMPONENTS':
+      SkillIcon = StyledComponents;
       break;
     case 'APACHE':
       SkillIcon = Apache;
@@ -245,6 +261,54 @@ const SkillIcon = ({ type, ...restProps }) => {
       break;
     case 'DOCKER':
       SkillIcon = Docker;
+      break;
+    case 'HUGO':
+      SkillIcon = Hugo;
+      break;
+    case 'JSP':
+      SkillIcon = Jsp;
+      break;
+    case 'KOA':
+      SkillIcon = Koa;
+      break;
+    case 'LESS':
+      SkillIcon = Less;
+      break;
+    case 'MSSQL':
+      SkillIcon = MsSQL;
+      break;
+    case 'NGINX':
+      SkillIcon = NginX;
+      break;
+    case 'NGRX':
+      SkillIcon = NGRX;
+      break;
+    case 'NUXTJS':
+      SkillIcon = NuxtJS;
+      break;
+    case 'PHP':
+      SkillIcon = PHP;
+      break;
+    case 'POSTGRESQL':
+      SkillIcon = PostgreSQL;
+      break;
+    case 'EMOTION':
+      SkillIcon = Emotion;
+      break;
+    case 'PARCEL':
+      SkillIcon = Parcel;
+      break;
+    case 'REACTHOOKS':
+      SkillIcon = ReactHooks;
+      break;
+    case 'REACTNATIVE':
+      SkillIcon = Reactnative;
+      break;
+    case 'REACTSTRAP':
+      SkillIcon = ReactStrap;
+      break;
+    case 'VUEX':
+      SkillIcon = VueX;
       break;
   }
   return <SkillIcon {...restProps} />;

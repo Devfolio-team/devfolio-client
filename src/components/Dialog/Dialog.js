@@ -3,13 +3,13 @@ import { string } from 'prop-types';
 import { forwardRef } from 'react';
 import { applyStyle } from 'utils';
 
-const StyledDialog = styled.div.attrs(({ tabIndex }) => ({
-  tabIndex,
+const StyledDialog = styled.div.attrs(() => ({
+  tabIndex: 0,
 }))`
   ${props => css`
     ${applyStyle(props)}
     background-color: #2c3035;
-    border-radius: 8;
+    border-radius: 8px;
     z-index: 100001;
     position: absolute;
     top: 50%;
@@ -20,21 +20,23 @@ const StyledDialog = styled.div.attrs(({ tabIndex }) => ({
 `;
 
 const Dialog = forwardRef(
-  ({ width, height, padding, borderRadius, textAlign, children, minWidth, ...restProps }, ref) => (
-    <StyledDialog
-      id="dialog"
-      $width={width}
-      $height={height}
-      $padding={padding}
-      $borderRadius={borderRadius}
-      $textAlign={textAlign}
-      $minWidth={minWidth}
-      ref={ref}
-      {...restProps}
-    >
-      {children}
-    </StyledDialog>
-  )
+  ({ width, height, padding, borderRadius, textAlign, children, minWidth, ...restProps }, ref) => {
+    return (
+      <StyledDialog
+        id="dialog"
+        $width={width}
+        $height={height}
+        $padding={padding}
+        $borderRadius={borderRadius}
+        $textAlign={textAlign}
+        $minWidth={minWidth}
+        ref={ref}
+        {...restProps}
+      >
+        {children}
+      </StyledDialog>
+    );
+  }
 );
 
 Dialog.propTypes = {
