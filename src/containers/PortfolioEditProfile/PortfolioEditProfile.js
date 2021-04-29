@@ -1,13 +1,16 @@
-import { Container, DND, Button, Input, FormErrorMessage } from 'components';
+import { Container, DND, Button, Input, FormErrorMessage, SVGIcon } from 'components';
 import { color } from 'utils';
 import { Field, ErrorMessage } from 'formik';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { useState } from 'react';
+import { SwatchesPicker } from 'react-color';
 
 const PortfolioEditProfile = ({ setFieldValue, errors }) => {
   const { isDesktop, vw } = useDetectViewport();
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [profileColor, setProfileColor] = useState('#fff');
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
   const onClickDeleteHandler = () => {
     if (!isDeleted && window.confirm('정말로 프로필 사진을 지우시겠습니까?')) {
@@ -18,8 +21,16 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
     }
   };
 
+  const onColorChangeHandler = updatedColor => {
+    setProfileColor(updatedColor.hex);
+  };
+
+  const onClickShowColorPickerHandler = () => {
+    setShowColorPicker(!showColorPicker);
+  };
+
   return (
-    <Container background="#F19D85" height={isDesktop ? '970px' : '890px'}>
+    <Container background={profileColor} height={isDesktop ? '970px' : '890px'}>
       <Container
         width={vw >= 1440 ? 1440 : '100%'}
         padding={isDesktop ? '70px 70px 0 70px' : '40px 30px 30px 30px'}
@@ -29,6 +40,23 @@ const PortfolioEditProfile = ({ setFieldValue, errors }) => {
         minWidth="320px"
         textAlign="center"
       >
+        <Button
+          width="48px"
+          height="48px"
+          borderRadius={0}
+          padding="0"
+          position="absolute"
+          top="94px"
+          right="30px"
+          onClick={onClickShowColorPickerHandler}
+        >
+          <SVGIcon type="Palette" />
+        </Button>
+        <Container position="absolute" top="152px" right="30px">
+          {showColorPicker && (
+            <SwatchesPicker color={profileColor} onChange={onColorChangeHandler} />
+          )}
+        </Container>
         <DND
           setFieldValue={setFieldValue}
           errors={errors}
