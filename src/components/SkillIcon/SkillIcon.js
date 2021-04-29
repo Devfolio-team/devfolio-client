@@ -74,6 +74,7 @@ import { ReactComponent as ReactHooks } from 'assets/ReactHooks.svg';
 import { ReactComponent as Reactnative } from 'assets/Reactnative.svg';
 import { ReactComponent as ReactStrap } from 'assets/ReactStrap.svg';
 import { ReactComponent as VueX } from 'assets/VueX.svg';
+import { ReactComponent as AWSElasticBeanstalk } from 'assets/AWSElasticBeanstalk.svg';
 
 const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
@@ -309,6 +310,9 @@ const SkillIcon = ({ type, ...restProps }) => {
       break;
     case 'VUEX':
       SkillIcon = VueX;
+      break;
+    case 'AWSELASTICBEANSTALK':
+      SkillIcon = AWSElasticBeanstalk;
       break;
   }
   return <SkillIcon {...restProps} />;
