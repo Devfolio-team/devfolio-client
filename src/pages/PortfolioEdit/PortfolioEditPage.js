@@ -68,7 +68,7 @@ const PortfolioEditPage = () => {
           name: authState.currentUser?.name,
           nickname: authState.currentUser?.nickname,
           githubUrl: authState.currentUser?.github_url || '',
-          email: authState.currentUser?.email,
+          email: authState.currentUser?.email || '',
           blogUrl: authState.currentUser?.blog_url || '',
           techStacks: [],
           profilePhoto: null,
