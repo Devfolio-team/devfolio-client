@@ -292,11 +292,6 @@ const ProjectPage = ({ match }) => {
     scrollToTop();
   }, []);
 
-  // 날짜를 yyyy.mm.dd 형식으로 변환하는 함수
-  const DateFormMaker = date => {
-    return date.slice(0, 10).replace('-', '.').replace('-', '.');
-  };
-
   useEffect(() => {
     if (loginUserInfo) setLoginUser(loginUserInfo);
     const project = async () => {
@@ -372,6 +367,7 @@ const ProjectPage = ({ match }) => {
                     inline={false}
                   >
                     <LikeButton
+                      aria-label="좋아요 버튼"
                       borderRadius="50%"
                       background="inherit"
                       border="1px solid #A3ABB3"
@@ -415,7 +411,7 @@ const ProjectPage = ({ match }) => {
                 <ProjectWriter to={`/portfolio/${user_user_id}`}>
                   <Image
                     src={project_profile_photo}
-                    alt="닉네임프로필사진"
+                    alt="프로필 사진"
                     width="24px"
                     height="24px"
                     borderRadius="50%"
@@ -481,6 +477,7 @@ const ProjectPage = ({ match }) => {
         {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
         {vw > 840 ? null : (
           <LikeButton
+            aria-label="좋아요 버튼"
             borderRadius="5px"
             background="inherit"
             border="1px solid #A3ABB3"
@@ -737,7 +734,9 @@ const ProjectPage = ({ match }) => {
           )}
         </Container>
         {subject ? (
-          <ProjectExplanation>{main_contents}</ProjectExplanation>
+          main_contents === null ? null : (
+            <ProjectExplanation>{main_contents}</ProjectExplanation>
+          )
         ) : (
           <SkeletonUI width="100%" height="200px" />
         )}
