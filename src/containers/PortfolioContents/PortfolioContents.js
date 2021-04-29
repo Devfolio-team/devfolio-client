@@ -112,7 +112,7 @@ const PortfolioContents = ({ portfolio }) => {
             SKILLS
           </Heading>
           {skills &&
-            (skills.lenght ? (
+            (skills.length ? (
               <SkillIconList>
                 {skills.map((skill, index) => (
                   <SkillIconItem key={index} type={skill.skill_name} />
