@@ -44,20 +44,6 @@ const PortfolioEditPage = () => {
     setIsModalOpen(true);
   };
 
-  const onModalCloseHandler = e => {
-    if (e.keyCode === 27) {
-      setIsModalOpen(false);
-      beforeRef.current.focus();
-      return;
-    }
-
-    if (e.target === e.currentTarget) {
-      setIsModalOpen(false);
-      beforeRef.current.focus();
-      return;
-    }
-  };
-
   useEffect(() => {
     scrollToTop();
     editorRef.current?.getInstance().setHtml(authState.currentUser.introduce);
@@ -148,12 +134,7 @@ const PortfolioEditPage = () => {
       </Formik>
       {isModalOpen ? (
         <Portal id="modal-root">
-          <WithdrawalModalDialog
-            ref={ref}
-            onModalCloseHandler={onModalCloseHandler}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-          />
+          <WithdrawalModalDialog ref={ref} beforeRef={beforeRef} setIsModalOpen={setIsModalOpen} />
         </Portal>
       ) : null}
     </StyledPortfolioEditPage>
