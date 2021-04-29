@@ -1,5 +1,5 @@
 import { signIn, deleteAccount } from 'apis/auth';
-import { fetchProjects, postProject } from 'apis/project';
+import { fetchProjects, postProject, editProject } from 'apis/project';
 import { postImage } from 'apis/image';
 import { getPortfolio, editPortfolio } from 'apis/portfolio';
 import { fetchTechStacks } from 'apis/techStacks';
@@ -25,6 +25,7 @@ const ajax = {
   editPortfolio,
   deleteAccount,
   deleteProject,
+  editProject,
 };
 
 export default ajax;
