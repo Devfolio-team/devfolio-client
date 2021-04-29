@@ -98,7 +98,6 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
         <Dialog
           ref={ref}
           role="dialog"
-          // width={`${isDesktop ? '500px' : type === 'sm' ? '85%' : '345px'}`}
           width={`${isDesktop ? '500px' : type === 'sm' ? '85%' : '93%'}`}
           height={`${isDesktop ? '500px' : type === 'sm' ? '430px' : '378px'}`}
           padding={`${isDesktop ? '30px' : type === 'sm' ? '50px' : '30px'}`}
@@ -168,54 +167,34 @@ const LoginModalDialog = forwardRef(({ onModalCloseHandler, viewport }, ref) => 
               $marginBottom={`${isDesktop ? '42px' : type === 'sm' ? '20px' : '20px'}`}
             ></DivisionLine>
           </Container>
-          <DialogForm onSubmit={onSubmitHandler}>
-            {/* <Input
-              id="dialogInput"
-              aria-label="이메일 로그인"
-              label="이메일 주소를 입력해주세요 :)"
-              autoComplete="off"
-              labelFontSize={`${isDesktop ? '2' : type === 'sm' ? '1.5' : '1.1'}`}
-              width={`${isDesktop ? '550px' : type === 'sm' ? '100%' : '100%'}`}
-              height={`${type === 'xs' ? '48px' : '66px'}`}
-              borderRadius={30}
-              margin="0 auto"
-              padding="21px 0 21px 26px"
-              display="block"
-              beforeTranslate={`${isDesktop ? '4.2' : type === 'sm' ? '4' : '3'}`}
-              afterTranslate={`${isDesktop ? '-1.5' : type === 'sm' ? '-1' : '-1'}`}
-              beforeMargin={`${isDesktop ? '80' : type === 'sm' ? '20' : '20'}`}
-              afterMargin={`${isDesktop ? '60' : type === 'sm' ? '4.2' : '10'}`}
-            /> */}
-            <Heading
-              as="h3"
-              color="#FFFFFF"
-              fontSize={isDesktop ? 2 : type === 'sm' ? 1.8 : 1.4}
-              fontWeight={700}
-              textAlign="center"
-              // margin={type === 'xs' ? '0 0 20px 0' : ''}
-              margin={type === 'sm' ? '0 0 20px 0' : type === 'xs' ? '0 0 20px 0' : ''}
-            >
-              Suits에서 기술면접 준비하기
-            </Heading>
-            <LinkToWebSite
-              href="https://github.com/TEAM-SUITS/Suits"
-              target="_blank"
-              $width={`${isDesktop ? '320px' : type === 'xs' ? '225px' : '70%'}`}
-              $height={`${type === 'xs' ? '58px' : '66px'}`}
-              $background="#ffffff"
-              $borderRadius={30}
-              $display="flex"
-              $flexFlow="column"
-              $alignItems="center"
-              $justifyContent="center"
-              $margin={`${isDesktop ? '21px auto' : '10px auto 0 auto '}`}
-            >
-              <Span fontSize={`${type === 'xs' ? 1.2 : 1.4}`} fontWeight={700} margin="0 0 4px 0">
-                기술 면접을 준비하는 단정한 습관
-              </Span>
-              <SVGIcon type="Suits" />
-            </LinkToWebSite>
-          </DialogForm>
+          <Heading
+            as="h3"
+            color="#FFFFFF"
+            fontSize={isDesktop ? 2 : type === 'sm' ? 1.8 : 1.4}
+            fontWeight={700}
+            textAlign="center"
+            margin={type === 'sm' ? '0 0 20px 0' : type === 'xs' ? '0 0 20px 0' : ''}
+          >
+            Suits에서 기술면접 준비하기
+          </Heading>
+          <LinkToWebSite
+            href="https://github.com/TEAM-SUITS/Suits"
+            target="_blank"
+            $width={`${isDesktop ? '320px' : type === 'xs' ? '225px' : '70%'}`}
+            $height={`${type === 'xs' ? '58px' : '66px'}`}
+            $background="#ffffff"
+            $borderRadius={30}
+            $display="flex"
+            $flexFlow="column"
+            $alignItems="center"
+            $justifyContent="center"
+            $margin={`${isDesktop ? '21px auto' : '10px auto 0 auto '}`}
+          >
+            <Span fontSize={`${type === 'xs' ? 1.2 : 1.4}`} fontWeight={700} margin="0 0 4px 0">
+              기술 면접을 준비하는 단정한 습관
+            </Span>
+            <SVGIcon type="Suits" />
+          </LinkToWebSite>
           <Button
             width="15px"
             height="15px"
