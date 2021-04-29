@@ -2,6 +2,7 @@ import {
   Anchor,
   Button,
   Container,
+  DivisionLine,
   Heading,
   Image,
   Paragraph,
@@ -16,7 +17,7 @@ import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { applyStyle } from 'utils';
+import { applyStyle, dateFormMaker } from 'utils';
 import scrollToTop from 'utils/scrollToTop';
 import ajax from 'apis/ajax';
 import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
@@ -25,6 +26,7 @@ import { Flicker } from 'react-micron';
 import DeleteModifyButton from './DeleteModifyButton';
 import DeleteModalDialog from './DeleteModalDialog';
 import StyledToEditPageLink from './ToEditPageLink';
+import { Link } from 'react-router-dom';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -33,7 +35,22 @@ const StyledProjectPage = styled.main`
   `}
 `;
 
-const ProjectWriter = styled(Anchor)`
+const RowContainer = styled(Container)`
+  ${props => css`
+    ${applyStyle(props)}
+    display: flex;
+  `}
+`;
+
+const ColumnContainer = styled(Container)`
+  ${props => css`
+    ${applyStyle(props)}
+    display: flex;
+    flex-flow: column;
+  `}
+`;
+
+const ProjectWriter = styled(Link)`
   ${props => css`
     ${applyStyle(props)}
     width: ${'200px'};
@@ -44,6 +61,17 @@ const ProjectWriter = styled(Anchor)`
 const LinkToWebSite = styled.a`
   ${props => css`
     ${applyStyle(props)}
+    target:${'_blank'};
+    font-size: ${'1.6rem'};
+    font-weight: ${'700'};
+    border-radius: ${'5px'};
+    height: ${'44px'};
+    text-align: ${'center'};
+    line-height: ${'40px'};
+    background: ${'#FFFFFF'};
+    display: ${'flex'};
+    justify-content: ${'center'};
+    align-items: ${'center'};
   `}
 
   &:hover {
@@ -59,14 +87,6 @@ const LinkToWebSite = styled.a`
 const WebSiteIcon = styled(SVGIcon)`
   ${props => css`
     ${applyStyle(props)}
-  `}
-`;
-
-const DivisionLine = styled.div`
-  ${props => css`
-    ${applyStyle(props)}
-    border-bottom: ${'1px solid #666666'};
-    margin: ${'100px auto 0 auto'};
   `}
 `;
 
@@ -110,17 +130,27 @@ const LinkToWebSiteWrapper = styled.div`
 const DisabledLink = styled(Span)`
   ${props => css`
     ${applyStyle(props)}
+    font-size:${'1.6rem'};
+    font-weight: ${'700'};
+    border-radius: ${'5px'};
+    height: ${'44px'};
+    text-align: ${'center'};
+    line-height: ${'40px'};
+    background: ${'#FFFFFF'};
+    display: ${'flex'};
+    justify-content: ${'center'};
+    align-items: ${'center'};
   `}
 `;
 
-const NavListItem = styled.li`
+const NavListList = styled.li`
   ${props => css`
     ${applyStyle(props)}
     margin-bottom: 15px;
   `}
 `;
 
-const NavLink = styled(Anchor)`
+const NavItem = styled(Anchor)`
   ${props => css`
     ${applyStyle(props)}
     color : rgb(134, 142, 150);
@@ -137,9 +167,21 @@ const SkeletonUI = styled(Skeleton)`
 
 const Spinner = styled(LoadingSpinner)`
   ${props => css`
-     {
-      ${applyStyle(props)}
-    }
+    ${applyStyle(props)}
+  `}
+`;
+
+const H3Heading = styled(Heading)`
+  ${props => css`
+    ${applyStyle(props)}
+    color: ${'#212121'};
+    display: ${'inline-block'};
+    font-weight: ${700};
+    font-size: ${'3rem'};
+    border-bottom: ${'14px solid rgba(66, 139, 202, 0.6)'};
+    line-height: ${'10px'};
+    margin: ${'0 0 47px 0'};
+    padding: ${'100px 0 0 0'};
   `}
 `;
 
@@ -301,26 +343,23 @@ const ProjectPage = ({ match }) => {
       $margin="96px auto 0 auto"
       $background="#F8F9FA"
     >
-      <Container
-        width="100%"
-        margin={isDesktop ? '0 30px 30px 0' : '0'}
-        padding={isDesktop ? '0 70px' : '0 30px'}
-        display="flex"
-        justifyContent="space-between"
-        position={vw > 840 ? 'relative' : ''}
+      <RowContainer
+        $width="100%"
+        $margin={isDesktop ? '0 30px 30px 0' : '0'}
+        $padding={isDesktop ? '0 70px' : '0 30px'}
+        $justifyContent="space-between"
+        $position={vw > 840 ? 'relative' : ''}
       >
         {/* 뷰포트크기가 840px 이상이면 동그란 좋아요버튼 생성 */}
         {vw > 840 ? (
           <Container position="absolute" left="-10px">
-            <Container
-              display="flex"
-              flexFlow="column"
-              justifyContent="center"
-              alignItems="center"
-              margin="0"
-              position={scrollY > 0 ? 'fixed' : ''}
-              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
-              transition="0.5s"
+            <ColumnContainer
+              $justifyContent="center"
+              $alignItems="center"
+              $margin="0"
+              $position={scrollY > 0 ? 'fixed' : ''}
+              $transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              $transition="0.5s"
             >
               {subject ? (
                 <>
@@ -355,23 +394,23 @@ const ProjectPage = ({ match }) => {
               ) : (
                 <SkeletonUI circle $width="44px" $height="44px" />
               )}
-            </Container>
+            </ColumnContainer>
           </Container>
         ) : (
           ''
         )}
-        <Container display="flex" alignItems="center" width="215px" margin="0">
+        <RowContainer display="flex" alignItems="center" width="215px" margin="0">
           {subject ? (
             <>
               <Time
                 margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
                 fontSize={1.6}
-                dateTime={DateFormMaker(created)}
+                dateTime={dateFormMaker(created)}
               >
-                {DateFormMaker(created)}
+                {dateFormMaker(created)}
               </Time>
-              <Container display="flex">
-                <ProjectWriter href={`/portfolio/${user_user_id}`}>
+              <RowContainer display="flex">
+                <ProjectWriter to={`/portfolio/${user_user_id}`}>
                   <Image
                     src={project_profile_photo}
                     alt="닉네임프로필사진"
@@ -382,12 +421,12 @@ const ProjectPage = ({ match }) => {
                   />
                   {project_nickname}
                 </ProjectWriter>
-              </Container>
+              </RowContainer>
             </>
           ) : (
             <SkeletonUI $display="inline-block" $width="200px" $height="16px" />
           )}
-        </Container>
+        </RowContainer>
         <Container position="relative" display={vw > 1050 ? '' : 'none'}>
           <Container position="absolute" left="250px" width="200px">
             <Container
@@ -401,18 +440,18 @@ const ProjectPage = ({ match }) => {
                   padding="0 40px 0 10px"
                   fontSize={1.5}
                 >
-                  <NavListItem>
-                    <NavLink href="#제목">{subject}</NavLink>
-                  </NavListItem>
-                  <NavListItem>
-                    <NavLink href="#기획의도">기획의도</NavLink>
-                  </NavListItem>
-                  <NavListItem>
-                    <NavLink href="#사용기술스택">사용기술스택</NavLink>
-                  </NavListItem>
-                  <NavListItem>
-                    <NavLink href="#프로젝트설명">프로젝트설명</NavLink>
-                  </NavListItem>
+                  <NavListList>
+                    <NavItem href="#제목">{subject}</NavItem>
+                  </NavListList>
+                  <NavListList>
+                    <NavItem href="#기획의도">기획 의도</NavItem>
+                  </NavListList>
+                  <NavListList>
+                    <NavItem href="#사용기술스택">사용기술스택</NavItem>
+                  </NavListList>
+                  <NavListList>
+                    <NavItem href="#프로젝트설명">프로젝트설명</NavItem>
+                  </NavListList>
                 </ProjectNav>
               ) : (
                 <SkeletonUI $width="150px" $height="10px" rows={4} />
@@ -420,7 +459,7 @@ const ProjectPage = ({ match }) => {
             </Container>
           </Container>
         </Container>
-      </Container>
+      </RowContainer>
       <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'} position="relative">
         {subject === '' ? (
           <SkeletonUI $width="300px" $height="50px" $margin="120px 0 0 0" />
@@ -508,21 +547,10 @@ const ProjectPage = ({ match }) => {
             {deploy_url ? (
               <LinkToWebSite
                 href={deploy_url ? deploy_url : '/'}
-                target="_blank"
-                $fontSize={1.6}
-                $fontWeight="700"
-                $borderRadius={5}
                 $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
                 $width={type === 'xs' ? '100%' : '200px'}
                 $marginBottom={type === 'xs' ? '5px' : ''}
-                $height="44px"
-                $textAlign="center"
-                $lineHeight="40px"
                 $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $background={'#FFFFFF'}
-                $display="flex"
-                $justifyContent="center"
-                $alignItems="center"
                 $pointerEvents={deploy_url ? '' : 'none'}
               >
                 <WebSiteIcon
@@ -535,20 +563,10 @@ const ProjectPage = ({ match }) => {
               </LinkToWebSite>
             ) : (
               <DisabledLink
-                $fontSize={1.6}
-                $fontWeight="700"
-                $borderRadius={5}
                 $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
                 $width={type === 'xs' ? '100%' : '200px'}
                 $marginBottom={type === 'xs' ? '5px' : ''}
-                $height="44px"
-                $textAlign="center"
-                $lineHeight="40px"
                 $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $background={'#FFFFFF'}
-                $display="flex"
-                $justifyContent="center"
-                $alignItems="center"
                 $pointerEvents={deploy_url ? '' : 'none'}
               >
                 Visit the Website
@@ -566,20 +584,9 @@ const ProjectPage = ({ match }) => {
             {github_url ? (
               <LinkToWebSite
                 href={github_url ? github_url : '/'}
-                target="_blank"
-                $fontSize={1.6}
-                $fontWeight="700"
-                $borderRadius={5}
                 $border="1px solid #428BCA"
                 $width={type === 'xs' ? '100%' : '145px'}
-                $height="44px"
-                $textAlign="center"
-                $lineHeight="40px"
                 $color={github_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $background={'#FFFFFF'}
-                $display="flex"
-                $justifyContent="center"
-                $alignItems="center"
                 $pointerEvents={github_url ? '' : 'none'}
               >
                 <WebSiteIcon
@@ -592,20 +599,10 @@ const ProjectPage = ({ match }) => {
               </LinkToWebSite>
             ) : (
               <DisabledLink
-                $fontSize={1.6}
-                $fontWeight="700"
-                $borderRadius={5}
-                $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
                 $width={type === 'xs' ? '100%' : '200px'}
                 $marginBottom={type === 'xs' ? '5px' : ''}
-                $height="44px"
-                $textAlign="center"
-                $lineHeight="40px"
                 $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $background={'#FFFFFF'}
-                $display="flex"
-                $justifyContent="center"
-                $alignItems="center"
+                $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
                 $pointerEvents={deploy_url ? '' : 'none'}
               >
                 Visit the Website
@@ -639,23 +636,12 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI width="100%" height="300px" />
         )}
       </Container>
-      <DivisionLine $width={isDesktop ? '500px' : '70%'} />
+      <DivisionLine width={isDesktop ? '500px' : '70%'} />
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         {subject ? (
-          <Heading
-            as="h3"
-            id="기획의도"
-            color="#212121"
-            display="inline-block"
-            fontWeight={700}
-            fontSize="3"
-            borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-            lineHeight="10px"
-            margin="0 0 47px 0"
-            $padding="100px 0 0 0"
-          >
+          <H3Heading id="기획의도" as="h3">
             기획 의도
-          </Heading>
+          </H3Heading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -673,23 +659,12 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
-      <DivisionLine $width={isDesktop ? '500px' : '70%'} />
+      <DivisionLine width={isDesktop ? '500px' : '70%'} />
       <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
         {subject ? (
-          <Heading
-            as="h3"
-            id="사용기술스택"
-            display="inline-block"
-            color="#212121"
-            fontWeight={700}
-            fontSize="3"
-            borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-            lineHeight="10px"
-            margin="0 0 47px 0"
-            $padding="100px 0 0 0"
-          >
+          <H3Heading as="h3" id="사용기술스택">
             사용 기술 스택
-          </Heading>
+          </H3Heading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -730,38 +705,27 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
-      <DivisionLine $width={isDesktop ? '500px' : '70%'} />
+      <DivisionLine width={isDesktop ? '500px' : '70%'} />
       <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         {subject ? (
-          <Heading
-            as="h3"
-            id="프로젝트설명"
-            display="inline-block"
-            color="#212121"
-            fontWeight={700}
-            fontSize="3"
-            borderBottom="14px solid rgba(66, 139, 202, 0.6)"
-            lineHeight="10px"
-            margin="0 0 47px 0"
-            $padding="100px 0 0 0"
-          >
+          <H3Heading as="h3" id="프로젝트설명">
             프로젝트 설명
-          </Heading>
+          </H3Heading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
         <Container margin="0 0 10px">
           {subject ? (
             <>
-              <Time fontSize={1.6} dateTime={DateFormMaker(start_date)} color="#70777d">
-                {DateFormMaker(start_date)}
+              <Time fontSize={1.6} dateTime={dateFormMaker(start_date)} color="#70777d">
+                {dateFormMaker(start_date)}
               </Time>
               <Span fontSize={1.6} color="#70777d">
                 {' '}
                 ~{' '}
               </Span>
-              <Time fontSize={1.6} dateTime={DateFormMaker(end_date)} color="#70777d">
-                {DateFormMaker(end_date)}
+              <Time fontSize={1.6} dateTime={dateFormMaker(end_date)} color="#70777d">
+                {dateFormMaker(end_date)}
               </Time>
             </>
           ) : (
