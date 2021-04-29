@@ -14,6 +14,7 @@ import Skeleton from '@yisheng90/react-loading';
 import scrollToTop from 'utils/scrollToTop';
 
 const StyledPortfolioProfile = styled.div`
+  background: #eaeaea;
   ${props => css`
     ${applyStyle(props)}
     position: fixed;
@@ -23,8 +24,7 @@ const StyledPortfolioProfile = styled.div`
     inset: 0px;
     width: 100%;
     min-height: 100vh;
-    background: #f19d85;
-    /* #eaeaea */
+    /* #f19d85 */
     @media (max-height: 740px) {
       position: relative;
       min-height: 740px;
@@ -78,11 +78,11 @@ const UsersSite = ({ href, type, margin, vw, iconMargin, children, title, ariaLa
   );
 };
 
-const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
+const PortfolioProfile = ({ userInfo, skills, background, ...restProps }) => {
   const { vw } = useDetectViewport();
 
   return (
-    <StyledPortfolioProfile>
+    <StyledPortfolioProfile $background={background}>
       <Container
         width={'100%'}
         padding="0 30px"
