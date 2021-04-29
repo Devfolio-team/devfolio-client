@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { applyStyle } from 'utils';
 
 const StyledDialog = styled.div.attrs(() => ({
-  tabIndex: 0,
+  tabIndex: -1,
 }))`
   ${props => css`
     ${applyStyle(props)}
