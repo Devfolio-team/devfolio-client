@@ -4,20 +4,36 @@ import { ProjectEditForm } from 'containers';
 import { Heading, Container } from 'components';
 import { useSelector } from 'react-redux';
 import scrollToTop from 'utils/scrollToTop';
-import { Prompt, useHistory } from 'react-router-dom';
+import { Prompt, useHistory, useParams } from 'react-router-dom';
+import ajax from 'apis/ajax';
 
 const StyledProjectEditPage = styled.main``;
 
 const ProjectEditPage = ({ viewport }) => {
   const currentUser = useSelector(({ auth }) => auth.currentUser);
 
+  const [editProjectData, setEditProjectData] = useState(null);
+
   const history = useHistory();
+
+  const { project_id } = useParams();
 
   const [leave, setLeave] = useState(true);
 
   useEffect(() => {
     scrollToTop();
-  }, []);
+    const getProject = async () => {
+      try {
+        const response = await ajax.getProject(project_id);
+        const { responseData } = response.data;
+        setEditProjectData(responseData);
+      } catch (error) {}
+    };
+
+    if (project_id) {
+      getProject();
+    }
+  }, [project_id]);
 
   const { vw, isDesktop } = viewport;
   useEffect(() => {
@@ -62,7 +78,11 @@ const ProjectEditPage = ({ viewport }) => {
           <br />
           프로젝트 등록을 시작해 볼까요?
         </Heading>
-        <ProjectEditForm vw={vw} setLeave={setLeave} />
+        <ProjectEditForm
+          vw={vw}
+          setLeave={setLeave}
+          editProjectData={project_id && editProjectData}
+        />
       </Container>
     </StyledProjectEditPage>
   );

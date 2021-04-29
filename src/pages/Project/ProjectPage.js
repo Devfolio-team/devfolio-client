@@ -24,6 +24,7 @@ import Skeleton from '@yisheng90/react-loading';
 import { Flicker } from 'react-micron';
 import DeleteModifyButton from './DeleteModifyButton';
 import DeleteModalDialog from './DeleteModalDialog';
+import StyledToEditPageLink from './ToEditPageLink';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -486,7 +487,9 @@ const ProjectPage = ({ match }) => {
             top={vw > 840 ? '-50px' : 0}
             right={vw >= 768 ? '70px' : '30px'}
           >
-            <DeleteModifyButton>수정</DeleteModifyButton>
+            <StyledToEditPageLink to={`/edit/project/${project.projectData.project_id}`}>
+              수정
+            </StyledToEditPageLink>
             <DeleteModifyButton onClick={onDeleteModalOpenHandler}>삭제</DeleteModifyButton>
           </Container>
         )}
