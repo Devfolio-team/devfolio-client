@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReactComponent as arrowDownIcon } from 'assets/arrowDownIcon.svg';
 import { applyStyle } from 'utils';
-import { LoginModalDialog2 } from 'containers';
+import { LoginModalDialog } from 'containers';
 
 const StyledHeaderBar = styled.header`
   ${({ $background, $padding }) => css`
@@ -79,29 +79,12 @@ const HeaderBar = ({ viewport }) => {
     setUserNavigatorIsOepn(false);
   };
 
-  const ref = useRef(null);
   const beforeRef = useRef(null);
 
   const onModalOpenHandler = () => {
     setIsModalOpen(true);
     document.body.style.overflow = 'hidden';
   };
-
-  // const onModalCloseHandler = e => {
-  //   if (e.keyCode === 27) {
-  //     setIsModalOpen(false);
-  //     beforeRef.current.focus();
-  //     document.body.style.overflow = 'unset';
-  //     return;
-  //   }
-
-  //   if (e.target === e.currentTarget) {
-  //     setIsModalOpen(false);
-  //     beforeRef.current.focus();
-  //     document.body.style.overflow = 'unset';
-  //     return;
-  //   }
-  // };
 
   useEffect(() => {
     window.addEventListener('click', onNavigatorCloseHandler);
@@ -207,28 +190,12 @@ const HeaderBar = ({ viewport }) => {
         )}
         {isModalOpen ? (
           <Portal id="modal-root">
-            {/* <LoginModalDialog
+            <LoginModalDialog
               viewport={viewport}
-              ref={ref}
-              onModalCloseHandler={onModalCloseHandler}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-            ></LoginModalDialog> */}
-            {/* <ModalDialog
-              viewport={viewport}
-              ref={ref}
-              onModalCloseHandler={onModalCloseHandler}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-            ></ModalDialog> */}
-            <LoginModalDialog2
-              viewport={viewport}
-              ref={ref}
               beforeRef={beforeRef}
-              // onModalCloseHandler={onModalCloseHandler}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
-            ></LoginModalDialog2>
+            ></LoginModalDialog>
           </Portal>
         ) : null}
       </Naigation>

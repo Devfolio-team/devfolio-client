@@ -13,7 +13,7 @@ import {
   Time,
 } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
@@ -242,6 +242,8 @@ const ProjectPage = ({ match }) => {
   const onDeleteModalOpenHandler = () => {
     setIsDeleteModalOpen(true);
   };
+
+  const deleteButtonRef = useRef(null);
 
   // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
   useEffect(() => {
@@ -490,7 +492,9 @@ const ProjectPage = ({ match }) => {
             <StyledToEditPageLink to={`/edit/project/${project.projectData.project_id}`}>
               수정
             </StyledToEditPageLink>
-            <DeleteModifyButton onClick={onDeleteModalOpenHandler}>삭제</DeleteModifyButton>
+            <DeleteModifyButton onClick={onDeleteModalOpenHandler} ref={deleteButtonRef}>
+              삭제
+            </DeleteModifyButton>
           </Container>
         )}
       </Container>
@@ -776,6 +780,7 @@ const ProjectPage = ({ match }) => {
       </Container>
       {isDeleteModalOpen && (
         <DeleteModalDialog
+          deleteButtonRef={deleteButtonRef}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
           projectId={project && project.projectData.project_id}
         />
