@@ -80,7 +80,7 @@ const SkillIcon = ({ type, ...restProps }) => {
   let SkillIcon = null;
   const spaceDelete = type => {
     let result = '';
-    result = type.replace(/ /g, '');
+    result = type.replace(/ /g, '').replace('.', '');
     return result.toUpperCase();
   };
 
