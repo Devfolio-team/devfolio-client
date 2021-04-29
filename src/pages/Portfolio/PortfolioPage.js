@@ -45,11 +45,7 @@ const PortfolioPage = ({ match }) => {
       <A11yHidden as="h2">
         {portfolio.user ? portfolio.user.name : null}의 포트폴리오 페이지
       </A11yHidden>
-      <PortfolioProfile
-        userInfo={portfolio.user}
-        skills={portfolio.skills}
-        background={authState.currentUser.profile_background}
-      />
+      <PortfolioProfile userInfo={portfolio.user} skills={portfolio.skills} />
 
       <PortfolioContents portfolio={portfolio} />
     </StyledPortfolioPage>
