@@ -44,9 +44,11 @@ const StyledLabel = styled.label`
     `}
 `;
 
-const ProjectDuration = ({ setFieldValue, vw, errors }) => {
+const ProjectDuration = ({ setFieldValue, vw, errors, editStartDate, editEndDate }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [isStartSelected, setIsStartSelected] = useState(false);
+  const [isEndSelected, setIsEndSelected] = useState(false);
 
   return (
     <StyledContainer vw={vw}>
@@ -101,11 +103,12 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             $boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
             $borderRadius="5px"
             locale="ko"
-            selected={startDate}
+            selected={isStartSelected ? startDate : Date.parse(editStartDate)}
             onChange={date => {
               const timezoneOffset = new Date().getTimezoneOffset() * 60000;
               const timezoneDate = new Date(date.getTime() - timezoneOffset);
               const dateFormat = timezoneDate.toISOString();
+              setIsStartSelected(true);
               setStartDate(date);
               setFieldValue('startDate', dateFormat);
             }}
@@ -145,11 +148,12 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             $boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
             $borderRadius="5px"
             locale="ko"
-            selected={endDate}
+            selected={isEndSelected ? endDate : Date.parse(editEndDate)}
             onChange={date => {
               const timezoneOffset = new Date().getTimezoneOffset() * 60000;
               const timezoneDate = new Date(date.getTime() - timezoneOffset);
               const dateFormat = timezoneDate.toISOString();
+              setIsEndSelected(true);
               setEndDate(date);
               setFieldValue('endDate', dateFormat);
             }}

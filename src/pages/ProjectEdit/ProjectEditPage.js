@@ -27,7 +27,9 @@ const ProjectEditPage = ({ viewport }) => {
         const response = await ajax.getProject(project_id);
         const { responseData } = response.data;
         setEditProjectData(responseData);
-      } catch (error) {}
+      } catch (error) {
+        throw new Error(error);
+      }
     };
 
     if (project_id) {
@@ -76,13 +78,20 @@ const ProjectEditPage = ({ viewport }) => {
         >
           {currentUser.nickname}님 안녕하세요!
           <br />
-          프로젝트 등록을 시작해 볼까요?
+          프로젝트 {editProjectData ? '수정' : '등록'}을 시작해 볼까요?
         </Heading>
-        <ProjectEditForm
-          vw={vw}
-          setLeave={setLeave}
-          editProjectData={project_id && editProjectData}
-        />
+        {editProjectData ? (
+          <>
+            <ProjectEditForm
+              vw={vw}
+              setLeave={setLeave}
+              editProjectData={editProjectData}
+              projectId={project_id}
+            />
+          </>
+        ) : (
+          <ProjectEditForm vw={vw} setLeave={setLeave} />
+        )}
       </Container>
     </StyledProjectEditPage>
   );

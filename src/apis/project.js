@@ -40,3 +40,11 @@ export const delLikeCountMinus = async (projectId, loginUserId) => {
     url: `${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
   });
 };
+
+export const editProject = async (projectData, projectId) => {
+  return await axios.patch(`${API_URL}/api/project/${projectId}`, projectData, {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+};
