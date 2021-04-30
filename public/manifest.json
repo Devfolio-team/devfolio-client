@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "http://devfolio.world",
+  "start_url": ".",
   "display": "standalone",
   "theme_color": "#5382F6",
   "background_color": "#ffffff"
