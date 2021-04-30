@@ -25,6 +25,12 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
         background: ${color.white};
         color: ${props.$background === '#fafbfc' ? '#d73a49' : color.mainColor};
       }
+      @media (max-width: 768px) {
+        outline: none;
+        &:focus {
+          outline: none;
+        }
+      }
     `}
 `;
 
