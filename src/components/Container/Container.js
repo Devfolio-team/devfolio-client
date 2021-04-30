@@ -11,6 +11,12 @@ const StyledContainer = styled.div`
       .react-datepicker-popper {
         left: 115px !important;
       }
+      @media (max-width: 768px) {
+        outline: none;
+        &:focus {
+          outline: none;
+        }
+      }
     `}
 `;
 
