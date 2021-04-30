@@ -11,7 +11,14 @@ const StyledContainer = styled.div`
       .react-datepicker-popper {
         left: 115px !important;
       }
+      &:focus {
+        outline: 3px solid #aaa;
+      }
+      &:focus:not(:focus-visible) {
+        outline: none;
+      }
       @media (max-width: 768px) {
+        --webkit-tap-highlight-color: transparent;
         outline: none;
         &:focus {
           outline: none;
