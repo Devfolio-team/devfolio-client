@@ -1,12 +1,20 @@
-import { Anchor, Container, Span, SVGIcon } from 'components';
+import {
+  Anchor,
+  Container,
+  SkillsTypewriterEffect,
+  SkillsTypewriterEffectSkeleton,
+  Span,
+  SVGIcon,
+} from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { applyStyle } from 'utils';
-import Typewiter from 'react-simple-typewriter';
 import Skeleton from '@yisheng90/react-loading';
+import scrollToTop from 'utils/scrollToTop';
 
 const StyledPortfolioProfile = styled.div`
+  background: #eaeaea;
   ${props => css`
     ${applyStyle(props)}
     position: fixed;
@@ -16,7 +24,7 @@ const StyledPortfolioProfile = styled.div`
     inset: 0px;
     width: 100%;
     min-height: 100vh;
-    background: #f19d85;
+    /* #f19d85 */
     @media (max-height: 740px) {
       position: relative;
       min-height: 740px;
@@ -24,7 +32,7 @@ const StyledPortfolioProfile = styled.div`
   `}
 `;
 
-const ProfileImate = styled.img`
+const ProfileImage = styled.img`
   border-radius: 50%;
   width: 250px;
   height: 250px;
@@ -43,57 +51,17 @@ const ProfileImate = styled.img`
   }
 `;
 
-// const SimpleIntroduce = styled.em`
-//   display: block;
-//   max-width: 600px;
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 2.2rem;
-//   text-align: center;
-//   line-height: 3.5rem;
-//   color: #212121;
-//   @media (max-width: 768px) {
-//     font-size: 1.6rem;
-//     max-width: 300px;
-//   }
-// `;
-
-const CustomTypewriter = styled.div`
-  @keyframes cursorAnimation {
-    0% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  & > .typewriterEffectWraper > span:last-of-type {
-    animation: cursorAnimation 1s infinite;
-  }
-  line-height: 3.3rem;
-  margin: 60px 0 40px;
-  font-size: 3rem;
-  font-weight: 700;
-  color: #212121;
-  @media (max-width: 1024px) {
-    font-size: 2.7rem;
-  }
-  @media (max-width: 768px) {
-    font-size: 2.4rem;
-    margin: 45px 0 35px;
-  }
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-`;
-
-const UsersSite = ({ href, type, margin, vw, iconMargin, children }) => {
+const UsersSite = ({ href, type, margin, vw, iconMargin, children, title, ariaLabel }) => {
   return (
     <Container width="100%" margin={margin} display="flex" alignItems="center">
-      <Anchor href={href} target="_blank" margin={iconMargin}>
+      <Anchor
+        href={href}
+        target="_blank"
+        margin={iconMargin}
+        onFocus={scrollToTop}
+        title={title}
+        aria-label={ariaLabel}
+      >
         <SVGIcon type={type} width={vw >= 768 ? 30 : 25} height={vw >= 768 ? 30 : 25} />
       </Anchor>
       <Anchor
@@ -102,6 +70,7 @@ const UsersSite = ({ href, type, margin, vw, iconMargin, children }) => {
         href={href}
         fontSize={vw >= 768 ? 1.4 : 1.3}
         margin="0 0 0 8px"
+        title={title}
       >
         {children}
       </Anchor>
@@ -113,7 +82,7 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
   const { vw } = useDetectViewport();
 
   return (
-    <StyledPortfolioProfile>
+    <StyledPortfolioProfile $background={userInfo && userInfo.profile_background}>
       <Container
         width={'100%'}
         padding="0 30px"
@@ -127,13 +96,14 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
         transform={`translate3D(-50%, ${vw >= 780 ? '-44%' : '-50%'}, 0)`}
       >
         {userInfo ? (
-          <ProfileImate
+          <ProfileImage
             src={
               userInfo
                 ? userInfo.profile_photo
                 : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'
             }
-            alt=""
+            alt={`${userInfo.name}님의 프로필 사진`}
+            title={`${userInfo.name}님의 프로필 사진`}
           />
         ) : (
           <Skeleton
@@ -178,93 +148,12 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
           )}
         </Span>
 
-        {vw >= 768 ? (
-          <CustomTypewriter>
-            {skills ? (
-              <>
-                저는{' '}
-                <Container
-                  className="typewriterEffectWraper"
-                  display={vw >= 768 ? 'inline-block' : 'block'}
-                >
-                  <Typewiter
-                    loop
-                    cursor
-                    typeSpeed={150}
-                    deleteSpeed={140}
-                    delaySpeed={1000}
-                    words={['React.js', 'Vue.js', 'Styled Components', 'Javascript']}
-                  />{' '}
-                </Container>
-                할 줄 아는 개발자 입니다.
-              </>
-            ) : (
-              <Span margin="0 0 -4px">
-                {vw >= 768 ? (
-                  <Skeleton
-                    color="#cccccc"
-                    width={vw >= 1024 ? 750 : 600}
-                    height={vw >= 1024 ? 36 : 36}
-                    translucent
-                  />
-                ) : (
-                  <Skeleton rows={3} color="#cccccc" width={250} height={33} translucent />
-                )}
-              </Span>
-            )}
-          </CustomTypewriter>
-        ) : null}
-        <Container display="flex" flexFlow="column nowrap" alignItems="flex-start">
-          {vw < 768 ? (
-            <CustomTypewriter>
-              {skills ? (
-                <>
-                  저는{' '}
-                  <Container
-                    className="typewriterEffectWraper"
-                    display={vw >= 768 ? 'inline-block' : 'block'}
-                  >
-                    <Typewiter
-                      loop
-                      cursor
-                      typeSpeed={150}
-                      deleteSpeed={140}
-                      delaySpeed={1000}
-                      words={['React.js', 'Vue.js', 'Styled Components', 'Javascript']}
-                    />{' '}
-                  </Container>
-                  할 줄 아는 개발자 입니다.
-                </>
-              ) : (
-                <Span margin="0 0 -4px">
-                  {vw >= 768 ? (
-                    <Skeleton
-                      color="#cccccc"
-                      width={vw >= 1024 ? 750 : 600}
-                      height={vw >= 1024 ? 36 : 36}
-                      translucent
-                    />
-                  ) : (
-                    <Skeleton rows={3} color="#cccccc" width={250} height={33} translucent />
-                  )}
-                </Span>
-              )}
-            </CustomTypewriter>
-          ) : null}
+        {skills ? (
+          <SkillsTypewriterEffect skills={skills.map(({ skill_name }) => skill_name)} />
+        ) : (
+          <SkillsTypewriterEffectSkeleton />
+        )}
 
-          {/* {userInfo ? (
-            <SimpleIntroduce>{userInfo.simple_introduction}</SimpleIntroduce>
-          ) : (
-            <Container margin="-5px 0 -8px">
-              <Skeleton
-                color="#cccccc"
-                width={vw >= 1024 ? 480 : vw >= 768 ? 480 : vw >= 480 ? 400 : vw >= 365 ? 315 : 260}
-                height={vw >= 1024 ? 30 : vw >= 768 ? 30 : 25}
-                translucent
-              />
-            </Container>
-          )} */}
-        </Container>
         <Container
           width={vw >= 768 ? 'auto' : vw > 480 ? 250 : 208}
           maxWidth={vw >= 768 ? 250 : null}
@@ -275,7 +164,7 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
           zIndex={10}
           justifyContent="space-between"
         >
-          {userInfo ? (
+          {userInfo && (
             <>
               {userInfo.github_url ? (
                 <UsersSite
@@ -285,6 +174,8 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                   vw={vw}
                   type="GithubBlack"
                   alignItems="center"
+                  title={`${userInfo.name}님의 github 주소로 이동`}
+                  ariaLabel={`${userInfo.name}님의 github 주소로 이동`}
                 />
               ) : null}
               {userInfo.email ? (
@@ -295,6 +186,8 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                   vw={vw}
                   type="Email"
                   alignItems="center"
+                  title={`${userInfo.name}님에게 email 전송`}
+                  ariaLabel={`${userInfo.name}님에게 email 전송`}
                 />
               ) : null}
               {userInfo.blog_url ? (
@@ -306,10 +199,12 @@ const PortfolioProfile = ({ userInfo, skills, ...restProps }) => {
                   type="Blog"
                   alignItems="center"
                   iconMargin="0 0 -7px"
+                  title={`${userInfo.name}님의 blog 주소로 이동`}
+                  ariaLabel={`${userInfo.name}님의 blog 주소로 이동`}
                 />
               ) : null}
             </>
-          ) : null}
+          )}
         </Container>
       </Container>
     </StyledPortfolioProfile>

@@ -4,7 +4,7 @@ const FILE_SIZE = 1000 * 1000 * 10;
 
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif'];
 
-const validationSchema = Yup.object({
+const projectValidationSchema = Yup.object({
   subject: Yup.string().required('* 프로젝트 이름은 필수 항목입니다.'),
   planIntention: Yup.string()
     .max(200, '기획의도는 200자 이내여야 합니다.')
@@ -33,4 +33,4 @@ const validationSchema = Yup.object({
     .required('* 프로젝트 썸네일은 필수 항목입니다.'),
 });
 
-export default validationSchema;
+export default projectValidationSchema;

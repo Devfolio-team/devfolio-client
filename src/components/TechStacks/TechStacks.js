@@ -9,13 +9,18 @@ const StyledContainer = styled(Container)`
   `}
 `;
 
-const TechStacks = ({ setFieldValue, vw }) => {
+const TechStacks = ({ setFieldValue, vw, editTechStacks }) => {
   return (
     <StyledContainer vw={vw}>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 32px 0">
         사용 기술 스택
       </Heading>
-      <ChipInputSearch id="techStacksList" setFieldValue={setFieldValue} />
+      <ChipInputSearch
+        id="techStacksList"
+        setFieldValue={setFieldValue}
+        profile={false}
+        editTechStacks={editTechStacks}
+      />
     </StyledContainer>
   );
 };

@@ -71,6 +71,24 @@ export default {
           'TailwindCSS',
           'Tomcat',
           'Webpack',
+          'Firestore',
+          'Docker',
+          'Hugo',
+          'Jsp',
+          'Koa',
+          'Less',
+          'MsSQL',
+          'NginX',
+          'NGRX',
+          'NuxtJS',
+          'PHP',
+          'PostgreSQL',
+          'Emotion',
+          'Parcel',
+          'ReactHooks',
+          'Reactnative',
+          'ReactStrap',
+          'VueX',
         ],
       },
     },
@@ -137,6 +155,24 @@ export const Svelte = Template.bind({});
 export const TailwindCSS = Template.bind({});
 export const Tomcat = Template.bind({});
 export const Webpack = Template.bind({});
+export const Firestore = Template.bind({});
+export const Docker = Template.bind({});
+export const Hugo = Template.bind({});
+export const Jsp = Template.bind({});
+export const Koa = Template.bind({});
+export const Less = Template.bind({});
+export const MsSQL = Template.bind({});
+export const NginX = Template.bind({});
+export const NGRX = Template.bind({});
+export const NuxtJS = Template.bind({});
+export const PHP = Template.bind({});
+export const PostgreSQL = Template.bind({});
+export const Emotion = Template.bind({});
+export const Parcel = Template.bind({});
+export const ReactHooks = Template.bind({});
+export const Reactnative = Template.bind({});
+export const ReactStrap = Template.bind({});
+export const VueX = Template.bind({});
 
 ExpressIcon.args = {
   type: 'Express',
@@ -315,107 +351,197 @@ Vue.args = {
   heigth: 40,
 };
 Aws.args = {
-  typd: 'Aws',
+  type: 'Aws',
   width: 40,
   height: 40,
 };
 Bootstrap.args = {
-  typd: 'Bootstrap',
+  type: 'Bootstrap',
   width: 40,
   height: 40,
 };
 CouchDB.args = {
-  typd: 'CouchDB',
+  type: 'CouchDB',
   width: 40,
   height: 40,
 };
 DynamoDB.args = {
-  typd: 'DynamoDB',
+  type: 'DynamoDB',
   width: 40,
   height: 40,
 };
 Git.args = {
-  typd: 'Git',
+  type: 'Git',
   width: 40,
   height: 40,
 };
 Github.args = {
-  typd: 'Github',
+  type: 'Github',
   width: 40,
   height: 40,
 };
 Jekyll.args = {
-  typd: 'Jekyll',
+  type: 'Jekyll',
   width: 40,
   height: 40,
 };
 JQuery.args = {
-  typd: 'JQuery',
+  type: 'JQuery',
   width: 40,
   height: 40,
 };
 Linux.args = {
-  typd: 'Linux',
+  type: 'Linux',
   width: 40,
   height: 40,
 };
 MariaDB.args = {
-  typd: 'MariaDB',
+  type: 'MariaDB',
   width: 40,
   height: 40,
 };
 MaterialUI.args = {
-  typd: 'MaterialUI',
+  type: 'MaterialUI',
   width: 40,
   height: 40,
 };
 Oracle.args = {
-  typd: 'Oracle',
+  type: 'Oracle',
   width: 40,
   height: 40,
 };
 PostCSS.args = {
-  typd: 'PostCSS',
+  type: 'PostCSS',
   width: 40,
   height: 40,
 };
 Redis.args = {
-  typd: 'Redis',
+  type: 'Redis',
   width: 40,
   height: 40,
 };
 RethinkDB.args = {
-  typd: 'RethinkDB',
+  type: 'RethinkDB',
   width: 40,
   height: 40,
 };
 Rollup.args = {
-  typd: 'Rollup',
+  type: 'Rollup',
   width: 40,
   height: 40,
 };
 RxJS.args = {
-  typd: 'RxJS',
+  type: 'RxJS',
   width: 40,
   height: 40,
 };
 Svelte.args = {
-  typd: 'Svelte',
+  type: 'Svelte',
   width: 40,
   height: 40,
 };
 TailwindCSS.args = {
-  typd: 'TailwindCSS',
+  type: 'TailwindCSS',
   width: 40,
   height: 40,
 };
 Tomcat.args = {
-  typd: 'Tomcat',
+  type: 'Tomcat',
   width: 40,
   height: 40,
 };
 Webpack.args = {
-  typd: 'Webpack',
+  type: 'Webpack',
+  width: 40,
+  height: 40,
+};
+Firestore.args = {
+  type: 'Firestore',
+  width: 40,
+  height: 40,
+};
+Docker.args = {
+  type: 'Docker',
+  width: 40,
+  height: 40,
+};
+Hugo.args = {
+  type: 'Hugo',
+  width: 40,
+  height: 40,
+};
+Jsp.args = {
+  type: 'Jsp',
+  width: 40,
+  height: 40,
+};
+Koa.args = {
+  type: 'Koa',
+  width: 40,
+  height: 40,
+};
+Less.args = {
+  type: 'Less',
+  width: 40,
+  height: 40,
+};
+MsSQL.args = {
+  type: 'MsSQL',
+  width: 40,
+  height: 40,
+};
+NginX.args = {
+  type: 'NginX',
+  width: 40,
+  height: 40,
+};
+NGRX.args = {
+  type: 'NGRX',
+  width: 40,
+  height: 40,
+};
+NuxtJS.args = {
+  type: 'NuxtJS',
+  width: 40,
+  height: 40,
+};
+PHP.args = {
+  type: 'PHP',
+  width: 40,
+  height: 40,
+};
+PostgreSQL.args = {
+  type: 'PostgreSQL',
+  width: 40,
+  height: 40,
+};
+Emotion.args = {
+  type: 'Emotion',
+  width: 40,
+  height: 40,
+};
+Parcel.args = {
+  type: 'Parcel',
+  width: 40,
+  height: 40,
+};
+ReactHooks.args = {
+  type: 'ReactHooks',
+  width: 40,
+  height: 40,
+};
+Reactnative.args = {
+  type: 'Reactnative',
+  width: 40,
+  height: 40,
+};
+ReactStrap.args = {
+  type: 'ReactStrap',
+  width: 40,
+  height: 40,
+};
+VueX.args = {
+  type: 'VueX',
   width: 40,
   height: 40,
 };

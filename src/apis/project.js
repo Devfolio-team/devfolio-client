@@ -14,3 +14,37 @@ export const postProject = async projectData => {
     },
   });
 };
+
+export const getProject = async userId => {
+  return await axios(`${API_URL}/api/project/${userId}`);
+};
+
+export const deleteProject = async projectId => {
+  return await axios.delete(`${API_URL}/api/project/${projectId}`);
+};
+
+export const getIsPressLikeButton = async (projectId, loginUserId) => {
+  return await axios(`${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`);
+};
+
+export const postLikeCountPlus = async (projectId, loginUserId) => {
+  return await axios({
+    method: 'post',
+    url: `${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
+  });
+};
+
+export const delLikeCountMinus = async (projectId, loginUserId) => {
+  return await axios({
+    method: 'delete',
+    url: `${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
+  });
+};
+
+export const editProject = async (projectData, projectId) => {
+  return await axios.patch(`${API_URL}/api/project/${projectId}`, projectData, {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+};
