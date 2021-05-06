@@ -1,15 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string } from 'prop-types';
+import { applyStyle } from 'utils';
 
 const StyledFormErrorMessage = styled.div`
   color: red;
   font-size: 1.2rem;
   font-weight: 700;
-  margin-top: 10px;
+  ${props =>
+    css`
+      ${applyStyle(props)}
+    `}
 `;
 
-const FormErrorMessage = ({ children }) => {
-  return <StyledFormErrorMessage>{children}</StyledFormErrorMessage>;
+const FormErrorMessage = ({ margin, children }) => {
+  return <StyledFormErrorMessage $margin={margin}>{children}</StyledFormErrorMessage>;
 };
 
 FormErrorMessage.defaultProps = {};

@@ -17,6 +17,7 @@ export default {
     circle: { control: 'boolean' },
     color: { control: 'color' },
     translucent: { control: 'boolean' },
+    rows: { control: 'number' },
   },
 };
 

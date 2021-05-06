@@ -5,6 +5,7 @@ import { SVGIcon } from 'components';
 import { string, func } from 'prop-types';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
+import { useSelector } from 'react-redux';
 
 const ChipContainer = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const ChipContainer = styled.div`
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background: ${color.white};
+  text-align: left;
 `;
 
 const ChipItems = styled.div`
@@ -69,10 +71,11 @@ const ChipInput = styled.input`
   }
 `;
 
-const ChipInputSearch = ({ id, setFieldValue }) => {
+const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const [chipLabels, setChipLabels] = useState([]);
   const [techStacks, setTechStacks] = useState([]);
   const chipRef = useRef();
+  const authState = useSelector(state => state.auth);
 
   useEffect(() => {
     setFieldValue('techStacks', chipLabels);
@@ -90,6 +93,12 @@ const ChipInputSearch = ({ id, setFieldValue }) => {
 
     fetchTechStacks();
   }, []);
+
+  useEffect(() => {
+    if (profile)
+      setChipLabels(authState.currentUser.currentUsersSkills.map(skill => skill.skill_name));
+    if (editTechStacks) setChipLabels(editTechStacks.map(stack => stack.tech_name));
+  }, [authState.currentUser.currentUsersSkills, editTechStacks, profile]);
 
   const onKeyUpHandler = e => {
     if (e.key !== 'Enter') return;

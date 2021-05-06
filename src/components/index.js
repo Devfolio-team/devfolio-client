@@ -37,3 +37,6 @@ export { default as SkillIconItem } from './SkillIconItem/SkillIconItem';
 export { default as ProjectItemSkeleton } from './ProjectItem/ProjectItemSkeleton';
 export { default as ProjectNav } from './ProjectNav/ProjectNav';
 export { default as FormErrorMessage } from './FormErrorMessage/FormErrorMessage';
+export { default as SkillsTypewriterEffect } from './SkillsTypewriterEffect/SkillsTypewriterEffect';
+export { default as SkillsTypewriterEffectSkeleton } from './SkillsTypewriterEffect/SkillsTypewriterEffectSkeleton.js';
+export { default as DivisionLine } from './DivisionLine/DivisionLine';

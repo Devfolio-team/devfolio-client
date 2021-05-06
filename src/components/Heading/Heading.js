@@ -6,6 +6,7 @@ import { applyStyle } from 'utils';
 const StyledHeading = styled.h1`
   ${props => css`
     ${applyStyle(props)}
+    word-break: break-all;
   `}
 `;
 
@@ -17,6 +18,7 @@ const Heading = ({
   lineHeight,
   background,
   margin,
+  padding,
   textAlign,
   border,
   borderBottom,
@@ -45,6 +47,7 @@ const Heading = ({
     $overflow={overflow}
     $whiteSpace={whiteSpace}
     $textOverflow={textOverflow}
+    $padding={padding}
     {...restProps}
   ></StyledHeading>
 );

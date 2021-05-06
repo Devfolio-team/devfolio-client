@@ -22,6 +22,7 @@ const Paragraph = ({
   overflow,
   textOverflow,
   width,
+  textAlign,
   ...restProps
 }) => (
   <StyledParagraph
@@ -37,6 +38,7 @@ const Paragraph = ({
     $cursor={cursor}
     $overflow={overflow}
     $textOverflow={textOverflow}
+    $textAlign={textAlign}
     {...restProps}
   />
 );
@@ -45,7 +47,7 @@ Paragraph.propTypes = {
   /** Paragraph에 적용 할 글자 크기를 설정합니다. */
   fontSize: number,
   /** Paragraph에 적용 할 글자 굵기를 설정합니다. */
-  fontWeight: string,
+  fontWeight: oneOfType([string, number]),
   /** Paragraph에 적용 할 줄 높이를 설정합니다. */
   lineHeight: oneOfType([string, number]),
   /** Paragraph에 적용 할 글자색을 설정합니다. */

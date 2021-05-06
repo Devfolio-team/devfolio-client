@@ -29,7 +29,7 @@ const PlanIntention = ({ vw, errors }) => {
         afterMargin={0}
         errors={errors}
       />
-      <ErrorMessage name="planIntention" component={FormErrorMessage} />
+      <ErrorMessage name="planIntention" component={FormErrorMessage} margin="10px 0 0 0" />
     </StyledContainer>
   );
 };

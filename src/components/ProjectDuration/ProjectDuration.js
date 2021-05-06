@@ -44,9 +44,11 @@ const StyledLabel = styled.label`
     `}
 `;
 
-const ProjectDuration = ({ setFieldValue, vw, errors }) => {
+const ProjectDuration = ({ setFieldValue, vw, errors, editStartDate, editEndDate }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [isStartSelected, setIsStartSelected] = useState(false);
+  const [isEndSelected, setIsEndSelected] = useState(false);
 
   return (
     <StyledContainer vw={vw}>
@@ -74,7 +76,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
           height="70px"
           display="flex"
           flexFlow="column"
-          margin="0"
+          margin={vw >= 768 ? '0' : '0 0 30px 0'}
           position="relative"
         >
           <StyledLabel $margin="0 0 10px 0" htmlFor="startDate">
@@ -101,11 +103,12 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             $boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
             $borderRadius="5px"
             locale="ko"
-            selected={startDate}
+            selected={isStartSelected ? startDate : Date.parse(editStartDate)}
             onChange={date => {
               const timezoneOffset = new Date().getTimezoneOffset() * 60000;
               const timezoneDate = new Date(date.getTime() - timezoneOffset);
               const dateFormat = timezoneDate.toISOString();
+              setIsStartSelected(true);
               setStartDate(date);
               setFieldValue('startDate', dateFormat);
             }}
@@ -117,7 +120,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             autoComplete="off"
             errors={errors}
           />
-          <ErrorMessage name="startDate" component={FormErrorMessage} />
+          <ErrorMessage name="startDate" component={FormErrorMessage} margin="10px 0 0 0" />
         </Container>
         <Container
           width="100%"
@@ -145,11 +148,12 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             $boxShadow="1px 2px 4px rgba(0, 0, 0, 0.1)"
             $borderRadius="5px"
             locale="ko"
-            selected={endDate}
+            selected={isEndSelected ? endDate : Date.parse(editEndDate)}
             onChange={date => {
               const timezoneOffset = new Date().getTimezoneOffset() * 60000;
               const timezoneDate = new Date(date.getTime() - timezoneOffset);
               const dateFormat = timezoneDate.toISOString();
+              setIsEndSelected(true);
               setEndDate(date);
               setFieldValue('endDate', dateFormat);
             }}
@@ -163,7 +167,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors }) => {
             style={{ left: '115px' }}
             errors={errors}
           />
-          <ErrorMessage name="endDate" component={FormErrorMessage} />
+          <ErrorMessage name="endDate" component={FormErrorMessage} margin="10px 0 0 0" />
         </Container>
       </Container>
     </StyledContainer>

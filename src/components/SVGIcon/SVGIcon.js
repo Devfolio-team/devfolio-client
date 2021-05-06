@@ -19,6 +19,8 @@ import { ReactComponent as Calendar } from 'assets/Calendar.svg';
 import { ReactComponent as WebSite } from 'assets/WebSite.svg';
 import { ReactComponent as WebSiteDisable } from 'assets/WebSiteDisable.svg';
 import { ReactComponent as GithubBlueDisable } from 'assets/GithubBlueDisable.svg';
+import { ReactComponent as Suits } from 'assets/Suits.svg';
+import { ReactComponent as Palette } from 'assets/Palette.svg';
 
 const SVGIcon = ({ type, ...restProps }) => {
   let SVGIcon = null;
@@ -83,6 +85,12 @@ const SVGIcon = ({ type, ...restProps }) => {
       break;
     case 'GithubBlueDisable':
       SVGIcon = GithubBlueDisable;
+      break;
+    case 'Suits':
+      SVGIcon = Suits;
+      break;
+    case 'Palette':
+      SVGIcon = Palette;
       break;
   }
   return <SVGIcon {...restProps} />;

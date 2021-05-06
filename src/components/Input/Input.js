@@ -26,7 +26,7 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
 }))`
   ${props => css`
     ${applyStyle(props)}
-    font-size: ${props.$inputFontSize};
+    font-size: ${props.$inputFontSize}rem;
     outline: none;
     &:focus {
       outline: none;
@@ -68,6 +68,8 @@ const Input = ({
   zIndex,
   field,
   errors,
+  withdrawal,
+  textAlign,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -89,7 +91,7 @@ const Input = ({
           htmlFor={id}
           fontSize={labelFontSize}
           focus={isFocused}
-          inputValue={field.value}
+          inputValue={withdrawal ? value : field.value}
           beforeTranslate={beforeTranslate}
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
@@ -118,6 +120,7 @@ const Input = ({
         $display={display}
         $padding={padding}
         $boxShadow={boxShadow}
+        $textAlign={textAlign}
         errors={errors}
         {...field}
         onBlur={onBlurHandler}
@@ -129,6 +132,7 @@ const Input = ({
 
 Input.defaultProps = {
   padding: '0 0 0 12px',
+  withdrawal: false,
 };
 
 Input.propTypes = {

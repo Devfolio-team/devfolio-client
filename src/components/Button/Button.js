@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { string, func, number, oneOfType } from 'prop-types';
-import { applyStyle } from 'utils';
+import { applyStyle, color } from 'utils';
 import { forwardRef } from 'react';
 
 const StyledButton = styled.button.attrs(({ type, onClick }) => ({
@@ -10,12 +10,26 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   ${props =>
     css`
       ${applyStyle(props)}
+
       &:focus {
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+        outline: 3px solid #aaa;
       }
       &:focus:not(:focus-visible) {
-        box-shadow: none;
+        outline: none;
+      }
+      &[disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      &[disabled]:hover {
+        background: ${color.white};
+        color: ${props.$background === '#fafbfc' ? '#d73a49' : color.mainColor};
+      }
+      @media (max-width: 768px) {
+        outline: none;
+        &:focus {
+          outline: none;
+        }
       }
     `}
 `;
