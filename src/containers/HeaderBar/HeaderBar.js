@@ -83,7 +83,7 @@ const HeaderBar = ({ viewport }) => {
 
   const onModalOpenHandler = () => {
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = 'hidden';
   };
 
   useEffect(() => {

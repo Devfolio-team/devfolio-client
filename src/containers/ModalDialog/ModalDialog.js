@@ -3,6 +3,7 @@ import { useEffect, React, useCallback, useRef } from 'react';
 
 const ModalDialog = ({
   setIsModalOpen,
+  isModalOpen,
   beforeRef,
   children,
   width,
@@ -15,6 +16,10 @@ const ModalDialog = ({
   $rootNode.setAttribute('aria-hidden', 'true');
 
   const ref = useRef(null);
+
+  if (isModalOpen) {
+    document.body.style.overflow = 'hidden';
+  }
 
   const onModalCloseHandler = useCallback(
     e => {
