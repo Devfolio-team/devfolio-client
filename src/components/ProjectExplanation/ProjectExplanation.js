@@ -47,6 +47,7 @@ const StyledProjectExplanation = styled.div`
   a {
     text-decoration: underline;
     color: #157cd6;
+    word-wrap: break-word;
   }
 
   div {

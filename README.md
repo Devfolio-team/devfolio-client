@@ -44,10 +44,21 @@ Figma 디자인 툴을 이용하여 프로젝트의 디자인 시안을 제작�
 ### 프로젝트 상세 조회(기획의도, 기술스택)
 ![](public/assets/프로젝트-사용-기술-스택-조회.png)
 
+### 프로젝트 상세 조회(프로젝트 설명)
+![](public/assets/프로젝트-조회-프로젝트-설명.png)
+
+### 포트폴리오(기술스택 typewriter effect)
+![](public/assets/포트폴리오typewriter-effect.gif)
+
+### 포트폴리오(자기소개, 기술스택)
+![](public/assets/포트폴리오-자기소개-기술스택.png)
+
 ## 👨‍👦‍👦 Devfolio와 함께한 사람들
 | [류하준(HajunRyu)](https://github.com/HaJunRyu) | [신봉철(Bcroun)](https://github.com/bcround) | [최수혁(choisuhyeok1255)](https://github.com/choisuhyeok1255) |
 |:---:|:---:|:---:|
 | ![류하준의 프로필 사진](https://avatars.githubusercontent.com/u/71176945?v=4) | ![신봉철의 프로필 사진](https://avatars.githubusercontent.com/u/71061236?v=4) | ![최수혁의 프로필 사진](https://avatars.githubusercontent.com/u/72919631?v=4) |
+
+## [👉 프로젝트 발표 자료 👈](https://docs.google.com/presentation/d/1biG5F-HUbESvyYUK9wFcwMIHiabt5QbaZO5YAlsq9CE/edit?usp=sharing)
 
 
 ## 🚀 프로젝트 사용법

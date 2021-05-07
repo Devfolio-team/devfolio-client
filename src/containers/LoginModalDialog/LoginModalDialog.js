@@ -134,7 +134,7 @@ const LoginModalDialog2 = ({ viewport, isModalOpen, setIsModalOpen, beforeRef })
         Suits에서 기술면접 준비하기
       </Heading>
       <LinkToWebSite
-        href="https://github.com/TEAM-SUITS/Suits"
+        href="http://13.125.254.219"
         target="_blank"
         $width={`${isDesktop ? '320px' : type === 'xs' ? '225px' : '70%'}`}
         $height={`${type === 'xs' ? '58px' : '66px'}`}
