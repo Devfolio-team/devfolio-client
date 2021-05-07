@@ -10,12 +10,12 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
   ${props =>
     css`
       ${applyStyle(props)}
+
       &:focus {
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(147, 153, 210, 0.56);
+        outline: 3px solid #aaa;
       }
       &:focus:not(:focus-visible) {
-        box-shadow: none;
+        outline: none;
       }
       &[disabled] {
         opacity: 0.4;
@@ -24,6 +24,12 @@ const StyledButton = styled.button.attrs(({ type, onClick }) => ({
       &[disabled]:hover {
         background: ${color.white};
         color: ${props.$background === '#fafbfc' ? '#d73a49' : color.mainColor};
+      }
+      @media (max-width: 768px) {
+        outline: none;
+        &:focus {
+          outline: none;
+        }
       }
     `}
 `;

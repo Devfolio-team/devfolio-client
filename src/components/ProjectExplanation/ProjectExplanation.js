@@ -44,6 +44,12 @@ const StyledProjectExplanation = styled.div`
     margin-bottom: 1rem;
   }
 
+  a {
+    text-decoration: underline;
+    color: #157cd6;
+    word-wrap: break-word;
+  }
+
   div {
     font-size: 2rem;
   }

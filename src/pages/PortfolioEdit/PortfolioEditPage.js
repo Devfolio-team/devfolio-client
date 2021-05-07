@@ -80,7 +80,6 @@ const PortfolioEditPage = () => {
           email: true,
         }}
         onSubmit={values => {
-          console.log(profileColor);
           const editedInfo = {
             ...values,
             introduce: getContents(),
