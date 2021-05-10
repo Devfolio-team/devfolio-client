@@ -91,7 +91,7 @@ const Input = ({
           htmlFor={id}
           fontSize={labelFontSize}
           focus={isFocused}
-          inputValue={withdrawal ? value : field.value}
+          inputValue={withdrawal ? value : field?.value}
           beforeTranslate={beforeTranslate}
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
@@ -131,6 +131,8 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  id: 'exampleId',
+  label: 'exampleLabel',
   padding: '0 0 0 12px',
   withdrawal: false,
 };
