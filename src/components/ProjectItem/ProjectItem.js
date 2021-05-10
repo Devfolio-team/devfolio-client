@@ -86,10 +86,11 @@ const ProjectItem = ({
         borderBottom="1px solid rgb(230, 230, 230)"
       >
         {imageLoading ? <StyledLoadingSpinner width={vw >= 1126 ? '35%' : '25%'} /> : null}
-        <StyledLink to={`/project/${projectId}`} tabIndex={-1}>
+        <StyledLink to={`/project/${projectId}`} tabIndex={-1} title={`${subject} 자세히 보기`}>
           <Image
             src={thumbnail}
             alt=""
+            ariaLabel={`${subject}의 썸네일 이미지`}
             width={imageLoading ? 0 : '100%'}
             maxHeight={imageMaxHeight}
             cursor="pointer"
