@@ -1,6 +1,6 @@
-import { HeaderBar } from 'containers';
+import { Button } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import LoginModalDialog from './LoginModalDialog';
 
 export default {
@@ -19,11 +19,21 @@ export default {
 const Template = args => {
   const viewport = useDetectViewport();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const beforeRef = useRef();
 
   return (
     <>
-      <HeaderBar viewport={viewport} {...args}></HeaderBar>
-      <LoginModalDialog viewport={viewport} setIsModalOpen={setIsModalOpen} {...args} />;
+      <Button ref={beforeRef} onClick={setIsModalOpen} border="1px solid black">
+        로그인
+      </Button>
+      {isModalOpen ? (
+        <LoginModalDialog
+          viewport={viewport}
+          setIsModalOpen={setIsModalOpen}
+          beforeRef={beforeRef}
+          {...args}
+        />
+      ) : null}
     </>
   );
 };

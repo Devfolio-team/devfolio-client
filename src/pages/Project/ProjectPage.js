@@ -347,56 +347,6 @@ const ProjectPage = ({ match }) => {
         $justifyContent="space-between"
         $position={vw > 840 ? 'relative' : ''}
       >
-        {/* 뷰포트크기가 840px 이상이면 동그란 좋아요버튼 생성 */}
-        {vw > 840 ? (
-          <Container position="absolute" left="-10px">
-            <ColumnContainer
-              $justifyContent="center"
-              $alignItems="center"
-              $margin="0"
-              $position={scrollY > 0 ? 'fixed' : ''}
-              $transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
-              $transition="0.5s"
-            >
-              {subject ? (
-                <>
-                  <Flicker
-                    events="onMouseEnter"
-                    timing="ease-in-out"
-                    duration={0.45}
-                    inline={false}
-                  >
-                    <LikeButton
-                      aria-label="좋아요 버튼"
-                      borderRadius="50%"
-                      background="inherit"
-                      border="1px solid #A3ABB3"
-                      width="44px"
-                      height="44px"
-                      padding="0"
-                      onClick={onLikeCountPlusHandler}
-                      title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
-                      $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
-                    >
-                      {isLike === false ? (
-                        <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-                      ) : (
-                        <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-                      )}
-                    </LikeButton>
-                  </Flicker>
-                  <Span fontSize={1.4} lineHeight="16px" margin="5px 0 0 0">
-                    {likeCount}
-                  </Span>{' '}
-                </>
-              ) : (
-                <SkeletonUI circle $width="44px" $height="44px" />
-              )}
-            </ColumnContainer>
-          </Container>
-        ) : (
-          ''
-        )}
         <RowContainer display="flex" alignItems="center" width="215px" margin="0">
           {subject ? (
             <>
@@ -474,8 +424,54 @@ const ProjectPage = ({ match }) => {
             {subject}
           </Heading>
         )}
-        {/* 뷰포트크기가 840px이 이하일 떄 네모난 좋아요버튼 생성 */}
-        {vw > 840 ? null : (
+        {/* view 840 이상 동그란 좋아요버튼 view 840이하 네모난 좋아요 버튼 */}
+        {vw > 840 ? (
+          <Container position="absolute" left="-10px" top="-50px">
+            <ColumnContainer
+              $justifyContent="center"
+              $alignItems="center"
+              $margin="0"
+              $position={scrollY > 0 ? 'fixed' : ''}
+              $transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              $transition="0.5s"
+            >
+              {subject ? (
+                <>
+                  <Flicker
+                    events="onMouseEnter"
+                    timing="ease-in-out"
+                    duration={0.45}
+                    inline={false}
+                  >
+                    <LikeButton
+                      aria-label="좋아요 버튼"
+                      borderRadius="50%"
+                      background="inherit"
+                      border="1px solid #A3ABB3"
+                      width="44px"
+                      height="44px"
+                      padding="0"
+                      onClick={onLikeCountPlusHandler}
+                      title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+                      $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
+                    >
+                      {isLike === false ? (
+                        <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+                      ) : (
+                        <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+                      )}
+                    </LikeButton>
+                  </Flicker>
+                  <Span fontSize={1.4} lineHeight="16px" margin="5px 0 0 0">
+                    {likeCount}
+                  </Span>{' '}
+                </>
+              ) : (
+                <SkeletonUI circle $width="44px" $height="44px" />
+              )}
+            </ColumnContainer>
+          </Container>
+        ) : (
           <LikeButton
             aria-label="좋아요 버튼"
             borderRadius="5px"
@@ -614,7 +610,7 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI $width={type === 'xs' ? '100%' : '200px'} $height="44px" />
         )}
       </Container>
-      <Container position="relative" padding={isDesktop ? '0 70px' : '0 30px'} minHeight="300px">
+      <Container position="relative" padding={isDesktop ? '0 70px' : '0 30px'}>
         {subject ? (
           <>
             {isIMGLoading ? (
@@ -718,6 +714,9 @@ const ProjectPage = ({ match }) => {
         <Container margin="0 0 10px">
           {subject ? (
             <>
+              <Heading as="h4" fontSize={1.5} margin="0 0 5px 0">
+                프로젝트 기간
+              </Heading>
               <Time fontSize={1.6} dateTime={dateFormMaker(start_date)} color="#70777d">
                 {dateFormMaker(start_date)}
               </Time>
