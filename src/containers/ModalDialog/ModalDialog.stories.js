@@ -1,3 +1,6 @@
+import { Button } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
+import { useRef, useState } from 'react';
 import ModalDialog from './ModalDialog';
 
 export default {
@@ -14,7 +17,27 @@ export default {
   argTypes: {},
 };
 
-const Template = args => <ModalDialog {...args} />;
+const Template = args => {
+  const viewport = useDetectViewport();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const beforeRef = useRef();
+
+  return (
+    <>
+      <Button ref={beforeRef} onClick={setIsModalOpen} border="1px solid black">
+        ModalDialog Open
+      </Button>
+      {isModalOpen ? (
+        <ModalDialog
+          viewport={viewport}
+          setIsModalOpen={setIsModalOpen}
+          beforeRef={beforeRef}
+          {...args}
+        />
+      ) : null}
+    </>
+  );
+};
 
 export const ExampleModalDialog = Template.bind({});
 
