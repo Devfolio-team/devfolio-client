@@ -23,6 +23,7 @@ const StyledHeaderBar = styled.header`
     position: fixed;
     z-index: 9999;
     top: 0;
+    left: 0;
     background: ${$background};
     display: flex;
     justify-content: space-between;
