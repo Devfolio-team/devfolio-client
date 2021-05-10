@@ -1,4 +1,4 @@
-import { FooterBar, HeaderBar } from 'containers';
+import { FooterBar } from 'containers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 import {
@@ -44,7 +44,6 @@ const App = () => {
   return (
     <Router>
       <FlexApp>
-        <HeaderBar viewport={viewport} />
         <EmptyContainer>
           <Switch>
             <Route path="/" exact render={() => <HomePage viewport={viewport} />} />

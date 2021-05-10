@@ -1,15 +1,18 @@
 import ajax from 'apis/ajax';
 import { A11yHidden } from 'components';
-import { PortfolioContents, PortfolioProfile } from 'containers';
+import { HeaderBar, PortfolioContents, PortfolioProfile } from 'containers';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import scrollToTop from 'utils/scrollToTop';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 const StyledPortfolioPage = styled.main``;
 
 const PortfolioPage = ({ match }) => {
+  const viewport = useDetectViewport();
+
   const [portfolio, setPortfolio] = useState({
     user: null,
     skills: null,
@@ -41,14 +44,17 @@ const PortfolioPage = ({ match }) => {
   }, [user_id, authState.currentUser, history]);
 
   return (
-    <StyledPortfolioPage>
-      <A11yHidden as="h2">
-        {portfolio.user ? portfolio.user.name : null}의 포트폴리오 페이지
-      </A11yHidden>
-      <PortfolioProfile userInfo={portfolio.user} skills={portfolio.skills} />
+    <>
+      <HeaderBar viewport={viewport} />
+      <StyledPortfolioPage>
+        <A11yHidden as="h2">
+          {portfolio.user ? portfolio.user.name : null}의 포트폴리오 페이지
+        </A11yHidden>
+        <PortfolioProfile userInfo={portfolio.user} skills={portfolio.skills} />
 
-      <PortfolioContents portfolio={portfolio} />
-    </StyledPortfolioPage>
+        <PortfolioContents portfolio={portfolio} />
+      </StyledPortfolioPage>
+    </>
   );
 };
 
