@@ -1,4 +1,5 @@
 import { ProjectItem } from 'components';
+import useDetectViewport from 'hooks/useDetectViewport';
 import ProjectList from './ProjectList';
 
 export default {
@@ -31,6 +32,7 @@ ExampleProjectList.args = {
         author="minki607"
         authorProfile="https://avatars.githubusercontent.com/u/40879385?s=64&v=4"
         likeCount="20"
+        viewport={{ vw: 1440 }}
       />
       <ProjectItem
         thumbnail="https://github.com/TEAM-SUITS/Suits/raw/develop/client/public/assets/og-image.jpg?raw=true"
@@ -41,6 +43,7 @@ ExampleProjectList.args = {
         author="minki607"
         authorProfile="https://avatars.githubusercontent.com/u/40879385?s=64&v=4"
         likeCount="20"
+        viewport={{ vw: 1440 }}
       />
       <ProjectItem
         thumbnail="https://github.com/TEAM-SUITS/Suits/raw/develop/client/public/assets/og-image.jpg?raw=true"
@@ -51,6 +54,7 @@ ExampleProjectList.args = {
         author="minki607"
         authorProfile="https://avatars.githubusercontent.com/u/40879385?s=64&v=4"
         likeCount="20"
+        viewport={{ vw: 1440 }}
       />
     </>
   ),

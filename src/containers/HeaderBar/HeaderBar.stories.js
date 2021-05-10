@@ -2,6 +2,7 @@ import HeaderBar from './HeaderBar';
 import { addDecorator } from '@storybook/react';
 import StoryRouter from 'storybook-react-router';
 import useDetectViewport from 'hooks/useDetectViewport';
+import { Container } from 'components';
 
 // 스토리북에서의 Router오류 방지를 위한 decorator
 addDecorator(StoryRouter());
@@ -22,7 +23,11 @@ export default {
 
 const Template = args => {
   const viewport = useDetectViewport();
-  return <HeaderBar viewport={viewport} {...args} />;
+  return (
+    <Container position="relative" height={64}>
+      <HeaderBar viewport={viewport} {...args} />
+    </Container>
+  );
 };
 
 export const HeaderBarLight = Template.bind({});
