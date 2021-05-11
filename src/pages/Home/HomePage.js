@@ -19,6 +19,51 @@ const StyledHomePage = styled.main`
   `}
 `;
 
+const SortButtonContainer = styled.div`
+  position: relative;
+  margin: 0 16px 16px;
+
+  @media (max-width: 1024px) {
+    margin: 0 0 16px;
+  }
+`;
+
+const HomePageProjecItem = styled(ProjectItem)`
+  width: 301px;
+  margin: 16px;
+
+  @media (max-width: 1440px) {
+    width: 31%;
+    margin: 1.1%;
+  }
+  @media (max-width: 1126px) {
+    width: 47.5%;
+  }
+  @media (max-width: 1024px) {
+    width: 100%;
+    margin: 25px 0;
+  }
+`;
+
+HomePageProjecItem.displayName = 'HomepageProjectItem';
+
+const HomePageProjectItemSkeleton = styled(ProjectItemSkeleton)`
+  width: 301px;
+  margin: 16px;
+
+  @media (max-width: 1440px) {
+    width: 31%;
+    margin: 1.1%;
+  }
+  @media (max-width: 1126px) {
+    width: 47.5%;
+  }
+  @media (max-width: 1024px) {
+    width: 100%;
+    margin: 25px 0;
+  }
+`;
+
 const HomepageSection = styled.section`
   margin: 0 auto;
   padding: 30px 54px;
@@ -85,7 +130,7 @@ const HomePage = ({ viewport }) => {
           display="flex"
           flexFlow="column nowrap"
         >
-          <Container position="relative" margin={vw >= 1024 ? '0 16px 16px' : '0 0 16px'}>
+          <SortButtonContainer>
             <Button
               title="좋아요가 많은 순서로 프로젝트 보기"
               aria-label="좋아요가 많은 순서로 프로젝트 보기"
@@ -121,15 +166,11 @@ const HomePage = ({ viewport }) => {
               left="0"
               transform={`translate3D(${sortType === 'latest' ? '112px' : '0'}, 0, 0)`}
             />
-          </Container>
+          </SortButtonContainer>
           <ProjectList viewport={viewport}>
             {!projects[0]
               ? Array.from({ length: 12 }, (_, i) => i).map((_, index) => (
-                  <ProjectItemSkeleton
-                    width={
-                      vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'
-                    }
-                    margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '25px 0'}
+                  <HomePageProjectItemSkeleton
                     containerMinHeight={
                       vw >= 1440
                         ? 166
@@ -157,11 +198,7 @@ const HomePage = ({ viewport }) => {
                 ))
               : projects.map(project => {
                   return (
-                    <ProjectItem
-                      width={
-                        vw >= 1440 ? '301px' : vw >= 1126 ? '31%' : vw >= 1024 ? '47.5%' : '100%'
-                      }
-                      margin={vw >= 1440 ? '16px' : vw >= 1024 ? '1.1%' : '25px 0'}
+                    <HomePageProjecItem
                       containerMinHeight={
                         vw >= 1440
                           ? 166
