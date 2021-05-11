@@ -40,9 +40,6 @@ const ChipLabel = styled.span`
   color: ${color.white};
 `;
 
-// const ChipDataList = styled.datalist``;
-
-// const ChipDataListOption = styled.option``;
 const ChipDataList = styled.ul`
   display: none;
   width: 100%;
@@ -51,10 +48,15 @@ const ChipDataList = styled.ul`
   `}
 `;
 
-const ChipDataListItem = styled.li``;
-
-const ChipDataListOption = styled.button`
-  width: 100%;
+const ChipDataListItem = styled.li`
+  &:hover {
+    background: blue;
+  }
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      background: blue;
+    `}
 `;
 
 const XIcon = styled(SVGIcon)`
@@ -89,6 +91,7 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const [techStacks, setTechStacks] = useState([]);
   const [displayList, setDisplayList] = useState([]);
   const [originalTechStacks, setOriginalTechStacks] = useState([]);
+  const [activeTechStack, setActiveTechStack] = useState(0);
   const chipRef = useRef();
   const authState = useSelector(state => state.auth);
 
@@ -117,21 +120,25 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   }, [authState.currentUser?.currentUsersSkills, editTechStacks, profile]);
 
   const onKeyUpHandler = e => {
-    if (e.key !== 'Enter') return;
-
-    const techStack = techStacks.filter(({ stack_name }) => {
-      return stack_name === e.target.value;
-    });
-
-    if (e.target.value !== '' && techStack.length && !chipLabels.includes(e.target.value)) {
-      setChipLabels([...chipLabels, e.target.value]);
-      e.target.value = '';
+    if (e.keyCode === 13) {
+      if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
+        setChipLabels([...chipLabels, techStacks[activeTechStack].stack_name]);
+        e.target.value = '';
+        setDisplayList('none');
+      }
+    } else if (e.keyCode === 38) {
+      if (activeTechStack === 0) return;
+      setActiveTechStack(activeTechStack - 1);
+    } else if (e.keyCode === 40) {
+      if (activeTechStack + 1 === techStacks.length) return;
+      setActiveTechStack(activeTechStack + 1);
     }
   };
 
   const onClickRemoveHandler = e => {
     const chipLabelText = e.target.parentNode.firstChild.innerHTML;
     setChipLabels(chipLabels.filter(chipLabel => chipLabel !== chipLabelText));
+    setDisplayList('none');
   };
 
   const onFocusHandler = () => {
@@ -140,6 +147,14 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
 
   const onBlurHandler = () => {
     chipRef.current.style.boxShadow = 'none';
+  };
+
+  const onClickAddHandler = e => {
+    if (!chipLabels.includes(e.target.innerText)) {
+      setChipLabels([...chipLabels, e.target.innerText]);
+      e.target.parentNode.previousElementSibling.value = '';
+      setDisplayList('none');
+    }
   };
 
   return (
@@ -181,15 +196,14 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
       />
-      {/* <ChipDataList id={id}>
-        {techStacks.map(({ stack_name, tech_stacks_id }) => (
-          <ChipDataListOption key={tech_stacks_id} value={stack_name}></ChipDataListOption>
-        ))}
-      </ChipDataList> */}
       <ChipDataList display={displayList}>
-        {techStacks.map(({ stack_name, tech_stacks_id }) => (
-          <ChipDataListItem key={tech_stacks_id}>
-            <ChipDataListOption>{stack_name}</ChipDataListOption>
+        {techStacks.map(({ stack_name, tech_stacks_id }, index) => (
+          <ChipDataListItem
+            key={tech_stacks_id}
+            onClick={onClickAddHandler}
+            isSelected={activeTechStack === index}
+          >
+            {stack_name}
           </ChipDataListItem>
         ))}
       </ChipDataList>
