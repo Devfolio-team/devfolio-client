@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from 'utils';
 import { SVGIcon } from 'components';
 import { string, func } from 'prop-types';
@@ -40,9 +40,22 @@ const ChipLabel = styled.span`
   color: ${color.white};
 `;
 
-const ChipDataList = styled.datalist``;
+// const ChipDataList = styled.datalist``;
 
-const ChipDataListOption = styled.option``;
+// const ChipDataListOption = styled.option``;
+const ChipDataList = styled.ul`
+  display: none;
+  width: 100%;
+  ${({ display }) => css`
+    display: ${display};
+  `}
+`;
+
+const ChipDataListItem = styled.li``;
+
+const ChipDataListOption = styled.button`
+  width: 100%;
+`;
 
 const XIcon = styled(SVGIcon)`
   cursor: pointer;
@@ -74,6 +87,8 @@ const ChipInput = styled.input`
 const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const [chipLabels, setChipLabels] = useState([]);
   const [techStacks, setTechStacks] = useState([]);
+  const [displayList, setDisplayList] = useState([]);
+  const [originalTechStacks, setOriginalTechStacks] = useState([]);
   const chipRef = useRef();
   const authState = useSelector(state => state.auth);
 
@@ -86,6 +101,7 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
       try {
         const res = await ajax.fetchTechStacks();
         setTechStacks(res.data.techStacks);
+        setOriginalTechStacks(res.data.techStacks);
       } catch (error) {
         throw new Error(error);
       }
@@ -145,15 +161,36 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
         placeholder="검색..."
         list={id}
         mode="hidden"
-        onChange={() => {
+        onChange={e => {
+          const filteredTechStacks = originalTechStacks;
+          if (e.target.value) {
+            setDisplayList('block');
+          } else {
+            setDisplayList('none');
+          }
+
+          setTechStacks(
+            filteredTechStacks.filter(
+              ({ stack_name }) =>
+                stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
+            )
+          );
+
           setFieldValue('techStacks', chipLabels);
         }}
         onFocus={onFocusHandler}
         onBlur={onBlurHandler}
       />
-      <ChipDataList id={id}>
+      {/* <ChipDataList id={id}>
         {techStacks.map(({ stack_name, tech_stacks_id }) => (
           <ChipDataListOption key={tech_stacks_id} value={stack_name}></ChipDataListOption>
+        ))}
+      </ChipDataList> */}
+      <ChipDataList display={displayList}>
+        {techStacks.map(({ stack_name, tech_stacks_id }) => (
+          <ChipDataListItem key={tech_stacks_id}>
+            <ChipDataListOption>{stack_name}</ChipDataListOption>
+          </ChipDataListItem>
         ))}
       </ChipDataList>
     </ChipContainer>
