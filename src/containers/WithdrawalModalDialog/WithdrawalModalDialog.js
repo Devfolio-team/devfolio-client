@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { deleteAccountMiddleware } from 'store/modules/auth/authMiddleware';
 import { ModalDialog } from 'containers';
 
-const WithdrawalModalDialog = forwardRef(({ setIsModalOpen, beforeRef }, ref) => {
+const WithdrawalModalDialog = forwardRef(({ setIsModalOpen, isModalOpen, beforeRef }, ref) => {
   const { isDesktop, vw } = useDetectViewport();
   const [isDisabled, setIsDisabled] = useState(true);
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ const WithdrawalModalDialog = forwardRef(({ setIsModalOpen, beforeRef }, ref) =>
     <>
       <ModalDialog
         setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
         beforeRef={beforeRef}
         width={`${isDesktop ? '500px' : '85%'}`}
         height={`${isDesktop ? '500px' : '440px'}`}
