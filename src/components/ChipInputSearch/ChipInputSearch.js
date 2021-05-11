@@ -120,16 +120,16 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   }, [authState.currentUser?.currentUsersSkills, editTechStacks, profile]);
 
   const onKeyUpHandler = e => {
-    if (e.keyCode === 13) {
+    if (e.key === 'Enter') {
       if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
         setChipLabels([...chipLabels, techStacks[activeTechStack].stack_name]);
         e.target.value = '';
         setDisplayList('none');
       }
-    } else if (e.keyCode === 38) {
+    } else if (e.key === 'ArrowUp') {
       if (activeTechStack === 0) return;
       setActiveTechStack(activeTechStack - 1);
-    } else if (e.keyCode === 40) {
+    } else if (e.key === 'ArrowDown') {
       if (activeTechStack + 1 === techStacks.length) return;
       setActiveTechStack(activeTechStack + 1);
     }
@@ -150,8 +150,9 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   };
 
   const onClickAddHandler = e => {
-    if (!chipLabels.includes(e.target.innerText)) {
-      setChipLabels([...chipLabels, e.target.innerText]);
+    const { innerText } = e.target;
+    if (!chipLabels.includes(innerText)) {
+      setChipLabels([...chipLabels, innerText]);
       e.target.parentNode.previousElementSibling.value = '';
       setDisplayList('none');
     }
