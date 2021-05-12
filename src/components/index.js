@@ -40,3 +40,6 @@ export { default as FormErrorMessage } from './FormErrorMessage/FormErrorMessage
 export { default as SkillsTypewriterEffect } from './SkillsTypewriterEffect/SkillsTypewriterEffect';
 export { default as SkillsTypewriterEffectSkeleton } from './SkillsTypewriterEffect/SkillsTypewriterEffectSkeleton.js';
 export { default as DivisionLine } from './DivisionLine/DivisionLine';
+export { default as CustomLogo } from './CustomLogo/CustomLogo';
+export { default as HeaderBarBackground } from './HeaderBarBackground/HeaderBarBackground';
+export { default as DevfolioLink } from './DevfolioLink/DevfolioLink';
