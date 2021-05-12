@@ -24,7 +24,7 @@ const DivLine = styled.div`
   opacity: 0.5;
 `;
 
-const PortfolioEditPage = () => {
+const PortfolioEditPage = ({ location, match }) => {
   const editorRef = useRef(null);
   const viewport = useDetectViewport();
   const { isDesktop } = viewport;
@@ -69,7 +69,7 @@ const PortfolioEditPage = () => {
 
   return (
     <>
-      <HeaderBar viewport={viewport} />
+      <HeaderBar viewport={viewport} location={location} match={match} />
       <StyledPortfolioEditPage>
         <Formik
           initialValues={{

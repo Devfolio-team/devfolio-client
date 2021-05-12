@@ -186,7 +186,7 @@ const H3Heading = styled(Heading)`
   `}
 `;
 
-const ProjectPage = ({ match }) => {
+const ProjectPage = ({ match, location }) => {
   const viewport = useDetectViewport();
   const { isDesktop, vw, type } = viewport;
   const [scrollY, setScrollY] = useState(0);
@@ -338,7 +338,13 @@ const ProjectPage = ({ match }) => {
 
   return (
     <>
-      <HeaderBar viewport={viewport} projectNickname={project_nickname} />
+      <HeaderBar
+        viewport={viewport}
+        location={location}
+        match={match}
+        projectNickname={project_nickname}
+        userId={user_user_id}
+      />
       <StyledProjectPage
         $width={isDesktop ? '768px' : '100%'}
         $margin="96px auto 0 auto"

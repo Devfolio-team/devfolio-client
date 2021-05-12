@@ -31,7 +31,7 @@ const HomepageSection = styled.section`
   }
 `;
 
-const HomePage = ({ viewport }) => {
+const HomePage = ({ viewport, location, match }) => {
   const { vw } = viewport;
 
   const [projects, setProjects] = useState([]);
@@ -77,7 +77,7 @@ const HomePage = ({ viewport }) => {
 
   return (
     <>
-      <HeaderBar viewport={viewport} />
+      <HeaderBar viewport={viewport} location={location} match={match} />
       <StyledHomePage>
         {/* isMobile일때는 프로젝트 아이템의 크기를 키우고 뷰포트에 따라서 작아지게(%) 설정 */}
         <HomepageSection>

@@ -9,7 +9,7 @@ import ajax from 'apis/ajax';
 
 const StyledProjectEditPage = styled.main``;
 
-const ProjectEditPage = ({ viewport }) => {
+const ProjectEditPage = ({ viewport, location }) => {
   const currentUser = useSelector(({ auth }) => auth.currentUser);
 
   const [editProjectData, setEditProjectData] = useState(null);
@@ -56,7 +56,7 @@ const ProjectEditPage = ({ viewport }) => {
 
   return (
     <>
-      <HeaderBar viewport={viewport} />
+      <HeaderBar viewport={viewport} location={location} />
       <StyledProjectEditPage>
         <Prompt
           when={leave}

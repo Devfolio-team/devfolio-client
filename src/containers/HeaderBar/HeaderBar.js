@@ -2,10 +2,12 @@ import {
   A11yHidden,
   Button,
   Container,
+  CustomLogo,
+  DevfolioLink,
   Heading,
   Image,
-  Logo,
   Portal,
+  SVGIcon,
   UserNavigator,
 } from 'components';
 import React, { useState, useRef, useEffect } from 'react';
@@ -62,7 +64,15 @@ const StyledArrowDownIcon = styled(arrowDownIcon)`
   `}
 `;
 
-const HeaderBar = ({ viewport }) => {
+const HeaderBar = ({
+  viewport,
+  projectNickname,
+  portfolioNickName,
+  userNickName,
+  userId,
+  location,
+  match,
+}) => {
   const { currentUser } = useSelector(state => state.auth);
 
   const { type } = viewport;
@@ -97,10 +107,31 @@ const HeaderBar = ({ viewport }) => {
     <StyledHeaderBar $background="#25272B">
       <Naigation>
         <Heading as="h1">
-          <Link to="/">
-            <A11yHidden as="span">Devfolio</A11yHidden>
-            <Logo width={130} height={30} type="white" />
-          </Link>
+          {location.pathname === '/edit/project' ? (
+            <DevfolioLink />
+          ) : match.path === '/edit/portfolio/:portfolio_id' ? (
+            <DevfolioLink />
+          ) : match.path === '/' ? (
+            <DevfolioLink />
+          ) : (
+            <Container>
+              <CustomLogo to="/" $margin="0 10px 0 0">
+                <SVGIcon type="DevfolioMark" width="20px" height="20px"></SVGIcon>
+              </CustomLogo>
+              <CustomLogo to={`/portfolio/${userId}`} $color="#ffffff" $fontSize="2.5">
+                <A11yHidden as="span">Devfolio</A11yHidden>
+                {(function () {
+                  if (projectNickname) {
+                    return `${projectNickname}.folio`;
+                  } else if (portfolioNickName) {
+                    return `${portfolioNickName}.folio`;
+                  } else if (userNickName) {
+                    return `${userNickName}.folio`;
+                  }
+                })()}
+              </CustomLogo>
+            </Container>
+          )}
         </Heading>
         {currentUser ? (
           <Container display="flex" alignItems="center" margin="0">
