@@ -34,6 +34,7 @@ export default {
           'WebSite',
           'WebSiteDisable',
           'SuitsIcon',
+          'DevfolioMark',
         ],
       },
     },
@@ -63,6 +64,7 @@ export const GithubBlueDisableIcon = Template.bind({});
 export const WebSiteIcon = Template.bind({});
 export const WebSiteDisableIcon = Template.bind({});
 export const SuitsIcon = Template.bind({});
+export const DevfolioMark = Template.bind({});
 
 AngryIcon.args = {
   type: 'Angry',
@@ -157,6 +159,11 @@ WebSiteDisableIcon.arg = {
   height: 40,
 };
 SuitsIcon.arg = {
+  type: 'Suits',
+  width: 40,
+  height: 40,
+};
+DevfolioMark.arg = {
   type: 'Suits',
   width: 40,
   height: 40,
