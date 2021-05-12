@@ -45,7 +45,7 @@
     "eject": "react-scripts eject",
     "serve": "serve -s build",
     "build-and-serve": "yarn build && npm run serve",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook -p 6006 -s public --no-manager-cache",
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
