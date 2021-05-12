@@ -21,6 +21,8 @@ import { ReactComponent as WebSiteDisable } from 'assets/WebSiteDisable.svg';
 import { ReactComponent as GithubBlueDisable } from 'assets/GithubBlueDisable.svg';
 import { ReactComponent as Suits } from 'assets/Suits.svg';
 import { ReactComponent as Palette } from 'assets/Palette.svg';
+import { ReactComponent as Plus } from 'assets/Plus.svg';
+import { ReactComponent as Minus } from 'assets/Minus.svg';
 
 const SVGIcon = ({ type, ...restProps }) => {
   let SVGIcon = null;
@@ -91,6 +93,12 @@ const SVGIcon = ({ type, ...restProps }) => {
       break;
     case 'Palette':
       SVGIcon = Palette;
+      break;
+    case 'Plus':
+      SVGIcon = Plus;
+      break;
+    case 'Minus':
+      SVGIcon = Minus;
       break;
   }
   return <SVGIcon {...restProps} />;
