@@ -46,18 +46,38 @@ const App = () => {
       <FlexApp>
         <EmptyContainer>
           <Switch>
-            <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
-            <Route path="/portfolio/:user_id" exact component={PortfolioPage} />
+            <Route
+              path="/"
+              exact
+              render={({ location, match }) => (
+                <HomePage viewport={viewport} location={location} match={match} />
+              )}
+            />
+            <Route
+              path="/portfolio/:user_id"
+              exact
+              render={({ location, match }) => (
+                <PortfolioPage viewport={viewport} location={location} match={match} />
+              )}
+            />
             <Route
               path="/edit/portfolio/:portfolio_id"
               exact
-              render={() => <PortfolioEditPage viewport={viewport} />}
+              render={({ location, match }) => (
+                <PortfolioEditPage viewport={viewport} location={location} match={match} />
+              )}
             />
-            <Route path="/project/:project_id" exact component={ProjectPage} />
+            <Route
+              path="/project/:project_id"
+              exact
+              render={({ location, match }) => (
+                <ProjectPage viewport={viewport} location={location} match={match} />
+              )}
+            />
             <Route
               path="/edit/project/:project_id?"
               exact
-              render={() => <ProjectEditPage viewport={viewport} />}
+              render={({ location }) => <ProjectEditPage viewport={viewport} location={location} />}
             />
             <Route path="/sign_in" exact component={SignIn} />
             <Route path="/page-not-found" component={PageNotFound} />
