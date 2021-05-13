@@ -1,11 +1,4 @@
-import {
-  Container,
-  Heading,
-  ProjectExplanation,
-  ProjectItem,
-  SkillIconItem,
-  Span,
-} from 'components';
+import { Container, ProjectExplanation, ProjectItem, SkillIconItem, Span } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
@@ -24,6 +17,20 @@ const StyledPortfolioContents = styled.div`
       margin: 0;
     }
   `}
+`;
+
+const SectionHeader = styled.h3`
+  font-size: 4rem;
+  font-weight: 700;
+  display: inline-block;
+  line-height: 20px;
+  border-bottom: 14px solid rgba(66, 139, 202, 0.6);
+
+  @media (max-width: 768px) {
+    font-size: 4rem;
+    line-height: 12px;
+    border-bottom: 12px solid rgba(66, 139, 202, 0.6);
+  }
 `;
 
 const Introduce = styled.div`
@@ -57,6 +64,25 @@ const ProjectList = styled.ul`
   `}
 `;
 
+const PortfolioProjectItem = styled(ProjectItem)`
+  width: 70%;
+  margin: 25px auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const ContenetsContainer = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 70px;
+
+  @media (max-width: 768px) {
+    padding: 0 30px;
+  }
+`;
+
 const EmptyMessage = styled.span`
   display: block;
   width: 100px;
@@ -73,18 +99,9 @@ const PortfolioContents = ({ portfolio }) => {
 
   return (
     <StyledPortfolioContents>
-      <Container maxWidth={1440} margin="0 auto" padding={vw >= 768 ? '0 70px' : '0 30px'}>
+      <ContenetsContainer>
         <Container>
-          <Heading
-            as="h3"
-            fontSize={vw >= 768 ? 4 : 3}
-            fontWeight={700}
-            display="inline-block"
-            lineHeight={vw >= 768 ? '20px' : '12px'}
-            borderBottom={`${vw >= 768 ? '14px' : '12px'} solid rgba(66,139,202,0.6)`}
-          >
-            Introduce
-          </Heading>
+          <SectionHeader>Introduce</SectionHeader>
 
           {user &&
             (user.introduce ? (
@@ -101,16 +118,7 @@ const PortfolioContents = ({ portfolio }) => {
             ))}
         </Container>
         <Container margin="80px 0 0">
-          <Heading
-            as="h3"
-            fontSize={vw >= 768 ? 4 : 3}
-            fontWeight={700}
-            display="inline-block"
-            lineHeight={vw >= 768 ? '20px' : '12px'}
-            borderBottom={`${vw >= 768 ? '14px' : '12px'} solid rgba(66,139,202,0.6)`}
-          >
-            SKILLS
-          </Heading>
+          <SectionHeader>SKILLS</SectionHeader>
           {skills &&
             (skills.length ? (
               <SkillIconList>
@@ -128,26 +136,15 @@ const PortfolioContents = ({ portfolio }) => {
             ))}
         </Container>
         <Container margin="50px 0 0">
-          <Heading
-            as="h3"
-            fontSize={vw >= 768 ? 4 : 3}
-            fontWeight={700}
-            display="inline-block"
-            lineHeight={vw >= 768 ? '20px' : '12px'}
-            borderBottom={`${vw >= 768 ? '14px' : '12px'} solid rgba(66,139,202,0.6)`}
-          >
-            Projects
-          </Heading>
+          <SectionHeader>Projects</SectionHeader>
           {projects &&
             (projects.length ? (
               <ProjectList>
                 {projects.map(project => (
-                  <ProjectItem
+                  <PortfolioProjectItem
                     key={project.project_id}
                     containerMinHeight={'28.15vw'}
                     imageMaxHeight={vw >= 768 ? '28.15vw' : '49.4vw'}
-                    width={vw >= 768 ? '70%' : '100%'}
-                    margin="25px auto"
                     viewport={viewport}
                     projectId={project.project_id}
                     thumbnail={project.thumbnail}
@@ -170,7 +167,7 @@ const PortfolioContents = ({ portfolio }) => {
               </Container>
             ))}
         </Container>
-      </Container>
+      </ContenetsContainer>
     </StyledPortfolioContents>
   );
 };

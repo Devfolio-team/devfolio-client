@@ -26,9 +26,9 @@ const SkeletonUI = styled(Skeleton)`
   `}
 `;
 
-const ProjectItemSkeleton = ({ width, margin, containerMinHeight }) => {
+const ProjectItemSkeleton = ({ width, margin, containerMinHeight, ...restProps }) => {
   return (
-    <StyledProjectItemSkeleton $width={width} $margin={margin}>
+    <StyledProjectItemSkeleton $width={width} $margin={margin} {...restProps}>
       <Container borderBottom="1px solid rgb(230, 230, 230)">
         <SkeletonUI $height={containerMinHeight} color="#dddddd" $margin="0" $borderRadius={0} />
       </Container>

@@ -1,5 +1,4 @@
 import { ProjectItem } from 'components';
-import useDetectViewport from 'hooks/useDetectViewport';
 
 export default {
   title: 'Component/ProjectItem',
@@ -15,15 +14,11 @@ export default {
   argTypes: {},
 };
 
-const Template = args => {
-  const viewport = useDetectViewport();
-  return (
-    <ul>
-      <ProjectItem viewport={viewport} {...args} />
-    </ul>
-  );
-};
-
+const Template = args => (
+  <ul>
+    <ProjectItem {...args} />
+  </ul>
+);
 export const ExampleProjectItem = Template.bind({});
 
 ExampleProjectItem.args = {
