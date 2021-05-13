@@ -43,19 +43,35 @@ const ChipLabel = styled.span`
 const ChipDataList = styled.ul`
   display: none;
   width: 100%;
+  float: left;
+  max-height: 150px;
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  background: ${color.white};
+  overflow: scroll;
+  margin-top: 5px;
+  font-size: 1.3rem;
+  font-weight: 600;
   ${({ display }) => css`
     display: ${display};
   `}
 `;
 
 const ChipDataListItem = styled.li`
+  padding: 7px 8px 7px 12px;
+  border-bottom: 1px solid #eaeaea;
+  &:last-child {
+    border: none;
+  }
   &:hover {
-    background: blue;
+    background: ${color.mainColor};
+    color: ${color.white};
   }
   ${({ isSelected }) =>
     isSelected &&
     css`
-      background: blue;
+      background: ${color.mainColor};
+      color: ${color.white};
     `}
 `;
 
@@ -93,6 +109,8 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const [originalTechStacks, setOriginalTechStacks] = useState([]);
   const [activeTechStack, setActiveTechStack] = useState(0);
   const chipRef = useRef();
+  const liRef = useRef();
+  const ulRef = useRef();
   const authState = useSelector(state => state.auth);
 
   useEffect(() => {
@@ -119,12 +137,20 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
     if (editTechStacks) setChipLabels(editTechStacks.map(stack => stack.tech_name));
   }, [authState.currentUser?.currentUsersSkills, editTechStacks, profile]);
 
-  const onKeyUpHandler = e => {
+  const onKeyDownHandler = e => {
+    const liHeight = 28;
+    const { scrollTop } = ulRef.current;
+    const viewport = scrollTop + ulRef.current.offsetHeight;
+    const liOffset = liHeight * (activeTechStack + 1);
+    if (liOffset + liHeight > viewport) ulRef.current.scrollTop = liOffset;
+    else if (liOffset - liHeight < scrollTop) ulRef.current.scrollTop = liOffset - liHeight * 2;
+
     if (e.key === 'Enter') {
       if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
         setChipLabels([...chipLabels, techStacks[activeTechStack].stack_name]);
         e.target.value = '';
         setDisplayList('none');
+        setActiveTechStack(0);
       }
     } else if (e.key === 'ArrowUp') {
       if (activeTechStack === 0) return;
@@ -145,75 +171,77 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
     chipRef.current.style.boxShadow = '0 0 0 4px rgb(66, 139, 202)';
   };
 
-  const onBlurHandler = () => {
+  const onBlurHandler = e => {
     chipRef.current.style.boxShadow = 'none';
+    e.target.value = '';
+    setDisplayList('none');
   };
 
   const onClickAddHandler = e => {
     const { innerText } = e.target;
     if (!chipLabels.includes(innerText)) {
       setChipLabels([...chipLabels, innerText]);
-      e.target.parentNode.previousElementSibling.value = '';
+      e.target.parentNode.previousElementSibling.lastElementChild.value = '';
       setDisplayList('none');
     }
   };
 
   return (
-    <ChipContainer ref={chipRef}>
-      {chipLabels.map((chipLabel, index) => (
-        <ChipItems key={index}>
-          <ChipLabel>{chipLabel}</ChipLabel>
-          <XIcon type="X" onClick={onClickRemoveHandler} width="10" height="10" />
-        </ChipItems>
-      ))}
-      <Field
-        type="text"
-        name="techStacks"
-        id="techStacks"
-        label="기술 스택 작성칸"
-        autoComplete="off"
-        onKeyUp={onKeyUpHandler}
-        component={ChipInput}
-        placeholder="검색..."
-        list={id}
-        mode="hidden"
-        onChange={e => {
-          const filteredTechStacks = originalTechStacks;
-          if (e.target.value) {
-            setDisplayList('block');
-          } else {
-            setDisplayList('none');
-          }
+    <>
+      <ChipContainer ref={chipRef}>
+        {chipLabels.map((chipLabel, index) => (
+          <ChipItems key={index}>
+            <ChipLabel>{chipLabel}</ChipLabel>
+            <XIcon type="X" onClick={onClickRemoveHandler} width="10" height="10" />
+          </ChipItems>
+        ))}
+        <Field
+          type="text"
+          name="techStacks"
+          id="techStacks"
+          label="기술 스택 작성칸"
+          autoComplete="off"
+          onKeyDown={onKeyDownHandler}
+          component={ChipInput}
+          placeholder="검색..."
+          list={id}
+          mode="hidden"
+          onChange={e => {
+            const filteredTechStacks = originalTechStacks;
+            if (e.target.value) {
+              setDisplayList('block');
+            } else {
+              setDisplayList('none');
+            }
 
-          setTechStacks(
-            filteredTechStacks.filter(
-              ({ stack_name }) =>
-                stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
-            )
-          );
+            setTechStacks(
+              filteredTechStacks.filter(
+                ({ stack_name }) =>
+                  stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
+              )
+            );
 
-          setFieldValue('techStacks', chipLabels);
-        }}
-        onFocus={onFocusHandler}
-        onBlur={onBlurHandler}
-      />
-      <ChipDataList display={displayList}>
+            setFieldValue('techStacks', chipLabels);
+            setActiveTechStack(0);
+          }}
+          onFocus={onFocusHandler}
+          onBlur={onBlurHandler}
+        />
+      </ChipContainer>
+      <ChipDataList display={displayList} ref={ulRef}>
         {techStacks.map(({ stack_name, tech_stacks_id }, index) => (
           <ChipDataListItem
             key={tech_stacks_id}
             onClick={onClickAddHandler}
             isSelected={activeTechStack === index}
+            ref={liRef}
           >
             {stack_name}
           </ChipDataListItem>
         ))}
       </ChipDataList>
-    </ChipContainer>
+    </>
   );
-};
-
-ChipInputSearch.defaultProps = {
-  id: 'exId1',
 };
 
 ChipInputSearch.propTypes = {
