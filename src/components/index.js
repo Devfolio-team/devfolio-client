@@ -42,3 +42,7 @@ export { default as SkillsTypewriterEffectSkeleton } from './SkillsTypewriterEff
 export { default as DivisionLine } from './DivisionLine/DivisionLine';
 export { default as Comments } from './Comments/Comments';
 export { default as CommentsForm } from './CommentsForm/CommentsForm';
+export { default as CommentTextArea } from './CommentTextArea/CommentTextArea';
+export { default as NestedComment } from './NestedComment/NestedComment';
+export { default as CommentAuthor } from './CommentAuthor/CommentAuthor';
+export { default as NestedCommentsForm } from './NestedCommentsForm/NestedCommentsForm';

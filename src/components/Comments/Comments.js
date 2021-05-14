@@ -1,46 +1,59 @@
-import { Button, Container, Image, Span, SVGIcon, Time } from 'components';
+import { Button, CommentAuthor, NestedComment, Span, SVGIcon } from 'components';
 import Paragraph from 'components/Paragraph/Paragraph';
 import React from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
 
-const StyledComments = styled.div`
+const StyledComments = styled.li`
   width: 627px;
   padding: 30px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+  &:last-of-type {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
-const AuthorContainer = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
+const NestedComments = styled.ul`
+  position: relative;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px 20px 30px;
+  margin: 20px auto 0;
+
+  &::before {
+    border: 10px solid;
+    border-color: transparent transparent #eaeaea transparent;
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    transform: translateX(-50%);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -16px;
+    left: 20px;
+    transform: translateX(-50%);
+    border: 8px solid;
+    border-color: transparent transparent #fff transparent;
+  }
 `;
 
 const Comments = () => {
   return (
     <StyledComments>
-      <AuthorContainer>
-        <Image
-          src="https://lh3.googleusercontent.com/a-/AOh14GhtpT7YH6EriNYjuPcuXRK6J-weil804Xl8sNWl=s350-c"
-          alt=""
-          borderRadius="50%"
-          width={50}
-          height={50}
-        />
-        <Container
-          display="flex"
-          flexFlow="column nowrap"
-          justifyContent="space-between"
-          margin="0 0 0 16px"
-          padding="6px 0"
-        >
-          <Span display="block" fontSize={1.6} fontWeight={700}>
-            HajunRyu
-          </Span>
-          <Time dateTime="" fontSize={1.4} color="#666666">
-            2021.03.30
-          </Time>
-        </Container>
-      </AuthorContainer>
+      <CommentAuthor />
       <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 40px">
         좋은 글 감사합니다. 후속편이 기대되네요 :)
       </Paragraph>
@@ -56,6 +69,9 @@ const Comments = () => {
           답글 달기
         </Span>
       </Button>
+      <NestedComments>
+        <NestedComment />
+      </NestedComments>
     </StyledComments>
   );
 };

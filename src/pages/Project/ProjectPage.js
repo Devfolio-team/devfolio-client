@@ -27,6 +27,7 @@ import DeleteModifyButton from './DeleteModifyButton';
 import DeleteModalDialog from './DeleteModalDialog';
 import StyledToEditPageLink from './ToEditPageLink';
 import { Link } from 'react-router-dom';
+import { ProjectComments } from 'containers';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -740,6 +741,11 @@ const ProjectPage = ({ match }) => {
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
+
+      <DivisionLine width={isDesktop ? 672 : '80%'} />
+
+      <ProjectComments />
+
       {isDeleteModalOpen && (
         <DeleteModalDialog
           deleteButtonRef={deleteButtonRef}
