@@ -10,3 +10,4 @@ export { default as PortfolioEditProfile } from './PortfolioEditProfile/Portfoli
 export { default as PortfolioEditContents } from './PortfolioEditContents/PortfolioEditContents';
 export { default as ModalDialog } from './ModalDialog/ModalDialog';
 export { default as WithdrawalModalDialog } from './WithdrawalModalDialog/WithdrawalModalDialog';
+export { default as ProjectComments } from './ProjectComments/ProjectComments';

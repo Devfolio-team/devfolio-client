@@ -28,6 +28,7 @@ import DeleteModalDialog from './DeleteModalDialog';
 import StyledToEditPageLink from './ToEditPageLink';
 import { Link } from 'react-router-dom';
 import { HeaderBar } from 'containers';
+import { ProjectComments } from 'containers';
 
 const StyledProjectPage = styled.main`
   ${props => css`
@@ -761,8 +762,22 @@ const ProjectPage = ({ match, location }) => {
             projectId={project && project.projectData.project_id}
           />
         )}
-      </StyledProjectPage>
-    </>
+
+      </Container>
+
+      <DivisionLine width={isDesktop ? 672 : '80%'} />
+
+      <ProjectComments />
+
+      {isDeleteModalOpen && (
+        <DeleteModalDialog
+          deleteButtonRef={deleteButtonRef}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          projectId={project && project.projectData.project_id}
+        />
+      )}
+    </StyledProjectPage>
+</>
   );
 };
 

@@ -45,3 +45,7 @@ export { default as HeaderBarBackground } from './HeaderBarBackground/HeaderBarB
 export { default as DevfolioLink } from './DevfolioLink/DevfolioLink';
 export { default as Comments } from './Comments/Comments';
 export { default as CommentsForm } from './CommentsForm/CommentsForm';
+export { default as CommentTextArea } from './CommentTextArea/CommentTextArea';
+export { default as NestedComment } from './NestedComment/NestedComment';
+export { default as CommentAuthor } from './CommentAuthor/CommentAuthor';
+export { default as NestedCommentsForm } from './NestedCommentsForm/NestedCommentsForm';
