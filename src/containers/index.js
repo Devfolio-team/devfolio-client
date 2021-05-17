@@ -11,3 +11,4 @@ export { default as PortfolioEditContents } from './PortfolioEditContents/Portfo
 export { default as ModalDialog } from './ModalDialog/ModalDialog';
 export { default as WithdrawalModalDialog } from './WithdrawalModalDialog/WithdrawalModalDialog';
 export { default as NewTechStackModalDialog } from './NewTechStackModalDialog/NewTechStackModalDialog';
+export { default as ProjectComments } from './ProjectComments/ProjectComments';
