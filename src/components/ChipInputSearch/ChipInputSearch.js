@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { color } from 'utils';
-import { SVGIcon } from 'components';
+import { SVGIcon, Button, Paragraph, Portal } from 'components';
 import { string, func } from 'prop-types';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
 import { useSelector } from 'react-redux';
+import { NewTechStackModalDialog } from 'containers';
 
 const ChipContainer = styled.div`
   display: flex;
@@ -108,6 +109,10 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const [displayList, setDisplayList] = useState([]);
   const [originalTechStacks, setOriginalTechStacks] = useState([]);
   const [activeTechStack, setActiveTechStack] = useState(0);
+  const [isIncluded, setIsIncluded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const ref = useRef(null);
+  const beforeRef = useRef(null);
   const chipRef = useRef();
   const liRef = useRef();
   const ulRef = useRef();
@@ -174,7 +179,6 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const onBlurHandler = e => {
     chipRef.current.style.boxShadow = 'none';
     e.target.value = '';
-    setDisplayList('none');
   };
 
   const onClickAddHandler = e => {
@@ -184,6 +188,10 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
       e.target.parentNode.previousElementSibling.lastElementChild.value = '';
       setDisplayList('none');
     }
+  };
+
+  const onModalOpenHandler = () => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -207,12 +215,21 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
           list={id}
           mode="hidden"
           onChange={e => {
+            setIsIncluded(false);
             const filteredTechStacks = originalTechStacks;
             if (e.target.value) {
               setDisplayList('block');
             } else {
               setDisplayList('none');
             }
+
+            if (
+              !filteredTechStacks.find(
+                ({ stack_name }) =>
+                  stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
+              )
+            )
+              setIsIncluded(true);
 
             setTechStacks(
               filteredTechStacks.filter(
@@ -229,17 +246,49 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
         />
       </ChipContainer>
       <ChipDataList display={displayList} ref={ulRef}>
-        {techStacks.map(({ stack_name, tech_stacks_id }, index) => (
-          <ChipDataListItem
-            key={tech_stacks_id}
-            onClick={onClickAddHandler}
-            isSelected={activeTechStack === index}
-            ref={liRef}
-          >
-            {stack_name}
-          </ChipDataListItem>
-        ))}
+        {isIncluded ? (
+          <>
+            <Paragraph padding="12px 12px" lineHeight={20} color={color.lightGray}>
+              해당하는 스택이 없습니다. 기술은 영어로만 검색해 주세요.
+            </Paragraph>
+            <Button
+              margin="0 0 12px 12px"
+              color={color.white}
+              background={color.mainColor}
+              border={`1px solid ${color.mainColor}`}
+              fontWeight={700}
+              hoverColor={color.mainColor}
+              hoverBackground={color.white}
+              width="180px"
+              onClick={onModalOpenHandler}
+              ref={beforeRef}
+            >
+              새로운 스택 등록 요청
+            </Button>
+          </>
+        ) : (
+          techStacks.map(({ stack_name, tech_stacks_id }, index) => (
+            <ChipDataListItem
+              key={tech_stacks_id}
+              onClick={onClickAddHandler}
+              isSelected={activeTechStack === index}
+              ref={liRef}
+            >
+              {stack_name}
+            </ChipDataListItem>
+          ))
+        )}
       </ChipDataList>
+      {isModalOpen && (
+        <Portal id="modal-root">
+          <NewTechStackModalDialog
+            ref={ref}
+            beforeRef={beforeRef}
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+          />
+        </Portal>
+      )}
     </>
   );
 };
