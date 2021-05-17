@@ -122,6 +122,7 @@ const Input = ({
         $boxShadow={boxShadow}
         $textAlign={textAlign}
         errors={errors}
+        value={value}
         {...field}
         onBlur={onBlurHandler}
         {...restProps}
