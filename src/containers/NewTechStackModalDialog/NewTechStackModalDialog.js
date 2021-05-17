@@ -1,15 +1,24 @@
 import { ModalDialog } from 'containers';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState, useRef } from 'react';
 import { Heading, Paragraph, Input, Button } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { color } from 'utils';
+import ajax from 'apis/ajax';
 
 const NewTechStackModalDialog = forwardRef(({ setIsModalOpen, isModalOpen, beforeRef }, ref) => {
   const { isDesktop, vw } = useDetectViewport();
   const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef();
 
   const onChangeInputValueHandler = e => {
     setInputValue(e.target.value);
+  };
+
+  const onClickSubmitHandler = async () => {
+    await ajax.requestNewTechStack(inputRef.current.value);
+    setIsModalOpen(false);
+    beforeRef.current.focus();
+    document.body.style.overflow = 'unset';
   };
 
   return (
@@ -37,6 +46,7 @@ const NewTechStackModalDialog = forwardRef(({ setIsModalOpen, isModalOpen, befor
       <Input
         id="applyNewStack"
         label="새로운 기술 스택"
+        ref={inputRef}
         labelFontSize={1.2}
         value={inputValue}
         onChange={onChangeInputValueHandler}
@@ -59,6 +69,7 @@ const NewTechStackModalDialog = forwardRef(({ setIsModalOpen, isModalOpen, befor
         hoverColor={color.mainColor}
         hoverBackground={color.white}
         border={`1px solid ${color.white}`}
+        onClick={onClickSubmitHandler}
       >
         신청하기
       </Button>
