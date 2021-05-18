@@ -2,6 +2,7 @@ import { FooterBar, HeaderBar } from 'containers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Redirect, Route, Switch } from 'react-router';
 import {
+  FavoriteProjectPage,
   HomePage,
   PageNotFound,
   PortfolioEditPage,
@@ -59,6 +60,11 @@ const App = () => {
               path="/edit/project/:project_id?"
               exact
               render={() => <ProjectEditPage viewport={viewport} />}
+            />
+            <Route
+              path="/favorite_project/:current_user_id"
+              exact
+              component={FavoriteProjectPage}
             />
             <Route path="/sign_in" exact component={SignIn} />
             <Route path="/page-not-found" component={PageNotFound} />

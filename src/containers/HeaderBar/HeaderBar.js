@@ -166,7 +166,7 @@ const HeaderBar = ({ viewport }) => {
             <UserNavigator
               aria-hidden={!userNavigatorIsOepn}
               viewport={viewport}
-              height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 228 : 171}
+              height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 285 : 228}
               tabIndex={userNavigatorIsOepn ? 0 : -1}
               setUserNavigatorIsOepn={setUserNavigatorIsOepn}
             />
