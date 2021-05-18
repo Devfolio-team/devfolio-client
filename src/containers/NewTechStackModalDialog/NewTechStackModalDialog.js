@@ -5,7 +5,7 @@ import useDetectViewport from 'hooks/useDetectViewport';
 import { color } from 'utils';
 import ajax from 'apis/ajax';
 
-const NewTechStackModalDialog = forwardRef(({ setIsModalOpen, isModalOpen, beforeRef }, ref) => {
+const NewTechStackModalDialog = ({ setIsModalOpen, isModalOpen, beforeRef }) => {
   const { isDesktop, vw } = useDetectViewport();
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
@@ -75,6 +75,6 @@ const NewTechStackModalDialog = forwardRef(({ setIsModalOpen, isModalOpen, befor
       </Button>
     </ModalDialog>
   );
-});
+};
 
 export default NewTechStackModalDialog;
