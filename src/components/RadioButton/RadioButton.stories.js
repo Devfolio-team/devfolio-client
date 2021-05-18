@@ -28,4 +28,5 @@ export const ExampleRadioButton = Template.bind({});
 
 ExampleRadioButton.args = {
   id: 'rd-1',
+  label: 'Radio Button',
 };
