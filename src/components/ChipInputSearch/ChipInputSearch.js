@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useReducer } from 'react';
 import styled, { css } from 'styled-components';
 import { color } from 'utils';
-import { SVGIcon, Button, Paragraph, Portal } from 'components';
+import { SVGIcon, Button, Paragraph, Portal, Container } from 'components';
 import { string, func } from 'prop-types';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
@@ -42,7 +42,6 @@ const ChipLabel = styled.span`
 `;
 
 const ChipDataList = styled.ul`
-  display: none;
   width: 100%;
   float: left;
   max-height: 150px;
@@ -53,9 +52,6 @@ const ChipDataList = styled.ul`
   margin-top: 5px;
   font-size: 1.3rem;
   font-weight: 600;
-  ${({ display }) => css`
-    display: ${display};
-  `}
 `;
 
 const ChipDataListItem = styled.li`
@@ -74,6 +70,15 @@ const ChipDataListItem = styled.li`
       background: ${color.mainColor};
       color: ${color.white};
     `}
+`;
+
+const NewStackContainer = styled.div`
+  max-height: 150px;
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  background: ${color.white};
+  margin-top: 5px;
+  font-size: 1.3rem;
 `;
 
 const XIcon = styled(SVGIcon)`
@@ -103,17 +108,81 @@ const ChipInput = styled.input`
   }
 `;
 
+const initialState = {
+  chipLabels: [],
+  originalTechStacks: [],
+  techStacks: [],
+  activeTechStack: 0,
+  hasInputValue: false,
+  isIncluded: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'LOAD_PORTFOLIO_CHIPLABELS':
+      return {
+        ...state,
+        chipLabels: action.payload.map(skill => skill.skill_name),
+      };
+    case 'LOAD_PROJECT_CHIPLABELS':
+      return {
+        ...state,
+        chipLabels: action.payload.map(stack => stack.tech_name),
+      };
+    case 'ADD_CHIPLABELS':
+      return {
+        ...state,
+        chipLabels: [...state.chipLabels, action.payload],
+      };
+    case 'REMOVE_CHIPLABELS':
+      return {
+        ...state,
+        chipLabels: state.chipLabels.filter(chipLabel => chipLabel !== action.payload),
+      };
+    case 'TOGGLE_SEARCH_BAR_BOX':
+      return {
+        ...state,
+        hasInputValue: action.payload,
+      };
+    case 'SHOW_TECHLIST_OR_NEWTECH':
+      return {
+        ...state,
+        isIncluded: action.payload,
+      };
+    case 'SET_DEFAULT_TECH_STACKS':
+      return {
+        ...state,
+        originalTechStacks: action.payload,
+      };
+    case 'SET_FILTERED_TECH_STACKS':
+      return {
+        ...state,
+        techStacks: action.payload,
+      };
+    case 'SET_ACTIVE_TECH_STACK_INDEX':
+      return {
+        ...state,
+        activeTechStack: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
-  const [chipLabels, setChipLabels] = useState([]);
-  const [techStacks, setTechStacks] = useState([]);
-  const [displayList, setDisplayList] = useState([]);
-  const [originalTechStacks, setOriginalTechStacks] = useState([]);
-  const [activeTechStack, setActiveTechStack] = useState(0);
-  const [isIncluded, setIsIncluded] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    chipLabels,
+    hasInputValue,
+    isIncluded,
+    originalTechStacks,
+    techStacks,
+    activeTechStack,
+  } = state;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const ref = useRef(null);
-  const beforeRef = useRef(null);
+
   const chipRef = useRef();
+  const beforeRef = useRef(null);
   const liRef = useRef();
   const ulRef = useRef();
   const authState = useSelector(state => state.auth);
@@ -126,8 +195,8 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
     const fetchTechStacks = async () => {
       try {
         const res = await ajax.fetchTechStacks();
-        setTechStacks(res.data.techStacks);
-        setOriginalTechStacks(res.data.techStacks);
+
+        dispatch({ type: 'SET_DEFAULT_TECH_STACKS', payload: res.data.techStacks });
       } catch (error) {
         throw new Error(error);
       }
@@ -137,39 +206,53 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   }, []);
 
   useEffect(() => {
-    if (profile)
-      setChipLabels(authState.currentUser?.currentUsersSkills.map(skill => skill.skill_name));
-    if (editTechStacks) setChipLabels(editTechStacks.map(stack => stack.tech_name));
-  }, [authState.currentUser?.currentUsersSkills, editTechStacks, profile]);
+    if (profile) {
+      dispatch({
+        type: 'LOAD_PORTFOLIO_CHIPLABELS',
+        payload: authState.currentUser?.currentUsersSkills,
+      });
+    }
+    if (editTechStacks) dispatch({ type: 'LOAD_PROJECT_CHIPLABELS', payload: editTechStacks });
+  }, [authState.currentUser?.currentUsersSkills, dispatch, editTechStacks, profile]);
 
-  const onKeyDownHandler = e => {
+  const onEnterInputHandler = e => {
+    if (e.key === 'Enter') {
+      if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
+        dispatch({
+          type: 'ADD_CHIPLABELS',
+          payload: techStacks[activeTechStack].stack_name,
+        });
+        e.target.value = '';
+        dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
+        dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: 0 });
+      }
+    }
+  };
+
+  const onChipDataListMoveHandler = e => {
+    if (!hasInputValue || !isIncluded) return;
+
     const liHeight = 28;
     const { scrollTop } = ulRef.current;
     const viewport = scrollTop + ulRef.current.offsetHeight;
     const liOffset = liHeight * (activeTechStack + 1);
+
     if (liOffset + liHeight > viewport) ulRef.current.scrollTop = liOffset;
     else if (liOffset - liHeight < scrollTop) ulRef.current.scrollTop = liOffset - liHeight * 2;
 
-    if (e.key === 'Enter') {
-      if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
-        setChipLabels([...chipLabels, techStacks[activeTechStack].stack_name]);
-        e.target.value = '';
-        setDisplayList('none');
-        setActiveTechStack(0);
-      }
-    } else if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp') {
       if (activeTechStack === 0) return;
-      setActiveTechStack(activeTechStack - 1);
+      dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: activeTechStack - 1 });
     } else if (e.key === 'ArrowDown') {
       if (activeTechStack + 1 === techStacks.length) return;
-      setActiveTechStack(activeTechStack + 1);
+      dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: activeTechStack + 1 });
     }
   };
 
   const onClickRemoveHandler = e => {
     const chipLabelText = e.target.parentNode.firstChild.innerHTML;
-    setChipLabels(chipLabels.filter(chipLabel => chipLabel !== chipLabelText));
-    setDisplayList('none');
+    dispatch({ type: 'REMOVE_CHIPLABELS', payload: chipLabelText });
+    dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
   };
 
   const onFocusHandler = () => {
@@ -184,9 +267,9 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   const onClickAddHandler = e => {
     const { innerText } = e.target;
     if (!chipLabels.includes(innerText)) {
-      setChipLabels([...chipLabels, innerText]);
+      dispatch({ type: 'ADD_CHIPLABELS', payload: innerText });
       e.target.parentNode.previousElementSibling.lastElementChild.value = '';
-      setDisplayList('none');
+      dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
     }
   };
 
@@ -195,7 +278,7 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
   };
 
   return (
-    <>
+    <Container onKeyDown={onChipDataListMoveHandler}>
       <ChipContainer ref={chipRef}>
         {chipLabels.map((chipLabel, index) => (
           <ChipItems key={index}>
@@ -209,45 +292,53 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
           id="techStacks"
           label="기술 스택 작성칸"
           autoComplete="off"
-          onKeyDown={onKeyDownHandler}
+          onKeyDown={onEnterInputHandler}
           component={ChipInput}
           placeholder="검색..."
           list={id}
           mode="hidden"
           onChange={e => {
-            setIsIncluded(false);
-            const filteredTechStacks = originalTechStacks;
-            if (e.target.value) {
-              setDisplayList('block');
-            } else {
-              setDisplayList('none');
-            }
-
-            if (
-              !filteredTechStacks.find(
-                ({ stack_name }) =>
-                  stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
-              )
-            )
-              setIsIncluded(true);
-
-            setTechStacks(
-              filteredTechStacks.filter(
-                ({ stack_name }) =>
-                  stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
-              )
+            const filteredTechStack = originalTechStacks.find(
+              ({ stack_name }) =>
+                stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
             );
 
+            dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: e.target.value ? true : false });
+            dispatch({
+              type: 'SHOW_TECHLIST_OR_NEWTECH',
+              payload: filteredTechStack ? true : false,
+            });
+            dispatch({
+              type: 'SET_FILTERED_TECH_STACKS',
+              payload: originalTechStacks.filter(
+                ({ stack_name }) =>
+                  stack_name.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1
+              ),
+            });
+
             setFieldValue('techStacks', chipLabels);
-            setActiveTechStack(0);
+            dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: 0 });
           }}
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
         />
       </ChipContainer>
-      <ChipDataList display={displayList} ref={ulRef}>
-        {isIncluded ? (
-          <>
+      {hasInputValue &&
+        (isIncluded ? (
+          <ChipDataList ref={ulRef}>
+            {techStacks.map(({ stack_name, tech_stacks_id }, index) => (
+              <ChipDataListItem
+                key={tech_stacks_id}
+                onClick={onClickAddHandler}
+                isSelected={activeTechStack === index}
+                ref={liRef}
+              >
+                {stack_name}
+              </ChipDataListItem>
+            ))}
+          </ChipDataList>
+        ) : (
+          <NewStackContainer>
             <Paragraph padding="12px 12px" lineHeight={20} color={color.lightGray}>
               해당하는 스택이 없습니다. 기술은 영어로만 검색해 주세요.
             </Paragraph>
@@ -265,31 +356,18 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
             >
               새로운 스택 등록 요청
             </Button>
-          </>
-        ) : (
-          techStacks.map(({ stack_name, tech_stacks_id }, index) => (
-            <ChipDataListItem
-              key={tech_stacks_id}
-              onClick={onClickAddHandler}
-              isSelected={activeTechStack === index}
-              ref={liRef}
-            >
-              {stack_name}
-            </ChipDataListItem>
-          ))
-        )}
-      </ChipDataList>
+          </NewStackContainer>
+        ))}
       {isModalOpen && (
         <Portal id="modal-root">
           <NewTechStackModalDialog
-            ref={ref}
             beforeRef={beforeRef}
             setIsModalOpen={setIsModalOpen}
             isModalOpen={isModalOpen}
           />
         </Portal>
       )}
-    </>
+    </Container>
   );
 };
 
