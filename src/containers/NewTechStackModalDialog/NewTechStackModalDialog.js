@@ -1,5 +1,5 @@
 import { ModalDialog } from 'containers';
-import { forwardRef, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Heading, Paragraph, Input, Button } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { color } from 'utils';
