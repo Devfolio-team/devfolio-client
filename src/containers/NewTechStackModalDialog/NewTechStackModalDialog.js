@@ -5,7 +5,12 @@ import useDetectViewport from 'hooks/useDetectViewport';
 import { color } from 'utils';
 import ajax from 'apis/ajax';
 
-const NewTechStackModalDialog = ({ setIsModalOpen, isModalOpen, beforeRef }) => {
+const NewTechStackModalDialog = ({
+  setIsModalOpen,
+  setIsConfirmModalOpen,
+  isModalOpen,
+  beforeRef,
+}) => {
   const { isDesktop, vw } = useDetectViewport();
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
@@ -17,6 +22,7 @@ const NewTechStackModalDialog = ({ setIsModalOpen, isModalOpen, beforeRef }) => 
   const onClickSubmitHandler = async () => {
     await ajax.requestNewTechStack(inputRef.current.value);
     setIsModalOpen(false);
+    setIsConfirmModalOpen(true);
     beforeRef.current.focus();
     document.body.style.overflow = 'unset';
   };

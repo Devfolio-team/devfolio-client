@@ -6,7 +6,7 @@ import { string, func } from 'prop-types';
 import { Field } from 'formik';
 import ajax from 'apis/ajax';
 import { useSelector } from 'react-redux';
-import { NewTechStackModalDialog } from 'containers';
+import { NewTechStackModalDialog, ConfirmModalDialog } from 'containers';
 
 const ChipContainer = styled.div`
   display: flex;
@@ -180,6 +180,7 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
     activeTechStack,
   } = state;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const chipRef = useRef();
   const beforeRef = useRef(null);
@@ -363,7 +364,17 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
           <NewTechStackModalDialog
             beforeRef={beforeRef}
             setIsModalOpen={setIsModalOpen}
+            setIsConfirmModalOpen={setIsConfirmModalOpen}
             isModalOpen={isModalOpen}
+          />
+        </Portal>
+      )}
+      {isConfirmModalOpen && (
+        <Portal id="modal-root">
+          <ConfirmModalDialog
+            beforeRef={beforeRef}
+            setIsModalOpen={setIsConfirmModalOpen}
+            isModalOpen={isConfirmModalOpen}
           />
         </Portal>
       )}
