@@ -117,6 +117,15 @@ const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, viewport, ...
       </StyledUserNavigatorMenuItem>
       <StyledUserNavigatorMenuItem>
         <StyledLink
+          to={`/favorite_project/${currentUser ? currentUser.user_id : ''}`}
+          $padding="20px"
+          tabIndex={tabIndex}
+        >
+          좋아한 프로젝트
+        </StyledLink>
+      </StyledUserNavigatorMenuItem>
+      <StyledUserNavigatorMenuItem>
+        <StyledLink
           to={`/edit/portfolio/${currentUser ? currentUser.user_id : ''}`}
           $padding="20px"
           tabIndex={tabIndex}

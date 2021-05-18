@@ -5,3 +5,4 @@ export { default as ProjectPage } from 'pages/Project/ProjectPage';
 export { default as ProjectEditPage } from 'pages/ProjectEdit/ProjectEditPage';
 export { default as PageNotFound } from 'pages/PageNotFound/PageNotFound';
 export { default as SignIn } from 'pages/SignIn/SignIn';
+export { default as FavoriteProjectPage } from 'pages/FavoriteProject/FavoriteProjectPage';
