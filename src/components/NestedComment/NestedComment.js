@@ -1,5 +1,6 @@
 import { CommentAuthor, Paragraph } from 'components';
 import styled from 'styled-components';
+import { object } from 'prop-types';
 
 const StyledNestedComment = styled.li`
   :first-of-type {
@@ -30,6 +31,11 @@ const NestedComment = ({ data }) => {
       </Paragraph>
     </StyledNestedComment>
   );
+};
+
+NestedComment.propTypes = {
+  /** 해당 답글의 렌더링에 필요한 요소들이 담긴 객체를 전달 받습니다. */
+  data: object.isRequired,
 };
 
 export default NestedComment;

@@ -18,4 +18,9 @@ const Template = args => <NestedCommentsForm {...args} />;
 
 export const ExampleNestedCommentsForm = Template.bind({});
 
-ExampleNestedCommentsForm.args = {};
+ExampleNestedCommentsForm.args = {
+  projectId: 1,
+  commentId: 1,
+  dispatch: () => {},
+  seq: 0,
+};

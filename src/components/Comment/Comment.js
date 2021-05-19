@@ -10,6 +10,7 @@ import Paragraph from 'components/Paragraph/Paragraph';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
+import { func, object, array, number } from 'prop-types';
 
 const StyledComment = styled.li`
   width: 627px;
@@ -60,7 +61,7 @@ const NestedCommentsContainer = styled.div`
 
 const NestedComments = styled.ul``;
 
-const Comment = ({ data, commentsData }) => {
+const Comment = ({ dispatch, data, commentsData, projectId }) => {
   const {
     comment_id,
     contents,
@@ -117,10 +118,27 @@ const Comment = ({ data, commentsData }) => {
               <NestedComment key={comment.comment_id} data={comment} />
             ))}
           </NestedComments>
-          <NestedCommentsForm commentId={comment_id} />
+          <NestedCommentsForm
+            commentId={comment_id}
+            dispatch={dispatch}
+            seq={nestedComments.length}
+            projectId={projectId}
+          />
         </NestedCommentsContainer>
       )}
     </StyledComment>
   );
 };
+
+Comment.propTypes = {
+  /** 해당 프로젝트의 댓글 상태를 변경해주는 useReducer에 dispatch 함수를 전달해줍니다. */
+  dispatch: func.isRequired,
+  /** 해당 댓글의 정보를 담고 있는 객체를 전달해줍니다. */
+  data: object.isRequired,
+  /** 대댓글 렌더링을 위해 해당 프로젝트의 댓글 상태를 그대로 전달해줍니다. */
+  commentsData: array.isRequired,
+  /** 현재 어떤 프로젝트의 댓글인지 판단하기 위한 값입니다. 댓글의 CRUD를 하는데 사용됩니다. */
+  projectId: number.isRequired,
+};
+
 export default Comment;

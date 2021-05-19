@@ -2,6 +2,7 @@ import { Container, Image, Span, Time } from 'components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { dateFormMaker } from 'utils';
+import { string, number } from 'prop-types';
 
 const StyledCommentAuthor = styled.div`
   display: flex;
@@ -11,7 +12,8 @@ const StyledCommentAuthor = styled.div`
 const transferCreationDate = date => {
   const creationDate = parseInt((new Date().getTime() - new Date(date).getTime()) / 1000);
 
-  if (creationDate < 60) return `${creationDate}초 전`;
+  if (creationDate < 1) return '방금 전';
+  else if (creationDate < 60) return `${creationDate}초 전`;
   else if (creationDate >= 60 && creationDate < 3599) return `${parseInt(creationDate / 60)}분 전`;
   else if (creationDate >= 3600 && creationDate < 3600 * 24)
     return `${parseInt(creationDate / 3600)}시간 전`;
@@ -51,5 +53,16 @@ function CommentAuthor({ nickname, profilePhoto, created, authorId }) {
     </StyledCommentAuthor>
   );
 }
+
+CommentAuthor.propTypes = {
+  /** 댓글을 작성한 유저의 닉네임을 입력해줍니다. */
+  nickname: string.isRequired,
+  /** 댓글을 작성한 유저의 프로필 사진 url을 입력해줍니다. */
+  profilePhoto: string.isRequired,
+  /** 댓글을 작성한 시간을  ISOString형식으로 입력해줍니다. */
+  created: string.isRequired,
+  /** 댓글을 작성한 유저의 프로필 사진이나 닉네임을 클릭했을때 해당 유저의 포트폴리오 페이지로 이동하기 위한 Link요소에 쓰일 유저의 고유 id값을 입력해줍니다. */
+  authorId: number.isRequired,
+};
 
 export default CommentAuthor;

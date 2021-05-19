@@ -18,4 +18,6 @@ const Template = args => <ProjectComments {...args} />;
 
 export const ExampleProjectComments = Template.bind({});
 
-ExampleProjectComments.args = {};
+ExampleProjectComments.args = {
+  projectId: 27,
+};

@@ -1,7 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import styled from 'styled-components';
 import { Comment, CommentsForm } from 'components';
 import ajax from 'apis/ajax';
+import { number } from 'prop-types';
 
 const StyledProjectComments = styled.div`
   margin: 80px 0;
@@ -18,6 +19,10 @@ const CommentsList = styled.ul`
   @media (max-width: 768px) {
     width: 100%;
   }
+
+  & > li {
+    outline: none;
+  }
 `;
 
 const initialState = [];
@@ -25,7 +30,9 @@ const initialState = [];
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_COMMENTS':
-      return [...state, ...action.comments];
+      return [...state, ...action.payload];
+    case 'ADD_COMMENT':
+      return [...state, action.payload];
     default:
       return state;
   }
@@ -34,6 +41,8 @@ const reducer = (state, action) => {
 const ProjectComments = ({ projectId }) => {
   const [commentsData, dispatch] = useReducer(reducer, initialState);
 
+  const commentListRef = useRef();
+
   useEffect(() => {
     if (projectId) {
       const fetchCommentsData = async () => {
@@ -41,7 +50,7 @@ const ProjectComments = ({ projectId }) => {
           const { data } = await ajax.fetchComments(projectId);
           dispatch({
             type: 'FETCH_COMMENTS',
-            comments: data.commentsData,
+            payload: data.commentsData,
           });
         } catch (error) {
           throw new Error(error);
@@ -54,16 +63,32 @@ const ProjectComments = ({ projectId }) => {
 
   return (
     <StyledProjectComments>
-      <CommentsForm projectId={projectId} commentCount={commentsData.length} />
-      <CommentsList>
+      <CommentsForm
+        projectId={projectId}
+        commentCount={commentsData.length}
+        dispatch={dispatch}
+        commentListRef={commentListRef}
+      />
+      <CommentsList ref={commentListRef}>
         {commentsData.map(comment => {
           return comment.parent ? null : (
-            <Comment key={comment.comment_id} data={comment} commentsData={commentsData} />
+            <Comment
+              key={comment.comment_id}
+              data={comment}
+              commentsData={commentsData}
+              dispatch={dispatch}
+              projectId={projectId}
+            />
           );
         })}
       </CommentsList>
     </StyledProjectComments>
   );
+};
+
+ProjectComments.propTypes = {
+  /** 어떤 프로젝트의 댓글인지 판단하여 데이터 베이스에 댓글 데이터를 요청하기 위한 값입니다. */
+  projectId: number.isRequired,
 };
 
 export default ProjectComments;

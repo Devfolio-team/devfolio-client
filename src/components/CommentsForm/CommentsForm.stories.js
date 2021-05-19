@@ -18,4 +18,9 @@ const Template = args => <CommentsForm {...args} />;
 
 export const ExampleCommentsForm = Template.bind({});
 
-ExampleCommentsForm.args = {};
+ExampleCommentsForm.args = {
+  projectId: 1,
+  commentCount: 0,
+  dispatch: () => {},
+  commentListRef: {},
+};

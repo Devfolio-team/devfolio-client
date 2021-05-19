@@ -20,4 +20,5 @@ export const ExampleCommentTextArea = Template.bind({});
 ExampleCommentTextArea.args = {
   id: 'commentForm',
   label: '댓글을 입력해주세요.',
+  width: 300,
 };
