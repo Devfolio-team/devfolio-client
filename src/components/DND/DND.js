@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { color } from 'utils';
 import { func } from 'prop-types';
-import { Container, Image, SVGIcon, FormErrorMessage } from 'components';
+import { Container, Image, SVGIcon, FormErrorMessage, A11yHidden } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import ajax from 'apis/ajax';
 import useDetectViewport from 'hooks/useDetectViewport';
@@ -206,6 +206,7 @@ const DND = ({
         required
         $borderRadius={borderRadius}
       />
+      <A11yHidden as="label" htmlFor="thumbnail" />
 
       {src &&
         (!errors.thumbnail ? (

@@ -2,7 +2,7 @@ import { signIn, deleteAccount } from 'apis/auth';
 import { fetchProjects, postProject, editProject } from 'apis/project';
 import { postImage } from 'apis/image';
 import { getPortfolio, editPortfolio } from 'apis/portfolio';
-import { fetchTechStacks } from 'apis/techStacks';
+import { fetchTechStacks, requestNewTechStack } from 'apis/techStacks';
 import {
   getProject,
   getIsPressLikeButton,
@@ -29,6 +29,7 @@ const ajax = {
   editProject,
   postComment,
   fetchComments,
+  requestNewTechStack,
 };
 
 export default ajax;
