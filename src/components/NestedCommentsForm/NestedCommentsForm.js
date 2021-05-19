@@ -12,11 +12,15 @@ const NestedCommentsFormContainer = styled.div`
   }
 `;
 
-const NestedCommentsForm = () => {
+const NestedCommentsForm = ({ commentId }) => {
   return (
     <form>
       <NestedCommentsFormContainer>
-        <CommentTextArea id="nestedCommentForm" width="100%" label="답글을 작성해주세요." />
+        <CommentTextArea
+          id={`nestedCommentForm${commentId}`}
+          width="100%"
+          label="답글을 작성해주세요."
+        />
         <Container textAlign="right" margin="16px 0 0">
           <Button
             width={99}

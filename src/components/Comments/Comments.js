@@ -1,6 +1,13 @@
-import { Button, CommentAuthor, NestedComment, Span, SVGIcon } from 'components';
+import {
+  Button,
+  CommentAuthor,
+  NestedComment,
+  NestedCommentsForm,
+  Span,
+  SVGIcon,
+} from 'components';
 import Paragraph from 'components/Paragraph/Paragraph';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
 
@@ -19,13 +26,13 @@ const StyledComments = styled.li`
   }
 `;
 
-const NestedComments = styled.ul`
+const NestedCommentsContainer = styled.div`
   position: relative;
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  padding: 20px 20px 30px;
+  padding: 8px 20px 30px;
   margin: 20px auto 0;
 
   &::before {
@@ -37,6 +44,7 @@ const NestedComments = styled.ul`
     left: 20px;
     transform: translateX(-50%);
   }
+
   &::after {
     content: '';
     position: absolute;
@@ -50,28 +58,68 @@ const NestedComments = styled.ul`
   }
 `;
 
-const Comments = () => {
+const NestedComments = styled.ul``;
+
+const Comments = ({ data, commentsData }) => {
+  const {
+    comment_id,
+    contents,
+    created,
+    is_deleted,
+    nickname,
+    profile_photo,
+    user_user_id: userId,
+  } = data;
+
+  const [nestedComments, setNestedComments] = useState([]);
+
+  const [isNestedCommentOpen, setIsNestedCommentOpen] = useState(false);
+
+  const onNestedCommentToggleHandler = () => {
+    setIsNestedCommentOpen(!isNestedCommentOpen);
+  };
+
+  useEffect(() => {
+    setNestedComments(commentsData.filter(({ parent }) => comment_id === parent));
+  }, [comment_id, commentsData]);
+
   return (
     <StyledComments>
-      <CommentAuthor />
+      <CommentAuthor
+        nickname={nickname}
+        profilePhoto={profile_photo}
+        created={created}
+        authorId={userId}
+      />
       <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 40px">
-        좋은 글 감사합니다. 후속편이 기대되네요 :)
+        {contents}
       </Paragraph>
-      <Button width="auto" height="auto" padding="0">
+      <Button width="auto" height="auto" padding="0" onClick={onNestedCommentToggleHandler}>
         <SVGIcon type="Plus" width="12" height="12" />
         <Span
           color={color.mainColor}
-          fontSize={1.2}
+          fontSize={1.3}
           fontWeight={700}
           marginLeft="5px"
           verticalAlign="top"
         >
-          답글 달기
+          {isNestedCommentOpen
+            ? '숨기기'
+            : nestedComments.length
+            ? `${nestedComments.length}개의 답글`
+            : '답글 달기'}
         </Span>
       </Button>
-      <NestedComments>
-        <NestedComment />
-      </NestedComments>
+      {isNestedCommentOpen && (
+        <NestedCommentsContainer>
+          <NestedComments>
+            {nestedComments.map(comment => (
+              <NestedComment key={comment.comment_id} data={comment} />
+            ))}
+          </NestedComments>
+          <NestedCommentsForm commentId={comment_id} />
+        </NestedCommentsContainer>
+      )}
     </StyledComments>
   );
 };

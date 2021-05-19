@@ -10,6 +10,7 @@ import {
   delLikeCountMinus,
   deleteProject,
 } from 'apis/project';
+import { postComment, fetchComments } from 'apis/comment';
 
 const ajax = {
   signIn,
@@ -26,6 +27,8 @@ const ajax = {
   deleteAccount,
   deleteProject,
   editProject,
+  postComment,
+  fetchComments,
 };
 
 export default ajax;

@@ -188,7 +188,6 @@ const H3Heading = styled(Heading)`
 
 const ProjectPage = ({ match }) => {
   const { isDesktop, vw, type } = useDetectViewport();
-  const [scrollY, setScrollY] = useState(0);
   const [isIMGLoading, setIsIMGLoading] = useState(true);
   const initalProject = {
     projectData: {
@@ -241,10 +240,6 @@ const ProjectPage = ({ match }) => {
 
   const { projectTechStacks } = project;
   const loginUserInfo = useSelector(state => state.auth.currentUser);
-
-  const onScrollHandler = () => {
-    setScrollY(window.pageYOffset);
-  };
 
   const onLikeCountPlusHandler = async () => {
     if (!loginUser.user_id) return;
@@ -325,16 +320,6 @@ const ProjectPage = ({ match }) => {
     getIsLike();
   }, [loginUser.user_id, loginUserInfo, match.params.project_id, project_id]);
 
-  useEffect(() => {
-    function watchScroll() {
-      window.addEventListener('scroll', onScrollHandler);
-    }
-    watchScroll();
-    return () => {
-      window.removeEventListener('scroll', onScrollHandler);
-    };
-  });
-
   return (
     <StyledProjectPage
       $width={isDesktop ? '768px' : '100%'}
@@ -380,7 +365,7 @@ const ProjectPage = ({ match }) => {
           <Container position="absolute" left="250px" width="200px">
             <Container
               position="fixed"
-              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              transform={window.pageYOffset > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
               {subject ? (
@@ -432,8 +417,8 @@ const ProjectPage = ({ match }) => {
               $justifyContent="center"
               $alignItems="center"
               $margin="0"
-              $position={scrollY > 0 ? 'fixed' : ''}
-              $transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              $position={window.pageYOffset > 0 ? 'fixed' : ''}
+              $transform={window.pageYOffset > 130 ? 'translate3D(0, 130px, 0)' : ''}
               $transition="0.5s"
             >
               {subject ? (
@@ -744,13 +729,13 @@ const ProjectPage = ({ match }) => {
 
       <DivisionLine width={isDesktop ? 672 : '80%'} />
 
-      <ProjectComments />
+      <ProjectComments projectId={project.projectData.project_id} />
 
       {isDeleteModalOpen && (
         <DeleteModalDialog
           deleteButtonRef={deleteButtonRef}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          projectId={project && project.projectData.project_id}
+          projectId={project.projectData.project_id ? project.projectData.project_id : null}
         />
       )}
     </StyledProjectPage>

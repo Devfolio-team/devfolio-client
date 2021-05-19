@@ -1,16 +1,33 @@
-import { CommentAuthor, NestedCommentsForm, Paragraph } from 'components';
+import { CommentAuthor, Paragraph } from 'components';
 import styled from 'styled-components';
 
-const StyledNestedComment = styled.li``;
+const StyledNestedComment = styled.li`
+  :first-of-type {
+    margin-top: 10px;
+  }
 
-const NestedComment = () => {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+  &:last-of-type {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+`;
+
+const NestedComment = ({ data }) => {
+  const { contents, created, is_deleted, nickname, profile_photo, user_user_id: userId } = data;
   return (
     <StyledNestedComment>
-      <CommentAuthor />
+      <CommentAuthor
+        nickname={nickname}
+        profilePhoto={profile_photo}
+        created={created}
+        authorId={userId}
+      />
       <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 36px">
-        좋은 글 감사합니다. 후속편이 기대되네요 :)
+        {contents}
       </Paragraph>
-      <NestedCommentsForm />
     </StyledNestedComment>
   );
 };
