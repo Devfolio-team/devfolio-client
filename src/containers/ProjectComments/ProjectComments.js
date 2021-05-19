@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
-import { Comments, CommentsForm } from 'components';
+import { Comment, CommentsForm } from 'components';
 import ajax from 'apis/ajax';
 
 const StyledProjectComments = styled.div`
@@ -58,7 +58,7 @@ const ProjectComments = ({ projectId }) => {
       <CommentsList>
         {commentsData.map(comment => {
           return comment.parent ? null : (
-            <Comments key={comment.comment_id} data={comment} commentsData={commentsData} />
+            <Comment key={comment.comment_id} data={comment} commentsData={commentsData} />
           );
         })}
       </CommentsList>

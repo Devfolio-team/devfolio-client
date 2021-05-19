@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
 
-const StyledComments = styled.li`
+const StyledComment = styled.li`
   width: 627px;
   padding: 30px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -60,7 +60,7 @@ const NestedCommentsContainer = styled.div`
 
 const NestedComments = styled.ul``;
 
-const Comments = ({ data, commentsData }) => {
+const Comment = ({ data, commentsData }) => {
   const {
     comment_id,
     contents,
@@ -84,7 +84,7 @@ const Comments = ({ data, commentsData }) => {
   }, [comment_id, commentsData]);
 
   return (
-    <StyledComments>
+    <StyledComment>
       <CommentAuthor
         nickname={nickname}
         profilePhoto={profile_photo}
@@ -120,7 +120,7 @@ const Comments = ({ data, commentsData }) => {
           <NestedCommentsForm commentId={comment_id} />
         </NestedCommentsContainer>
       )}
-    </StyledComments>
+    </StyledComment>
   );
 };
-export default Comments;
+export default Comment;

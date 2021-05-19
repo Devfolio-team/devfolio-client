@@ -40,7 +40,7 @@ export { default as FormErrorMessage } from './FormErrorMessage/FormErrorMessage
 export { default as SkillsTypewriterEffect } from './SkillsTypewriterEffect/SkillsTypewriterEffect';
 export { default as SkillsTypewriterEffectSkeleton } from './SkillsTypewriterEffect/SkillsTypewriterEffectSkeleton.js';
 export { default as DivisionLine } from './DivisionLine/DivisionLine';
-export { default as Comments } from './Comments/Comments';
+export { default as Comment } from './Comment/Comment';
 export { default as CommentsForm } from './CommentsForm/CommentsForm';
 export { default as CommentTextArea } from './CommentTextArea/CommentTextArea';
 export { default as NestedComment } from './NestedComment/NestedComment';
