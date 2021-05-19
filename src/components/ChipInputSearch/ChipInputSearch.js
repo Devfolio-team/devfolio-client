@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useReducer } from 'react';
+import React, { useState, useEffect, useRef, useReducer, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { color } from 'utils';
 import { SVGIcon, Button, Paragraph, Portal, Container } from 'components';
@@ -43,7 +43,6 @@ const ChipLabel = styled.span`
 
 const ChipDataList = styled.ul`
   width: 100%;
-  float: left;
   max-height: 150px;
   border: 1px solid #eaeaea;
   border-radius: 5px;
@@ -184,7 +183,6 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
 
   const chipRef = useRef();
   const beforeRef = useRef(null);
-  const liRef = useRef();
   const ulRef = useRef();
   const authState = useSelector(state => state.auth);
 
@@ -216,67 +214,76 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
     if (editTechStacks) dispatch({ type: 'LOAD_PROJECT_CHIPLABELS', payload: editTechStacks });
   }, [authState.currentUser?.currentUsersSkills, dispatch, editTechStacks, profile]);
 
-  const onEnterInputHandler = e => {
-    if (e.key === 'Enter') {
-      if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
-        dispatch({
-          type: 'ADD_CHIPLABELS',
-          payload: techStacks[activeTechStack].stack_name,
-        });
-        e.target.value = '';
-        dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
-        dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: 0 });
+  const onEnterInputHandler = useCallback(
+    e => {
+      if (e.key === 'Enter') {
+        if (!chipLabels.includes(techStacks[activeTechStack].stack_name)) {
+          dispatch({
+            type: 'ADD_CHIPLABELS',
+            payload: techStacks[activeTechStack].stack_name,
+          });
+          e.target.value = '';
+          dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
+          dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: 0 });
+        }
       }
-    }
-  };
+    },
+    [activeTechStack, chipLabels, techStacks]
+  );
 
-  const onChipDataListMoveHandler = e => {
-    if (!hasInputValue || !isIncluded) return;
+  const onChipDataListMoveHandler = useCallback(
+    e => {
+      if (!hasInputValue || !isIncluded) return;
 
-    const liHeight = 28;
-    const { scrollTop } = ulRef.current;
-    const viewport = scrollTop + ulRef.current.offsetHeight;
-    const liOffset = liHeight * (activeTechStack + 1);
+      const liHeight = 28;
+      const { scrollTop } = ulRef.current;
+      const viewport = scrollTop + ulRef.current.offsetHeight;
+      const liOffset = liHeight * (activeTechStack + 1);
 
-    if (liOffset + liHeight > viewport) ulRef.current.scrollTop = liOffset;
-    else if (liOffset - liHeight < scrollTop) ulRef.current.scrollTop = liOffset - liHeight * 2;
+      if (liOffset + liHeight > viewport) ulRef.current.scrollTop = liOffset;
+      else if (liOffset - liHeight < scrollTop) ulRef.current.scrollTop = liOffset - liHeight * 2;
 
-    if (e.key === 'ArrowUp') {
-      if (activeTechStack === 0) return;
-      dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: activeTechStack - 1 });
-    } else if (e.key === 'ArrowDown') {
-      if (activeTechStack + 1 === techStacks.length) return;
-      dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: activeTechStack + 1 });
-    }
-  };
+      if (e.key === 'ArrowUp') {
+        if (activeTechStack === 0) return;
+        dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: activeTechStack - 1 });
+      } else if (e.key === 'ArrowDown') {
+        if (activeTechStack + 1 === techStacks.length) return;
+        dispatch({ type: 'SET_ACTIVE_TECH_STACK_INDEX', payload: activeTechStack + 1 });
+      }
+    },
+    [activeTechStack, hasInputValue, isIncluded, techStacks.length]
+  );
 
-  const onClickRemoveHandler = e => {
+  const onClickRemoveHandler = useCallback(e => {
     const chipLabelText = e.target.parentNode.firstChild.innerHTML;
     dispatch({ type: 'REMOVE_CHIPLABELS', payload: chipLabelText });
     dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
-  };
+  }, []);
 
-  const onFocusHandler = () => {
+  const onFocusHandler = useCallback(() => {
     chipRef.current.style.boxShadow = '0 0 0 4px rgb(66, 139, 202)';
-  };
+  }, []);
 
-  const onBlurHandler = e => {
+  const onBlurHandler = useCallback(e => {
     chipRef.current.style.boxShadow = 'none';
     e.target.value = '';
-  };
+  }, []);
 
-  const onClickAddHandler = e => {
-    const { innerText } = e.target;
-    if (!chipLabels.includes(innerText)) {
-      dispatch({ type: 'ADD_CHIPLABELS', payload: innerText });
-      e.target.parentNode.previousElementSibling.lastElementChild.value = '';
-      dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
-    }
-  };
+  const onClickAddHandler = useCallback(
+    e => {
+      const { innerText } = e.target;
+      if (!chipLabels.includes(innerText)) {
+        dispatch({ type: 'ADD_CHIPLABELS', payload: innerText });
+        e.target.parentNode.previousElementSibling.lastElementChild.value = '';
+        dispatch({ type: 'TOGGLE_SEARCH_BAR_BOX', payload: false });
+      }
+    },
+    [chipLabels]
+  );
 
-  const onModalOpenHandler = () => {
+  const onModalOpenHandler = useCallback(() => {
     setIsModalOpen(true);
-  };
+  }, []);
 
   return (
     <Container onKeyDown={onChipDataListMoveHandler}>
@@ -332,7 +339,6 @@ const ChipInputSearch = ({ id, setFieldValue, profile, editTechStacks }) => {
                 key={tech_stacks_id}
                 onClick={onClickAddHandler}
                 isSelected={activeTechStack === index}
-                ref={liRef}
               >
                 {stack_name}
               </ChipDataListItem>
