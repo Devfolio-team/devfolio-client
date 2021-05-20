@@ -10,7 +10,7 @@ import {
   delLikeCountMinus,
   deleteProject,
 } from 'apis/project';
-import { postComment, fetchComments } from 'apis/comment';
+import { postComment, fetchComments, deleteComment } from 'apis/comment';
 
 const ajax = {
   signIn,
@@ -29,6 +29,7 @@ const ajax = {
   editProject,
   postComment,
   fetchComments,
+  deleteComment,
   requestNewTechStack,
 };
 

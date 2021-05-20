@@ -12,6 +12,7 @@ import {
   Span,
   SVGIcon,
   Time,
+  DeleteModalDialog,
 } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect, useRef } from 'react';
@@ -24,7 +25,6 @@ import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
 import { Flicker } from 'react-micron';
 import DeleteModifyButton from './DeleteModifyButton';
-import DeleteModalDialog from './DeleteModalDialog';
 import StyledToEditPageLink from './ToEditPageLink';
 import { Link } from 'react-router-dom';
 import { ProjectComments } from 'containers';
@@ -186,7 +186,7 @@ const H3Heading = styled(Heading)`
   `}
 `;
 
-const ProjectPage = ({ match }) => {
+const ProjectPage = ({ match, history }) => {
   const { isDesktop, vw, type } = useDetectViewport();
   const [isIMGLoading, setIsIMGLoading] = useState(true);
   const initalProject = {
@@ -279,6 +279,15 @@ const ProjectPage = ({ match }) => {
 
   const onDeleteModalOpenHandler = () => {
     setIsDeleteModalOpen(true);
+  };
+
+  const onDeleteProjectHandler = async () => {
+    try {
+      await ajax.deleteProject(match.params.project_id);
+      history.push('/');
+    } catch (error) {
+      history.push('/page-not-found');
+    }
   };
 
   const deleteButtonRef = useRef(null);
@@ -735,7 +744,8 @@ const ProjectPage = ({ match }) => {
         <DeleteModalDialog
           deleteButtonRef={deleteButtonRef}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          projectId={project.projectData.project_id ? project.projectData.project_id : null}
+          deleteEvent={onDeleteProjectHandler}
+          deleteTargetName="프로젝트"
         />
       )}
     </StyledProjectPage>

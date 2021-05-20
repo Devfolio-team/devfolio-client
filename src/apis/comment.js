@@ -16,7 +16,7 @@ export const fetchComments = async projectId => {
 };
 
 export const deleteComment = async commentId => {
-  return await axios.delete(`${API_URL}/api/project/${commentId}`);
+  return await axios.delete(`${API_URL}/api/comment/${commentId}`);
 };
 
 export const editComment = async (commentData, commentId) => {

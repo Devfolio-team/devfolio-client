@@ -1,10 +1,10 @@
-import { CommentAuthor, Paragraph } from 'components';
+import { CommentAuthor, Paragraph, Span } from 'components';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 
 const StyledNestedComment = styled.li`
   :first-of-type {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   margin-bottom: 20px;
@@ -16,8 +16,16 @@ const StyledNestedComment = styled.li`
   }
 `;
 
-const NestedComment = ({ data }) => {
-  const { contents, created, is_deleted, nickname, profile_photo, user_user_id: userId } = data;
+const NestedComment = ({ data, dispatch }) => {
+  const {
+    comment_id,
+    contents,
+    created,
+    is_deleted,
+    nickname,
+    profile_photo,
+    user_user_id: userId,
+  } = data;
   return (
     <StyledNestedComment>
       <CommentAuthor
@@ -25,9 +33,12 @@ const NestedComment = ({ data }) => {
         profilePhoto={profile_photo}
         created={created}
         authorId={userId}
+        commentId={comment_id}
+        isDeleted={is_deleted}
+        dispatch={dispatch}
       />
       <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 36px">
-        {contents}
+        {is_deleted ? <Span color="#666666">삭제 된 답글입니다.</Span> : contents}
       </Paragraph>
     </StyledNestedComment>
   );

@@ -1,12 +1,26 @@
-import { Container, Image, Span, Time } from 'components';
+import { Container, DeleteModalDialog, Image, Span, Time } from 'components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { dateFormMaker } from 'utils';
 import { string, number } from 'prop-types';
+import { useSelector } from 'react-redux';
+import { useRef, useState } from 'react';
+import ajax from 'apis/ajax';
 
 const StyledCommentAuthor = styled.div`
   display: flex;
   flex-flow: row nowrap;
+`;
+
+const DeleteModifyButton = styled.button`
+  color: #868e96;
+  font-size: 1.4rem;
+  background: transparent;
+
+  &:hover {
+    color: #212121;
+    font-weight: 700;
+  }
 `;
 
 const transferCreationDate = date => {
@@ -22,12 +36,45 @@ const transferCreationDate = date => {
   else dateFormMaker(date);
 };
 
-function CommentAuthor({ nickname, profilePhoto, created, authorId }) {
+function CommentAuthor({
+  nickname,
+  profilePhoto,
+  created,
+  authorId,
+  commentId,
+  isDeleted,
+  dispatch,
+}) {
+  const currentUser = useSelector(({ auth }) => auth.currentUser);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const onDeleteModalOpenHandler = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const deleteButtonRef = useRef();
+
+  const onDeleteCommentHandler = async () => {
+    try {
+      await ajax.deleteComment(commentId);
+      setIsDeleteModalOpen(false);
+
+      dispatch({ type: 'DELETE_COMMENT', payload: { commentId } });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   return (
     <StyledCommentAuthor>
-      <Link to={`/portfolio/${authorId}`}>
+      <Link to={isDeleted ? '/page-not-found' : `/portfolio/${authorId}`}>
         <Image
-          src={profilePhoto}
+          src={
+            isDeleted
+              ? 'https://aws-devfolio.s3.ap-northeast-2.amazonaws.com/default_user_profile.jpeg'
+              : profilePhoto
+          }
           alt={`${nickname}님의 프로필 사진`}
           borderRadius="50%"
           width={50}
@@ -41,15 +88,36 @@ function CommentAuthor({ nickname, profilePhoto, created, authorId }) {
         margin="0 0 0 16px"
         padding="6px 0"
       >
-        <Link to={`/portfolio/${authorId}`}>
-          <Span display="block" fontSize={1.6} fontWeight={700}>
-            {nickname}
+        <Link to={isDeleted ? '/page-not-found' : `/portfolio/${authorId}`}>
+          <Span display="block" fontSize={1.6} fontWeight={700} whiteSpace="nowrap">
+            {isDeleted ? '알 수 없음' : nickname}
           </Span>
         </Link>
         <Time dateTime="" fontSize={1.4} color="#666666">
           {transferCreationDate(created)}
         </Time>
       </Container>
+      {isDeleted
+        ? null
+        : currentUser &&
+          currentUser.user_id === authorId && (
+            <>
+              <Container width="100%" margin="0" padding="6px 0" textAlign="right">
+                <DeleteModifyButton>수정</DeleteModifyButton>
+                <DeleteModifyButton ref={deleteButtonRef} onClick={onDeleteModalOpenHandler}>
+                  삭제
+                </DeleteModifyButton>
+              </Container>
+              {isDeleteModalOpen && (
+                <DeleteModalDialog
+                  deleteButtonRef={deleteButtonRef}
+                  setIsDeleteModalOpen={setIsDeleteModalOpen}
+                  deleteEvent={onDeleteCommentHandler}
+                  deleteTargetName="댓글"
+                />
+              )}
+            </>
+          )}
     </StyledCommentAuthor>
   );
 }

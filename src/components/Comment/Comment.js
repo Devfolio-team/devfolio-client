@@ -91,9 +91,12 @@ const Comment = ({ dispatch, data, commentsData, projectId }) => {
         profilePhoto={profile_photo}
         created={created}
         authorId={userId}
+        commentId={comment_id}
+        isDeleted={is_deleted}
+        dispatch={dispatch}
       />
       <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 40px">
-        {contents}
+        {is_deleted ? <Span color="#666666">삭제 된 답글입니다.</Span> : contents}
       </Paragraph>
       <Button width="auto" height="auto" padding="0" onClick={onNestedCommentToggleHandler}>
         <SVGIcon type="Plus" width="12" height="12" />
@@ -115,7 +118,7 @@ const Comment = ({ dispatch, data, commentsData, projectId }) => {
         <NestedCommentsContainer>
           <NestedComments>
             {nestedComments.map(comment => (
-              <NestedComment key={comment.comment_id} data={comment} />
+              <NestedComment key={comment.comment_id} data={comment} dispatch={dispatch} />
             ))}
           </NestedComments>
           <NestedCommentsForm

@@ -46,3 +46,4 @@ export { default as CommentTextArea } from './CommentTextArea/CommentTextArea';
 export { default as NestedComment } from './NestedComment/NestedComment';
 export { default as CommentAuthor } from './CommentAuthor/CommentAuthor';
 export { default as NestedCommentsForm } from './NestedCommentsForm/NestedCommentsForm';
+export { default as DeleteModalDialog } from './DeleteModalDialog/DeleteModalDialog';

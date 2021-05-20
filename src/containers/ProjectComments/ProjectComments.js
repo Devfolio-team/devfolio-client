@@ -33,6 +33,10 @@ const reducer = (state, action) => {
       return [...state, ...action.payload];
     case 'ADD_COMMENT':
       return [...state, action.payload];
+    case 'DELETE_COMMENT':
+      return state.map(comment =>
+        comment.comment_id === action.payload.commentId ? { ...comment, is_deleted: 1 } : comment
+      );
     default:
       return state;
   }
