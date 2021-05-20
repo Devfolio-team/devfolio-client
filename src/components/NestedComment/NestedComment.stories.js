@@ -26,5 +26,6 @@ ExampleNestedComment.args = {
     profile_photo:
       'https://lh3.googleusercontent.com/a-/AOh14GhtpT7YH6EriNYjuPcuXRK6J-weil804Xl8sNWl=s350-c',
     user_user_id: 1,
+    projectId: 1,
   },
 };

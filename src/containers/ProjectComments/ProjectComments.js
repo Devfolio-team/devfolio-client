@@ -37,6 +37,12 @@ const reducer = (state, action) => {
       return state.map(comment =>
         comment.comment_id === action.payload.commentId ? { ...comment, is_deleted: 1 } : comment
       );
+    case 'UPDATE_COMMENT':
+      return state.map(comment =>
+        comment.comment_id === action.payload.commentId
+          ? { ...comment, contents: action.payload.updateComment }
+          : comment
+      );
     default:
       return state;
   }

@@ -63,6 +63,7 @@ const TextArea = ({
   afterMargin,
   field,
   errors,
+  margin,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -96,6 +97,7 @@ const TextArea = ({
         id={id}
         $width={width}
         $height={height}
+        $margin={margin}
         onFocus={onFocusHandler}
         {...field}
         onBlur={onBlurHandler}

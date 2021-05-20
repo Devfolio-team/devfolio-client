@@ -47,3 +47,4 @@ export { default as NestedComment } from './NestedComment/NestedComment';
 export { default as CommentAuthor } from './CommentAuthor/CommentAuthor';
 export { default as NestedCommentsForm } from './NestedCommentsForm/NestedCommentsForm';
 export { default as DeleteModalDialog } from './DeleteModalDialog/DeleteModalDialog';
+export { default as UpdateCommentForm } from './UpdateCommentForm/UpdateCommentForm';

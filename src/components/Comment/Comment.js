@@ -5,6 +5,7 @@ import {
   NestedCommentsForm,
   Span,
   SVGIcon,
+  UpdateCommentForm,
 } from 'components';
 import Paragraph from 'components/Paragraph/Paragraph';
 import { useEffect, useState } from 'react';
@@ -76,8 +77,18 @@ const Comment = ({ dispatch, data, commentsData, projectId }) => {
 
   const [isNestedCommentOpen, setIsNestedCommentOpen] = useState(false);
 
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+
   const onNestedCommentToggleHandler = () => {
     setIsNestedCommentOpen(!isNestedCommentOpen);
+  };
+
+  const onEnableUpdateModeHandler = () => {
+    setIsUpdateMode(true);
+  };
+
+  const onDisableUpdateModeHandler = () => {
+    setIsUpdateMode(false);
   };
 
   useEffect(() => {
@@ -94,10 +105,21 @@ const Comment = ({ dispatch, data, commentsData, projectId }) => {
         commentId={comment_id}
         isDeleted={is_deleted}
         dispatch={dispatch}
+        onEnableUpdateModeHandler={onEnableUpdateModeHandler}
       />
-      <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 40px">
-        {is_deleted ? <Span color="#666666">삭제 된 답글입니다.</Span> : contents}
-      </Paragraph>
+      {isUpdateMode ? (
+        <UpdateCommentForm
+          commentId={comment_id}
+          contents={contents}
+          projectId={projectId}
+          dispatch={dispatch}
+          onDisableUpdateModeHandler={onDisableUpdateModeHandler}
+        />
+      ) : (
+        <Paragraph fontSize={1.6} lineHeight="20px" margin="30px 0 40px">
+          {is_deleted ? <Span color="#666666">삭제 된 댓글입니다.</Span> : contents}
+        </Paragraph>
+      )}
       <Button width="auto" height="auto" padding="0" onClick={onNestedCommentToggleHandler}>
         <SVGIcon type="Plus" width="12" height="12" />
         <Span
@@ -118,7 +140,12 @@ const Comment = ({ dispatch, data, commentsData, projectId }) => {
         <NestedCommentsContainer>
           <NestedComments>
             {nestedComments.map(comment => (
-              <NestedComment key={comment.comment_id} data={comment} dispatch={dispatch} />
+              <NestedComment
+                key={comment.comment_id}
+                data={comment}
+                dispatch={dispatch}
+                projectId={projectId}
+              />
             ))}
           </NestedComments>
           <NestedCommentsForm

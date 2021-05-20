@@ -2,7 +2,7 @@ import { Container, DeleteModalDialog, Image, Span, Time } from 'components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { dateFormMaker } from 'utils';
-import { string, number } from 'prop-types';
+import { string, number, func } from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
 import ajax from 'apis/ajax';
@@ -44,6 +44,7 @@ function CommentAuthor({
   commentId,
   isDeleted,
   dispatch,
+  onEnableUpdateModeHandler,
 }) {
   const currentUser = useSelector(({ auth }) => auth.currentUser);
 
@@ -103,7 +104,7 @@ function CommentAuthor({
           currentUser.user_id === authorId && (
             <>
               <Container width="100%" margin="0" padding="6px 0" textAlign="right">
-                <DeleteModifyButton>수정</DeleteModifyButton>
+                <DeleteModifyButton onClick={onEnableUpdateModeHandler}>수정</DeleteModifyButton>
                 <DeleteModifyButton ref={deleteButtonRef} onClick={onDeleteModalOpenHandler}>
                   삭제
                 </DeleteModifyButton>
@@ -131,6 +132,8 @@ CommentAuthor.propTypes = {
   created: string.isRequired,
   /** 댓글을 작성한 유저의 프로필 사진이나 닉네임을 클릭했을때 해당 유저의 포트폴리오 페이지로 이동하기 위한 Link요소에 쓰일 유저의 고유 id값을 입력해줍니다. */
   authorId: number.isRequired,
+  /** 댓글 수정 Form을 열기 위한 CommentUpdateMode의 상태를 변경하기 위한 함수를 전달해줍니다. */
+  onEnableUpdateModeHandler: func.isRequired,
 };
 
 export default CommentAuthor;

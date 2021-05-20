@@ -23,4 +23,5 @@ ExampleCommentAuthor.args = {
     'https://lh3.googleusercontent.com/a-/AOh14GhtpT7YH6EriNYjuPcuXRK6J-weil804Xl8sNWl=s350-c',
   created: '2021-05-20 00:45:34',
   authorId: 1,
+  onEnableUpdateModeHandler: () => {},
 };

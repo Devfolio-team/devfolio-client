@@ -19,8 +19,8 @@ export const deleteComment = async commentId => {
   return await axios.delete(`${API_URL}/api/comment/${commentId}`);
 };
 
-export const editComment = async (commentData, commentId) => {
-  return await axios.patch(`${API_URL}/api/project/${commentId}`, commentData, {
+export const editComment = async updateCommentData => {
+  return await axios.patch(`${API_URL}/api/comment`, updateCommentData, {
     headers: {
       'Content-type': 'application/json',
     },
