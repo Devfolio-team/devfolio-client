@@ -1,14 +1,11 @@
 import axios from 'axios';
 
-// TODO: 배포단계에서 API_URL을 process.env파일로 서버와 분리예정
-const API_URL = 'http://devfolio.world:3020';
-
 export const fetchProjects = async () => {
-  return await axios.get(`${API_URL}/api/projects`);
+  return await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`);
 };
 
 export const postProject = async projectData => {
-  return await axios.post(`${API_URL}/api/project`, projectData, {
+  return await axios.post(`${process.env.REACT_APP_API_URL}/api/project`, projectData, {
     headers: {
       'Content-type': 'application/json',
     },
@@ -16,39 +13,45 @@ export const postProject = async projectData => {
 };
 
 export const getProject = async userId => {
-  return await axios(`${API_URL}/api/project/${userId}`);
+  return await axios(`${process.env.REACT_APP_API_URL}/api/project/${userId}`);
 };
 
 export const deleteProject = async projectId => {
-  return await axios.delete(`${API_URL}/api/project/${projectId}`);
+  return await axios.delete(`${process.env.REACT_APP_API_URL}/api/project/${projectId}`);
 };
 
 export const getIsPressLikeButton = async (projectId, loginUserId) => {
-  return await axios(`${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`);
+  return await axios(
+    `${process.env.REACT_APP_API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`
+  );
 };
 
 export const postLikeCountPlus = async (projectId, loginUserId) => {
   return await axios({
     method: 'post',
-    url: `${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
+    url: `${process.env.REACT_APP_API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
   });
 };
 
 export const delLikeCountMinus = async (projectId, loginUserId) => {
   return await axios({
     method: 'delete',
-    url: `${API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
+    url: `${process.env.REACT_APP_API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
   });
 };
 
 export const editProject = async (projectData, projectId) => {
-  return await axios.patch(`${API_URL}/api/project/${projectId}`, projectData, {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
+  return await axios.patch(
+    `${process.env.REACT_APP_API_URL}/api/project/${projectId}`,
+    projectData,
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }
+  );
 };
 
 export const fetchFavoriteProjects = async userId => {
-  return await axios.get(`http://localhost:3020/api/favorite_projects/${userId}`);
+  return await axios.get(`${process.env.REACT_APP_API_URL}/api/favorite_projects/${userId}`);
 };
