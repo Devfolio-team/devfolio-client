@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-export const fetchProjects = async () => {
-  return await axios.get(`${process.env.REACT_APP_API_URL}/api/projects`);
+export const fetchProjects = async (sort, page, size) => {
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/projects?sort=${sort}&page=${page}&size=${size}`
+  );
 };
 
 export const postProject = async projectData => {
