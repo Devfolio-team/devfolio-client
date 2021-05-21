@@ -48,3 +48,7 @@ export const editProject = async (projectData, projectId) => {
     },
   });
 };
+
+export const fetchFavoriteProjects = async userId => {
+  return await axios.get(`http://localhost:3020/api/favorite_projects/${userId}`);
+};
