@@ -88,7 +88,7 @@ const reducer = (state, action) => {
     case 'FETCH_LATEST_PROJECTS':
       return { ...state, latest: { ...state.latest, data: action.payload } };
     case 'FETCH_POPULAR_PROJECTS':
-      return { ...state, popular: { ...state.latest, data: action.payload } };
+      return { ...state, popular: { ...state.popular, data: action.payload } };
     case 'SWITCH_SORT_TO_LATEST':
       return { ...state, sort: 'latest' };
     case 'SWITCH_SORT_TO_POPULAR':
