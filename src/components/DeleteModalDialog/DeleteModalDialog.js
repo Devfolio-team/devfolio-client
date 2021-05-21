@@ -2,8 +2,6 @@ import { Button, Container, Heading, Paragraph, Portal } from 'components';
 import React from 'react';
 import styled from 'styled-components';
 import { color } from 'utils';
-import ajax from 'apis/ajax';
-import { useHistory } from 'react-router';
 import { ModalDialog } from 'containers';
 import useDetectViewport from 'hooks/useDetectViewport';
 
@@ -14,22 +12,16 @@ const DeleteMessage = styled.span`
   }
 `;
 
-const DeleteModalDialog = ({ setIsDeleteModalOpen, projectId, deleteButtonRef }) => {
+const DeleteModalDialog = ({
+  deleteEvent,
+  deleteTargetName,
+  setIsDeleteModalOpen,
+  deleteButtonRef,
+}) => {
   const { type } = useDetectViewport();
-
-  const history = useHistory();
 
   const onDeleteModalCloseHandler = () => {
     setIsDeleteModalOpen(false);
-  };
-
-  const onDeleteProjectHandler = async () => {
-    try {
-      await ajax.deleteProject(projectId);
-      history.push('/');
-    } catch (error) {
-      history.push('/page-not-found');
-    }
   };
 
   return (
@@ -37,19 +29,19 @@ const DeleteModalDialog = ({ setIsDeleteModalOpen, projectId, deleteButtonRef })
       <ModalDialog
         beforeRef={deleteButtonRef}
         setIsModalOpen={setIsDeleteModalOpen}
-        width={type === 'xs' ? '70%' : '380px'}
+        width={type === 'xs' ? '70%' : '360px'}
         padding={type === 'xs' ? '20px' : '30px'}
       >
         <Heading as="h3" textAlign="center" fontWeight={700} fontSize={2.6} color="#FFFFFF">
-          프로젝트 삭제
+          {deleteTargetName} 삭제
         </Heading>
         <Paragraph textAlign="center" fontSize={2} color="#FFFFFF" margin="20px 0">
-          정말로 프로젝트를 <DeleteMessage>삭제하시겠습니까?</DeleteMessage>
+          정말로 <DeleteMessage>삭제하시겠습니까?</DeleteMessage>
         </Paragraph>
         <Container
           display="flex"
           justifyContent={type === 'xs' ? 'center' : 'flex-end'}
-          margin="40px 0 0"
+          margin="30px 0 0"
         >
           <Button
             width={80}
@@ -72,7 +64,7 @@ const DeleteModalDialog = ({ setIsDeleteModalOpen, projectId, deleteButtonRef })
             $hoverBackground="#FFFFFF"
             $hoverColor={color.mainColor}
             fontWeight={700}
-            onClick={onDeleteProjectHandler}
+            onClick={deleteEvent}
           >
             확인
           </Button>

@@ -12,6 +12,7 @@ import {
   Span,
   SVGIcon,
   Time,
+  DeleteModalDialog,
 } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect, useRef } from 'react';
@@ -24,7 +25,6 @@ import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
 import { Flicker } from 'react-micron';
 import DeleteModifyButton from './DeleteModifyButton';
-import DeleteModalDialog from './DeleteModalDialog';
 import StyledToEditPageLink from './ToEditPageLink';
 import { Link } from 'react-router-dom';
 import { ProjectComments } from 'containers';
@@ -186,9 +186,8 @@ const H3Heading = styled(Heading)`
   `}
 `;
 
-const ProjectPage = ({ match }) => {
+const ProjectPage = ({ match, history }) => {
   const { isDesktop, vw, type } = useDetectViewport();
-  const [scrollY, setScrollY] = useState(0);
   const [isIMGLoading, setIsIMGLoading] = useState(true);
   const initalProject = {
     projectData: {
@@ -242,10 +241,6 @@ const ProjectPage = ({ match }) => {
   const { projectTechStacks } = project;
   const loginUserInfo = useSelector(state => state.auth.currentUser);
 
-  const onScrollHandler = () => {
-    setScrollY(window.pageYOffset);
-  };
-
   const onLikeCountPlusHandler = async () => {
     if (!loginUser.user_id) return;
 
@@ -286,6 +281,15 @@ const ProjectPage = ({ match }) => {
     setIsDeleteModalOpen(true);
   };
 
+  const onDeleteProjectHandler = async () => {
+    try {
+      await ajax.deleteProject(match.params.project_id);
+      history.push('/');
+    } catch (error) {
+      history.push('/page-not-found');
+    }
+  };
+
   const deleteButtonRef = useRef(null);
 
   // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
@@ -324,16 +328,6 @@ const ProjectPage = ({ match }) => {
     };
     getIsLike();
   }, [loginUser.user_id, loginUserInfo, match.params.project_id, project_id]);
-
-  useEffect(() => {
-    function watchScroll() {
-      window.addEventListener('scroll', onScrollHandler);
-    }
-    watchScroll();
-    return () => {
-      window.removeEventListener('scroll', onScrollHandler);
-    };
-  });
 
   return (
     <StyledProjectPage
@@ -380,7 +374,7 @@ const ProjectPage = ({ match }) => {
           <Container position="absolute" left="250px" width="200px">
             <Container
               position="fixed"
-              transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              transform={window.pageYOffset > 130 ? 'translate3D(0, 130px, 0)' : ''}
               transition="0.5s"
             >
               {subject ? (
@@ -432,8 +426,8 @@ const ProjectPage = ({ match }) => {
               $justifyContent="center"
               $alignItems="center"
               $margin="0"
-              $position={scrollY > 0 ? 'fixed' : ''}
-              $transform={scrollY > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              $position={window.pageYOffset > 0 ? 'fixed' : ''}
+              $transform={window.pageYOffset > 130 ? 'translate3D(0, 130px, 0)' : ''}
               $transition="0.5s"
             >
               {subject ? (
@@ -744,13 +738,14 @@ const ProjectPage = ({ match }) => {
 
       <DivisionLine width={isDesktop ? 672 : '80%'} />
 
-      <ProjectComments />
+      <ProjectComments projectId={project.projectData.project_id} />
 
       {isDeleteModalOpen && (
         <DeleteModalDialog
           deleteButtonRef={deleteButtonRef}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          projectId={project && project.projectData.project_id}
+          deleteEvent={onDeleteProjectHandler}
+          deleteTargetName="프로젝트"
         />
       )}
     </StyledProjectPage>

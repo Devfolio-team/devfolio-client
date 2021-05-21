@@ -61,6 +61,7 @@ const Span = ({
   fill,
   transition,
   verticalAlign,
+  whiteSpace,
   ...restProps
 }) => {
   return (
@@ -115,6 +116,7 @@ const Span = ({
       $fill={fill}
       $transition={transition}
       $verticalAlign={verticalAlign}
+      $whiteSpace={whiteSpace}
       {...restProps}
     />
   );

@@ -17,4 +17,11 @@ const Template = args => <CommentAuthor {...args} />;
 
 export const ExampleCommentAuthor = Template.bind({});
 
-ExampleCommentAuthor.args = {};
+ExampleCommentAuthor.args = {
+  nickname: 'HajunRyu',
+  profilePhoto:
+    'https://lh3.googleusercontent.com/a-/AOh14GhtpT7YH6EriNYjuPcuXRK6J-weil804Xl8sNWl=s350-c',
+  created: '2021-05-20 00:45:34',
+  authorId: 1,
+  onEnableUpdateModeHandler: () => {},
+};

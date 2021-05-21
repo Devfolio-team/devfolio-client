@@ -11,6 +11,7 @@ import {
   deleteProject,
   fetchFavoriteProjects,
 } from 'apis/project';
+import { postComment, fetchComments, deleteComment, editComment } from 'apis/comment';
 
 const ajax = {
   signIn,
@@ -27,6 +28,10 @@ const ajax = {
   deleteAccount,
   deleteProject,
   editProject,
+  postComment,
+  fetchComments,
+  editComment,
+  deleteComment,
   requestNewTechStack,
   fetchFavoriteProjects,
 };

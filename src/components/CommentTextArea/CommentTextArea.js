@@ -12,7 +12,7 @@ const StyledCommentTextArea = styled(TextArea)`
   }
 `;
 
-function CommentTextArea({ id, width, label }) {
+function CommentTextArea({ id, width, label, field, onChange, margin }) {
   return (
     <StyledCommentTextArea
       id={id}
@@ -22,6 +22,9 @@ function CommentTextArea({ id, width, label }) {
       beforeMargin={10}
       afterMargin={0}
       width={width}
+      field={field}
+      onChange={onChange}
+      margin={margin}
     />
   );
 }
