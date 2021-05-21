@@ -58,6 +58,7 @@ const ProjectItem = ({
   author,
   authorProfile,
   likeCount,
+  commentCount,
   width,
   margin,
   imageMaxHeight,
@@ -131,9 +132,14 @@ const ProjectItem = ({
           >
             {planIntention}
           </Paragraph>
-          <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
-            {createdText}
-          </Time>
+          <Container display="flex" justifyContent="space-between">
+            <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
+              {createdText}
+            </Time>
+            <Span color="#70777d" fontSize={1.2}>
+              {commentCount} 개의 댓글
+            </Span>
+          </Container>
         </StyledLink>
       </Container>
       <Container

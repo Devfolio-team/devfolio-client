@@ -232,6 +232,7 @@ const HomePage = ({ viewport }) => {
                       authorProfile={project.profile_photo}
                       viewport={viewport}
                       likeCount={project.likeCount}
+                      commentCount={project.commentCount}
                     />
                   );
                 })}
