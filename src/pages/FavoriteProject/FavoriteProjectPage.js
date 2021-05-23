@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ProjectItem, ProjectItemSkeleton, A11yHidden, Container, Heading } from 'components';
+import {
+  ProjectItem,
+  ProjectItemSkeleton,
+  A11yHidden,
+  Container,
+  Heading,
+  FetchMore,
+} from 'components';
 import ajax from 'apis/ajax';
 import scrollToTop from 'utils/scrollToTop';
 import { ProjectList } from 'containers';
@@ -56,18 +63,19 @@ const FavoriteProjectPageSection = styled.section`
 
 const FavoriteProjectPage = ({ match }) => {
   const { vw } = useDetectViewport();
+  const [page, setPage] = useState(0);
   const [favoriteProjects, setFavoriteProjects] = useState([]);
   const { current_user_id } = match.params;
 
   useEffect(() => {
     const fetchFavoriteProejctList = async () => {
       try {
-        const response = await ajax.fetchFavoriteProjects(current_user_id);
+        const response = await ajax.fetchFavoriteProjects(current_user_id, page, 12);
         if (response.status === 200) {
           const {
             data: { projectsData },
           } = response;
-          setFavoriteProjects(projectsData);
+          setFavoriteProjects(prev => [...prev, ...projectsData]);
         } else throw new Error('서버의 응답이 올바르지 않습니다.');
       } catch (error) {
         throw new Error(error);
@@ -75,7 +83,7 @@ const FavoriteProjectPage = ({ match }) => {
     };
 
     fetchFavoriteProejctList();
-  }, [current_user_id]);
+  }, [current_user_id, page]);
 
   useEffect(() => {
     scrollToTop();
@@ -157,6 +165,7 @@ const FavoriteProjectPage = ({ match }) => {
                   );
                 })}
           </ProjectList>
+          <FetchMore setPage={setPage} />
         </Container>
       </FavoriteProjectPageSection>
     </StyledFavoriteProjectPage>
