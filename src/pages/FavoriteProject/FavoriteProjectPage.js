@@ -161,6 +161,7 @@ const FavoriteProjectPage = ({ match }) => {
                       author={project.nickname}
                       authorProfile={project.profile_photo}
                       likeCount={project.likeCount}
+                      commentCount={project.commentCount}
                     />
                   );
                 })}
