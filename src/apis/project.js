@@ -54,6 +54,8 @@ export const editProject = async (projectData, projectId) => {
   );
 };
 
-export const fetchFavoriteProjects = async userId => {
-  return await axios.get(`${process.env.REACT_APP_API_URL}/api/favorite_projects/${userId}`);
+export const fetchFavoriteProjects = async (userId, page, limit) => {
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/favorite_projects/${userId}?page=${page}&limit=${limit}`
+  );
 };
