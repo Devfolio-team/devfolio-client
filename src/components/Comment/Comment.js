@@ -14,17 +14,12 @@ import { color } from 'utils';
 import { func, object, array, number } from 'prop-types';
 
 const StyledComment = styled.li`
-  width: 627px;
   padding: 30px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   &:last-of-type {
     border-bottom: 0;
     padding-bottom: 0;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
   }
 `;
 

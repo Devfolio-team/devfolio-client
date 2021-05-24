@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { number, func, object } from 'prop-types';
 
 const CommentsFormContainer = styled.div`
-  width: 672px;
   margin: 0 auto;
 
   @media (max-width: 768px) {
@@ -55,7 +54,7 @@ const CommentsForm = ({ projectId, commentCount, dispatch, commentListRef }) => 
           </Span>
           <CommentTextArea
             id="commentForm"
-            width={672}
+            width="100%"
             field={{ value: comment, onChange: onCommentChangeHandler }}
             label="댓글을 작성해주세요."
           />
