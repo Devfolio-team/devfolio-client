@@ -632,7 +632,7 @@ const ProjectPage = ({ match, history }) => {
       <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
         {subject ? (
           <H3Heading id="기획의도" as="h3">
-            기획 의도
+            기획 의도 및 소개
           </H3Heading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
