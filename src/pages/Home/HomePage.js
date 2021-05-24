@@ -6,7 +6,7 @@ import {
   ProjectItem,
   ProjectItemSkeleton,
 } from 'components';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import ajax from 'apis/ajax';
 import { ProjectList } from 'containers';
@@ -64,7 +64,10 @@ const HomePageProjectItemSkeleton = styled(ProjectItemSkeleton)`
   }
 `;
 
+const HomepageSectionContainer = styled.div``;
+
 const HomepageSection = styled.section`
+  position: relative;
   margin: 0 auto;
   padding: 30px 54px;
   width: 1440px;
@@ -76,23 +79,61 @@ const HomepageSection = styled.section`
   }
 `;
 
+const FetchMore = styled.div`
+  position: absolute;
+  bottom: 20vh;
+  left: 0;
+`;
+
 const projectsInitialState = {
   sort: 'popular',
-  size: 12,
-  latest: { page: 0, data: [] },
-  popular: { page: 0, data: [] },
+  limit: 12,
+  loading: false,
+  latest: { page: 0, data: [], lastFetch: false },
+  popular: { page: 0, data: [], lastFetch: false },
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'FETCH_PROJECT_LOADING':
+      return {
+        ...state,
+        loading: true,
+      };
     case 'FETCH_LATEST_PROJECTS':
-      return { ...state, latest: { ...state.latest, data: action.payload } };
+      return {
+        ...state,
+        loading: false,
+        latest: {
+          ...state.latest,
+          data: [...state.latest.data, ...action.payload],
+          lastFetch: action.lastFetch,
+        },
+      };
     case 'FETCH_POPULAR_PROJECTS':
-      return { ...state, popular: { ...state.popular, data: action.payload } };
+      return {
+        ...state,
+        loading: false,
+        popular: {
+          ...state.popular,
+          data: [...state.popular.data, ...action.payload],
+          lastFetch: action.lastFetch,
+        },
+      };
     case 'SWITCH_SORT_TO_LATEST':
       return { ...state, sort: 'latest' };
     case 'SWITCH_SORT_TO_POPULAR':
       return { ...state, sort: 'popular' };
+    case 'LATEST_PAGE_UP':
+      return {
+        ...state,
+        latest: { ...state.latest, page: state.latest.page + 1 },
+      };
+    case 'POPULAR_PAGE_UP':
+      return {
+        ...state,
+        popular: { ...state.popular, page: state.popular.page + 1 },
+      };
     default:
       return state;
   }
@@ -101,24 +142,28 @@ const reducer = (state, action) => {
 const HomePage = ({ viewport }) => {
   const { vw } = viewport;
 
-  const [projects, dispatch] = useReducer(reducer, projectsInitialState);
+  const [projects, dispatch] = useReducer(reducer, projectsInitialState, () => ({
+    ...projectsInitialState,
+    sort: localStorage.getItem('sort'),
+  }));
 
-  const { sort, latest, popular } = projects;
+  const { sort, limit, loading, latest, popular } = projects;
 
   const onPopularSortHandler = () => {
     dispatch({ type: 'SWITCH_SORT_TO_POPULAR' });
+    localStorage.setItem('sort', 'popular');
   };
 
   const onLatestSortHandler = () => {
     dispatch({ type: 'SWITCH_SORT_TO_LATEST' });
+    localStorage.setItem('sort', 'latest');
   };
 
   useEffect(() => {
-    scrollToTop();
-
-    const fetchProejctList = async () => {
+    const fetchPopularProejctList = async () => {
+      dispatch({ type: 'FETCH_PROJECT_LOADING' });
       try {
-        const popularResponse = await ajax.fetchProjects('popular', 0, 12);
+        const popularResponse = await ajax.fetchProjects('popular', popular.page, limit);
 
         if (popularResponse.status === 200) {
           const {
@@ -128,10 +173,23 @@ const HomePage = ({ viewport }) => {
           dispatch({
             type: 'FETCH_POPULAR_PROJECTS',
             payload: projectsData,
+            lastFetch: projectsData.length < limit,
           });
         } else throw new Error('서버의 응답이 올바르지 않습니다.');
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
 
-        const latestResponse = await ajax.fetchProjects('latest', 0, 12);
+    if (!popular.lastFetch) fetchPopularProejctList();
+  }, [limit, popular.lastFetch, popular.page]);
+
+  useEffect(() => {
+    const fetchLatestProejctList = async () => {
+      try {
+        dispatch({ type: 'FETCH_PROJECT_LOADING' });
+
+        const latestResponse = await ajax.fetchProjects('latest', latest.page, limit);
 
         if (latestResponse.status === 200) {
           const {
@@ -141,6 +199,7 @@ const HomePage = ({ viewport }) => {
           dispatch({
             type: 'FETCH_LATEST_PROJECTS',
             payload: projectsData,
+            lastFetch: projectsData.length < limit,
           });
         } else throw new Error('서버의 응답이 올바르지 않습니다.');
       } catch (error) {
@@ -148,8 +207,34 @@ const HomePage = ({ viewport }) => {
       }
     };
 
-    fetchProejctList();
-  }, []);
+    if (!latest.lastFetch) fetchLatestProejctList();
+  }, [latest.lastFetch, latest.page, limit]);
+
+  const fetchMoreRef = useRef();
+
+  useEffect(() => {
+    scrollToTop();
+
+    const fetchMoreObserver = new IntersectionObserver(([{ isIntersecting }]) => {
+      if (!isIntersecting) return;
+
+      if (sort === 'popular')
+        dispatch({
+          type: 'POPULAR_PAGE_UP',
+        });
+      else
+        dispatch({
+          type: 'LATEST_PAGE_UP',
+        });
+    });
+
+    const skeletonElement = fetchMoreRef.current;
+
+    fetchMoreObserver.observe(skeletonElement);
+    return () => {
+      fetchMoreObserver && fetchMoreObserver.unobserve(skeletonElement);
+    };
+  }, [sort]);
 
   return (
     <StyledHomePage>
@@ -280,35 +365,40 @@ const HomePage = ({ viewport }) => {
                     />
                   );
                 })}
-            {Array.from({ length: 12 }, (_, i) => i).map((_, index) => (
-              <HomePageProjectItemSkeleton
-                containerMinHeight={
-                  vw >= 1440
-                    ? 166
-                    : vw >= 1126
-                    ? '15.7vw'
-                    : vw >= 1024
-                    ? '23.8vw'
-                    : vw >= 768
-                    ? '47.6111vw'
-                    : '49.4vw'
-                }
-                imageMaxHeight={
-                  vw >= 1440
-                    ? 166
-                    : vw >= 1126
-                    ? '15.7vw'
-                    : vw >= 1024
-                    ? '23.8vw'
-                    : vw >= 768
-                    ? '47.6111vw'
-                    : '49.4vw'
-                }
-                key={index}
-              />
-            ))}
+            {loading && (
+              <HomepageSectionContainer>
+                {Array.from({ length: 12 }, (_, i) => i).map((_, index) => (
+                  <HomePageProjectItemSkeleton
+                    containerMinHeight={
+                      vw >= 1440
+                        ? 166
+                        : vw >= 1126
+                        ? '15.7vw'
+                        : vw >= 1024
+                        ? '23.8vw'
+                        : vw >= 768
+                        ? '47.6111vw'
+                        : '49.4vw'
+                    }
+                    imageMaxHeight={
+                      vw >= 1440
+                        ? 166
+                        : vw >= 1126
+                        ? '15.7vw'
+                        : vw >= 1024
+                        ? '23.8vw'
+                        : vw >= 768
+                        ? '47.6111vw'
+                        : '49.4vw'
+                    }
+                    key={index}
+                  />
+                ))}
+              </HomepageSectionContainer>
+            )}
           </ProjectList>
         </Container>
+        <FetchMore ref={fetchMoreRef} />
       </HomepageSection>
     </StyledHomePage>
   );
