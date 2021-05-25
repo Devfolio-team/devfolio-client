@@ -50,3 +50,6 @@ export { default as DeleteModalDialog } from './DeleteModalDialog/DeleteModalDia
 export { default as UpdateCommentForm } from './UpdateCommentForm/UpdateCommentForm';
 export { default as FetchMore } from './FetchMore/FetchMore';
 export { default as ProjectTeamMember } from './ProjectTeamMember/ProjectTeamMember';
+export { default as TeamMembers } from './TeamMembers/TeamMembers';
+export { default as SectionHeading } from './SectionHeading/SectionHeading';
+export { default as Member } from './Member/Member';

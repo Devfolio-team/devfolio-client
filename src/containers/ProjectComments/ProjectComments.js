@@ -6,14 +6,9 @@ import { number } from 'prop-types';
 
 const StyledProjectComments = styled.div`
   margin: 80px 0;
-
-  @media (max-width: 768px) {
-    padding: 0 30px;
-  }
 `;
 
 const CommentsList = styled.ul`
-  width: 627px;
   margin: 0 auto;
 
   @media (max-width: 768px) {

@@ -13,6 +13,8 @@ import {
   SVGIcon,
   Time,
   DeleteModalDialog,
+  SectionHeading,
+  TeamMembers,
 } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect, useRef } from 'react';
@@ -30,6 +32,9 @@ import { Link } from 'react-router-dom';
 import { ProjectComments } from 'containers';
 
 const StyledProjectPage = styled.main`
+  @media (max-width: 828px) {
+    padding: 0 30px;
+  }
   ${props => css`
     ${applyStyle(props)}
     position: relative;
@@ -63,16 +68,16 @@ const LinkToWebSite = styled.a`
   ${props => css`
     ${applyStyle(props)}
     target:${'_blank'};
-    font-size: ${'1.6rem'};
-    font-weight: ${'700'};
-    border-radius: ${'5px'};
-    height: ${'44px'};
-    text-align: ${'center'};
-    line-height: ${'40px'};
-    background: ${'#FFFFFF'};
-    display: ${'flex'};
-    justify-content: ${'center'};
-    align-items: ${'center'};
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-radius: 5px;
+    height: 44px;
+    text-align: center;
+    line-height: 40px;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `}
 
   &:hover {
@@ -98,6 +103,15 @@ const SkillList = styled.ul`
 `;
 
 const SkillIconItem = styled.li`
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin: 0 0 20px 0;
+  align-items: center;
+  @media (max-width: 600px) {
+    justify-content: left;
+    width: 100%;
+  }
   ${props => css`
     ${applyStyle(props)}
   `}
@@ -131,16 +145,16 @@ const LinkToWebSiteWrapper = styled.div`
 const DisabledLink = styled(Span)`
   ${props => css`
     ${applyStyle(props)}
-    font-size:${'1.6rem'};
-    font-weight: ${'700'};
-    border-radius: ${'5px'};
-    height: ${'44px'};
-    text-align: ${'center'};
-    line-height: ${'40px'};
-    background: ${'#FFFFFF'};
-    display: ${'flex'};
-    justify-content: ${'center'};
-    align-items: ${'center'};
+    font-size:1.6rem;
+    font-weight: 700;
+    border-radius: 5px;
+    height: 44px;
+    text-align: center;
+    line-height: 40px;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `}
 `;
 
@@ -172,20 +186,6 @@ const Spinner = styled(LoadingSpinner)`
   `}
 `;
 
-const H3Heading = styled(Heading)`
-  ${props => css`
-    ${applyStyle(props)}
-    color: ${'#212121'};
-    display: ${'inline-block'};
-    font-weight: ${700};
-    font-size: ${'3rem'};
-    border-bottom: ${'14px solid rgba(66, 139, 202, 0.6)'};
-    line-height: ${'10px'};
-    margin: ${'0 0 47px 0'};
-    padding: ${'100px 0 0 0'};
-  `}
-`;
-
 const ProjectPage = ({ match, history }) => {
   const { isDesktop, vw, type } = useDetectViewport();
   const [isIMGLoading, setIsIMGLoading] = useState(true);
@@ -205,6 +205,7 @@ const ProjectPage = ({ match, history }) => {
       team_name: '',
       thumbnail: '',
       user_id: '',
+      teamMembers: [],
     },
     projectTechStack: [{}],
   };
@@ -214,7 +215,7 @@ const ProjectPage = ({ match, history }) => {
   };
   const [project, setProject] = useState(initalProject);
   const [loginUser, setLoginUser] = useState(initalLoginUser);
-  const [isLike, setIsLike] = useState(false);
+  const [isLike, setIsLike] = useState(true);
   const {
     created,
     deploy_url,
@@ -230,6 +231,7 @@ const ProjectPage = ({ match, history }) => {
     thumbnail,
     likeCount,
     user_user_id,
+    teamMembers,
   } = project.projectData;
 
   // eslint-disable-next-line prefer-destructuring
@@ -332,13 +334,12 @@ const ProjectPage = ({ match, history }) => {
   return (
     <StyledProjectPage
       $width={isDesktop ? '768px' : '100%'}
-      $margin="96px auto 0 auto"
+      $margin="96px auto 0"
       $background="#F8F9FA"
     >
       <RowContainer
         $width="100%"
-        $margin={isDesktop ? '0 30px 30px 0' : '0'}
-        $padding={isDesktop ? '0 70px' : '0 30px'}
+        $margin={isDesktop ? '0 0 30px' : '0'}
         $justifyContent="space-between"
         $position={vw > 840 ? 'relative' : ''}
       >
@@ -370,13 +371,9 @@ const ProjectPage = ({ match, history }) => {
             <SkeletonUI $display="inline-block" $width="200px" $height="16px" />
           )}
         </RowContainer>
-        <Container position="relative" display={vw > 1050 ? '' : 'none'}>
-          <Container position="absolute" left="250px" width="200px">
-            <Container
-              position="fixed"
-              transform={window.pageYOffset > 130 ? 'translate3D(0, 130px, 0)' : ''}
-              transition="0.5s"
-            >
+        <Container position="relative" display={type !== 'xl' && 'none'}>
+          <Container position="absolute" left="320px" top="0" width="200px">
+            <Container position="fixed" transform="translate3D(0, 150px, 0)" transition="0.5s">
               {subject ? (
                 <ProjectNav
                   borderLeft="1.5px solid rgba(134, 142, 150, .5)"
@@ -403,7 +400,7 @@ const ProjectPage = ({ match, history }) => {
           </Container>
         </Container>
       </RowContainer>
-      <Container margin="0 0 32px 0" padding={isDesktop ? '0 70px' : '0 30px'} position="relative">
+      <Container margin="0 0 32px 0" position="relative">
         {subject === '' ? (
           <SkeletonUI $width="300px" $height="50px" $margin="120px 0 0 0" />
         ) : (
@@ -420,14 +417,14 @@ const ProjectPage = ({ match, history }) => {
           </Heading>
         )}
         {/* view 840 이상 동그란 좋아요버튼 view 840이하 네모난 좋아요 버튼 */}
-        {vw > 840 ? (
-          <Container position="absolute" left="-10px" top="-50px">
+        {vw > 1024 ? (
+          <Container position="absolute" left="-100px" top="0px">
             <ColumnContainer
               $justifyContent="center"
               $alignItems="center"
               $margin="0"
-              $position={window.pageYOffset > 0 ? 'fixed' : ''}
-              $transform={window.pageYOffset > 130 ? 'translate3D(0, 130px, 0)' : ''}
+              $position="fixed"
+              $transform="translate3D(0, 130px, 0)"
               $transition="0.5s"
             >
               {subject ? (
@@ -481,7 +478,7 @@ const ProjectPage = ({ match, history }) => {
             $color="#212121"
             $position="absolute"
             $top={vw >= 480 ? '-50px' : '-70px'}
-            $right={vw >= 768 ? '70px' : '30px'}
+            $right="0"
             title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
             $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
             onClick={onLikeCountPlusHandler}
@@ -513,8 +510,8 @@ const ProjectPage = ({ match, history }) => {
           <Container
             margin="0"
             position="absolute"
-            top={vw > 840 ? '-50px' : 0}
-            right={vw >= 768 ? '70px' : '30px'}
+            top={type === 'l' && type === 'xl' ? '-50px' : 0}
+            right="0"
           >
             <StyledToEditPageLink to={`/edit/project/${project.projectData.project_id}`}>
               수정
@@ -529,7 +526,6 @@ const ProjectPage = ({ match, history }) => {
         display={type === 'xs' ? '' : 'flex'}
         justifyContent={type === 'xs' ? '' : 'space-between'}
         margin="0 0 22px 0"
-        padding={isDesktop ? '0 70px' : '0 30px'}
       >
         {subject ? (
           <LinkToWebSiteWrapper
@@ -605,7 +601,7 @@ const ProjectPage = ({ match, history }) => {
           <SkeletonUI $width={type === 'xs' ? '100%' : '200px'} $height="44px" />
         )}
       </Container>
-      <Container position="relative" padding={isDesktop ? '0 70px' : '0 30px'}>
+      <Container position="relative">
         {subject ? (
           <>
             {isIMGLoading ? (
@@ -628,12 +624,10 @@ const ProjectPage = ({ match, history }) => {
           <SkeletonUI width="100%" height="300px" />
         )}
       </Container>
-      <DivisionLine width={isDesktop ? '500px' : '70%'} />
-      <Container margin=" 0 0 80px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
+      <DivisionLine width="75%" />
+      <Container margin=" 0 0 80px 0">
         {subject ? (
-          <H3Heading id="기획의도" as="h3">
-            기획 의도 및 소개
-          </H3Heading>
+          <SectionHeading id="기획의도">기획 의도 및 소개</SectionHeading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -651,12 +645,12 @@ const ProjectPage = ({ match, history }) => {
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
-      <DivisionLine width={isDesktop ? '500px' : '70%'} />
-      <Container width={isDesktop ? '788px' : '100%'} padding={isDesktop ? '0 70px' : '0 30px'}>
+      <DivisionLine width="75%" />
+      <TeamMembers teamMembers={teamMembers} />
+      <DivisionLine width="75%" />
+      <Container width={isDesktop ? '788px' : '100%'}>
         {subject ? (
-          <H3Heading as="h3" id="사용기술스택">
-            사용 기술 스택
-          </H3Heading>
+          <SectionHeading id="사용기술스택">사용 기술 스택</SectionHeading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -664,21 +658,13 @@ const ProjectPage = ({ match, history }) => {
           <SkillList
             $margin="0 auto"
             $width="100%"
-            $padding={isDesktop ? '0 100px' : '0 30px'}
             $display="flex"
             $flexWrap="wrap"
             $justifyContent="space-between"
           >
             {projectTechStacks &&
               projectTechStacks.map(skill => (
-                <SkillIconItem
-                  $display="flex"
-                  $width={vw > 600 ? '50%' : '100%'}
-                  $margin="0 0 20px 0"
-                  $justifyContent={vw > 520 ? 'center' : 'left'}
-                  $alignItems="center"
-                  key={skill.project_tech_stacks_id}
-                >
+                <SkillIconItem key={skill.project_tech_stacks_id}>
                   <SkillIcon type={skill.tech_name} width={60} height={60}></SkillIcon>
                   <Span
                     color="#666666"
@@ -697,12 +683,10 @@ const ProjectPage = ({ match, history }) => {
           <SkeletonUI width="100%" height="200px" />
         )}
       </Container>
-      <DivisionLine width={isDesktop ? '500px' : '70%'} />
-      <Container margin="0 0 160px 0" padding={isDesktop ? '0 70px' : '0 30px'}>
+      <DivisionLine width="75%" />
+      <Container>
         {subject ? (
-          <H3Heading as="h3" id="프로젝트설명">
-            프로젝트 설명
-          </H3Heading>
+          <SectionHeading id="프로젝트설명">프로젝트 설명</SectionHeading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -736,7 +720,38 @@ const ProjectPage = ({ match, history }) => {
         )}
       </Container>
 
-      <DivisionLine width={isDesktop ? 672 : '80%'} />
+      <DivisionLine width="75%" />
+
+      <Container position="relative">
+        <LikeButton
+          aria-label="좋아요 버튼"
+          borderRadius="5px"
+          background="inherit"
+          border="1px solid #A3ABB3"
+          width="82px"
+          height="33px"
+          padding="0"
+          display="flex"
+          $justifyContent="center"
+          $alignItems="center"
+          $color="#212121"
+          $position="absolute"
+          $right="0"
+          $top="80px"
+          title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+          $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
+          onClick={onLikeCountPlusHandler}
+        >
+          {isLike === false ? (
+            <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+          ) : (
+            <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+          )}
+          <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
+            {likeCount}
+          </Span>
+        </LikeButton>
+      </Container>
 
       <ProjectComments projectId={project.projectData.project_id} />
 
