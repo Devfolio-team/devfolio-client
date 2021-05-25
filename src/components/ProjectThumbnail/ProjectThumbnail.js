@@ -3,7 +3,7 @@ import { Container, Heading, Paragraph, DND } from 'components';
 import styled, { css } from 'styled-components';
 
 const StyledContainer = styled(Container)`
-  grid-row: 4 / span 2;
+  grid-row: 5 / span 2;
   grid-column: 2 / 3;
   justify-self: end;
   ${({ vw }) => css`
