@@ -13,6 +13,8 @@ import {
   SVGIcon,
   Time,
   DeleteModalDialog,
+  SectionHeading,
+  TeamMembers,
 } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect, useRef } from 'react';
@@ -184,20 +186,6 @@ const Spinner = styled(LoadingSpinner)`
   `}
 `;
 
-const H3Heading = styled(Heading)`
-  ${props => css`
-    ${applyStyle(props)}
-    color: #212121;
-    display: inline-block;
-    font-weight: 700;
-    font-size: 3rem;
-    border-bottom: 14px solid rgba(66, 139, 202, 0.6);
-    line-height: 10px;
-    margin: 0 0 47px 0;
-    padding: 100px 0 0 0;
-  `}
-`;
-
 const ProjectPage = ({ match, history }) => {
   const { isDesktop, vw, type } = useDetectViewport();
   const [isIMGLoading, setIsIMGLoading] = useState(true);
@@ -217,6 +205,7 @@ const ProjectPage = ({ match, history }) => {
       team_name: '',
       thumbnail: '',
       user_id: '',
+      teamMembers: [],
     },
     projectTechStack: [{}],
   };
@@ -242,6 +231,7 @@ const ProjectPage = ({ match, history }) => {
     thumbnail,
     likeCount,
     user_user_id,
+    teamMembers,
   } = project.projectData;
 
   // eslint-disable-next-line prefer-destructuring
@@ -637,9 +627,7 @@ const ProjectPage = ({ match, history }) => {
       <DivisionLine width="75%" />
       <Container margin=" 0 0 80px 0">
         {subject ? (
-          <H3Heading id="기획의도" as="h3">
-            기획 의도 및 소개
-          </H3Heading>
+          <SectionHeading id="기획의도">기획 의도 및 소개</SectionHeading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -658,11 +646,11 @@ const ProjectPage = ({ match, history }) => {
         )}
       </Container>
       <DivisionLine width="75%" />
+      <TeamMembers teamMembers={teamMembers} />
+      <DivisionLine width="75%" />
       <Container width={isDesktop ? '788px' : '100%'}>
         {subject ? (
-          <H3Heading as="h3" id="사용기술스택">
-            사용 기술 스택
-          </H3Heading>
+          <SectionHeading id="사용기술스택">사용 기술 스택</SectionHeading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
@@ -698,9 +686,7 @@ const ProjectPage = ({ match, history }) => {
       <DivisionLine width="75%" />
       <Container>
         {subject ? (
-          <H3Heading as="h3" id="프로젝트설명">
-            프로젝트 설명
-          </H3Heading>
+          <SectionHeading id="프로젝트설명">프로젝트 설명</SectionHeading>
         ) : (
           <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
         )}
