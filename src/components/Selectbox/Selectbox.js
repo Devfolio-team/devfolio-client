@@ -9,7 +9,9 @@ const StyledSelectbox = styled.select`
   border: 1px solid ${color.lightGray};
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
   background: ${color.white};
+  margin-left: 15px;
   margin-right: 15px;
+  padding: 0 0 0 6px;
 `;
 
 const StyledLabel = styled.label`
