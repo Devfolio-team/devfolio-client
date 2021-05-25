@@ -1,13 +1,15 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Container, Heading, Paragraph, Selectbox, Input } from 'components';
 import { Field } from 'formik';
 
 const StyledContainer = styled(Container)`
   grid-column: 1 / 3;
-  ${({ vw }) => css`
-    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
-    width: ${vw >= 1280 ? '100%' : '80%'};
-  `}
+  width: 100%;
+
+  @media (max-width: 1280px) {
+    margin: 0 auto 60px;
+    width: 80%;
+  }
 `;
 
 const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam }) => {

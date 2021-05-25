@@ -23,7 +23,7 @@ import styled, { css } from 'styled-components';
 
 const StyledContainer = styled(Container)`
   ${({ vw }) => css`
-    display: ${vw >= 1280 ? 'grid' : 'flex'};
+    display: ${vw > 1280 ? 'grid' : 'flex'};
     grid-template-rows: repeat(2, 300px) minmax(min-content, 200px) repeat(3, 300px) 600px;
     grid-template-columns: minmax(300px, 650px) minmax(300px, 650px);
     flex-direction: column;
