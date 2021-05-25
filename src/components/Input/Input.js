@@ -10,13 +10,14 @@ const StyledLabel = styled.label`
     font-size: ${props.fontSize}rem;
     display: block;
     transition: 0.4s;
+    position: ${props.$position || 'static'};
   `}
   transform: translateY(
     ${({ focus, inputValue, beforeTranslate, afterTranslate }) =>
     focus || inputValue ? afterTranslate : beforeTranslate}rem
   );
-  margin-left: ${({ focus, inputValue, beforeMargin, afterMargin }) =>
-    focus || inputValue ? afterMargin : beforeMargin}px;
+  margin-left: ${({ focus, inputValue, beforeMargin, afterMargin, percentMargin }) =>
+    (focus || inputValue ? afterMargin : beforeMargin) + (percentMargin ? '%' : 'px')};
   color: ${color.placeholder};
 `;
 
@@ -72,6 +73,8 @@ const Input = forwardRef(
       errors,
       withdrawal,
       textAlign,
+      labelPosition,
+      percentMargin,
       ...restProps
     },
     ref
@@ -100,6 +103,8 @@ const Input = forwardRef(
             afterTranslate={afterTranslate}
             beforeMargin={beforeMargin}
             afterMargin={afterMargin}
+            $position={labelPosition}
+            percentMargin={percentMargin}
           >
             {label}
           </StyledLabel>
@@ -127,8 +132,8 @@ const Input = forwardRef(
           $boxShadow={boxShadow}
           $textAlign={textAlign}
           errors={errors}
-          value={value}
           {...field}
+          value={value}
           onBlur={onBlurHandler}
           {...restProps}
         />

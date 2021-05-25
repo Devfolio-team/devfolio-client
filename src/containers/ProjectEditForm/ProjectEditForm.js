@@ -1,4 +1,4 @@
-import { createRef, useEffect } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import {
   TeamName,
@@ -13,6 +13,7 @@ import {
   ProjectDescription,
   Button,
   Container,
+  ProjectTeamMember,
 } from 'components';
 import { color, projectValidationSchema } from 'utils';
 import { useSelector } from 'react-redux';
@@ -23,7 +24,7 @@ import styled, { css } from 'styled-components';
 const StyledContainer = styled(Container)`
   ${({ vw }) => css`
     display: ${vw >= 1280 ? 'grid' : 'flex'};
-    grid-template-rows: repeat(5, 300px) 600px;
+    grid-template-rows: repeat(2, 300px) minmax(min-content, 200px) repeat(3, 300px) 600px;
     grid-template-columns: minmax(300px, 650px) minmax(300px, 650px);
     flex-direction: column;
     margin-top: 80px;
@@ -32,9 +33,32 @@ const StyledContainer = styled(Container)`
 `;
 
 const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
+  const [numOfTeam, setNumOfTeam] = useState(0);
   const authState = useSelector(state => state.auth);
   const editorRef = createRef();
   const history = useHistory();
+  const initialValues = {
+    subject: editProjectData?.projectData.subject || '',
+    thumbnail: editProjectData?.projectData.thumbnail
+      ? { src: null, size: 0, type: 'image/jpeg' }
+      : null,
+    teamNameRadio: editProjectData?.projectData.team_name ? 'yes' : 'no',
+    planIntention: editProjectData?.projectData.plan_intention || '',
+    techStacks: [],
+    teamName: editProjectData?.projectData.team_name || '',
+    githubUrl: editProjectData?.projectData.github_url || '',
+    deploymentStatus: editProjectData?.projectData.deploy_url ? 'deployed' : 'undeployed',
+    deployUrl: editProjectData?.projectData.deploy_url || '',
+    isPrivate: String(editProjectData?.projectData.is_private) || '',
+    startDate: editProjectData?.projectData.start_date || '',
+    endDate: editProjectData?.projectData.end_date || '',
+    teamMembers: [],
+  };
+
+  Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
+    initialValues[`memberName${index}`] = '';
+    initialValues[`memberGithubUrl${index}`] = '';
+  });
 
   useEffect(() => {
     editorRef.current.getInstance().setHtml(editProjectData?.projectData.main_contents);
@@ -57,22 +81,7 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
 
   return (
     <Formik
-      initialValues={{
-        subject: editProjectData?.projectData.subject || '',
-        thumbnail: editProjectData?.projectData.thumbnail
-          ? { src: null, size: 0, type: 'image/jpeg' }
-          : null,
-        teamNameRadio: editProjectData?.projectData.team_name ? 'yes' : 'no',
-        planIntention: editProjectData?.projectData.plan_intention || '',
-        techStacks: [],
-        teamName: editProjectData?.projectData.team_name || '',
-        githubUrl: editProjectData?.projectData.github_url || '',
-        deploymentStatus: editProjectData?.projectData.deploy_url ? 'deployed' : 'undeployed',
-        deployUrl: editProjectData?.projectData.deploy_url || '',
-        isPrivate: String(editProjectData?.projectData.is_private) || '',
-        startDate: editProjectData?.projectData.start_date || '',
-        endDate: editProjectData?.projectData.end_date || '',
-      }}
+      initialValues={initialValues}
       validationSchema={projectValidationSchema}
       initialTouched={{
         subject: true,
@@ -84,6 +93,17 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
         thumbnail: true,
       }}
       onSubmit={async values => {
+        let teamMembers = [];
+        Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
+          teamMembers = [
+            ...teamMembers,
+            {
+              memberName: values[`memberName${index}`] || '',
+              memberGithubUrl: values[`memberGithubUrl${index}`] || '',
+            },
+          ];
+        });
+        values.teamMembers = teamMembers;
         const editorContent = getContents();
         const projectData = {
           ...values,
@@ -122,6 +142,12 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
                 errors={errors}
                 editStartDate={editProjectData?.projectData.start_date}
                 editEndDate={editProjectData?.projectData.end_date}
+              />
+              <ProjectTeamMember
+                vw={vw}
+                setFieldValue={setFieldValue}
+                numOfTeam={numOfTeam}
+                setNumOfTeam={setNumOfTeam}
               />
               <TechStacks
                 setFieldValue={setFieldValue}

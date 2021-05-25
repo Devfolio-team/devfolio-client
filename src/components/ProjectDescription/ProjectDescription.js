@@ -7,7 +7,7 @@ import { Container, Heading, Paragraph } from 'components';
 import styled, { css } from 'styled-components';
 
 const StyledContainer = styled(Container)`
-  grid-row: 6 /7;
+  grid-row: 7 / 8;
   grid-column: span 2;
   ${({ vw }) => css`
     margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
