@@ -1,14 +1,16 @@
 import { Heading, Paragraph, Input, Container, RadioButton } from 'components';
 import { object } from 'prop-types';
 import { Field } from 'formik';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
   justify-self: end;
-  ${({ vw }) => css`
-    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
-    width: ${vw >= 1280 ? '100%' : '80%'};
-  `}
+  width: 100%;
+
+  @media (max-width: 1280px) {
+    margin: 0 auto 60px;
+    width: 80%;
+  }
 `;
 
 const TeamName = ({ values, vw }) => {
