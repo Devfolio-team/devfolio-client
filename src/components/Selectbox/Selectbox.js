@@ -36,7 +36,6 @@ const Selectbox = ({
   return (
     <>
       <StyledSelectbox name={name} id={id} value={value} onChange={onChange} {...restProps}>
-        <option value="">인원 수</option>
         {optArray.map((optNum, index) => (
           <option value={optNum} key={index}>
             {optNum + '명'}
