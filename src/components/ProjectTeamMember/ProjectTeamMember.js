@@ -28,18 +28,9 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam }) => {
         </Paragraph>
         <Selectbox label="최대 10명" onChange={onTeamMemberChangeHandler} />
       </Container>
-      <Container
-        display="flex"
-        flexFlow="column wrap"
-        height={vw > 768 && numOfTeam ? '340px' : 'auto'}
-      >
+      <Container display="flex" flexFlow="row wrap" justifyContent="space-between">
         {Array.from({ length: numOfTeam }, (_, i) => i).map((_, index) => (
-          <Container
-            margin="0 10% 0 0"
-            width={vw > 768 ? '45%' : '100%'}
-            key={index}
-            position="relative"
-          >
+          <Container margin="0" width={vw > 768 ? '45%' : '100%'} key={index} position="relative">
             <Field
               component={Input}
               name={`memberName${index}`}
