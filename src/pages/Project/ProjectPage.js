@@ -371,7 +371,7 @@ const ProjectPage = ({ match, history }) => {
             <SkeletonUI $display="inline-block" $width="200px" $height="16px" />
           )}
         </RowContainer>
-        <Container position="relative" display={type !== 'xl' && 'none'}>
+        <Container position="relative" display={type !== 'xl' ? 'none' : 'block'}>
           <Container position="absolute" left="320px" top="0" width="200px">
             <Container position="fixed" transform="translate3D(0, 150px, 0)" transition="0.5s">
               {subject ? (
@@ -523,7 +523,7 @@ const ProjectPage = ({ match, history }) => {
         )}
       </Container>
       <Container
-        display={type === 'xs' ? '' : 'flex'}
+        display={type === 'xs' ? 'block' : 'flex'}
         justifyContent={type === 'xs' ? '' : 'space-between'}
         margin="0 0 22px 0"
       >

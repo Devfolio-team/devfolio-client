@@ -15,7 +15,11 @@ const TeamMembers = ({ teamMembers }) => {
       <SectionHeading id="팀원목록">팀원 목록</SectionHeading>
       <MemberList>
         {teamMembers.map(member => (
-          <Member name={member.member_name} githubUrl={member.member_github_url} />
+          <Member
+            key={member.project_team_members_id}
+            name={member.member_name}
+            githubUrl={member.member_github_url}
+          />
         ))}
       </MemberList>
     </StyledTeamMembers>
