@@ -416,7 +416,6 @@ const ProjectPage = ({ match, history }) => {
             {subject}
           </Heading>
         )}
-        {/* view 840 이상 동그란 좋아요버튼 view 840이하 네모난 좋아요 버튼 */}
         {vw > 1024 ? (
           <Container position="absolute" left="-100px" top="0px">
             <ColumnContainer
@@ -722,36 +721,38 @@ const ProjectPage = ({ match, history }) => {
 
       <DivisionLine width="75%" />
 
-      <Container position="relative">
-        <LikeButton
-          aria-label="좋아요 버튼"
-          borderRadius="5px"
-          background="inherit"
-          border="1px solid #A3ABB3"
-          width="82px"
-          height="33px"
-          padding="0"
-          display="flex"
-          $justifyContent="center"
-          $alignItems="center"
-          $color="#212121"
-          $position="absolute"
-          $right="0"
-          $top="80px"
-          title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
-          $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
-          onClick={onLikeCountPlusHandler}
-        >
-          {isLike === false ? (
-            <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-          ) : (
-            <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-          )}
-          <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
-            {likeCount}
-          </Span>
-        </LikeButton>
-      </Container>
+      {vw <= 1024 && (
+        <Container position="relative">
+          <LikeButton
+            aria-label="좋아요 버튼"
+            borderRadius="5px"
+            background="inherit"
+            border="1px solid #A3ABB3"
+            width="82px"
+            height="33px"
+            padding="0"
+            display="flex"
+            $justifyContent="center"
+            $alignItems="center"
+            $color="#212121"
+            $position="absolute"
+            $right="0"
+            $top="80px"
+            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
+            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
+            onClick={onLikeCountPlusHandler}
+          >
+            {isLike === false ? (
+              <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+            ) : (
+              <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+            )}
+            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
+              {likeCount}
+            </Span>
+          </LikeButton>
+        </Container>
+      )}
 
       <ProjectComments projectId={project.projectData.project_id} />
 
