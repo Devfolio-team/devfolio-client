@@ -15,11 +15,12 @@ import {
   Container,
   ProjectTeamMember,
 } from 'components';
-import { color, projectValidationSchema } from 'utils';
+import { color } from 'utils';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ajax from 'apis/ajax';
 import styled, { css } from 'styled-components';
+import * as Yup from 'yup';
 
 const StyledContainer = styled(Container)`
   ${({ vw }) => css`
@@ -33,7 +34,7 @@ const StyledContainer = styled(Container)`
 `;
 
 const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
-  const [numOfTeam, setNumOfTeam] = useState(0);
+  const [numOfTeam, setNumOfTeam] = useState(1);
   const authState = useSelector(state => state.auth);
   const editorRef = createRef();
   const history = useHistory();
@@ -54,11 +55,66 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
     endDate: editProjectData?.projectData.end_date || '',
     teamMembers: [],
   };
+  const initialTouched = {
+    subject: true,
+    planIntention: true,
+    startDate: true,
+    endDate: true,
+    deployUrl: true,
+    githubUrl: true,
+    thumbnail: true,
+  };
+  const FILE_SIZE = 1000 * 1000 * 10;
+
+  const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif'];
+
+  const projectValidation = {
+    subject: Yup.string().required('* 프로젝트 이름은 필수 항목입니다.'),
+    planIntention: Yup.string()
+      .max(200, '기획의도는 200자 이내여야 합니다.')
+      .required('* 기획의도는 필수 항목입니다.'),
+    startDate: Yup.date().required('* 시작날짜는 필수 항목입니다.'),
+    endDate: Yup.date().required('* 종료날짜는 필수 항목입니다.'),
+    deployUrl: Yup.string().matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      '형식에 맞는 URL을 작성해주세요!'
+    ),
+    githubUrl: Yup.string().matches(
+      /^https:\/\/github.com\/[\w-]+\/[\w-]+$/,
+      '형식에 맞는 URL을 작성해주세요!'
+    ),
+    thumbnail: Yup.mixed()
+      .test(
+        'fileType',
+        '지원하지않는 파일형식입니다. (지원하는 파일 형식: jpeg, png, jpg, webp, gif)',
+        value => value === null || (value && SUPPORTED_FORMATS.includes(value.type))
+      )
+      .test(
+        'fileSize',
+        '파일 크기가 너무 큽니다. (최대 10MB)',
+        value => value === null || (value && value.size <= FILE_SIZE)
+      )
+      .required('* 프로젝트 썸네일은 필수 항목입니다.'),
+  };
+
+  Array.from({ length: 10 }, (_, i) => i).forEach((_, index) => {
+    initialTouched[`memberName${index}`] = true;
+    initialTouched[`memberGithubUrl${index}`] = true;
+  });
 
   Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
     initialValues[`memberName${index}`] = '';
     initialValues[`memberGithubUrl${index}`] = '';
+    projectValidation[`memberName${index}`] = Yup.string().required(
+      '* 팀원 이름은 필수 항목입니다.'
+    );
+    projectValidation[`memberGithubUrl${index}`] = Yup.string().matches(
+      /((https?):\/\/)?github.com\/[\w-]+$/,
+      '형식에 맞는 URL을 작성해주세요!'
+    );
   });
+
+  const projectValidationSchema = Yup.object(projectValidation);
 
   useEffect(() => {
     editorRef.current.getInstance().setHtml(editProjectData?.projectData.main_contents);
@@ -83,15 +139,7 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={projectValidationSchema}
-      initialTouched={{
-        subject: true,
-        planIntention: true,
-        startDate: true,
-        endDate: true,
-        deployUrl: true,
-        githubUrl: true,
-        thumbnail: true,
-      }}
+      initialTouched={initialTouched}
       onSubmit={async values => {
         let teamMembers = [];
         Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
@@ -148,6 +196,7 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
                 setFieldValue={setFieldValue}
                 numOfTeam={numOfTeam}
                 setNumOfTeam={setNumOfTeam}
+                errors={errors}
               />
               <TechStacks
                 setFieldValue={setFieldValue}
