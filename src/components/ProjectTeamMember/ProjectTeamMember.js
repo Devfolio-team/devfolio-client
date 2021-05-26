@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Container, Heading, Paragraph, Selectbox, Input } from 'components';
-import { Field } from 'formik';
+import { Container, Heading, Paragraph, Selectbox, Input, FormErrorMessage } from 'components';
+import { Field, ErrorMessage } from 'formik';
 
 const StyledContainer = styled(Container)`
   grid-column: 1 / 3;
@@ -12,7 +12,7 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam }) => {
+const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors }) => {
   const onTeamMemberChangeHandler = e => {
     setNumOfTeam(+e.target.value);
   };
@@ -24,10 +24,13 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam }) => {
       </Heading>
       <Container display="flex" alignItems="center">
         <Paragraph color="#666" fontSize={1.4}>
-          총 몇 명의 팀원과 협업 했었나요?
+          총 몇 명의 팀원과 협업 했었나요? (팀원에는 본인도 포함됩니다)
         </Paragraph>
         <Selectbox label="최대 10명" onChange={onTeamMemberChangeHandler} />
       </Container>
+      <Paragraph color="#666" fontSize={1.2} margin="10px 0 0 0">
+        Github Url은 선택적 사항입니다. 없으면 비워두세요!
+      </Paragraph>
       <Container display="flex" flexFlow="row wrap" justifyContent="space-between">
         {Array.from({ length: numOfTeam }, (_, i) => i).map((_, index) => (
           <Container margin="0" width={vw > 768 ? '45%' : '100%'} key={index} position="relative">
@@ -48,6 +51,7 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam }) => {
               afterTranslate={0.3}
               beforeMargin={2}
               afterMargin={0}
+              errors={errors}
             />
             <Field
               component={Input}
@@ -66,6 +70,17 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam }) => {
               afterTranslate={-6.0}
               beforeMargin={32}
               afterMargin={30}
+              errors={errors}
+            />
+            <ErrorMessage
+              name={`memberName${index}`}
+              component={FormErrorMessage}
+              margin="10px 0 0 0"
+            />
+            <ErrorMessage
+              name={`memberGithubUrl${index}`}
+              component={FormErrorMessage}
+              margin="10px 0 0 0"
             />
           </Container>
         ))}
