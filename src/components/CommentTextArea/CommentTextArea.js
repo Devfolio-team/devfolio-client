@@ -7,12 +7,16 @@ const StyledCommentTextArea = styled(TextArea)`
   height: 95px;
   border: 1px solid #eaeaea;
 
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
-function CommentTextArea({ id, width, label, field, onChange, margin }) {
+function CommentTextArea({ id, width, label, field, onChange, margin, ...restProps }) {
   return (
     <StyledCommentTextArea
       id={id}
@@ -25,6 +29,7 @@ function CommentTextArea({ id, width, label, field, onChange, margin }) {
       field={field}
       onChange={onChange}
       margin={margin}
+      {...restProps}
     />
   );
 }
