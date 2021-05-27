@@ -6,13 +6,26 @@ import { useSelector } from 'react-redux';
 import scrollToTop from 'utils/scrollToTop';
 import { Prompt, useHistory, useParams } from 'react-router-dom';
 import ajax from 'apis/ajax';
+import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 
 const StyledProjectEditPage = styled.main``;
+
+const StyledLoadingSpinner = styled(LoadingSpinner)`
+  width: 35%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  @media (max-width: 1126px) {
+    width: 25%;
+  }
+`;
 
 const ProjectEditPage = ({ viewport }) => {
   const currentUser = useSelector(({ auth }) => auth.currentUser);
 
   const [editProjectData, setEditProjectData] = useState(null);
+  const [isIdIdentical, setIsIdIdentical] = useState(false);
 
   const history = useHistory();
 
@@ -26,6 +39,7 @@ const ProjectEditPage = ({ viewport }) => {
       try {
         const response = await ajax.getProject(project_id);
         const { responseData } = response.data;
+        setIsIdIdentical(currentUser.user_id === responseData.projectData.user_user_id);
         setEditProjectData(responseData);
       } catch (error) {
         throw new Error(error);
@@ -34,8 +48,10 @@ const ProjectEditPage = ({ viewport }) => {
 
     if (project_id) {
       getProject();
+    } else {
+      setIsIdIdentical(true);
     }
-  }, [project_id]);
+  }, [currentUser.user_id, project_id]);
 
   const { vw, isDesktop } = viewport;
   useEffect(() => {
@@ -49,12 +65,13 @@ const ProjectEditPage = ({ viewport }) => {
     e.returnValue = '';
   };
 
-  if (!currentUser) {
-    history.push('/page-not-found');
-    return null;
-  }
+  useEffect(() => {
+    if (editProjectData && !isIdIdentical) {
+      history.push('/page-not-found');
+    }
+  }, [isIdIdentical, editProjectData, history]);
 
-  return (
+  return isIdIdentical ? (
     <StyledProjectEditPage>
       <Prompt
         when={leave}
@@ -94,6 +111,8 @@ const ProjectEditPage = ({ viewport }) => {
         )}
       </Container>
     </StyledProjectEditPage>
+  ) : (
+    <StyledLoadingSpinner />
   );
 };
 
