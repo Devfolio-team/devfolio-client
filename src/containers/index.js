@@ -13,3 +13,4 @@ export { default as WithdrawalModalDialog } from './WithdrawalModalDialog/Withdr
 export { default as NewTechStackModalDialog } from './NewTechStackModalDialog/NewTechStackModalDialog';
 export { default as ProjectComments } from './ProjectComments/ProjectComments';
 export { default as ConfirmModalDialog } from './ConfirmModalDialog/ConfirmModalDialog';
+export { default as ProjectInfo } from './ProjectInfo/ProjectInfo';

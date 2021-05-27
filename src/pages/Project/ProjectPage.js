@@ -1,13 +1,10 @@
 import {
-  Anchor,
   Button,
   Container,
   DivisionLine,
   Heading,
-  Image,
   Paragraph,
   ProjectExplanation,
-  ProjectNav,
   SkillIcon,
   Span,
   SVGIcon,
@@ -15,6 +12,8 @@ import {
   DeleteModalDialog,
   SectionHeading,
   TeamMembers,
+  ProjectRegistInfo,
+  ProjectNavigator,
 } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React, { useState, useEffect, useRef } from 'react';
@@ -23,77 +22,18 @@ import styled, { css } from 'styled-components';
 import { applyStyle, dateFormMaker } from 'utils';
 import scrollToTop from 'utils/scrollToTop';
 import ajax from 'apis/ajax';
-import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
 import Skeleton from '@yisheng90/react-loading';
-import { Flicker } from 'react-micron';
-import DeleteModifyButton from './DeleteModifyButton';
-import StyledToEditPageLink from './ToEditPageLink';
-import { Link } from 'react-router-dom';
-import { ProjectComments } from 'containers';
+import { ProjectComments, ProjectInfo } from 'containers';
 
 const StyledProjectPage = styled.main`
+  width: 768px;
+  margin: 96px auto 0;
+  background: #f8f9fa;
+  position: relative;
   @media (max-width: 828px) {
-    padding: 0 30px;
+    width: 100%;
+    padding: 64px 30px 0;
   }
-  ${props => css`
-    ${applyStyle(props)}
-    position: relative;
-  `}
-`;
-
-const RowContainer = styled(Container)`
-  ${props => css`
-    ${applyStyle(props)}
-    display: flex;
-  `}
-`;
-
-const ColumnContainer = styled(Container)`
-  ${props => css`
-    ${applyStyle(props)}
-    display: flex;
-    flex-flow: column;
-  `}
-`;
-
-const ProjectWriter = styled(Link)`
-  ${props => css`
-    ${applyStyle(props)}
-    width: ${'200px'};
-    font-size: ${'1.6rem'};
-  `}
-`;
-
-const LinkToWebSite = styled.a`
-  ${props => css`
-    ${applyStyle(props)}
-    target:${'_blank'};
-    font-size: 1.6rem;
-    font-weight: 700;
-    border-radius: 5px;
-    height: 44px;
-    text-align: center;
-    line-height: 40px;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `}
-
-  &:hover {
-    background: #428bca;
-    color: #fff;
-
-    path {
-      fill: #fff;
-    }
-  }
-`;
-
-const WebSiteIcon = styled(SVGIcon)`
-  ${props => css`
-    ${applyStyle(props)}
-  `}
 `;
 
 const SkillList = styled.ul`
@@ -136,42 +76,6 @@ const HeartIcon = styled(SVGIcon)`
   }
 `;
 
-const LinkToWebSiteWrapper = styled.div`
-  ${props => css`
-    ${applyStyle(props)}
-  `}
-`;
-
-const DisabledLink = styled(Span)`
-  ${props => css`
-    ${applyStyle(props)}
-    font-size:1.6rem;
-    font-weight: 700;
-    border-radius: 5px;
-    height: 44px;
-    text-align: center;
-    line-height: 40px;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `}
-`;
-
-const NavListList = styled.li`
-  ${props => css`
-    ${applyStyle(props)}
-    margin-bottom: 15px;
-  `}
-`;
-
-const NavItem = styled(Anchor)`
-  ${props => css`
-    ${applyStyle(props)}
-    color : rgb(134, 142, 150);
-  `}
-`;
-
 const SkeletonUI = styled(Skeleton)`
   ${props => css`
     &&&& {
@@ -180,15 +84,8 @@ const SkeletonUI = styled(Skeleton)`
   `}
 `;
 
-const Spinner = styled(LoadingSpinner)`
-  ${props => css`
-    ${applyStyle(props)}
-  `}
-`;
-
 const ProjectPage = ({ match, history }) => {
   const { isDesktop, vw, type } = useDetectViewport();
-  const [isIMGLoading, setIsIMGLoading] = useState(true);
   const initalProject = {
     projectData: {
       authorInfo: [{ nickname: '', profile_photo: '' }],
@@ -217,11 +114,9 @@ const ProjectPage = ({ match, history }) => {
   const [loginUser, setLoginUser] = useState(initalLoginUser);
   const [isLike, setIsLike] = useState(true);
   const {
-    created,
     deploy_url,
     end_date,
     github_url,
-    // is_private,
     main_contents,
     plan_intention,
     project_id,
@@ -230,15 +125,8 @@ const ProjectPage = ({ match, history }) => {
     team_name,
     thumbnail,
     likeCount,
-    user_user_id,
     teamMembers,
   } = project.projectData;
-
-  // eslint-disable-next-line prefer-destructuring
-  const {
-    nickname: project_nickname,
-    profile_photo: project_profile_photo,
-  } = project.projectData.authorInfo[0];
 
   const { projectTechStacks } = project;
   const loginUserInfo = useSelector(state => state.auth.currentUser);
@@ -262,7 +150,6 @@ const ProjectPage = ({ match, history }) => {
         );
         setIsLike(true);
       } else {
-        // likeCount--
         const DelLikeCount = await ajax.delLikeCountMinus(project_id, loginUser.user_id);
 
         setProject({ ...project }, (project.projectData.likeCount = DelLikeCount.data.likeCount));
@@ -271,10 +158,6 @@ const ProjectPage = ({ match, history }) => {
     } catch (e) {
       throw new Error(e);
     }
-  };
-
-  const onIsIMGLoadingHandler = () => {
-    setIsIMGLoading(false);
   };
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -332,297 +215,25 @@ const ProjectPage = ({ match, history }) => {
   }, [loginUser.user_id, loginUserInfo, match.params.project_id, project_id]);
 
   return (
-    <StyledProjectPage
-      $width={isDesktop ? '768px' : '100%'}
-      $margin="96px auto 0"
-      $background="#F8F9FA"
-    >
-      <RowContainer
-        $width="100%"
-        $margin={isDesktop ? '0 0 30px' : '0'}
-        $justifyContent="space-between"
-        $position={vw > 840 ? 'relative' : ''}
-      >
-        <RowContainer display="flex" alignItems="center" width="215px" margin="0">
-          {subject ? (
-            <>
-              <Time
-                margin={type === 'xs' ? '0 10px 0 0' : '0 43px 0 0'}
-                fontSize={1.6}
-                dateTime={dateFormMaker(created)}
-              >
-                {dateFormMaker(created)}
-              </Time>
-              <RowContainer display="flex">
-                <ProjectWriter to={`/portfolio/${user_user_id}`}>
-                  <Image
-                    src={project_profile_photo}
-                    alt="프로필 사진"
-                    width="24px"
-                    height="24px"
-                    borderRadius="50%"
-                    $margin="0 8px 0 0"
-                  />
-                  {project_nickname}
-                </ProjectWriter>
-              </RowContainer>
-            </>
-          ) : (
-            <SkeletonUI $display="inline-block" $width="200px" $height="16px" />
-          )}
-        </RowContainer>
-        <Container position="relative" display={type !== 'xl' ? 'none' : 'block'}>
-          <Container position="absolute" left="320px" top="0" width="200px">
-            <Container position="fixed" transform="translate3D(0, 150px, 0)" transition="0.5s">
-              {subject ? (
-                <ProjectNav
-                  borderLeft="1.5px solid rgba(134, 142, 150, .5)"
-                  padding="0 40px 0 10px"
-                  fontSize={1.5}
-                >
-                  <NavListList>
-                    <NavItem href="#제목">{subject}</NavItem>
-                  </NavListList>
-                  <NavListList>
-                    <NavItem href="#기획의도">기획 의도</NavItem>
-                  </NavListList>
-                  <NavListList>
-                    <NavItem href="#사용기술스택">사용기술스택</NavItem>
-                  </NavListList>
-                  <NavListList>
-                    <NavItem href="#프로젝트설명">프로젝트설명</NavItem>
-                  </NavListList>
-                </ProjectNav>
-              ) : (
-                <SkeletonUI $width="150px" $height="10px" rows={4} />
-              )}
-            </Container>
-          </Container>
-        </Container>
-      </RowContainer>
-      <Container margin="0 0 32px 0" position="relative">
-        {subject === '' ? (
-          <SkeletonUI $width="300px" $height="50px" $margin="120px 0 0 0" />
-        ) : (
-          <Heading
-            as="h2"
-            id="제목"
-            fontSize={type === 'xs' ? 2.7 : 4}
-            color="#212121"
-            lineHeight={type === 'xs' ? '3.5rem' : '5rem'}
-            margin={type === 'xs' ? '' : '20px 0'}
-            $padding={type === 'xs' ? '30px 0 0 0' : '80px 0 0 0'}
-          >
-            {subject}
-          </Heading>
-        )}
-        {vw > 1024 ? (
-          <Container position="absolute" left="-100px" top="0px">
-            <ColumnContainer
-              $justifyContent="center"
-              $alignItems="center"
-              $margin="0"
-              $position="fixed"
-              $transform="translate3D(0, 130px, 0)"
-              $transition="0.5s"
-            >
-              {subject ? (
-                <>
-                  <Flicker
-                    events="onMouseEnter"
-                    timing="ease-in-out"
-                    duration={0.45}
-                    inline={false}
-                  >
-                    <LikeButton
-                      aria-label="좋아요 버튼"
-                      borderRadius="50%"
-                      background="inherit"
-                      border="1px solid #A3ABB3"
-                      width="44px"
-                      height="44px"
-                      padding="0"
-                      onClick={onLikeCountPlusHandler}
-                      title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
-                      $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
-                    >
-                      {isLike === false ? (
-                        <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-                      ) : (
-                        <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-                      )}
-                    </LikeButton>
-                  </Flicker>
-                  <Span fontSize={1.4} lineHeight="16px" margin="5px 0 0 0">
-                    {likeCount}
-                  </Span>{' '}
-                </>
-              ) : (
-                <SkeletonUI circle $width="44px" $height="44px" />
-              )}
-            </ColumnContainer>
-          </Container>
-        ) : (
-          <LikeButton
-            aria-label="좋아요 버튼"
-            borderRadius="5px"
-            background="inherit"
-            border="1px solid #A3ABB3"
-            width="82px"
-            height="33px"
-            padding="0"
-            display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $color="#212121"
-            $position="absolute"
-            $top={vw >= 480 ? '-50px' : '-70px'}
-            $right="0"
-            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
-            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
-            onClick={onLikeCountPlusHandler}
-          >
-            {isLike === false ? (
-              <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-            ) : (
-              <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-            )}
-            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
-              {likeCount}
-            </Span>
-          </LikeButton>
-        )}
-        {subject ? (
-          <Span
-            display="inline-block"
-            fontSize={type === 'xs' ? 1.8 : 2}
-            lineHeight={type === 'xs' ? '' : '10px'}
-            margin={type === 'xs' ? '15px 0 0 0' : ''}
-            color="#212121"
-          >
-            {team_name}
-          </Span>
-        ) : (
-          <SkeletonUI $width="150px" $height="30px" $margin="10px 0 0 0" />
-        )}
-        {loginUserInfo && project && loginUserInfo.user_id === project.projectData.user_user_id && (
-          <Container
-            margin="0"
-            position="absolute"
-            top={type === 'l' && type === 'xl' ? '-50px' : 0}
-            right="0"
-          >
-            <StyledToEditPageLink to={`/edit/project/${project.projectData.project_id}`}>
-              수정
-            </StyledToEditPageLink>
-            <DeleteModifyButton onClick={onDeleteModalOpenHandler} ref={deleteButtonRef}>
-              삭제
-            </DeleteModifyButton>
-          </Container>
-        )}
-      </Container>
-      <Container
-        display={type === 'xs' ? 'block' : 'flex'}
-        justifyContent={type === 'xs' ? '' : 'space-between'}
-        margin="0 0 22px 0"
-      >
-        {subject ? (
-          <LinkToWebSiteWrapper
-            $cursor="not-allowed"
-            title={deploy_url ? '배포된 사이트로 이동' : '배포된 사이트가 없습니다.'}
-          >
-            {deploy_url ? (
-              <LinkToWebSite
-                href={deploy_url ? deploy_url : '/'}
-                $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
-                $width={type === 'xs' ? '100%' : '200px'}
-                $marginBottom={type === 'xs' ? '5px' : ''}
-                $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $pointerEvents={deploy_url ? '' : 'none'}
-              >
-                <WebSiteIcon
-                  type={deploy_url ? 'WebSite' : 'WebSiteDisable'}
-                  $margin="0 7px 0 0"
-                  $width={20}
-                  $height={20}
-                />
-                Visit the Website
-              </LinkToWebSite>
-            ) : (
-              <DisabledLink
-                $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
-                $width={type === 'xs' ? '100%' : '200px'}
-                $marginBottom={type === 'xs' ? '5px' : ''}
-                $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $pointerEvents={deploy_url ? '' : 'none'}
-              >
-                Visit the Website
-              </DisabledLink>
-            )}
-          </LinkToWebSiteWrapper>
-        ) : (
-          <SkeletonUI width={type === 'xs' ? '100%' : '200px'} height="44px" />
-        )}
-        {subject ? (
-          <LinkToWebSiteWrapper
-            $cursor="not-allowed"
-            title={github_url ? '깃허브로 이동' : '깃허브 주소가 없습니다.'}
-          >
-            {github_url ? (
-              <LinkToWebSite
-                href={github_url ? github_url : '/'}
-                $border="1px solid #428BCA"
-                $width={type === 'xs' ? '100%' : '145px'}
-                $color={github_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $pointerEvents={github_url ? '' : 'none'}
-              >
-                <WebSiteIcon
-                  type={github_url ? 'GithubBlue' : 'GithubBlueDisable'}
-                  $marginRight="9px"
-                  $width={20}
-                  $height={20}
-                />
-                GitHub
-              </LinkToWebSite>
-            ) : (
-              <DisabledLink
-                $width={type === 'xs' ? '100%' : '200px'}
-                $marginBottom={type === 'xs' ? '5px' : ''}
-                $color={deploy_url ? '#428BCA' : 'rgba(66, 139, 202, 0.3)'}
-                $border={deploy_url ? '1px solid #428BCA' : '1px solid rgba(66, 139, 202, 0.3)'}
-                $pointerEvents={deploy_url ? '' : 'none'}
-              >
-                Visit the Website
-              </DisabledLink>
-            )}
-          </LinkToWebSiteWrapper>
-        ) : (
-          <SkeletonUI $width={type === 'xs' ? '100%' : '200px'} $height="44px" />
-        )}
-      </Container>
-      <Container position="relative">
-        {subject ? (
-          <>
-            {isIMGLoading ? (
-              <Spinner
-                $position="absolute"
-                $top="50%"
-                $left="50%"
-                $transform="translate(-50%, -50%)"
-              />
-            ) : null}
-            <Image
-              src={thumbnail}
-              alt="프로젝트 썸네일"
-              onLoad={onIsIMGLoadingHandler}
-              width="100%"
-              borderRadius="10px"
-            />
-          </>
-        ) : (
-          <SkeletonUI width="100%" height="300px" />
-        )}
-      </Container>
+    <StyledProjectPage>
+      <ProjectRegistInfo projectData={project.projectData} />
+
+      <ProjectNavigator subject={subject} />
+
+      <ProjectInfo
+        subject={subject}
+        team_name={team_name}
+        onDeleteModalOpenHandler={onDeleteModalOpenHandler}
+        projectData={project && project.projectData}
+        ref={deleteButtonRef}
+        onLikeCountPlusHandler={onLikeCountPlusHandler}
+        isLike={isLike}
+        likeCount={likeCount}
+        deploy_url={deploy_url}
+        github_url={github_url}
+        thumbnail={thumbnail}
+      />
+
       <DivisionLine width="75%" />
       <Container margin=" 0 0 80px 0">
         {subject ? (
