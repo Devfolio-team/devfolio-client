@@ -28,7 +28,7 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors }) => {
         </Paragraph>
         <Selectbox label="최대 10명" onChange={onTeamMemberChangeHandler} />
       </Container>
-      <Paragraph color="#666" fontSize={1.2} margin="10px 0 0 0">
+      <Paragraph color="#666" fontSize={1.2} margin="5px 0 20px 0">
         Github Url은 선택적 사항입니다. 없으면 비워두세요!
       </Paragraph>
       <Container display="flex" flexFlow="row wrap" justifyContent="space-between">
