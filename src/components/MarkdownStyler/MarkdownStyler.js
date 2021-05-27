@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { parseHtmlAndHighlighter } from 'utils/parseHtmlAndHighlighter';
 
-const StyledProjectExplanation = styled.div`
+const StyledMarkdownStyler = styled.div`
   h1,
   h2,
   h3,
@@ -77,8 +77,8 @@ const StyledProjectExplanation = styled.div`
   }
 `;
 
-const ProjectExplanation = ({ children }) => {
-  return <StyledProjectExplanation>{parseHtmlAndHighlighter(children)}</StyledProjectExplanation>;
+const MarkdownStyler = ({ children }) => {
+  return <StyledMarkdownStyler>{parseHtmlAndHighlighter(children)}</StyledMarkdownStyler>;
 };
 
-export default ProjectExplanation;
+export default MarkdownStyler;

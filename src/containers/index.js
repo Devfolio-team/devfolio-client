@@ -14,3 +14,5 @@ export { default as NewTechStackModalDialog } from './NewTechStackModalDialog/Ne
 export { default as ProjectComments } from './ProjectComments/ProjectComments';
 export { default as ConfirmModalDialog } from './ConfirmModalDialog/ConfirmModalDialog';
 export { default as ProjectInfo } from './ProjectInfo/ProjectInfo';
+export { default as ProjectExplanation } from './ProjectExplanation/ProjectExplanation';
+export { default as UseTechStacks } from './UseTechStacks/UseTechStacks';

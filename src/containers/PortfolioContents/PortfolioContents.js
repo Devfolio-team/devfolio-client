@@ -1,4 +1,4 @@
-import { Container, ProjectExplanation, ProjectItem, SkillIconItem, Span } from 'components';
+import { Container, MarkdownStyler, ProjectItem, SkillIconItem, Span } from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
@@ -106,7 +106,7 @@ const PortfolioContents = ({ portfolio }) => {
           {user &&
             (user.introduce ? (
               <Introduce>
-                <ProjectExplanation>{user.introduce}</ProjectExplanation>
+                <MarkdownStyler>{user.introduce}</MarkdownStyler>
               </Introduce>
             ) : (
               <Container textAlign="center">
