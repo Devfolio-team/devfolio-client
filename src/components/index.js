@@ -57,3 +57,4 @@ export { default as ProjectRegistInfo } from './ProjectRegistInfo/ProjectRegistI
 export { default as ProjectNavigator } from './ProjectNavigator/ProjectNavigator';
 export { default as LikeButton } from './LikeButton/LikeButton';
 export { default as ProjectPlanIntention } from './ProjectPlanIntention/ProjectPlanIntention';
+export { default as CommentRegistButton } from './CommentRegistButton/CommentRegistButton';
