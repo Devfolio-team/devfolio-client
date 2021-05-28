@@ -30,11 +30,11 @@ export const signUpMiddleware = () => async dispatch => {
   }
 };
 
-export const signInMiddleware = auth_token => async dispatch => {
+export const signInMiddleware = () => async dispatch => {
   dispatch(signInLoadingAction());
 
   try {
-    const response = await ajax.signIn(auth_token);
+    const response = await ajax.signIn();
     const { currentUser: payload } = response.data;
     dispatch(signInSuccessAction(payload));
   } catch (error) {

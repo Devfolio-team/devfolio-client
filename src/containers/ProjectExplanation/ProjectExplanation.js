@@ -20,10 +20,10 @@ const ProjectPeriod = styled.section`
   font-size: 1.6rem;
 `;
 
-const ProjectExplanation = ({ mainContents, startDate, endDate }) => {
+const ProjectExplanation = ({ mainContents, startDate, endDate, projectLoading }) => {
   return (
     <>
-      {mainContents ? (
+      {!projectLoading ? (
         <StyledProjectPlanIntention>
           <SectionHeading id="프로젝트설명">프로젝트 설명</SectionHeading>
           <ProjectPeriod>
@@ -38,7 +38,7 @@ const ProjectExplanation = ({ mainContents, startDate, endDate }) => {
               {dateFormMaker(endDate)}
             </Time>
           </ProjectPeriod>
-          <MarkdownStyler>{mainContents}</MarkdownStyler>
+          {mainContents && <MarkdownStyler>{mainContents}</MarkdownStyler>}
         </StyledProjectPlanIntention>
       ) : (
         <ProjectSectionSkeleton />

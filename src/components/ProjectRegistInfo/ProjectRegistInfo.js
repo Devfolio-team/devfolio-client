@@ -40,13 +40,14 @@ const ProjectRegistInfo = ({
     created,
     authorInfo: { nickname, profile_photo },
     user_user_id,
+    projectLoading,
   },
 }) => {
   const dateTime = dateFormMaker(created);
   return (
     <StyledProjectRegistInfo>
       <Container display="flex" alignItems="center" width="215px" margin="0">
-        {created ? (
+        {!projectLoading ? (
           <>
             <ProjectRegistTime dateTime={dateTime} children={dateTime} />
 

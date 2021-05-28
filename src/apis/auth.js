@@ -1,13 +1,9 @@
-import axios from 'axios';
+import axios from './customAxios';
 
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-export const signIn = async auth_token => {
-  return await axios.post(`${process.env.REACT_APP_API_URL}/auth/signin`, {
-    authentication: auth_token,
-  });
+export const signIn = async () => {
+  return await axios.post('/auth/signin');
 };
 
 export const deleteAccount = async userId => {
-  return await axios.delete(`${process.env.REACT_APP_API_URL}/auth/${userId}`);
+  return await axios.delete(`/auth/${userId}`);
 };
