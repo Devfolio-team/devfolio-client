@@ -40,8 +40,8 @@ const ProjectRegistInfo = ({
     created,
     authorInfo: { nickname, profile_photo },
     user_user_id,
-    projectLoading,
   },
+  projectLoading,
 }) => {
   const dateTime = dateFormMaker(created);
   return (

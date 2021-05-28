@@ -136,15 +136,22 @@ const ProjectPage = ({ match, history }) => {
 
     const getProjectData = async () => {
       try {
-        const projectData = await ajax.getProject(match.params.project_id);
+        const {
+          data: { responseData },
+        } = await ajax.getProject(match.params.project_id);
 
-        setProject({ ...projectData.data.responseData, projectLoading: false });
+        const { user_user_id, is_private } = responseData.projectData;
+
+        // 사실 여기서 currentUser의 user_id는 볼 수 없어 에러가 나지만 만약 비공개 글이야 근데 너가 로그인을 안했어? 그럼 못보는게 당연하니 catch로 가서 자연스레 페이지이동
+        if (is_private && user_user_id !== currentUser.user_id) history.push('/page-not-found');
+
+        setProject({ ...responseData, projectLoading: false });
       } catch (error) {
-        throw new Error(error);
+        history.push('/page-not-found');
       }
     };
     getProjectData();
-  }, [match.params.project_id]);
+  }, [match.params.project_id, history, currentUser]);
 
   useEffect(() => {
     const getIsLike = async () => {
@@ -164,7 +171,7 @@ const ProjectPage = ({ match, history }) => {
     <StyledProjectPage>
       <ProjectRegistInfo projectData={project.projectData} projectLoading={projectLoading} />
 
-      <ProjectNavigator subject={subject} />
+      <ProjectNavigator subject={subject} projectLoading={projectLoading} />
 
       <ProjectInfo
         subject={subject}
