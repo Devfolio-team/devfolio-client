@@ -1,4 +1,4 @@
-import { SectionHeading, SkeletonUI, SkillIcon } from 'components';
+import { ProjectSectionSkeleton, SectionHeading, SkillIcon } from 'components';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -49,9 +49,9 @@ const TechName = styled.span`
 
 const UseTechStacks = ({ techStacks }) => {
   return (
-    <StyledUseTechStacks>
+    <>
       {techStacks.length ? (
-        <>
+        <StyledUseTechStacks>
           <SectionHeading id="사용기술스택">사용 기술 스택</SectionHeading>
           <SkillList
             $margin="0 auto"
@@ -68,14 +68,11 @@ const UseTechStacks = ({ techStacks }) => {
                 </SkillIconItem>
               ))}
           </SkillList>
-        </>
+        </StyledUseTechStacks>
       ) : (
-        <>
-          <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
-          <SkeletonUI width="100%" height="200px" />
-        </>
+        <ProjectSectionSkeleton />
       )}
-    </StyledUseTechStacks>
+    </>
   );
 };
 

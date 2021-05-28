@@ -1,5 +1,5 @@
 import ajax from 'apis/ajax';
-import { Button, CommentTextArea } from 'components';
+import { CommentRegistButton, CommentTextArea } from 'components';
 import Container from 'components/Container/Container';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -24,7 +24,7 @@ const NestedCommentsForm = ({ projectId, commentId, dispatch, seq }) => {
     setNestedComment(value);
   };
 
-  const onCreateCommentHandler = async () => {
+  const onAddCommentHandler = async () => {
     try {
       const {
         data: { commentData },
@@ -49,22 +49,14 @@ const NestedCommentsForm = ({ projectId, commentId, dispatch, seq }) => {
         <CommentTextArea
           id={`nestedCommentForm${commentId}`}
           width="100%"
-          label="답글을 작성해주세요."
+          label={currentUser ? '답글을 작성해주세요.' : '로그인 후 프로젝트에 답글을 달아보세요!'}
           field={{ value: nestedComment, onChange: onCommentChangeHandler }}
+          disabled={!currentUser}
         />
         <Container textAlign="right" margin="16px 0 0">
-          <Button
-            width={99}
-            height={32}
-            background="#428BCA"
-            color="#FFFFFF"
-            fontSize={1.4}
-            fontWeight={700}
-            borderRadius={5}
-            onClick={onCreateCommentHandler}
-          >
+          <CommentRegistButton type="button" onClick={onAddCommentHandler} disabled={!currentUser}>
             답글 작성
-          </Button>
+          </CommentRegistButton>
         </Container>
       </NestedCommentsFormContainer>
     </form>

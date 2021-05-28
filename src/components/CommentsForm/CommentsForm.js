@@ -1,5 +1,5 @@
 import ajax from 'apis/ajax';
-import { A11yHidden, CommentTextArea, Span } from 'components';
+import { A11yHidden, CommentRegistButton, CommentTextArea, Span } from 'components';
 import Container from 'components/Container/Container';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -14,20 +14,6 @@ const CommentsFormContainer = styled.div`
   }
 `;
 
-const RegistButton = styled.button`
-  width: 99px;
-  height: 32px;
-  background: #428bca;
-  color: #ffffff;
-  font-size: 1.4rem;
-  font-weight: 700;
-  border-radius: 5px;
-  &[disabled] {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-`;
-
 const CommentsForm = ({ projectId, commentCount, dispatch, commentListRef }) => {
   const [comment, setComment] = useState('');
 
@@ -37,7 +23,7 @@ const CommentsForm = ({ projectId, commentCount, dispatch, commentListRef }) => 
     setComment(value);
   };
 
-  const onCreateCommentHandler = async () => {
+  const onAddCommentHandler = async () => {
     try {
       const {
         data: { commentData },
@@ -74,9 +60,13 @@ const CommentsForm = ({ projectId, commentCount, dispatch, commentListRef }) => 
             disabled={!currentUser}
           />
           <Container textAlign="right" margin="16px 0 0">
-            <RegistButton type="button" onClick={onCreateCommentHandler} disabled={!currentUser}>
+            <CommentRegistButton
+              type="button"
+              onClick={onAddCommentHandler}
+              disabled={!currentUser}
+            >
               댓글 작성
-            </RegistButton>
+            </CommentRegistButton>
           </Container>
         </CommentsFormContainer>
       </fieldset>

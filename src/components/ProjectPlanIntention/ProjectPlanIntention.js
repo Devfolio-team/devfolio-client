@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionHeading, SkeletonUI } from 'components';
+import { ProjectSectionSkeleton, SectionHeading } from 'components';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
@@ -17,19 +17,16 @@ const PlanIntention = styled.p`
 
 const ProjectPlanIntention = ({ planIntention }) => {
   return (
-    <StyledProjectPlanIntention>
+    <>
       {planIntention ? (
-        <>
+        <StyledProjectPlanIntention>
           <SectionHeading id="기획의도">기획 의도 및 소개</SectionHeading>
           <PlanIntention>{planIntention}</PlanIntention>
-        </>
+        </StyledProjectPlanIntention>
       ) : (
-        <>
-          <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
-          <SkeletonUI width="100%" height="200px" />
-        </>
+        <ProjectSectionSkeleton />
       )}
-    </StyledProjectPlanIntention>
+    </>
   );
 };
 

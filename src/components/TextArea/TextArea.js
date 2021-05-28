@@ -23,6 +23,8 @@ const StyledLabel = styled.label.attrs(({ htmlFor }) => ({
     margin-left: ${({ focus, areaValue, beforeMargin, afterMargin }) =>
       focus || areaValue ? afterMargin : beforeMargin}px;
     color: ${color.placeholder};
+    cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'initial')};
+    user-select: none;
   `}
 `;
 
@@ -32,7 +34,7 @@ const StyledTextArea = styled.textarea`
       ${applyStyle(props)}
       font-size: 1.2rem;
       padding: 12px 0 0 12px;
-      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
       border-radius: 5px;
       border: 0;
       resize: none;
@@ -64,6 +66,7 @@ const TextArea = ({
   field,
   errors,
   margin,
+  disabled,
   ...restProps
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -89,6 +92,7 @@ const TextArea = ({
           afterTranslate={afterTranslate}
           beforeMargin={beforeMargin}
           afterMargin={afterMargin}
+          $disabled={disabled}
         >
           {label}
         </StyledLabel>
@@ -102,6 +106,7 @@ const TextArea = ({
         {...field}
         onBlur={onBlurHandler}
         errors={errors}
+        disabled={disabled}
         {...restProps}
       />
     </>
