@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SkeletonUI } from 'components';
 
 const StyledProjectNavigator = styled.div`
   position: absolute;

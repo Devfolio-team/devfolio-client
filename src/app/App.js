@@ -1,6 +1,5 @@
 import { FooterBar, HeaderBar } from 'containers';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Redirect, Route, Switch } from 'react-router';
+import { Redirect, Route, Switch, useLocation } from 'react-router';
 import {
   FavoriteProjectPage,
   HomePage,
@@ -36,6 +35,10 @@ const App = () => {
 
   const dispatch = useDispatch();
 
+  const { pathname } = useLocation();
+
+  const isInfinityScrollPage = /^\/favorite_project\//.test(pathname) || pathname === '/';
+
   useEffect(() => {
     // 전역 상태에 유저의 정보는 있는데 쿠키에 인증토큰이 존재하지 않는다면 로그아웃을 시켜 전역상태를 비워준다. (쿠키만 없을때)
     if (auth.currentUser && !new RegExp(/auth_token/).test(document.cookie)) {
@@ -44,38 +47,32 @@ const App = () => {
   }, [auth.currentUser, dispatch]);
 
   return (
-    <Router>
-      <FlexApp>
-        <HeaderBar viewport={viewport} />
-        <EmptyContainer>
-          <Switch>
-            <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
-            <Route path="/portfolio/:user_id" exact component={PortfolioPage} />
-            <Route
-              path="/edit/portfolio/:portfolio_id"
-              exact
-              render={() => <PortfolioEditPage viewport={viewport} />}
-            />
-            <Route path="/project/:project_id" exact component={ProjectPage} />
-            <Route
-              path="/edit/project/:project_id?"
-              exact
-              render={() => <ProjectEditPage viewport={viewport} />}
-            />
-            <Route
-              path="/favorite_project/:current_user_id"
-              exact
-              component={FavoriteProjectPage}
-            />
-            <Route path="/search" exact component={SearchPage} />
-            <Route path="/sign_in" exact component={SignIn} />
-            <Route path="/page-not-found" component={PageNotFound} />
-            <Redirect to="/page-not-found" />
-          </Switch>
-        </EmptyContainer>
-        <FooterBar />
-      </FlexApp>
-    </Router>
+    <FlexApp>
+      <HeaderBar viewport={viewport} />
+      <EmptyContainer>
+        <Switch>
+          <Route path="/" exact render={() => <HomePage viewport={viewport} />} />
+          <Route path="/portfolio/:user_id" exact component={PortfolioPage} />
+          <Route
+            path="/edit/portfolio/:portfolio_id"
+            exact
+            render={() => <PortfolioEditPage viewport={viewport} />}
+          />
+          <Route path="/project/:project_id" exact component={ProjectPage} />
+          <Route
+            path="/edit/project/:project_id?"
+            exact
+            render={() => <ProjectEditPage viewport={viewport} />}
+          />
+          <Route path="/favorite_project/:current_user_id" exact component={FavoriteProjectPage} />
+          <Route path="/search" exact component={SearchPage} />
+          <Route path="/sign_in" exact component={SignIn} />
+          <Route path="/page-not-found" component={PageNotFound} />
+          <Redirect to="/page-not-found" />
+        </Switch>
+      </EmptyContainer>
+      {!isInfinityScrollPage && <FooterBar />}
+    </FlexApp>
   );
 };
 
