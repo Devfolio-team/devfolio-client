@@ -24,15 +24,19 @@ const DeleteModifyButton = styled.button`
 `;
 
 const transferCreationDate = date => {
-  const creationDate = parseInt((new Date().getTime() - new Date(date).getTime()) / 1000);
+  const today = new Date();
+  const registerDate = new Date(date);
+
+  // 초 단위로 댓글을 작성한 시점으로부터의 경과 시간이 담김
+  const creationDate = parseInt((today.getTime() - registerDate.getTime()) / 1000);
 
   if (creationDate < 1) return '방금 전';
   else if (creationDate < 60) return `${creationDate}초 전`;
   else if (creationDate >= 60 && creationDate < 3600) return `${parseInt(creationDate / 60)}분 전`;
   else if (creationDate >= 3600 && creationDate < 3600 * 24)
     return `${parseInt(creationDate / 3600)}시간 전`;
-  else if (creationDate >= 3600 * 24 && creationDate < 3600 * 24 * 7)
-    return `${parseInt(creationDate / (3600 * 24))}일 전`;
+  else if (creationDate >= 3600 * 24 && today.getDate() - registerDate.getDate() < 8)
+    return `${today.getDate() - registerDate.getDate()}일 전`;
   else return dateFormMaker(date);
 };
 
