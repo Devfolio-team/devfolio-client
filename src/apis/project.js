@@ -1,61 +1,37 @@
-import axios from 'axios';
+import axios from './customAxios';
 
 export const fetchProjects = async (sort, page, limit) => {
-  return await axios.get(
-    `${process.env.REACT_APP_API_URL}/api/projects?sort=${sort}&page=${page}&size=${limit}`
-  );
+  return await axios.get(`/api/projects?sort=${sort}&page=${page}&size=${limit}`);
 };
 
 export const postProject = async projectData => {
-  return await axios.post(`${process.env.REACT_APP_API_URL}/api/project`, projectData, {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
+  return await axios.post('/api/project', projectData);
 };
 
 export const getProject = async userId => {
-  return await axios(`${process.env.REACT_APP_API_URL}/api/project/${userId}`);
+  return await axios(`/api/project/${userId}`);
 };
 
 export const deleteProject = async projectId => {
-  return await axios.delete(`${process.env.REACT_APP_API_URL}/api/project/${projectId}`);
+  return await axios.delete(`/api/project/${projectId}`);
 };
 
 export const getIsPressLikeButton = async (projectId, loginUserId) => {
-  return await axios(
-    `${process.env.REACT_APP_API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`
-  );
+  return await axios(`/api/project_like?project_id=${projectId}&user_id=${loginUserId}`);
 };
 
 export const postLikeCountPlus = async (projectId, loginUserId) => {
-  return await axios({
-    method: 'post',
-    url: `${process.env.REACT_APP_API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
-  });
+  return await axios.post(`/api/project_like?project_id=${projectId}&user_id=${loginUserId}`);
 };
 
 export const delLikeCountMinus = async (projectId, loginUserId) => {
-  return await axios({
-    method: 'delete',
-    url: `${process.env.REACT_APP_API_URL}/api/project_like?project_id=${projectId}&user_id=${loginUserId}`,
-  });
+  return await axios.delete(`/api/project_like?project_id=${projectId}&user_id=${loginUserId}`);
 };
 
 export const editProject = async (projectData, projectId) => {
-  return await axios.patch(
-    `${process.env.REACT_APP_API_URL}/api/project/${projectId}`,
-    projectData,
-    {
-      headers: {
-        'Content-type': 'application/json',
-      },
-    }
-  );
+  return await axios.patch(`/api/project/${projectId}`, projectData);
 };
 
 export const fetchFavoriteProjects = async (userId, page, limit) => {
-  return await axios.get(
-    `${process.env.REACT_APP_API_URL}/api/favorite_projects/${userId}?page=${page}&limit=${limit}`
-  );
+  return await axios.get(`/api/favorite_projects/${userId}?page=${page}&limit=${limit}`);
 };

@@ -1,25 +1,17 @@
-import axios from 'axios';
+import axios from './customAxios';
 
 export const postComment = async commentData => {
-  return await axios.post(`${process.env.REACT_APP_API_URL}/api/comment`, commentData, {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
+  return await axios.post('/api/comment', commentData);
 };
 
 export const fetchComments = async projectId => {
-  return await axios(`${process.env.REACT_APP_API_URL}/api/comment/${projectId}`);
+  return await axios(`/api/comment/${projectId}`);
 };
 
 export const deleteComment = async commentId => {
-  return await axios.delete(`${process.env.REACT_APP_API_URL}/api/comment/${commentId}`);
+  return await axios.delete(`/api/comment/${commentId}`);
 };
 
 export const editComment = async updateCommentData => {
-  return await axios.patch(`${process.env.REACT_APP_API_URL}/api/comment`, updateCommentData, {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
+  return await axios.patch('/api/comment', updateCommentData);
 };
