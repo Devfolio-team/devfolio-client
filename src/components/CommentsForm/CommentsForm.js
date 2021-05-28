@@ -1,5 +1,5 @@
 import ajax from 'apis/ajax';
-import { A11yHidden, Button, CommentTextArea, Span } from 'components';
+import { A11yHidden, CommentTextArea, Span } from 'components';
 import Container from 'components/Container/Container';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,20 @@ const CommentsFormContainer = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
+  }
+`;
+
+const RegistButton = styled.button`
+  width: 99px;
+  height: 32px;
+  background: #428bca;
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-radius: 5px;
+  &[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 `;
 
@@ -56,21 +70,13 @@ const CommentsForm = ({ projectId, commentCount, dispatch, commentListRef }) => 
             id="commentForm"
             width="100%"
             field={{ value: comment, onChange: onCommentChangeHandler }}
-            label="댓글을 작성해주세요."
+            label={currentUser ? '댓글을 작성해주세요.' : '로그인 후 프로젝트에 댓글을 달아보세요!'}
+            disabled={!currentUser}
           />
           <Container textAlign="right" margin="16px 0 0">
-            <Button
-              width={99}
-              height={32}
-              background="#428BCA"
-              color="#FFFFFF"
-              fontSize={1.4}
-              fontWeight={700}
-              borderRadius={5}
-              onClick={onCreateCommentHandler}
-            >
+            <RegistButton type="button" onClick={onCreateCommentHandler} disabled={!currentUser}>
               댓글 작성
-            </Button>
+            </RegistButton>
           </Container>
         </CommentsFormContainer>
       </fieldset>

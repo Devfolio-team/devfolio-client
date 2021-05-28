@@ -28,12 +28,12 @@ const transferCreationDate = date => {
 
   if (creationDate < 1) return '방금 전';
   else if (creationDate < 60) return `${creationDate}초 전`;
-  else if (creationDate >= 60 && creationDate < 3599) return `${parseInt(creationDate / 60)}분 전`;
+  else if (creationDate >= 60 && creationDate < 3600) return `${parseInt(creationDate / 60)}분 전`;
   else if (creationDate >= 3600 && creationDate < 3600 * 24)
     return `${parseInt(creationDate / 3600)}시간 전`;
   else if (creationDate >= 3600 * 24 && creationDate < 3600 * 24 * 7)
     return `${parseInt(creationDate / (3600 * 24))}일 전`;
-  else dateFormMaker(date);
+  else return dateFormMaker(date);
 };
 
 function CommentAuthor({

@@ -1,29 +1,19 @@
+import React, { useState, useEffect, useRef } from 'react';
 import {
-  Button,
-  Container,
   DivisionLine,
-  Heading,
-  Paragraph,
-  ProjectExplanation,
-  SkillIcon,
-  Span,
-  SVGIcon,
-  Time,
   DeleteModalDialog,
-  SectionHeading,
   TeamMembers,
   ProjectRegistInfo,
   ProjectNavigator,
+  ProjectPlanIntention,
+  LikeButton,
+  Container,
 } from 'components';
-import useDetectViewport from 'hooks/useDetectViewport';
-import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import styled, { css } from 'styled-components';
-import { applyStyle, dateFormMaker } from 'utils';
+import styled from 'styled-components';
 import scrollToTop from 'utils/scrollToTop';
 import ajax from 'apis/ajax';
-import Skeleton from '@yisheng90/react-loading';
-import { ProjectComments, ProjectInfo } from 'containers';
+import { ProjectComments, ProjectExplanation, ProjectInfo, UseTechStacks } from 'containers';
 
 const StyledProjectPage = styled.main`
   width: 768px;
@@ -36,83 +26,44 @@ const StyledProjectPage = styled.main`
   }
 `;
 
-const SkillList = styled.ul`
-  ${props => css`
-    ${applyStyle(props)}
-  `}
-`;
+const BottomLikeButton = styled(LikeButton)`
+  top: 76px;
+  right: 0;
 
-const SkillIconItem = styled.li`
-  display: flex;
-  justify-content: center;
-  width: 50%;
-  margin: 0 0 20px 0;
-  align-items: center;
-  @media (max-width: 600px) {
-    justify-content: left;
-    width: 100%;
-  }
-  ${props => css`
-    ${applyStyle(props)}
-  `}
-`;
-
-const LikeButton = styled(Button)`
-  ${props => css`
-    ${applyStyle(props)}
-  `}
-  &:hover {
-    background: #e0e0e0;
-    stroke: none;
+  @media (min-width: 1024px) {
+    display: none;
   }
 `;
 
-const HeartIcon = styled(SVGIcon)`
-  & {
-    stroke: #a3abb3;
-  }
-  path {
-    fill: white;
-  }
-`;
-
-const SkeletonUI = styled(Skeleton)`
-  ${props => css`
-    &&&& {
-      ${applyStyle(props)}
-    }
-  `}
-`;
+const initalProjectState = {
+  projectData: {
+    authorInfo: [{ nickname: '', profile_photo: '' }],
+    created: '',
+    deploy_url: '',
+    end_date: '',
+    github_url: '',
+    is_private: false,
+    main_contents: '',
+    plan_intention: '',
+    project_id: 0,
+    start_date: '',
+    subject: '',
+    team_name: '',
+    thumbnail: '',
+    user_id: '',
+    likeCount: 0,
+    teamMembers: [],
+  },
+  projectTechStack: [{}],
+};
 
 const ProjectPage = ({ match, history }) => {
-  const { isDesktop, vw, type } = useDetectViewport();
-  const initalProject = {
-    projectData: {
-      authorInfo: [{ nickname: '', profile_photo: '' }],
-      created: '',
-      deploy_url: '',
-      end_date: '',
-      github_url: '',
-      is_private: false,
-      main_contents: '',
-      plan_intention: '',
-      project_id: 0,
-      start_date: '',
-      subject: '',
-      team_name: '',
-      thumbnail: '',
-      user_id: '',
-      teamMembers: [],
-    },
-    projectTechStack: [{}],
-  };
+  const currentUser = useSelector(state => state.auth.currentUser);
 
-  const initalLoginUser = {
-    user_id: null,
-  };
-  const [project, setProject] = useState(initalProject);
-  const [loginUser, setLoginUser] = useState(initalLoginUser);
-  const [isLike, setIsLike] = useState(true);
+  const [project, setProject] = useState(initalProjectState);
+
+  const [isLike, setIsLike] = useState({ value: false, loading: true });
+
   const {
     deploy_url,
     end_date,
@@ -128,32 +79,35 @@ const ProjectPage = ({ match, history }) => {
     teamMembers,
   } = project.projectData;
 
-  const { projectTechStacks } = project;
-  const loginUserInfo = useSelector(state => state.auth.currentUser);
+  const { projectTechStacks = [] } = project;
 
   const onLikeCountPlusHandler = async () => {
-    if (!loginUser.user_id) return;
+    if (!currentUser) return;
 
-    //해당 유저가 게시글에 좋아요를 눌렀는지 확인
-    const likeButtonResponse = await ajax.getIsPressLikeButton(project_id, loginUser.user_id);
-
-    //좋아요 버튼을 누르면 true 안누르면 false
-    const likeState = likeButtonResponse.data.existeLike;
     try {
+      setIsLike({ ...isLike, loading: true });
+
+      //해당 유저가 게시글에 좋아요를 눌렀는지 확인
+      const likeButtonResponse = await ajax.getIsPressLikeButton(project_id, currentUser.user_id);
+
+      //좋아요 버튼을 이미 눌렀다면 true 안눌렀다면 false값이 담김
+      const likeState = likeButtonResponse.data.existeLike;
       if (!likeState) {
-        // LikeCount++
-        const postLikeCountPlus = await ajax.postLikeCountPlus(project_id, loginUser.user_id);
+        const postLikeCountPlus = await ajax.postLikeCountPlus(project_id, currentUser.user_id);
 
-        setProject(
-          { ...project },
-          (project.projectData.likeCount = postLikeCountPlus.data.likeCount)
-        );
-        setIsLike(true);
+        setProject({
+          ...project,
+          projectData: { ...project.projectData, likeCount: postLikeCountPlus.data.likeCount },
+        });
+        setIsLike({ value: true, loading: false });
       } else {
-        const DelLikeCount = await ajax.delLikeCountMinus(project_id, loginUser.user_id);
+        const delLikeCount = await ajax.delLikeCountMinus(project_id, currentUser.user_id);
 
-        setProject({ ...project }, (project.projectData.likeCount = DelLikeCount.data.likeCount));
-        setIsLike(false);
+        setProject({
+          ...project,
+          projectData: { ...project.projectData, likeCount: delLikeCount.data.likeCount },
+        });
+        setIsLike({ value: false, loading: false });
       }
     } catch (e) {
       throw new Error(e);
@@ -161,6 +115,7 @@ const ProjectPage = ({ match, history }) => {
   };
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const deleteButtonRef = useRef(null);
 
   const onDeleteModalOpenHandler = () => {
     setIsDeleteModalOpen(true);
@@ -175,44 +130,36 @@ const ProjectPage = ({ match, history }) => {
     }
   };
 
-  const deleteButtonRef = useRef(null);
-
-  // 페이지 로딩 될 때 최초 한 번만 뷰포트 최상단으로 끌어올리기
   useEffect(() => {
-    scrollToTop();
-  }, []);
-
-  useEffect(() => {
-    if (loginUserInfo) setLoginUser(loginUserInfo);
-    const project = async () => {
+    const getProjectData = async () => {
       try {
         const projectData = await ajax.getProject(match.params.project_id);
 
         setProject(projectData.data.responseData);
-      } catch (e) {
-        // throw new Error(e);
+      } catch (error) {
+        throw new Error(error);
       }
     };
-    project();
+    getProjectData();
 
-    //처음에 페이지 접속 했을 때 프로젝트에 좋아요를 눌렀는가?
     const getIsLike = async () => {
-      if (!loginUser.user_id) return;
       try {
-        const likeButtonResponse = await ajax.getIsPressLikeButton(project_id, loginUser.user_id);
-        const likeState = await likeButtonResponse.data.existeLike;
-
-        if (likeState) {
-          setIsLike(true);
-        } else {
-          setIsLike(false);
-        }
+        const likeButtonResponse = await ajax.getIsPressLikeButton(project_id, currentUser.user_id);
+        const value = await likeButtonResponse.data.existeLike;
+        setIsLike({ value, loading: false });
       } catch (e) {
         throw new Error(e);
       }
     };
-    getIsLike();
-  }, [loginUser.user_id, loginUserInfo, match.params.project_id, project_id]);
+
+    if (currentUser && project_id) getIsLike();
+  }, [currentUser, match.params.project_id, project_id]);
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <StyledProjectPage>
@@ -235,135 +182,30 @@ const ProjectPage = ({ match, history }) => {
       />
 
       <DivisionLine width="75%" />
-      <Container margin=" 0 0 80px 0">
-        {subject ? (
-          <SectionHeading id="기획의도">기획 의도 및 소개</SectionHeading>
-        ) : (
-          <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
-        )}
-        {subject ? (
-          <Paragraph
-            color="#666666"
-            fontSize={1.6}
-            fontWeight="700"
-            lineHeight="25px"
-            padding="0 15px"
-          >
-            {plan_intention}
-          </Paragraph>
-        ) : (
-          <SkeletonUI width="100%" height="200px" />
-        )}
-      </Container>
+
+      <ProjectPlanIntention planIntention={plan_intention} />
+
       <DivisionLine width="75%" />
+
       <TeamMembers teamMembers={teamMembers} />
-      <DivisionLine width="75%" />
-      <Container width={isDesktop ? '788px' : '100%'}>
-        {subject ? (
-          <SectionHeading id="사용기술스택">사용 기술 스택</SectionHeading>
-        ) : (
-          <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
-        )}
-        {subject ? (
-          <SkillList
-            $margin="0 auto"
-            $width="100%"
-            $display="flex"
-            $flexWrap="wrap"
-            $justifyContent="space-between"
-          >
-            {projectTechStacks &&
-              projectTechStacks.map(skill => (
-                <SkillIconItem key={skill.project_tech_stacks_id}>
-                  <SkillIcon type={skill.tech_name} width={60} height={60}></SkillIcon>
-                  <Span
-                    color="#666666"
-                    fontSize={isDesktop ? 2.3 : 2}
-                    fontWeight="700"
-                    width={isDesktop ? '200px' : type === 'sm' ? '100px' : '100px'}
-                    textAlign="left"
-                    marginLeft={isDesktop ? '30px' : '10px'}
-                  >
-                    {skill.tech_name}
-                  </Span>
-                </SkillIconItem>
-              ))}
-          </SkillList>
-        ) : (
-          <SkeletonUI width="100%" height="200px" />
-        )}
-      </Container>
-      <DivisionLine width="75%" />
-      <Container>
-        {subject ? (
-          <SectionHeading id="프로젝트설명">프로젝트 설명</SectionHeading>
-        ) : (
-          <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
-        )}
-        <Container margin="0 0 10px">
-          {subject ? (
-            <>
-              <Heading as="h4" fontSize={1.5} margin="0 0 5px 0">
-                프로젝트 기간
-              </Heading>
-              <Time fontSize={1.6} dateTime={dateFormMaker(start_date)} color="#70777d">
-                {dateFormMaker(start_date)}
-              </Time>
-              <Span fontSize={1.6} color="#70777d">
-                {' '}
-                ~{' '}
-              </Span>
-              <Time fontSize={1.6} dateTime={dateFormMaker(end_date)} color="#70777d">
-                {dateFormMaker(end_date)}
-              </Time>
-            </>
-          ) : (
-            <SkeletonUI $width="200px" $height="10px" />
-          )}
-        </Container>
-        {subject ? (
-          main_contents === null ? null : (
-            <ProjectExplanation>{main_contents}</ProjectExplanation>
-          )
-        ) : (
-          <SkeletonUI width="100%" height="200px" />
-        )}
-      </Container>
 
       <DivisionLine width="75%" />
 
-      {vw <= 1024 && (
-        <Container position="relative">
-          <LikeButton
-            aria-label="좋아요 버튼"
-            borderRadius="5px"
-            background="inherit"
-            border="1px solid #A3ABB3"
-            width="82px"
-            height="33px"
-            padding="0"
-            display="flex"
-            $justifyContent="center"
-            $alignItems="center"
-            $color="#212121"
-            $position="absolute"
-            $right="0"
-            $top="80px"
-            title={loginUser.user_id === null ? '로그인이 필요합니다.' : ''}
-            $cursor={loginUser.user_id === null ? 'not-allowed' : ''}
-            onClick={onLikeCountPlusHandler}
-          >
-            {isLike === false ? (
-              <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
-            ) : (
-              <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
-            )}
-            <Span fontSize={1.6} lineHeight="16px" margin="0 0 0 10px">
-              {likeCount}
-            </Span>
-          </LikeButton>
-        </Container>
-      )}
+      <UseTechStacks techStacks={projectTechStacks} />
+
+      <DivisionLine width="75%" />
+
+      <ProjectExplanation mainContents={main_contents} startDate={start_date} endDate={end_date} />
+
+      <DivisionLine width="75%" />
+
+      <Container position="relative">
+        <BottomLikeButton
+          isLike={isLike}
+          likeCount={likeCount}
+          onLikeCountPlusHandler={onLikeCountPlusHandler}
+        />
+      </Container>
 
       <ProjectComments projectId={project.projectData.project_id} />
 

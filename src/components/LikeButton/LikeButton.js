@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { Flicker } from 'react-micron';
 import { useSelector } from 'react-redux';
 import { SVGIcon } from 'components';
+import { ReactComponent as Spinner } from 'assets/LoadingSpinner.svg';
 
 const LikeButtonContainer = styled.div`
   position: fixed;
+  top: 300px;
 
   @media (max-width: 1024px) {
     position: absolute;
@@ -47,12 +49,14 @@ const LikeCount = styled.span`
 
   @media (max-width: 1024px) {
     position: absolute;
+    cursor: pointer;
+    pointer-events: none;
     top: 2px;
     right: 25px;
   }
 `;
 
-const HeartIcon = styled(SVGIcon)`
+const EmptyHeartIcon = styled(SVGIcon)`
   & {
     stroke: #a3abb3;
   }
@@ -61,7 +65,12 @@ const HeartIcon = styled(SVGIcon)`
   }
 `;
 
-const LikeButton = ({ isLike, likeCount, onLikeCountPlusHandler, ...restProps }) => {
+const LikeButton = ({
+  isLike: { value: likeValue, loading: likeLoading },
+  likeCount,
+  onLikeCountPlusHandler,
+  ...restProps
+}) => {
   const currentUser = useSelector(({ auth }) => auth.currentUser);
   return (
     <LikeButtonContainer {...restProps}>
@@ -69,13 +78,15 @@ const LikeButton = ({ isLike, likeCount, onLikeCountPlusHandler, ...restProps })
         <StyledLikeButton
           aria-label="좋아요 버튼"
           onClick={onLikeCountPlusHandler}
-          title={currentUser && '로그인이 필요합니다.'}
+          title={currentUser ? '좋아요 버튼' : '로그인이 필요합니다.'}
           currentUser={currentUser}
         >
-          {isLike ? (
-            <SVGIcon type="HeartRed" width={20} height={20}></SVGIcon>
+          {likeLoading && currentUser ? (
+            <Spinner width="20" height="20" style={{ margin: 0 }} />
+          ) : currentUser && likeValue ? (
+            <SVGIcon type="HeartRed" width={20} height={20} />
           ) : (
-            <HeartIcon type="HeartRed" width={20} height={20}></HeartIcon>
+            <EmptyHeartIcon type="HeartRed" width={20} height={20} />
           )}
         </StyledLikeButton>
       </Flicker>
