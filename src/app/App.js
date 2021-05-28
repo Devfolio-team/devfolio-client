@@ -10,6 +10,7 @@ import {
   ProjectEditPage,
   ProjectPage,
   SignIn,
+  SearchPage,
 } from 'pages';
 import useDetectViewport from 'hooks/useDetectViewport';
 import { useEffect } from 'react';
@@ -66,6 +67,7 @@ const App = () => {
               exact
               component={FavoriteProjectPage}
             />
+            <Route path="/search" exact component={SearchPage} />
             <Route path="/sign_in" exact component={SignIn} />
             <Route path="/page-not-found" component={PageNotFound} />
             <Redirect to="/page-not-found" />

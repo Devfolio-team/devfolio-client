@@ -57,3 +57,4 @@ export { default as SkeletonUI } from './SkeletonUI/SkeletonUI';
 export { default as ProjectRegistInfo } from './ProjectRegistInfo/ProjectRegistInfo';
 export { default as ProjectNavigator } from './ProjectNavigator/ProjectNavigator';
 export { default as LikeButton } from './LikeButton/LikeButton';
+export { default as SearchBox } from './SearchBox/SearchBox';

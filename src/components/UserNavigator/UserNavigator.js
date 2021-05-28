@@ -49,6 +49,21 @@ const StyledLink = styled(Link)`
   `}
 `;
 
+const SearchLink = styled(Link)`
+  ${props => applyStyle(props)}
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #d5d5d5;
+  &:hover {
+    background: #f0f0f0;
+  }
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+`;
+
 const ProjectEditLink = styled(Link)`
   ${props => applyStyle(props)}
   font-size: 1.6rem;
@@ -97,14 +112,24 @@ const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, viewport, ...
     <StyledUl $height={height} {...restProps}>
       <StyledUserNavigatorMenuItem $color="#ffffff" $fontSize={1.6} $fontWeight={700}>
         {type === 'xs' ? (
-          <ProjectEditLink
-            to={'/edit/project'}
-            $padding="20px"
-            tabIndex={tabIndex}
-            onKeyDown={onCloseNavigatorShiftTabHandler}
-          >
-            프로젝트 등록
-          </ProjectEditLink>
+          <>
+            <SearchLink
+              to={'/search'}
+              $padding="20px"
+              tabIndex={tabIndex}
+              onKeyDown={onCloseNavigatorShiftTabHandler}
+            >
+              프로젝트 검색
+            </SearchLink>
+            <ProjectEditLink
+              to={'/edit/project'}
+              $padding="20px"
+              tabIndex={tabIndex}
+              onKeyDown={onCloseNavigatorShiftTabHandler}
+            >
+              프로젝트 등록
+            </ProjectEditLink>
+          </>
         ) : null}
         <StyledLink
           to={`/portfolio/${currentUser ? currentUser.user_id : ''}`}

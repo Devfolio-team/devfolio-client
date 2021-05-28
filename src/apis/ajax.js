@@ -10,6 +10,7 @@ import {
   delLikeCountMinus,
   deleteProject,
   fetchFavoriteProjects,
+  searchProjectByTitle,
 } from 'apis/project';
 import { postComment, fetchComments, deleteComment, editComment } from 'apis/comment';
 
@@ -34,6 +35,7 @@ const ajax = {
   deleteComment,
   requestNewTechStack,
   fetchFavoriteProjects,
+  searchProjectByTitle,
 };
 
 export default ajax;
