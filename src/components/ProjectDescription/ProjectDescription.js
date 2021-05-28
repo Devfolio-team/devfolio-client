@@ -4,15 +4,17 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import ajax from 'apis/ajax';
 import { Container, Heading, Paragraph } from 'components';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
-  grid-row: 6 /7;
+  grid-row: 7 / 8;
   grid-column: span 2;
-  ${({ vw }) => css`
-    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
-    width: ${vw >= 1280 ? '100%' : '80%'};
-  `}
+  width: 100%;
+
+  @media (max-width: 1280px) {
+    margin: 0 auto 60px;
+    width: 80%;
+  }
 `;
 
 const ProjectDescription = forwardRef(({ vw }, ref) => {
@@ -28,7 +30,7 @@ const ProjectDescription = forwardRef(({ vw }, ref) => {
   };
 
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 설명
       </Heading>

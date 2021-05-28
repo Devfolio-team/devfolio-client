@@ -23,6 +23,7 @@ import { ReactComponent as Suits } from 'assets/Suits.svg';
 import { ReactComponent as Palette } from 'assets/Palette.svg';
 import { ReactComponent as Plus } from 'assets/Plus.svg';
 import { ReactComponent as Minus } from 'assets/Minus.svg';
+import { ReactComponent as Search } from 'assets/Search.svg';
 
 const SVGIcon = ({ type, ...restProps }) => {
   let SVGIcon = null;
@@ -99,6 +100,9 @@ const SVGIcon = ({ type, ...restProps }) => {
       break;
     case 'Minus':
       SVGIcon = Minus;
+      break;
+    case 'Search':
+      SVGIcon = Search;
       break;
   }
   return <SVGIcon {...restProps} />;
