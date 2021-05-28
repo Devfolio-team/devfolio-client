@@ -130,7 +130,7 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
       '* 팀원 이름은 필수 항목입니다.'
     );
     projectValidation[`memberGithubUrl${index}`] = Yup.string().matches(
-      /((https?):\/\/)?github.com\/[\w-]+$/,
+      /((https):\/\/)github.com\/[\w-]+$/,
       '형식에 맞는 URL을 작성해주세요!'
     );
   });
