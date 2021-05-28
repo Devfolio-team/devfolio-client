@@ -80,7 +80,6 @@ const Input = forwardRef(
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
-
     const onFocusHandler = () => {
       setIsFocused(true);
     };
@@ -133,7 +132,6 @@ const Input = forwardRef(
           $textAlign={textAlign}
           errors={errors}
           {...field}
-          value={value}
           onBlur={onBlurHandler}
           {...restProps}
         />

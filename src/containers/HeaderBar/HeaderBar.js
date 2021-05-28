@@ -107,13 +107,13 @@ const HeaderBar = ({ viewport }) => {
             <Logo width={130} height={30} type="white" />
           </Link>
         </Heading>
-        {currentUser ? (
-          <Container display="flex" alignItems="center" margin="0">
-            {type === 'xs' ? null : (
-              <>
-                <SearchLink to="/search" $margin="0 30px 0 0">
-                  <SVGIcon type="Search" />
-                </SearchLink>
+        <Container display="flex" margin="0" alignItems="center">
+          <SearchLink to="/search" $margin="0 20px 0 0">
+            <SVGIcon type="Search" />
+          </SearchLink>
+          {currentUser ? (
+            <Container display="flex" alignItems="center" margin="0">
+              {type === 'xs' ? null : (
                 <ProjectEditLink
                   to="/edit/project"
                   $width={125}
@@ -133,71 +133,71 @@ const HeaderBar = ({ viewport }) => {
                 >
                   프로젝트 등록
                 </ProjectEditLink>
-              </>
-            )}
-            <Container
-              title="네비게이션 메뉴 열기"
-              aria-label="네비게이션 메뉴 열기"
-              className="userNavigator"
-              display="flex"
-              alignItems="center"
-              cursor="pointer"
-              tabIndex={-1}
-              onClick={onNavigatorToggleHandler}
-              focusOutline="none"
-            >
-              <Button
+              )}
+              <Container
+                title="네비게이션 메뉴 열기"
+                aria-label="네비게이션 메뉴 열기"
                 className="userNavigator"
-                width={40}
-                height={40}
-                border="0"
-                borderRadius="50%"
-                padding="0"
-                margin="0 5px 0 0"
+                display="flex"
+                alignItems="center"
+                cursor="pointer"
+                tabIndex={-1}
+                onClick={onNavigatorToggleHandler}
+                focusOutline="none"
               >
-                <Image
+                <Button
                   className="userNavigator"
-                  src={currentUser.profile_photo}
-                  alt=""
                   width={40}
                   height={40}
+                  border="0"
                   borderRadius="50%"
+                  padding="0"
+                  margin="0 5px 0 0"
+                >
+                  <Image
+                    className="userNavigator"
+                    src={currentUser.profile_photo}
+                    alt=""
+                    width={40}
+                    height={40}
+                    borderRadius="50%"
+                  />
+                </Button>
+                <StyledArrowDownIcon
+                  className="userNavigator"
+                  width={24}
+                  height={24}
+                  fill="#f8f9fa"
+                  $transition=".5s"
+                  $transform={`${userNavigatorIsOepn ? 'rotate(0.5turn)' : ''}`}
                 />
-              </Button>
-              <StyledArrowDownIcon
-                className="userNavigator"
-                width={24}
-                height={24}
-                fill="#f8f9fa"
-                $transition=".5s"
-                $transform={`${userNavigatorIsOepn ? 'rotate(0.5turn)' : ''}`}
+              </Container>
+              <UserNavigator
+                aria-hidden={!userNavigatorIsOepn}
+                viewport={viewport}
+                height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 285 : 228}
+                tabIndex={userNavigatorIsOepn ? 0 : -1}
+                setUserNavigatorIsOepn={setUserNavigatorIsOepn}
               />
             </Container>
-            <UserNavigator
-              aria-hidden={!userNavigatorIsOepn}
-              viewport={viewport}
-              height={!userNavigatorIsOepn ? 0 : type === 'xs' ? 285 : 228}
-              tabIndex={userNavigatorIsOepn ? 0 : -1}
-              setUserNavigatorIsOepn={setUserNavigatorIsOepn}
-            />
-          </Container>
-        ) : (
-          <Button
-            width={84}
-            height={36}
-            color="#FFFFFF"
-            background="#25272B"
-            fontWeight={700}
-            fontSize={1.6}
-            borderRadius={16}
-            padding="0"
-            border="0"
-            onClick={onModalOpenHandler}
-            ref={beforeRef}
-          >
-            로그인
-          </Button>
-        )}
+          ) : (
+            <Button
+              width={84}
+              height={36}
+              color="#FFFFFF"
+              background="#25272B"
+              fontWeight={700}
+              fontSize={1.6}
+              borderRadius={16}
+              padding="0"
+              border="0"
+              onClick={onModalOpenHandler}
+              ref={beforeRef}
+            >
+              로그인
+            </Button>
+          )}
+        </Container>
         {isModalOpen ? (
           <Portal id="modal-root">
             <LoginModalDialog
