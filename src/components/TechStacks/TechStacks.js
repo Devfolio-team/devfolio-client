@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
   width: 100%;
-
+  margin-top: 50px;
   @media (max-width: 1280px) {
     margin: 0 auto 60px;
     width: 80%;

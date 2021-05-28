@@ -7,6 +7,7 @@ import {
   Logo,
   Portal,
   UserNavigator,
+  SVGIcon,
 } from 'components';
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
@@ -48,6 +49,10 @@ const Naigation = styled.nav`
   @media (max-width: 768px) {
     padding: 30px;
   }
+`;
+
+const SearchLink = styled(Link)`
+  ${props => applyStyle(props)}
 `;
 
 const ProjectEditLink = styled(Link)`
@@ -105,25 +110,30 @@ const HeaderBar = ({ viewport }) => {
         {currentUser ? (
           <Container display="flex" alignItems="center" margin="0">
             {type === 'xs' ? null : (
-              <ProjectEditLink
-                to="/edit/project"
-                $width={125}
-                $height={36}
-                $margin="0 20px 0 0"
-                $border="2px solid #f8f9fa"
-                $background="#212121"
-                $color="#f8f9fa"
-                $fontWeight="700"
-                $fontSize={1.6}
-                $borderRadius={16}
-                $padding="0"
-                $hoverBackground="#f8f9fa"
-                $hoverColor="#212121"
-                $textAlign="center"
-                $lineHeight="1.88"
-              >
-                프로젝트 등록
-              </ProjectEditLink>
+              <>
+                <SearchLink to="/search" $margin="0 30px 0 0">
+                  <SVGIcon type="Search" />
+                </SearchLink>
+                <ProjectEditLink
+                  to="/edit/project"
+                  $width={125}
+                  $height={36}
+                  $margin="0 20px 0 0"
+                  $border="2px solid #f8f9fa"
+                  $background="#212121"
+                  $color="#f8f9fa"
+                  $fontWeight="700"
+                  $fontSize={1.6}
+                  $borderRadius={16}
+                  $padding="0"
+                  $hoverBackground="#f8f9fa"
+                  $hoverColor="#212121"
+                  $textAlign="center"
+                  $lineHeight="1.88"
+                >
+                  프로젝트 등록
+                </ProjectEditLink>
+              </>
             )}
             <Container
               title="네비게이션 메뉴 열기"
