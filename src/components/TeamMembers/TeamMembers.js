@@ -1,4 +1,4 @@
-import { Member, SectionHeading } from 'components';
+import { Member, ProjectSectionSkeleton, SectionHeading } from 'components';
 import React from 'react';
 import styled from 'styled-components';
 import { array } from 'prop-types';
@@ -11,18 +11,24 @@ const MemberList = styled.ul`
 
 const TeamMembers = ({ teamMembers }) => {
   return (
-    <StyledTeamMembers>
-      <SectionHeading id="팀원목록">팀원 목록</SectionHeading>
-      <MemberList>
-        {teamMembers.map(member => (
-          <Member
-            key={member.project_team_members_id}
-            name={member.member_name}
-            githubUrl={member.member_github_url}
-          />
-        ))}
-      </MemberList>
-    </StyledTeamMembers>
+    <>
+      {teamMembers.length ? (
+        <StyledTeamMembers>
+          <SectionHeading id="팀원목록">팀원 목록</SectionHeading>
+          <MemberList>
+            {teamMembers.map(member => (
+              <Member
+                key={member.project_team_members_id}
+                name={member.member_name}
+                githubUrl={member.member_github_url}
+              />
+            ))}
+          </MemberList>
+        </StyledTeamMembers>
+      ) : (
+        <ProjectSectionSkeleton />
+      )}
+    </>
   );
 };
 

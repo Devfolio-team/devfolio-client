@@ -1,4 +1,11 @@
-import { Heading, MarkdownStyler, SectionHeading, SkeletonUI, Span, Time } from 'components';
+import {
+  Heading,
+  MarkdownStyler,
+  ProjectSectionSkeleton,
+  SectionHeading,
+  Span,
+  Time,
+} from 'components';
 import React from 'react';
 import styled from 'styled-components';
 import { dateFormMaker } from 'utils';
@@ -15,9 +22,9 @@ const ProjectPeriod = styled.section`
 
 const ProjectExplanation = ({ mainContents, startDate, endDate }) => {
   return (
-    <StyledProjectPlanIntention>
+    <>
       {mainContents ? (
-        <>
+        <StyledProjectPlanIntention>
           <SectionHeading id="프로젝트설명">프로젝트 설명</SectionHeading>
           <ProjectPeriod>
             <Heading as="h4" fontSize={1.5} margin="0 0 5px 0">
@@ -32,15 +39,11 @@ const ProjectExplanation = ({ mainContents, startDate, endDate }) => {
             </Time>
           </ProjectPeriod>
           <MarkdownStyler>{mainContents}</MarkdownStyler>
-        </>
+        </StyledProjectPlanIntention>
       ) : (
-        <>
-          <SkeletonUI $width="120px" $height="40px" $margin="100px 0 47px 0" />
-          <SkeletonUI $width="200px" $height="10px" />
-          <SkeletonUI width="100%" height="200px" />
-        </>
+        <ProjectSectionSkeleton />
       )}
-    </StyledProjectPlanIntention>
+    </>
   );
 };
 
