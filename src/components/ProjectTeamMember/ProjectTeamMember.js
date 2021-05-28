@@ -14,6 +14,13 @@ const StyledContainer = styled(Container)`
   }
 `;
 
+const NameErrorMessage = styled.div`
+  color: red;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+`;
+
 const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors, editTeamMember }) => {
   useEffect(() => {
     if (editTeamMember) setNumOfTeam(editTeamMember.length);
@@ -37,6 +44,9 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors, editTeamMember
       <Paragraph color="#666" fontSize={1.2} margin="5px 0 20px 0">
         Github Url은 선택적 사항입니다. 없으면 비워두세요!
       </Paragraph>
+      {Object.keys(errors).some(error => error.includes('memberName')) && (
+        <NameErrorMessage>* 팀원 이름은 필수 항목입니다.</NameErrorMessage>
+      )}
       <Container display="flex" flexFlow="row wrap" justifyContent="space-between">
         {Array.from({ length: numOfTeam }, (_, i) => i).map((_, index) => (
           <Container margin="0" width={vw > 768 ? '45%' : '100%'} key={index} position="relative">
@@ -77,11 +87,6 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors, editTeamMember
               beforeMargin={32}
               afterMargin={30}
               errors={errors}
-            />
-            <ErrorMessage
-              name={`memberName${index}`}
-              component={FormErrorMessage}
-              margin="10px 0 0 0"
             />
             <ErrorMessage
               name={`memberGithubUrl${index}`}
