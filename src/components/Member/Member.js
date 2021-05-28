@@ -52,6 +52,7 @@ const GithubUrl = styled.a`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  pointer-events: ${({ githubUrl }) => (githubUrl ? 'initial' : 'none')};
 
   @media (max-width: 828px) {
     width: 65vw;
@@ -72,18 +73,46 @@ const GithubIconUrl = styled.a`
   }
 `;
 
+const DisabledGithubIconMobile = styled(SVGIcon)`
+  opacity: 0.3;
+  cursor: not-allowed;
+
+  @media (min-width: 480px) {
+    display: none;
+  }
+`;
+
+const DisabledGithubIconDesktop = styled(SVGIcon)`
+  opacity: 0.3;
+  cursor: not-allowed;
+
+  @media (max-width: 479px) {
+    display: none;
+  }
+`;
+
 const Member = ({ name, githubUrl }) => {
   return (
     <StyledMember>
-      <GithubIconUrl
-        href={githubUrl}
-        title={`${name}님의 github로 이동(새 창)`}
-        target="_blank"
-        rel="noopener"
-        aria-label={`${name}님의 github로 이동(새 창)`}
-      >
-        <SVGIcon type="GithubBlack" width="23" height="23" />
-      </GithubIconUrl>
+      {githubUrl ? (
+        <GithubIconUrl
+          href={githubUrl}
+          title={`${name}님의 github로 이동(새 창)`}
+          target="_blank"
+          rel="noopener"
+          aria-label={`${name}님의 github로 이동(새 창)`}
+        >
+          <SVGIcon type="GithubBlack" width="23" height="23" />
+        </GithubIconUrl>
+      ) : (
+        <DisabledGithubIconMobile
+          title="등록된 github 주소가 없습니다."
+          aria-label="등록된 github 주소가 없습니다."
+          type="GithubBlack"
+          width="23"
+          height="23"
+        />
+      )}
 
       <Name title={name}>{name}</Name>
 
@@ -93,9 +122,25 @@ const Member = ({ name, githubUrl }) => {
         target="_blank"
         rel="noopener"
         aria-label={`${name}님의 github로 이동(새 창)`}
+        githubUrl={githubUrl}
       >
-        <SVGIcon type="GithubBlack" width="23" height="23" />
-        {githubUrl}
+        {githubUrl ? (
+          <>
+            <SVGIcon type="GithubBlack" width="23" height="23" />
+            {githubUrl}
+          </>
+        ) : (
+          <>
+            <DisabledGithubIconDesktop
+              title="등록된 github 주소가 없습니다."
+              aria-label="등록된 github 주소가 없습니다."
+              type="GithubBlack"
+              width="23"
+              height="23"
+            />
+            github 주소가 없습니다 :(
+          </>
+        )}
       </GithubUrl>
     </StyledMember>
   );
