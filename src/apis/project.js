@@ -37,5 +37,5 @@ export const fetchFavoriteProjects = async (userId, page, limit) => {
 };
 
 export const searchProjectByTitle = async search => {
-  return await axios.get(`${process.env.REACT_APP_API_URL}/api/projects/search?q=${search}`);
+  return await axios.get(`/api/projects/search?q=${search}`);
 };
