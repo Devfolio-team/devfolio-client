@@ -171,7 +171,7 @@ const ProjectPage = ({ match, history }) => {
     <StyledProjectPage>
       <ProjectRegistInfo projectData={project.projectData} projectLoading={projectLoading} />
 
-      <ProjectNavigator subject={subject} />
+      <ProjectNavigator subject={subject} projectLoading={projectLoading} />
 
       <ProjectInfo
         subject={subject}

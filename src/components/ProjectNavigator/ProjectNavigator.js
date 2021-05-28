@@ -30,7 +30,7 @@ const NavigatorItem = styled.li`
 const ProjectNavigator = ({ subject, projectLoading }) => {
   return (
     <StyledProjectNavigator>
-      {!projectLoading ? (
+      {!projectLoading && (
         <NavigatorList>
           <NavigatorItem>
             <a href="#제목">{subject}</a>
@@ -48,8 +48,6 @@ const ProjectNavigator = ({ subject, projectLoading }) => {
             <a href="#프로젝트설명">프로젝트설명</a>
           </NavigatorItem>
         </NavigatorList>
-      ) : (
-        <SkeletonUI $width="150px" $height="10px" rows={4} />
       )}
     </StyledProjectNavigator>
   );
