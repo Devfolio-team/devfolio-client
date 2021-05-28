@@ -50,10 +50,33 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
     githubUrl: editProjectData?.projectData.github_url || '',
     deploymentStatus: editProjectData?.projectData.deploy_url ? 'deployed' : 'undeployed',
     deployUrl: editProjectData?.projectData.deploy_url || '',
-    isPrivate: String(editProjectData?.projectData.is_private) || '',
+    isPrivate:
+      String(editProjectData?.projectData.is_private) === 'undefined'
+        ? '0'
+        : String(editProjectData?.projectData.is_private),
     startDate: editProjectData?.projectData.start_date || '',
     endDate: editProjectData?.projectData.end_date || '',
     teamMembers: [],
+    memberName0: editProjectData?.projectData?.teamMembers[0]?.member_name || '',
+    memberName1: editProjectData?.projectData?.teamMembers[1]?.member_name || '',
+    memberName2: editProjectData?.projectData?.teamMembers[2]?.member_name || '',
+    memberName3: editProjectData?.projectData?.teamMembers[3]?.member_name || '',
+    memberName4: editProjectData?.projectData?.teamMembers[4]?.member_name || '',
+    memberName5: editProjectData?.projectData?.teamMembers[5]?.member_name || '',
+    memberName6: editProjectData?.projectData?.teamMembers[6]?.member_name || '',
+    memberName7: editProjectData?.projectData?.teamMembers[7]?.member_name || '',
+    memberName8: editProjectData?.projectData?.teamMembers[8]?.member_name || '',
+    memberName9: editProjectData?.projectData?.teamMembers[9]?.member_name || '',
+    memberGithubUrl0: editProjectData?.projectData?.teamMembers[0]?.member_github_url || '',
+    memberGithubUrl1: editProjectData?.projectData?.teamMembers[1]?.member_github_url || '',
+    memberGithubUrl2: editProjectData?.projectData?.teamMembers[2]?.member_github_url || '',
+    memberGithubUrl3: editProjectData?.projectData?.teamMembers[3]?.member_github_url || '',
+    memberGithubUrl4: editProjectData?.projectData?.teamMembers[4]?.member_github_url || '',
+    memberGithubUrl5: editProjectData?.projectData?.teamMembers[5]?.member_github_url || '',
+    memberGithubUrl6: editProjectData?.projectData?.teamMembers[6]?.member_github_url || '',
+    memberGithubUrl7: editProjectData?.projectData?.teamMembers[7]?.member_github_url || '',
+    memberGithubUrl8: editProjectData?.projectData?.teamMembers[8]?.member_github_url || '',
+    memberGithubUrl9: editProjectData?.projectData?.teamMembers[9]?.member_github_url || '',
   };
   const initialTouched = {
     subject: true,
@@ -103,8 +126,6 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
   });
 
   Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
-    initialValues[`memberName${index}`] = '';
-    initialValues[`memberGithubUrl${index}`] = '';
     projectValidation[`memberName${index}`] = Yup.string().required(
       '* 팀원 이름은 필수 항목입니다.'
     );
@@ -197,6 +218,7 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
                 numOfTeam={numOfTeam}
                 setNumOfTeam={setNumOfTeam}
                 errors={errors}
+                editTeamMember={editProjectData?.projectData.teamMembers}
               />
               <TechStacks
                 setFieldValue={setFieldValue}

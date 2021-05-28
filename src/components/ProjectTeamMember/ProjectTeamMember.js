@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Container, Heading, Paragraph, Selectbox, Input, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
 import { number, func, object } from 'prop-types';
+import { useEffect } from 'react';
 
 const StyledContainer = styled(Container)`
   grid-column: 1 / 3;
@@ -13,7 +14,11 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors }) => {
+const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors, editTeamMember }) => {
+  useEffect(() => {
+    if (editTeamMember) setNumOfTeam(editTeamMember.length);
+  }, [editTeamMember, setNumOfTeam]);
+
   const onTeamMemberChangeHandler = e => {
     setNumOfTeam(+e.target.value);
   };
@@ -27,7 +32,7 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors }) => {
         <Paragraph color="#666" fontSize={1.4}>
           총 몇 명의 팀원과 협업 했었나요? (팀원에는 본인도 포함됩니다)
         </Paragraph>
-        <Selectbox label="최대 10명" onChange={onTeamMemberChangeHandler} />
+        <Selectbox label="최대 10명" onChange={onTeamMemberChangeHandler} value={numOfTeam} />
       </Container>
       <Paragraph color="#666" fontSize={1.2} margin="5px 0 20px 0">
         Github Url은 선택적 사항입니다. 없으면 비워두세요!
