@@ -9,10 +9,10 @@ const MemberList = styled.ul`
   padding: 10px;
 `;
 
-const TeamMembers = ({ teamMembers }) => {
+const TeamMembers = ({ teamMembers, projectLoading }) => {
   return (
     <>
-      {teamMembers.length ? (
+      {!projectLoading ? (
         <StyledTeamMembers>
           <SectionHeading id="팀원목록">팀원 목록</SectionHeading>
           <MemberList>

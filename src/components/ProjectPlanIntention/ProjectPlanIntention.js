@@ -15,10 +15,10 @@ const PlanIntention = styled.p`
   padding: 0 15px;
 `;
 
-const ProjectPlanIntention = ({ planIntention }) => {
+const ProjectPlanIntention = ({ planIntention, projectLoading }) => {
   return (
     <>
-      {planIntention ? (
+      {!projectLoading ? (
         <StyledProjectPlanIntention>
           <SectionHeading id="기획의도">기획 의도 및 소개</SectionHeading>
           <PlanIntention>{planIntention}</PlanIntention>

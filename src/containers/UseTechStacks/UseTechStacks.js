@@ -47,10 +47,10 @@ const TechName = styled.span`
   }
 `;
 
-const UseTechStacks = ({ techStacks }) => {
+const UseTechStacks = ({ techStacks, projectLoading }) => {
   return (
     <>
-      {techStacks.length ? (
+      {!projectLoading ? (
         <StyledUseTechStacks>
           <SectionHeading id="사용기술스택">사용 기술 스택</SectionHeading>
           <SkillList

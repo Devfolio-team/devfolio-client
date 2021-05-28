@@ -27,10 +27,10 @@ const NavigatorItem = styled.li`
   margin-bottom: 15px;
 `;
 
-const ProjectNavigator = ({ subject }) => {
+const ProjectNavigator = ({ subject, projectLoading }) => {
   return (
     <StyledProjectNavigator>
-      {subject ? (
+      {!projectLoading ? (
         <NavigatorList>
           <NavigatorItem>
             <a href="#제목">{subject}</a>

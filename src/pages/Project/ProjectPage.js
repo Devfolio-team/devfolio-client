@@ -36,6 +36,7 @@ const BottomLikeButton = styled(LikeButton)`
 `;
 
 const initalProjectState = {
+  projectLoading: true,
   projectData: {
     authorInfo: [{ nickname: '', profile_photo: '' }],
     created: '',
@@ -79,7 +80,7 @@ const ProjectPage = ({ match, history }) => {
     teamMembers,
   } = project.projectData;
 
-  const { projectTechStacks = [] } = project;
+  const { projectLoading, projectTechStacks = [] } = project;
 
   const onLikeCountPlusHandler = async () => {
     if (!currentUser) return;
@@ -131,17 +132,21 @@ const ProjectPage = ({ match, history }) => {
   };
 
   useEffect(() => {
+    scrollToTop();
+
     const getProjectData = async () => {
       try {
         const projectData = await ajax.getProject(match.params.project_id);
 
-        setProject(projectData.data.responseData);
+        setProject({ ...projectData.data.responseData, projectLoading: false });
       } catch (error) {
         throw new Error(error);
       }
     };
     getProjectData();
+  }, [match.params.project_id]);
 
+  useEffect(() => {
     const getIsLike = async () => {
       try {
         const likeButtonResponse = await ajax.getIsPressLikeButton(project_id, currentUser.user_id);
@@ -153,17 +158,11 @@ const ProjectPage = ({ match, history }) => {
     };
 
     if (currentUser && project_id) getIsLike();
-  }, [currentUser, match.params.project_id, project_id]);
-
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    scrollToTop();
-  }, []);
+  }, [currentUser, project_id]);
 
   return (
     <StyledProjectPage>
-      <ProjectRegistInfo projectData={project.projectData} />
+      <ProjectRegistInfo projectData={project.projectData} projectLoading={projectLoading} />
 
       <ProjectNavigator subject={subject} />
 
@@ -183,19 +182,24 @@ const ProjectPage = ({ match, history }) => {
 
       <DivisionLine width="75%" />
 
-      <ProjectPlanIntention planIntention={plan_intention} />
+      <ProjectPlanIntention planIntention={plan_intention} projectLoading={projectLoading} />
 
       <DivisionLine width="75%" />
 
-      <TeamMembers teamMembers={teamMembers} />
+      <TeamMembers teamMembers={teamMembers} projectLoading={projectLoading} />
 
       <DivisionLine width="75%" />
 
-      <UseTechStacks techStacks={projectTechStacks} />
+      <UseTechStacks techStacks={projectTechStacks} projectLoading={projectLoading} />
 
       <DivisionLine width="75%" />
 
-      <ProjectExplanation mainContents={main_contents} startDate={start_date} endDate={end_date} />
+      <ProjectExplanation
+        mainContents={main_contents}
+        startDate={start_date}
+        endDate={end_date}
+        projectLoading={projectLoading}
+      />
 
       <DivisionLine width="75%" />
 
