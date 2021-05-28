@@ -36,3 +36,9 @@ export default {
 const Template = args => <ProjectTeamMember {...args} />;
 
 export const ExampleProjectTeamMember = Template.bind({});
+
+ExampleProjectTeamMember.args = {
+  numOfTeam: 1,
+  setNumOfTeam: () => {},
+  errors: {},
+};

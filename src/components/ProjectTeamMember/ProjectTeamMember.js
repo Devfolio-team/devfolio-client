@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Container, Heading, Paragraph, Selectbox, Input, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
+import { number, func, object } from 'prop-types';
 
 const StyledContainer = styled(Container)`
   grid-column: 1 / 3;
@@ -91,6 +92,15 @@ const ProjectTeamMember = ({ vw, numOfTeam, setNumOfTeam, errors }) => {
 
 ProjectTeamMember.defaultProps = {};
 
-ProjectTeamMember.propTypes = {};
+ProjectTeamMember.propTypes = {
+  /** 현재 뷰포트의 넓이를 가지고 있는 상태입니다. */
+  vw: number,
+  /** 팀원의 수를 나타내는 상태입니다. */
+  numOfTeam: number,
+  /** 팀원의 수의 상태를 조정할 수 있는 함수입니다. */
+  setNumOfTeam: func,
+  /** Formik이 관리하는 input이 validation을 통과하지 못하면 에러가 나는데, 그 에러들을 갖고 있는 객체입니다. */
+  errors: object,
+};
 
 export default ProjectTeamMember;
