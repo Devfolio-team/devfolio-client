@@ -13,9 +13,9 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const GithubRepoInput = ({ vw, errors }) => {
+const GithubRepoInput = ({ errors }) => {
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         GitHub 저장소 링크
       </Heading>

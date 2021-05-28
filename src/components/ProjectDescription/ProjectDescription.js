@@ -30,7 +30,7 @@ const ProjectDescription = forwardRef(({ vw }, ref) => {
   };
 
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 설명
       </Heading>

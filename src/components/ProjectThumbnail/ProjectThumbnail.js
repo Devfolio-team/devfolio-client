@@ -14,9 +14,9 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const ProjectThumbnail = ({ setFieldValue, vw, errors, editThumbnail }) => {
+const ProjectThumbnail = ({ setFieldValue, errors, editThumbnail }) => {
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 썸네일
       </Heading>

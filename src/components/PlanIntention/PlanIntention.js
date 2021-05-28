@@ -11,9 +11,9 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const PlanIntention = ({ vw, errors }) => {
+const PlanIntention = ({ errors }) => {
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         기획 의도 및 소개
       </Heading>

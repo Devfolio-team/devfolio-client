@@ -53,7 +53,7 @@ const ProjectDuration = ({ setFieldValue, vw, errors, editStartDate, editEndDate
   const [isEndSelected, setIsEndSelected] = useState(false);
 
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0" lineHeight="16px">
         프로젝트 기간
       </Heading>

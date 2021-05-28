@@ -16,7 +16,7 @@ const StyledContainer = styled(Container)`
 const TeamName = ({ values, vw }) => {
   const { teamNameRadio } = values;
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         팀 이름
       </Heading>
