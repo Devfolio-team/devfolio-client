@@ -52,7 +52,10 @@ const Naigation = styled.nav`
 `;
 
 const SearchLink = styled(Link)`
-  ${props => applyStyle(props)}
+  margin-right: 20px;
+  @media (max-width: 480px) {
+    margin-right: 0;
+  }
 `;
 
 const ProjectEditLink = styled(Link)`
@@ -108,8 +111,17 @@ const HeaderBar = ({ viewport }) => {
           </Link>
         </Heading>
         <Container display="flex" margin="0" alignItems="center">
-          <SearchLink to="/search" $margin="0 20px 0 0">
-            <SVGIcon type="Search" />
+          <SearchLink
+            aria-label="제목 기준으로 프로젝트 검색"
+            title="제목 기준으로 프로젝트 검색"
+            to="/search"
+            $margin="0 20px 0 0"
+          >
+            <SVGIcon
+              type="Search"
+              width={type === 'xs' ? '25' : '30'}
+              height={type === 'xs' ? '25' : '30'}
+            />
           </SearchLink>
           {currentUser ? (
             <Container display="flex" alignItems="center" margin="0">
@@ -182,7 +194,7 @@ const HeaderBar = ({ viewport }) => {
             </Container>
           ) : (
             <Button
-              width={84}
+              width={80}
               height={36}
               color="#FFFFFF"
               background="#25272B"
