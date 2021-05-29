@@ -3,50 +3,66 @@ import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
 const SearchContainer = styled(Container)`
+  width: 70%;
+  height: 60px;
+  padding-left: 20px;
   @media (max-width: 768px) {
-    height: 40px;
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
   }
 `;
 
 const SearchInput = styled(Input)`
+  font-size: 2.4rem;
+  padding: 0 20px 0 10px;
+
   &:focus {
     box-shadow: none;
   }
   @media (max-width: 768px) {
     font-size: 2rem;
   }
-`;
-
-const SearchIcon = styled(SVGIcon)`
-  path {
-    fill: #ccc;
+  @media (max-width: 480px) {
+    padding: 0 10px;
   }
 `;
 
-const SearchBox = ({ margin, onChange, value }) => {
+const SearchIcon = styled(SVGIcon)`
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+
+  path {
+    fill: #ccc;
+  }
+  @media (max-width: 768px) {
+    width: 25px;
+    height: 25px;
+  }
+`;
+
+const SearchBox = ({ onChange, value }) => {
   return (
     <SearchContainer
-      width="100%"
-      height="60px"
       border="1px solid #ccc"
       background="#fff"
-      margin={margin}
+      margin="50px auto 0"
       display="flex"
       alignItems="center"
-      padding="0 0 0 20px"
     >
-      <SearchIcon type="Search" />
+      <label aria-label="검색" htmlFor="searchInput">
+        <SearchIcon type="Search" />
+      </label>
       <SearchInput
         width="100%"
         height="100%"
-        margin="0 0 0 20px"
-        padding="0"
-        inputFontSize={3}
         border="none"
         mode="hidden"
-        label="검색어 입력 칸"
+        label="검색어 입력"
+        title="검색어를 입력하세요."
         id="searchInput"
-        placeholder="검색어를 입력하세요"
+        placeholder="검색어를 입력하세요."
         value={value}
         onChange={onChange}
       />

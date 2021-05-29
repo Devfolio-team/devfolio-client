@@ -1,11 +1,24 @@
 import styled, { css } from 'styled-components';
-import { SearchBox, Paragraph, Container, ProjectItem } from 'components';
+import { SearchBox, Paragraph, ProjectItem, Span } from 'components';
 import { useEffect, useState } from 'react';
 import ajax from 'apis/ajax';
 import { applyStyle } from 'utils';
 import useDetectViewport from 'hooks/useDetectViewport';
 
 const StyledSearchPage = styled.main``;
+
+const SearchSection = styled.section`
+  position: relative;
+  margin: 0 auto;
+  padding: 30px 54px;
+  width: 1440px;
+  @media (max-width: 1440px) {
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    padding: 30px;
+  }
+`;
 
 const ProjectList = styled.ul`
   ${props => css`
@@ -16,8 +29,12 @@ const ProjectList = styled.ul`
 `;
 
 const SearchedProjectItem = styled(ProjectItem)`
-  width: 100%;
+  width: 70%;
   margin: 25px auto;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 let debounce;
@@ -27,7 +44,7 @@ const SearchPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [projects, setProjects] = useState(null);
   const viewport = useDetectViewport();
-  const { vw } = viewport;
+  const { vw, type } = viewport;
 
   useEffect(() => {
     const searchProjects = async () => {
@@ -53,13 +70,13 @@ const SearchPage = () => {
 
   return (
     <StyledSearchPage>
-      <Container width="65%">
-        <SearchBox margin="120px 0 0 0" value={inputValue} onChange={onSearchChangeHandler} />
+      <SearchSection>
+        <SearchBox value={inputValue} onChange={onSearchChangeHandler} />
         {projects &&
           (projects.length ? (
             <>
-              <Paragraph margin="35px 0 100px 0" fontSize={2}>
-                총 {projects.length}개의 프로젝트를 찾았습니다.
+              <Paragraph width={type === 'xs' ? '100%' : '70%'} margin="35px auto" fontSize={2}>
+                총 <Span fontWeight={700}>{projects.length}개</Span>의 프로젝트를 찾았습니다.
               </Paragraph>
               <ProjectList>
                 {projects.map(project => (
@@ -83,11 +100,11 @@ const SearchPage = () => {
               </ProjectList>
             </>
           ) : (
-            <Paragraph margin="35px 0 100px 0" fontSize={2}>
+            <Paragraph width={type === 'xs' ? '100%' : '70%'} margin="35px auto 100px" fontSize={2}>
               검색결과가 없습니다
             </Paragraph>
           ))}
-      </Container>
+      </SearchSection>
     </StyledSearchPage>
   );
 };

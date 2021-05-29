@@ -1,4 +1,4 @@
-import { ProjectSectionSkeleton, SectionHeading, SkillIcon } from 'components';
+import { Container, ProjectSectionSkeleton, SectionHeading, SkillIcon, Span } from 'components';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -47,6 +47,14 @@ const TechName = styled.span`
   }
 `;
 
+const EmptyMessage = styled.span`
+  display: block;
+  width: 100px;
+  font-size: 10rem;
+  margin: 50px auto 80px;
+  text-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+`;
+
 const UseTechStacks = ({ techStacks, projectLoading }) => {
   return (
     <>
@@ -60,13 +68,21 @@ const UseTechStacks = ({ techStacks, projectLoading }) => {
             $flexWrap="wrap"
             $justifyContent="space-between"
           >
-            {techStacks &&
+            {techStacks.length ? (
               techStacks.map(skill => (
                 <SkillIconItem key={skill.project_tech_stacks_id}>
                   <SkillIcon type={skill.tech_name} width={60} height={60}></SkillIcon>
                   <TechName>{skill.tech_name}</TechName>
                 </SkillIconItem>
-              ))}
+              ))
+            ) : (
+              <Container textAlign="center">
+                <EmptyMessage>텅-</EmptyMessage>
+                <Span fontSize={2} fontWeight={700}>
+                  등록된 기술 스택이 없습니다<span aria-hidden> :(</span>
+                </Span>
+              </Container>
+            )}
           </SkillList>
         </StyledUseTechStacks>
       ) : (
