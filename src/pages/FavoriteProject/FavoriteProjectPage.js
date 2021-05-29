@@ -4,7 +4,6 @@ import {
   ProjectItem,
   ProjectItemSkeleton,
   Container,
-  Heading,
   FetchMore,
   Span,
   EmptyMessage,
@@ -71,7 +70,7 @@ const FavoritePageHeading = styled.h2`
 `;
 
 const FavoriteProjectPage = ({ match }) => {
-  const { vw, type } = useDetectViewport();
+  const { vw } = useDetectViewport();
   const [page, setPage] = useState(0);
   const [favoriteProjects, setFavoriteProjects] = useState();
   const { current_user_id } = match.params;
