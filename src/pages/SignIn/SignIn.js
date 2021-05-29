@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { signInMiddleware } from 'store/modules/auth/authMiddleware';
-import { useHistory } from 'react-router';
 
-const SignIn = () => {
+const SignIn = ({ history }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     const authToken = document.cookie.split(';').find(cookie => cookie.includes('auth_token'));
@@ -13,11 +11,11 @@ const SignIn = () => {
     const authTokenValue = authToken ? authToken.split('=')[1] : null;
 
     if (authTokenValue) {
-      dispatch(signInMiddleware(authTokenValue));
+      dispatch(signInMiddleware());
     }
     history.push('/');
   }, [dispatch, history]);
-  return <></>;
+  return null;
 };
 
 export default SignIn;

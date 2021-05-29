@@ -19,7 +19,6 @@ const Template = args => (
     <ProjectItem {...args} />
   </ul>
 );
-
 export const ExampleProjectItem = Template.bind({});
 
 ExampleProjectItem.args = {

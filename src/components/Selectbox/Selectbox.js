@@ -9,7 +9,9 @@ const StyledSelectbox = styled.select`
   border: 1px solid ${color.lightGray};
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
   background: ${color.white};
+  margin-left: 15px;
   margin-right: 15px;
+  padding: 0 0 0 6px;
 `;
 
 const StyledLabel = styled.label`
@@ -34,7 +36,6 @@ const Selectbox = ({
   return (
     <>
       <StyledSelectbox name={name} id={id} value={value} onChange={onChange} {...restProps}>
-        <option value="">인원 수</option>
         {optArray.map((optNum, index) => (
           <option value={optNum} key={index}>
             {optNum + '명'}

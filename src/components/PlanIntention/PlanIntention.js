@@ -1,20 +1,25 @@
-import { Heading, Container, TextArea, FormErrorMessage } from 'components';
+import { Heading, Container, TextArea, FormErrorMessage, Paragraph } from 'components';
 import { Field, ErrorMessage } from 'formik';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
-  ${({ vw }) => css`
-    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
-    width: ${vw >= 1280 ? '100%' : '80%'};
-  `}
+  width: 100%;
+
+  @media (max-width: 1280px) {
+    margin: 0 auto 60px;
+    width: 80%;
+  }
 `;
 
-const PlanIntention = ({ vw, errors }) => {
+const PlanIntention = ({ errors }) => {
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
-        기획 의도
+        기획 의도 및 소개
       </Heading>
+      <Paragraph color="#666" fontSize={1.4} margin="0 0 20px 0">
+        이 항목은 프로젝트의 소개글로 표시됩니다.
+      </Paragraph>
       <Field
         component={TextArea}
         name="planIntention"
@@ -24,7 +29,7 @@ const PlanIntention = ({ vw, errors }) => {
         fontSize={1.2}
         label="기획 의도를 200자 이내로 작성해주세요."
         beforeTranslate={3.5}
-        afterTranslate={-0.5}
+        afterTranslate={-0.8}
         beforeMargin={15}
         afterMargin={0}
         errors={errors}

@@ -1,4 +1,4 @@
-import { createRef, useEffect } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import {
   TeamName,
@@ -13,17 +13,19 @@ import {
   ProjectDescription,
   Button,
   Container,
+  ProjectTeamMember,
 } from 'components';
-import { color, projectValidationSchema } from 'utils';
+import { color } from 'utils';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ajax from 'apis/ajax';
 import styled, { css } from 'styled-components';
+import * as Yup from 'yup';
 
 const StyledContainer = styled(Container)`
   ${({ vw }) => css`
-    display: ${vw >= 1280 ? 'grid' : 'flex'};
-    grid-template-rows: repeat(5, 300px) 600px;
+    display: ${vw > 1280 ? 'grid' : 'flex'};
+    grid-template-rows: repeat(2, 300px) minmax(min-content, 200px) repeat(3, 300px) 600px;
     grid-template-columns: minmax(300px, 650px) minmax(300px, 650px);
     flex-direction: column;
     margin-top: 80px;
@@ -32,9 +34,108 @@ const StyledContainer = styled(Container)`
 `;
 
 const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
+  const [numOfTeam, setNumOfTeam] = useState(1);
   const authState = useSelector(state => state.auth);
   const editorRef = createRef();
   const history = useHistory();
+  const initialValues = {
+    subject: editProjectData?.projectData.subject || '',
+    thumbnail: editProjectData?.projectData.thumbnail
+      ? { src: null, size: 0, type: 'image/jpeg' }
+      : null,
+    teamNameRadio: editProjectData?.projectData.team_name ? 'yes' : 'no',
+    planIntention: editProjectData?.projectData.plan_intention || '',
+    techStacks: [],
+    teamName: editProjectData?.projectData.team_name || '',
+    githubUrl: editProjectData?.projectData.github_url || '',
+    deploymentStatus: editProjectData?.projectData.deploy_url ? 'deployed' : 'undeployed',
+    deployUrl: editProjectData?.projectData.deploy_url || '',
+    isPrivate:
+      String(editProjectData?.projectData.is_private) === 'undefined'
+        ? '0'
+        : String(editProjectData?.projectData.is_private),
+    startDate: editProjectData?.projectData.start_date || '',
+    endDate: editProjectData?.projectData.end_date || '',
+    teamMembers: [],
+    memberName0: editProjectData?.projectData?.teamMembers[0]?.member_name || '',
+    memberName1: editProjectData?.projectData?.teamMembers[1]?.member_name || '',
+    memberName2: editProjectData?.projectData?.teamMembers[2]?.member_name || '',
+    memberName3: editProjectData?.projectData?.teamMembers[3]?.member_name || '',
+    memberName4: editProjectData?.projectData?.teamMembers[4]?.member_name || '',
+    memberName5: editProjectData?.projectData?.teamMembers[5]?.member_name || '',
+    memberName6: editProjectData?.projectData?.teamMembers[6]?.member_name || '',
+    memberName7: editProjectData?.projectData?.teamMembers[7]?.member_name || '',
+    memberName8: editProjectData?.projectData?.teamMembers[8]?.member_name || '',
+    memberName9: editProjectData?.projectData?.teamMembers[9]?.member_name || '',
+    memberGithubUrl0: editProjectData?.projectData?.teamMembers[0]?.member_github_url || '',
+    memberGithubUrl1: editProjectData?.projectData?.teamMembers[1]?.member_github_url || '',
+    memberGithubUrl2: editProjectData?.projectData?.teamMembers[2]?.member_github_url || '',
+    memberGithubUrl3: editProjectData?.projectData?.teamMembers[3]?.member_github_url || '',
+    memberGithubUrl4: editProjectData?.projectData?.teamMembers[4]?.member_github_url || '',
+    memberGithubUrl5: editProjectData?.projectData?.teamMembers[5]?.member_github_url || '',
+    memberGithubUrl6: editProjectData?.projectData?.teamMembers[6]?.member_github_url || '',
+    memberGithubUrl7: editProjectData?.projectData?.teamMembers[7]?.member_github_url || '',
+    memberGithubUrl8: editProjectData?.projectData?.teamMembers[8]?.member_github_url || '',
+    memberGithubUrl9: editProjectData?.projectData?.teamMembers[9]?.member_github_url || '',
+  };
+  const initialTouched = {
+    subject: true,
+    planIntention: true,
+    startDate: true,
+    endDate: true,
+    deployUrl: true,
+    githubUrl: true,
+    thumbnail: true,
+  };
+  const FILE_SIZE = 1000 * 1000 * 10;
+
+  const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif'];
+
+  const projectValidation = {
+    subject: Yup.string().required('* 프로젝트 이름은 필수 항목입니다.'),
+    planIntention: Yup.string()
+      .max(200, '기획의도는 200자 이내여야 합니다.')
+      .required('* 기획의도는 필수 항목입니다.'),
+    startDate: Yup.date().required('* 시작날짜는 필수 항목입니다.'),
+    endDate: Yup.date().required('* 종료날짜는 필수 항목입니다.'),
+    deployUrl: Yup.string().matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      '형식에 맞는 URL을 작성해주세요!'
+    ),
+    githubUrl: Yup.string().matches(
+      /^https:\/\/github.com\/[\w-]+\/[\w-]+$/,
+      '형식에 맞는 URL을 작성해주세요!'
+    ),
+    thumbnail: Yup.mixed()
+      .test(
+        'fileType',
+        '지원하지않는 파일형식입니다. (지원하는 파일 형식: jpeg, png, jpg, webp, gif)',
+        value => value === null || (value && SUPPORTED_FORMATS.includes(value.type))
+      )
+      .test(
+        'fileSize',
+        '파일 크기가 너무 큽니다. (최대 10MB)',
+        value => value === null || (value && value.size <= FILE_SIZE)
+      )
+      .required('* 프로젝트 썸네일은 필수 항목입니다.'),
+  };
+
+  Array.from({ length: 10 }, (_, i) => i).forEach((_, index) => {
+    initialTouched[`memberName${index}`] = true;
+    initialTouched[`memberGithubUrl${index}`] = true;
+  });
+
+  Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
+    projectValidation[`memberName${index}`] = Yup.string().required(
+      '* 팀원 이름은 필수 항목입니다.'
+    );
+    projectValidation[`memberGithubUrl${index}`] = Yup.string().matches(
+      /((https):\/\/)github.com\/[\w-]+$/,
+      '형식에 맞는 URL을 작성해주세요!'
+    );
+  });
+
+  const projectValidationSchema = Yup.object(projectValidation);
 
   useEffect(() => {
     editorRef.current.getInstance().setHtml(editProjectData?.projectData.main_contents);
@@ -57,33 +158,21 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
 
   return (
     <Formik
-      initialValues={{
-        subject: editProjectData?.projectData.subject || '',
-        thumbnail: editProjectData?.projectData.thumbnail
-          ? { src: null, size: 0, type: 'image/jpeg' }
-          : null,
-        teamNameRadio: editProjectData?.projectData.team_name ? 'yes' : 'no',
-        planIntention: editProjectData?.projectData.plan_intention || '',
-        techStacks: [],
-        teamName: editProjectData?.projectData.team_name || '',
-        githubUrl: editProjectData?.projectData.github_url || '',
-        deploymentStatus: editProjectData?.projectData.deploy_url ? 'deployed' : 'undeployed',
-        deployUrl: editProjectData?.projectData.deploy_url || '',
-        isPrivate: String(editProjectData?.projectData.is_private) || '',
-        startDate: editProjectData?.projectData.start_date || '',
-        endDate: editProjectData?.projectData.end_date || '',
-      }}
+      initialValues={initialValues}
       validationSchema={projectValidationSchema}
-      initialTouched={{
-        subject: true,
-        planIntention: true,
-        startDate: true,
-        endDate: true,
-        deployUrl: true,
-        githubUrl: true,
-        thumbnail: true,
-      }}
+      initialTouched={initialTouched}
       onSubmit={async values => {
+        let teamMembers = [];
+        Array.from({ length: numOfTeam }, (_, i) => i).forEach((_, index) => {
+          teamMembers = [
+            ...teamMembers,
+            {
+              memberName: values[`memberName${index}`] || '',
+              memberGithubUrl: values[`memberGithubUrl${index}`] || '',
+            },
+          ];
+        });
+        values.teamMembers = teamMembers;
         const editorContent = getContents();
         const projectData = {
           ...values,
@@ -122,6 +211,14 @@ const ProjectEditForm = ({ vw, setLeave, editProjectData, projectId }) => {
                 errors={errors}
                 editStartDate={editProjectData?.projectData.start_date}
                 editEndDate={editProjectData?.projectData.end_date}
+              />
+              <ProjectTeamMember
+                vw={vw}
+                setFieldValue={setFieldValue}
+                numOfTeam={numOfTeam}
+                setNumOfTeam={setNumOfTeam}
+                errors={errors}
+                editTeamMember={editProjectData?.projectData.teamMembers}
               />
               <TechStacks
                 setFieldValue={setFieldValue}

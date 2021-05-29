@@ -1,6 +1,9 @@
-import axios from 'axios';
-const API_URL = 'http://devfolio.world:3020';
+import axios from './customAxios';
 
 export const fetchTechStacks = async () => {
-  return await axios.get(`${API_URL}/api/tech_stacks`);
+  return await axios.get('/api/tech_stacks');
+};
+
+export const requestNewTechStack = async stackName => {
+  return await axios.post(`/api/request_tech_stacks?stack_name=${stackName}`);
 };

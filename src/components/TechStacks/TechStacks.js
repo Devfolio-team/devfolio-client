@@ -1,17 +1,19 @@
 import { func } from 'prop-types';
 import { Container, Heading, ChipInputSearch } from 'components';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
-  ${({ vw }) => css`
-    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
-    width: ${vw >= 1280 ? '100%' : '80%'};
-  `}
+  width: 100%;
+  margin-top: 50px;
+  @media (max-width: 1280px) {
+    margin: 0 auto 60px;
+    width: 80%;
+  }
 `;
 
-const TechStacks = ({ setFieldValue, vw, editTechStacks }) => {
+const TechStacks = ({ setFieldValue, editTechStacks }) => {
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 32px 0">
         사용 기술 스택
       </Heading>

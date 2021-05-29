@@ -2,14 +2,17 @@ import { signIn, deleteAccount } from 'apis/auth';
 import { fetchProjects, postProject, editProject } from 'apis/project';
 import { postImage } from 'apis/image';
 import { getPortfolio, editPortfolio } from 'apis/portfolio';
-import { fetchTechStacks } from 'apis/techStacks';
+import { fetchTechStacks, requestNewTechStack } from 'apis/techStacks';
 import {
   getProject,
   getIsPressLikeButton,
   postLikeCountPlus,
   delLikeCountMinus,
   deleteProject,
+  fetchFavoriteProjects,
+  searchProjectByTitle,
 } from 'apis/project';
+import { postComment, fetchComments, deleteComment, editComment } from 'apis/comment';
 
 const ajax = {
   signIn,
@@ -26,6 +29,13 @@ const ajax = {
   deleteAccount,
   deleteProject,
   editProject,
+  postComment,
+  fetchComments,
+  editComment,
+  deleteComment,
+  requestNewTechStack,
+  fetchFavoriteProjects,
+  searchProjectByTitle,
 };
 
 export default ajax;

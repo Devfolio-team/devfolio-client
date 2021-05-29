@@ -38,10 +38,14 @@ const StyledLink = styled(Link)`
 StyledLink.displayName = 'Link';
 
 const StyledLoadingSpinner = styled(LoadingSpinner)`
+  width: 35%;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate3d(-50%, -50%, 0);
+  @media (max-width: 1126px) {
+    width: 25%;
+  }
 `;
 
 const ProjectItem = ({
@@ -54,19 +58,18 @@ const ProjectItem = ({
   author,
   authorProfile,
   likeCount,
-  viewport,
+  commentCount,
   width,
   margin,
   imageMaxHeight,
   containerMinHeight,
+  ...restProps
 }) => {
   const [imageLoading, setImageLoading] = useState(true);
 
   const onImageLoadingHandler = () => {
     setImageLoading(false);
   };
-
-  const { vw } = viewport;
 
   const createDate = new Date(created);
   const year = createDate.getFullYear();
@@ -78,18 +81,19 @@ const ProjectItem = ({
   const dateTime = createDate.toISOString();
 
   return (
-    <StyledProjectItem $width={width} $margin={margin}>
+    <StyledProjectItem $width={width} $margin={margin} {...restProps}>
       <Container
         position="relative"
         minHeight={containerMinHeight}
         background="#FFFFFF"
         borderBottom="1px solid rgb(230, 230, 230)"
       >
-        {imageLoading ? <StyledLoadingSpinner width={vw >= 1126 ? '35%' : '25%'} /> : null}
-        <StyledLink to={`/project/${projectId}`} tabIndex={-1}>
+        {imageLoading ? <StyledLoadingSpinner /> : null}
+        <StyledLink to={`/project/${projectId}`} tabIndex={-1} title={`${subject} 자세히 보기`}>
           <Image
             src={thumbnail}
             alt=""
+            ariaLabel={`${subject}의 썸네일 이미지`}
             width={imageLoading ? 0 : '100%'}
             maxHeight={imageMaxHeight}
             cursor="pointer"
@@ -128,9 +132,14 @@ const ProjectItem = ({
           >
             {planIntention}
           </Paragraph>
-          <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
-            {createdText}
-          </Time>
+          <Container display="flex" justifyContent="space-between">
+            <Time dateTime={dateTime} color="#70777d" fontSize={1.2}>
+              {createdText}
+            </Time>
+            <Span color="#70777d" fontSize={1.2}>
+              {commentCount} 개의 댓글
+            </Span>
+          </Container>
         </StyledLink>
       </Container>
       <Container

@@ -150,7 +150,12 @@ const PortfolioEditPage = () => {
       </Formik>
       {isModalOpen ? (
         <Portal id="modal-root">
-          <WithdrawalModalDialog ref={ref} beforeRef={beforeRef} setIsModalOpen={setIsModalOpen} />
+          <WithdrawalModalDialog
+            ref={ref}
+            beforeRef={beforeRef}
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+          />
         </Portal>
       ) : null}
     </StyledPortfolioEditPage>

@@ -1,17 +1,19 @@
 import { Heading, Paragraph, Input, Container, FormErrorMessage } from 'components';
 import { Field, ErrorMessage } from 'formik';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
-  ${({ vw }) => css`
-    margin: ${vw >= 1280 ? 0 : '0 auto 60px auto'};
-    width: ${vw >= 1280 ? '100%' : '80%'};
-  `}
+  width: 100%;
+
+  @media (max-width: 1280px) {
+    margin: 0 auto 60px;
+    width: 80%;
+  }
 `;
 
-const ProjectName = ({ vw, errors }) => {
+const ProjectName = ({ errors }) => {
   return (
-    <StyledContainer vw={vw}>
+    <StyledContainer>
       <Heading as="h3" color="#212121" fontSize={1.6} margin="0 0 20px 0">
         프로젝트 이름
       </Heading>

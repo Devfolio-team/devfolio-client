@@ -24,6 +24,11 @@ const StyledUl = styled.ul`
       border-radius: 2px;
       transition: 0.5s;
       overflow: hidden;
+      margin-right: 70px;
+
+      @media (max-width: 768px) {
+        margin-right: 30px;
+      }
     `}
 `;
 
@@ -73,7 +78,7 @@ const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, viewport, ...
 
   const history = useHistory();
 
-  const { vw, type } = viewport;
+  const { type } = viewport;
 
   const onSignOutHandler = () => {
     dispatch(signOutMiddleware());
@@ -89,7 +94,7 @@ const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, viewport, ...
   };
 
   return (
-    <StyledUl $height={height} $marginRight={vw >= 768 ? '70px' : '30px'} {...restProps}>
+    <StyledUl $height={height} {...restProps}>
       <StyledUserNavigatorMenuItem $color="#ffffff" $fontSize={1.6} $fontWeight={700}>
         {type === 'xs' ? (
           <ProjectEditLink
@@ -108,6 +113,15 @@ const UserNavigator = ({ height, tabIndex, setUserNavigatorIsOepn, viewport, ...
           onKeyDown={type === 'xs' ? null : onCloseNavigatorShiftTabHandler}
         >
           내 포트폴리오
+        </StyledLink>
+      </StyledUserNavigatorMenuItem>
+      <StyledUserNavigatorMenuItem>
+        <StyledLink
+          to={`/favorite_project/${currentUser ? currentUser.user_id : ''}`}
+          $padding="20px"
+          tabIndex={tabIndex}
+        >
+          좋아한 프로젝트
         </StyledLink>
       </StyledUserNavigatorMenuItem>
       <StyledUserNavigatorMenuItem>

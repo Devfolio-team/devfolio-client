@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { string, number, object, oneOfType, bool } from 'prop-types';
 import { color, applyStyle } from 'utils';
@@ -10,13 +10,14 @@ const StyledLabel = styled.label`
     font-size: ${props.fontSize}rem;
     display: block;
     transition: 0.4s;
+    position: ${props.$position || 'static'};
   `}
   transform: translateY(
     ${({ focus, inputValue, beforeTranslate, afterTranslate }) =>
     focus || inputValue ? afterTranslate : beforeTranslate}rem
   );
-  margin-left: ${({ focus, inputValue, beforeMargin, afterMargin }) =>
-    focus || inputValue ? afterMargin : beforeMargin}px;
+  margin-left: ${({ focus, inputValue, beforeMargin, afterMargin, percentMargin }) =>
+    (focus || inputValue ? afterMargin : beforeMargin) + (percentMargin ? '%' : 'px')};
   color: ${color.placeholder};
 `;
 
@@ -40,97 +41,107 @@ const StyledInput = styled.input.attrs(({ type, id }) => ({
   `}
 `;
 
-const Input = ({
-  type,
-  id,
-  label,
-  name,
-  value,
-  mode,
-  width,
-  height,
-  borderRadius,
-  inputFontSize,
-  fontWeight,
-  color,
-  border,
-  margin,
-  display,
-  padding,
-  boxShadow,
-  beforeTranslate,
-  afterTranslate,
-  beforeMargin,
-  afterMargin,
-  disabled,
-  labelFontSize,
-  opacity,
-  zIndex,
-  field,
-  errors,
-  withdrawal,
-  textAlign,
-  ...restProps
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
+const Input = forwardRef(
+  (
+    {
+      type,
+      id,
+      label,
+      name,
+      value,
+      mode,
+      width,
+      height,
+      borderRadius,
+      inputFontSize,
+      fontWeight,
+      color,
+      border,
+      margin,
+      display,
+      padding,
+      boxShadow,
+      beforeTranslate,
+      afterTranslate,
+      beforeMargin,
+      afterMargin,
+      disabled,
+      labelFontSize,
+      opacity,
+      zIndex,
+      field,
+      errors,
+      withdrawal,
+      textAlign,
+      labelPosition,
+      percentMargin,
+      ...restProps
+    },
+    ref
+  ) => {
+    const [isFocused, setIsFocused] = useState(false);
+    const onFocusHandler = () => {
+      setIsFocused(true);
+    };
 
-  const onFocusHandler = () => {
-    setIsFocused(true);
-  };
+    const onBlurHandler = () => {
+      setIsFocused(false);
+    };
 
-  const onBlurHandler = () => {
-    setIsFocused(false);
-  };
-
-  return (
-    <>
-      {mode === 'hidden' ? (
-        <A11yHidden as="label" htmlFor={id} children={label} />
-      ) : (
-        <StyledLabel
-          htmlFor={id}
-          fontSize={labelFontSize}
-          focus={isFocused}
-          inputValue={withdrawal ? value : field.value}
-          beforeTranslate={beforeTranslate}
-          afterTranslate={afterTranslate}
-          beforeMargin={beforeMargin}
-          afterMargin={afterMargin}
-        >
-          {label}
-        </StyledLabel>
-      )}
-      <StyledInput
-        type={type}
-        id={id}
-        name={name}
-        disabled={disabled}
-        autoComplete="off"
-        onFocus={onFocusHandler}
-        $width={width}
-        $height={height}
-        $zIndex={zIndex}
-        $opacity={opacity}
-        $borderRadius={borderRadius}
-        $inputFontSize={inputFontSize}
-        $fontWeight={fontWeight}
-        $color={color}
-        $border={border}
-        $margin={margin}
-        $display={display}
-        $padding={padding}
-        $boxShadow={boxShadow}
-        $textAlign={textAlign}
-        errors={errors}
-        {...field}
-        onBlur={onBlurHandler}
-        {...restProps}
-      />
-    </>
-  );
-};
+    return (
+      <>
+        {mode === 'hidden' ? (
+          <A11yHidden as="label" htmlFor={id} children={label} />
+        ) : (
+          <StyledLabel
+            htmlFor={id}
+            fontSize={labelFontSize}
+            focus={isFocused}
+            inputValue={withdrawal ? value : field?.value}
+            beforeTranslate={beforeTranslate}
+            afterTranslate={afterTranslate}
+            beforeMargin={beforeMargin}
+            afterMargin={afterMargin}
+            $position={labelPosition}
+            percentMargin={percentMargin}
+          >
+            {label}
+          </StyledLabel>
+        )}
+        <StyledInput
+          type={type}
+          id={id}
+          name={name}
+          ref={ref}
+          disabled={disabled}
+          autoComplete="off"
+          onFocus={onFocusHandler}
+          $width={width}
+          $height={height}
+          $zIndex={zIndex}
+          $opacity={opacity}
+          $borderRadius={borderRadius}
+          $inputFontSize={inputFontSize}
+          $fontWeight={fontWeight}
+          $color={color}
+          $border={border}
+          $margin={margin}
+          $display={display}
+          $padding={padding}
+          $boxShadow={boxShadow}
+          $textAlign={textAlign}
+          errors={errors}
+          {...field}
+          onBlur={onBlurHandler}
+          {...restProps}
+        />
+      </>
+    );
+  }
+);
 
 Input.defaultProps = {
+  label: 'exampleLabel',
   padding: '0 0 0 12px',
   withdrawal: false,
 };
