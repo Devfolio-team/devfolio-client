@@ -1,4 +1,11 @@
-import { Container, MarkdownStyler, ProjectItem, SkillIconItem, Span } from 'components';
+import {
+  Container,
+  EmptyMessage,
+  MarkdownStyler,
+  ProjectItem,
+  SkillIconItem,
+  Span,
+} from 'components';
 import useDetectViewport from 'hooks/useDetectViewport';
 import React from 'react';
 import styled, { css } from 'styled-components';
@@ -81,14 +88,6 @@ const ContenetsContainer = styled.div`
   @media (max-width: 768px) {
     padding: 0 30px;
   }
-`;
-
-const EmptyMessage = styled.span`
-  display: block;
-  width: 100px;
-  font-size: 10rem;
-  margin: 50px auto 80px;
-  text-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
 `;
 
 const PortfolioContents = ({ portfolio }) => {

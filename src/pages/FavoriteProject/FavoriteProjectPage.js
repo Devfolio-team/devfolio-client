@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import {
   ProjectItem,
   ProjectItemSkeleton,
-  A11yHidden,
   Container,
   Heading,
   FetchMore,
+  Span,
+  EmptyMessage,
 } from 'components';
 import ajax from 'apis/ajax';
 import scrollToTop from 'utils/scrollToTop';
@@ -61,10 +62,18 @@ const FavoriteProjectPageSection = styled.section`
   }
 `;
 
+const FavoritePageHeading = styled.h2`
+  font-size: 1.9rem;
+  margin: 16px;
+  @media (max-width: 1024px) {
+    margin: 16px 0;
+  }
+`;
+
 const FavoriteProjectPage = ({ match }) => {
-  const { vw } = useDetectViewport();
+  const { vw, type } = useDetectViewport();
   const [page, setPage] = useState(0);
-  const [favoriteProjects, setFavoriteProjects] = useState([]);
+  const [favoriteProjects, setFavoriteProjects] = useState();
   const { current_user_id } = match.params;
 
   useEffect(() => {
@@ -75,7 +84,7 @@ const FavoriteProjectPage = ({ match }) => {
           const {
             data: { projectsData },
           } = response;
-          setFavoriteProjects(prev => [...prev, ...projectsData]);
+          setFavoriteProjects(prev => (prev ? [...prev, ...projectsData] : projectsData));
         } else throw new Error('서버의 응답이 올바르지 않습니다.');
       } catch (error) {
         throw new Error(error);
@@ -92,15 +101,48 @@ const FavoriteProjectPage = ({ match }) => {
   return (
     <StyledFavoriteProjectPage>
       <FavoriteProjectPageSection>
-        <A11yHidden as="h2">좋아요 한 프로젝트 목록</A11yHidden>
         <Container display="flex" flexFlow="column nowrap">
-          <Heading as="h3" fontSize={1.9} margin="16px">
-            좋아한 프로젝트
-          </Heading>
+          <FavoritePageHeading>좋아한 프로젝트</FavoritePageHeading>
           <ProjectList>
-            {!favoriteProjects[0]
-              ? Array.from({ length: 12 }, (_, i) => i).map((_, index) => (
-                  <FavoriteProjectPageProjectItemSkeleton
+            {!favoriteProjects ? (
+              Array.from({ length: 12 }, (_, i) => i).map((_, index) => (
+                <FavoriteProjectPageProjectItemSkeleton
+                  containerMinHeight={
+                    vw >= 1440
+                      ? 166
+                      : vw >= 1126
+                      ? '15.7vw'
+                      : vw >= 1024
+                      ? '23.8vw'
+                      : vw >= 768
+                      ? '47.6111vw'
+                      : '49.4vw'
+                  }
+                  imageMaxHeight={
+                    vw >= 1440
+                      ? 166
+                      : vw >= 1126
+                      ? '15.7vw'
+                      : vw >= 1024
+                      ? '23.8vw'
+                      : vw >= 768
+                      ? '47.6111vw'
+                      : '49.4vw'
+                  }
+                  key={index}
+                />
+              ))
+            ) : !favoriteProjects.length ? (
+              <Container textAlign="center" margin="0 0 80px">
+                <EmptyMessage>텅-</EmptyMessage>
+                <Span fontSize={2} fontWeight={700}>
+                  좋아요를 누른 프로젝트가 없습니다 <span aria-hidden> :(</span>
+                </Span>
+              </Container>
+            ) : (
+              favoriteProjects.map(project => {
+                return (
+                  <FavoriteProjectPageProjectItem
                     containerMinHeight={
                       vw >= 1440
                         ? 166
@@ -123,48 +165,21 @@ const FavoriteProjectPage = ({ match }) => {
                         ? '47.6111vw'
                         : '49.4vw'
                     }
-                    key={index}
+                    key={project.project_id}
+                    projectId={project.project_id}
+                    thumbnail={project.thumbnail}
+                    subject={project.subject}
+                    planIntention={project.plan_intention}
+                    created={project.created}
+                    authorId={project.user_user_id}
+                    author={project.nickname}
+                    authorProfile={project.profile_photo}
+                    likeCount={project.likeCount}
+                    commentCount={project.commentCount}
                   />
-                ))
-              : favoriteProjects.map(project => {
-                  return (
-                    <FavoriteProjectPageProjectItem
-                      containerMinHeight={
-                        vw >= 1440
-                          ? 166
-                          : vw >= 1126
-                          ? '15.7vw'
-                          : vw >= 1024
-                          ? '23.8vw'
-                          : vw >= 768
-                          ? '47.6111vw'
-                          : '49.4vw'
-                      }
-                      imageMaxHeight={
-                        vw >= 1440
-                          ? 166
-                          : vw >= 1126
-                          ? '15.7vw'
-                          : vw >= 1024
-                          ? '23.8vw'
-                          : vw >= 768
-                          ? '47.6111vw'
-                          : '49.4vw'
-                      }
-                      key={project.project_id}
-                      projectId={project.project_id}
-                      thumbnail={project.thumbnail}
-                      subject={project.subject}
-                      planIntention={project.plan_intention}
-                      created={project.created}
-                      authorId={project.user_user_id}
-                      author={project.nickname}
-                      authorProfile={project.profile_photo}
-                      likeCount={project.likeCount}
-                      commentCount={project.commentCount}
-                    />
-                  );
-                })}
+                );
+              })
+            )}
           </ProjectList>
           <FetchMore setPage={setPage} />
         </Container>
