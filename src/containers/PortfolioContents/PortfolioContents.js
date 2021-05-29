@@ -68,7 +68,7 @@ const PortfolioProjectItem = styled(ProjectItem)`
   width: 70%;
   margin: 25px auto;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 100%;
   }
 `;
@@ -109,7 +109,7 @@ const PortfolioContents = ({ portfolio }) => {
                 <MarkdownStyler>{user.introduce}</MarkdownStyler>
               </Introduce>
             ) : (
-              <Container textAlign="center">
+              <Container textAlign="center" margin="0 0 80px">
                 <EmptyMessage>텅-</EmptyMessage>
                 <Span fontSize={2} fontWeight={700}>
                   등록된 자기소개가 없습니다<span aria-hidden> :(</span>
@@ -127,7 +127,7 @@ const PortfolioContents = ({ portfolio }) => {
                 ))}
               </SkillIconList>
             ) : (
-              <Container textAlign="center">
+              <Container textAlign="center" margin="0 0 80px">
                 <EmptyMessage>텅-</EmptyMessage>
                 <Span fontSize={2} fontWeight={700}>
                   등록된 기술스택이 없습니다<span aria-hidden> :(</span>
@@ -160,7 +160,7 @@ const PortfolioContents = ({ portfolio }) => {
                 ))}
               </ProjectList>
             ) : (
-              <Container textAlign="center">
+              <Container textAlign="center" margin="0 0 80px">
                 <EmptyMessage>텅-</EmptyMessage>
                 <Span fontSize={2} fontWeight={700}>
                   등록된 프로젝트가 없습니다<span aria-hidden> :(</span>
