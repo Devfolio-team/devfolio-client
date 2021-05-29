@@ -1,4 +1,11 @@
-import { Container, ProjectSectionSkeleton, SectionHeading, SkillIcon, Span } from 'components';
+import {
+  Container,
+  EmptyMessage,
+  ProjectSectionSkeleton,
+  SectionHeading,
+  SkillIcon,
+  Span,
+} from 'components';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -45,14 +52,6 @@ const TechName = styled.span`
     width: 100px;
     margin-left: 10px;
   }
-`;
-
-const EmptyMessage = styled.span`
-  display: block;
-  width: 100px;
-  font-size: 10rem;
-  margin: 50px auto 80px;
-  text-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
 `;
 
 const UseTechStacks = ({ techStacks, projectLoading }) => {

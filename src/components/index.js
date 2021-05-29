@@ -61,3 +61,4 @@ export { default as SearchBox } from './SearchBox/SearchBox';
 export { default as ProjectPlanIntention } from './ProjectPlanIntention/ProjectPlanIntention';
 export { default as CommentRegistButton } from './CommentRegistButton/CommentRegistButton';
 export { default as ProjectSectionSkeleton } from './ProjectSectionSkeleton/ProjectSectionSkeleton';
+export { default as EmptyMessage } from './EmptyMessage/EmptyMessage';
