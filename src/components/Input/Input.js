@@ -141,7 +141,6 @@ const Input = forwardRef(
 );
 
 Input.defaultProps = {
-  id: 'exampleId',
   label: 'exampleLabel',
   padding: '0 0 0 12px',
   withdrawal: false,
