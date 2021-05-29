@@ -46,6 +46,9 @@ const Naigation = styled.nav`
   @media (max-width: 1440px) {
     width: 100%;
   }
+  @media (max-width: 1024px) {
+    padding: 0 54px;
+  }
   @media (max-width: 768px) {
     padding: 30px;
   }
