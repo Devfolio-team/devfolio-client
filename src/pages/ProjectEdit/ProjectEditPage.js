@@ -7,6 +7,7 @@ import scrollToTop from 'utils/scrollToTop';
 import { Prompt, useHistory, useParams } from 'react-router-dom';
 import ajax from 'apis/ajax';
 import { ReactComponent as LoadingSpinner } from 'assets/LoadingSpinner.svg';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 const StyledProjectEditPage = styled.main``;
 
@@ -21,7 +22,7 @@ const StyledLoadingSpinner = styled(LoadingSpinner)`
   }
 `;
 
-const ProjectEditPage = ({ viewport }) => {
+const ProjectEditPage = () => {
   const currentUser = useSelector(({ auth }) => auth.currentUser);
 
   const [editProjectData, setEditProjectData] = useState(null);
@@ -53,7 +54,9 @@ const ProjectEditPage = ({ viewport }) => {
     }
   }, [currentUser.user_id, project_id]);
 
+  const viewport = useDetectViewport();
   const { vw, isDesktop } = viewport;
+
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser);
     return () => {
