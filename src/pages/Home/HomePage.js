@@ -11,6 +11,7 @@ import styled, { css } from 'styled-components';
 import ajax from 'apis/ajax';
 import { ProjectList } from 'containers';
 import scrollToTop from 'utils/scrollToTop';
+import useDetectViewport from 'hooks/useDetectViewport';
 
 const StyledHomePage = styled.main`
   ${({ $padding }) => css`
@@ -139,7 +140,8 @@ const reducer = (state, action) => {
   }
 };
 
-const HomePage = ({ viewport }) => {
+const HomePage = () => {
+  const viewport = useDetectViewport();
   const { vw } = viewport;
 
   const [projects, dispatch] = useReducer(reducer, projectsInitialState, () => ({
