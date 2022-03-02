@@ -117,5 +117,8 @@
     "sass": "^1.32.8",
     "serve": "^11.3.2",
     "storybook-react-router": "^1.0.8"
+  },
+  "resolutions": {
+    "babel-loader": "8.1.0"
   }
 }
